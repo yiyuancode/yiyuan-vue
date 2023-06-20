@@ -1,2 +1,2 @@
-import WorkPlace from './WorkPlace'
-export default WorkPlace
+import WorkPlace from './WorkPlace';
+export default WorkPlace;

@@ -19,7 +19,7 @@ module.exports = {
           fixed: '定宽'
         },
         fixedHeader: '固定Header',
-        fixedSideBar: '固定侧边栏',
+        fixedSideBar: '固定侧边栏'
       },
       other: {
         title: '其他设置',
@@ -33,10 +33,11 @@ module.exports = {
         effect: '动画效果',
         direction: '动画方向'
       },
-      alert: '拷贝配置后，直接覆盖文件 src/config/config.js 中的全部内容，然后重启即可。（注意：仅会拷贝与默认配置不同的项）',
+      alert:
+        '拷贝配置后，直接覆盖文件 src/config/config.js 中的全部内容，然后重启即可。（注意：仅会拷贝与默认配置不同的项）',
       copy: '拷贝配置',
       save: '保存配置',
-      reset: '重置配置',
+      reset: '重置配置'
     },
     HK: {
       theme: {
@@ -56,7 +57,7 @@ module.exports = {
           fixed: '定寬'
         },
         fixedHeader: '固定Header',
-        fixedSideBar: '固定側邊欄',
+        fixedSideBar: '固定側邊欄'
       },
       other: {
         title: '其他設置',
@@ -70,10 +71,11 @@ module.exports = {
         effect: '動畫效果',
         direction: '動畫方向'
       },
-      alert: '拷貝配置后，直接覆蓋文件 src/config/config.js 中的全部內容，然後重啟即可。（注意：僅會拷貝與默認配置不同的項）',
+      alert:
+        '拷貝配置后，直接覆蓋文件 src/config/config.js 中的全部內容，然後重啟即可。（注意：僅會拷貝與默認配置不同的項）',
       copy: '拷貝配置',
       save: '保存配置',
-      reset: '重置配置',
+      reset: '重置配置'
     },
     US: {
       theme: {
@@ -94,7 +96,7 @@ module.exports = {
           fixed: 'Fixed'
         },
         fixedHeader: 'Fixed Header',
-        fixedSideBar: 'Fixed SideBar',
+        fixedSideBar: 'Fixed SideBar'
       },
       other: {
         title: 'Other Setting',
@@ -108,10 +110,11 @@ module.exports = {
         effect: 'Effect',
         direction: 'Direction'
       },
-      alert: 'After copying the configuration code, directly cover all contents in the file src/config/config.js, then restart the server. (Note: only items that are different from the default configuration will be copied)',
+      alert:
+        'After copying the configuration code, directly cover all contents in the file src/config/config.js, then restart the server. (Note: only items that are different from the default configuration will be copied)',
       copy: 'Copy Setting',
       save: 'Save',
-      reset: 'Reset',
+      reset: 'Reset'
     }
   }
-}
+};

@@ -7,15 +7,15 @@
 </template>
 
 <script>
-import PageLayout from '@/layouts/PageLayout'
-import {mapState} from 'vuex'
-import {request, METHOD} from '@/utils/request'
+import PageLayout from '@/layouts/PageLayout';
+import { mapState } from 'vuex';
+import { request, METHOD } from '@/utils/request';
 
 export default {
   name: 'WorkPlace',
-  components: { PageLayout},
+  components: { PageLayout },
   i18n: require('./i18n'),
-  data () {
+  data() {
     return {
       projects: [],
       loading: true,
@@ -25,24 +25,28 @@ export default {
         timeFix: '',
         message: ''
       }
-    }
+    };
   },
   computed: {
-    ...mapState('account', {currUser: 'user'}),
+    ...mapState('account', { currUser: 'user' }),
     ...mapState('setting', ['lang'])
   },
   created() {
-    request('/user/welcome', METHOD.GET).then(res => this.welcome = res.data)
-    request('/work/activity', METHOD.GET).then(res => this.activities = res.data)
-    request('/work/team', METHOD.GET).then(res => this.teams = res.data)
-    request('/project', METHOD.GET).then(res => {
-        this.projects = res.data
-        this.loading = false
-      })
+    request('/user/welcome', METHOD.GET).then(
+      (res) => (this.welcome = res.data)
+    );
+    request('/work/activity', METHOD.GET).then(
+      (res) => (this.activities = res.data)
+    );
+    request('/work/team', METHOD.GET).then((res) => (this.teams = res.data));
+    request('/project', METHOD.GET).then((res) => {
+      this.projects = res.data;
+      this.loading = false;
+    });
   }
-}
+};
 </script>
 
 <style lang="less">
-@import "index";
+@import 'index';
 </style>

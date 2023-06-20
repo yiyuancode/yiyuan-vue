@@ -12,7 +12,7 @@ const ANTD = {
       menuColors: ['#000c17', '#001529', '#002140']
     },
     night: {
-      menuColors: ['#151515', '#1f1f1f', '#1e1e1e'],
+      menuColors: ['#151515', '#1f1f1f', '#1e1e1e']
     }
   },
   theme: {
@@ -37,7 +37,7 @@ const ANTD = {
       'menu-dark-highlight-color': '#fefefe',
       'menu-dark-selected-item-icon-color': '#fefefe',
       'menu-dark-arrow-color': '#fefefe',
-      'btn-primary-color': '#fefefe',
+      'btn-primary-color': '#fefefe'
     },
     light: {
       'layout-body-background': '#f0f2f5',
@@ -60,7 +60,7 @@ const ANTD = {
       'menu-dark-highlight-color': '#fefefe',
       'menu-dark-selected-item-icon-color': '#fefefe',
       'menu-dark-arrow-color': '#fefefe',
-      'btn-primary-color': '#fefefe',
+      'btn-primary-color': '#fefefe'
     },
     night: {
       'layout-body-background': '#000',
@@ -83,8 +83,8 @@ const ANTD = {
       'menu-dark-highlight-color': '#fefefe',
       'menu-dark-selected-item-icon-color': '#fefefe',
       'menu-dark-arrow-color': '#fefefe',
-      'btn-primary-color': '#fefefe',
+      'btn-primary-color': '#fefefe'
     }
   }
-}
-module.exports = ANTD
+};
+module.exports = ANTD;

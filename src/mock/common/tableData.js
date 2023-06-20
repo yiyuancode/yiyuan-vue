@@ -39,7 +39,7 @@ const operation1 = [
     updatedAt: '2017-10-03  19:23:12',
     memo: '-'
   }
-]
+];
 
 const operation2 = [
   {
@@ -66,7 +66,7 @@ const operation2 = [
     updatedAt: '2017-10-03  19:23:12',
     memo: '很棒'
   }
-]
+];
 
 const operation3 = [
   {
@@ -85,7 +85,7 @@ const operation3 = [
     updatedAt: '2017-10-03  19:23:12',
     memo: '-'
   }
-]
+];
 
 const operationColumns = [
   {
@@ -113,6 +113,6 @@ const operationColumns = [
     dataIndex: 'memo',
     key: 'memo'
   }
-]
+];
 
-export {operation1, operation2, operation3, operationColumns}
+export { operation1, operation2, operation3, operationColumns };

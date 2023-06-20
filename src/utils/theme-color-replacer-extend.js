@@ -1,68 +1,68 @@
-const {cssResolve} = require('../config/replacer')
+const { cssResolve } = require('../config/replacer');
 // 修正 webpack-theme-color-replacer 插件提取的 css 结果
 function resolveCss(output, srcArr) {
-  let regExps = []
+  let regExps = [];
   // 提取 resolve 配置中所有的正则配置
-  Object.keys(cssResolve).forEach(key => {
-    let isRegExp = false
-    let reg = {}
+  Object.keys(cssResolve).forEach((key) => {
+    let isRegExp = false;
+    let reg = {};
     try {
-      reg = eval(key)
-      isRegExp = reg instanceof RegExp
+      reg = eval(key);
+      isRegExp = reg instanceof RegExp;
     } catch (e) {
-      isRegExp = false
+      isRegExp = false;
     }
     if (isRegExp) {
-      regExps.push([reg, cssResolve[key]])
+      regExps.push([reg, cssResolve[key]]);
     }
-  })
+  });
 
   // 去重
-  srcArr = dropDuplicate(srcArr)
+  srcArr = dropDuplicate(srcArr);
 
   // 处理 css
-  let outArr = []
-  srcArr.forEach(text => {
+  let outArr = [];
+  srcArr.forEach((text) => {
     // 转换为 css 对象
-    let cssObj = parseCssObj(text)
+    let cssObj = parseCssObj(text);
     // 根据selector匹配配置，匹配成功，则按配置处理 css
     if (cssResolve[cssObj.selector] != undefined) {
-      let cfg = cssResolve[cssObj.selector]
+      let cfg = cssResolve[cssObj.selector];
       if (cfg) {
-        outArr.push(cfg.resolve(text, cssObj))
+        outArr.push(cfg.resolve(text, cssObj));
       }
     } else {
-      let cssText = ''
+      let cssText = '';
       // 匹配不成功，则测试是否有匹配的正则配置，有则按正则对应的配置处理
       for (let regExp of regExps) {
         if (regExp[0].test(cssObj.selector)) {
-          let cssCfg = regExp[1]
-          cssText = cssCfg ? cssCfg.resolve(text, cssObj) : ''
-          break
+          let cssCfg = regExp[1];
+          cssText = cssCfg ? cssCfg.resolve(text, cssObj) : '';
+          break;
         }
         // 未匹配到正则，则设置 cssText 为默认的 css（即不处理）
-        cssText = text
+        cssText = text;
       }
       if (cssText != '') {
-        outArr.push(cssText)
+        outArr.push(cssText);
       }
     }
-  })
-  output = outArr.join('\n')
-  return output
+  });
+  output = outArr.join('\n');
+  return output;
 }
 
 // 数组去重
 function dropDuplicate(arr) {
-  let map = {}
-  let r = []
+  let map = {};
+  let r = [];
   for (let s of arr) {
     if (!map[s]) {
-      r.push(s)
-      map[s] = 1
+      r.push(s);
+      map[s] = 1;
     }
   }
-  return r
+  return r;
 }
 
 /**
@@ -75,18 +75,20 @@ function dropDuplicate(arr) {
  * }}
  */
 function parseCssObj(cssText) {
-  let css = {}
-  const ruleIndex = cssText.indexOf('{')
-  css.selector = cssText.substring(0, ruleIndex)
-  const ruleBody = cssText.substring(ruleIndex + 1, cssText.length - 1)
-  const rules = ruleBody.split(';')
-  css.rules = rules
+  let css = {};
+  const ruleIndex = cssText.indexOf('{');
+  css.selector = cssText.substring(0, ruleIndex);
+  const ruleBody = cssText.substring(ruleIndex + 1, cssText.length - 1);
+  const rules = ruleBody.split(';');
+  css.rules = rules;
   css.toText = function () {
-    let body = ''
-    this.rules.forEach(item => {body += item + ';'})
-    return `${this.selector}{${body}}`
-  }
-  return css
+    let body = '';
+    this.rules.forEach((item) => {
+      body += item + ';';
+    });
+    return `${this.selector}{${body}}`;
+  };
+  return css;
 }
 
-module.exports = {resolveCss}
+module.exports = { resolveCss };

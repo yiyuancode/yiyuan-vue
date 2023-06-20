@@ -6,5 +6,5 @@
  * @cssResolve: css处理规则，在 webpack-theme-color-replacer 提取 需要替换主题色的 css 后，应用此规则。一般在
  *              webpack-theme-color-replacer 默认规则无法达到我们的要求时使用。
  */
-const cssResolve = require('./resolve.config')
-module.exports = {cssResolve}
+const cssResolve = require('./resolve.config');
+module.exports = { cssResolve };

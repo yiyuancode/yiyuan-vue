@@ -1,2 +1,2 @@
-import TabsView from './TabsView'
-export default TabsView
+import TabsView from './TabsView';
+export default TabsView;

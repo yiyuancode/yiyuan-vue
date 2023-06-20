@@ -1,12 +1,17 @@
-const client = require('webpack-theme-color-replacer/client')
-const {theme} = require('../config')
-const {getMenuColors, getAntdColors, getThemeToggleColors, getFunctionalColors} = require('../utils/colors')
-const {ANTD} = require('../config/default')
+const client = require('webpack-theme-color-replacer/client');
+const { theme } = require('../config');
+const {
+  getMenuColors,
+  getAntdColors,
+  getThemeToggleColors,
+  getFunctionalColors
+} = require('../utils/colors');
+const { ANTD } = require('../config/default');
 
 function getThemeColors(color, $theme) {
-  const _color = color || theme.color
-  const mode = $theme || theme.mode
-  const replaceColors = getThemeToggleColors(_color, mode)
+  const _color = color || theme.color;
+  const mode = $theme || theme.mode;
+  const replaceColors = getThemeToggleColors(_color, mode);
   const themeColors = [
     ...replaceColors.mainColors,
     ...replaceColors.subColors,
@@ -15,22 +20,24 @@ function getThemeColors(color, $theme) {
     ...replaceColors.rgbColors,
     ...replaceColors.functionalColors.success,
     ...replaceColors.functionalColors.warning,
-    ...replaceColors.functionalColors.error,
-  ]
-  return themeColors
+    ...replaceColors.functionalColors.error
+  ];
+  return themeColors;
 }
 
 function changeThemeColor(newColor, $theme) {
-  let promise = client.changer.changeColor({newColors: getThemeColors(newColor, $theme)})
-  return promise
+  let promise = client.changer.changeColor({
+    newColors: getThemeColors(newColor, $theme)
+  });
+  return promise;
 }
 
 function modifyVars(color) {
-  let _color = color || theme.color
-  const palettes = getAntdColors(_color, theme.mode)
-  const menuColors = getMenuColors(_color, theme.mode)
-  const {success, warning, error} = getFunctionalColors(theme.mode)
-  const primary = palettes[5]
+  let _color = color || theme.color;
+  const palettes = getAntdColors(_color, theme.mode);
+  const menuColors = getMenuColors(_color, theme.mode);
+  const { success, warning, error } = getFunctionalColors(theme.mode);
+  const primary = palettes[5];
   return {
     'primary-color': primary,
     'primary-1': palettes[0],
@@ -62,15 +69,15 @@ function modifyVars(color) {
     'btn-danger-bg': error[4],
     'btn-danger-border': error[4],
     ...ANTD.theme[theme.mode]
-  }
+  };
 }
 
 function loadLocalTheme(localSetting) {
   if (localSetting && localSetting.theme) {
-    let {color, mode} = localSetting.theme
-    color = color || theme.color
-    mode = mode || theme.mode
-    changeThemeColor(color, mode)
+    let { color, mode } = localSetting.theme;
+    color = color || theme.color;
+    mode = mode || theme.mode;
+    changeThemeColor(color, mode);
   }
 }
 
@@ -80,17 +87,19 @@ function loadLocalTheme(localSetting) {
  * @returns {Object}
  */
 function getLocalSetting(loadTheme) {
-  let localSetting = {}
+  let localSetting = {};
   try {
-    const localSettingStr = localStorage.getItem(process.env.VUE_APP_SETTING_KEY)
-    localSetting = JSON.parse(localSettingStr)
+    const localSettingStr = localStorage.getItem(
+      process.env.VUE_APP_SETTING_KEY
+    );
+    localSetting = JSON.parse(localSettingStr);
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
   if (loadTheme) {
-    loadLocalTheme(localSetting)
+    loadLocalTheme(localSetting);
   }
-  return localSetting
+  return localSetting;
 }
 
 module.exports = {
@@ -99,4 +108,4 @@ module.exports = {
   modifyVars,
   loadLocalTheme,
   getLocalSetting
-}
+};

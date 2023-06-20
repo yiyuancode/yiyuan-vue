@@ -1,0 +1,20 @@
+# 忽略 dist 目录下的所有文件和子目录
+dist/
+docs/
+
+# 忽略文件名为 .prettierrc 的文件
+.prettierrc
+.prettierrc.js
+.prettierignore
+.lintstagedrc.js 
+.stylelintrc.js
+.huskyrc.js
+.eslintrc.js
+.eslintignore
+babel.config.js
+
+# 忽略所有后缀名为 .md 的 Markdown 文件
+*.md
+
+# 忽略某个具体的文件路径
+src/config.js

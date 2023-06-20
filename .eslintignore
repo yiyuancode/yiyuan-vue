@@ -1,0 +1,25 @@
+# 忽略整个文件夹
+node_modules/
+dist/
+build/
+tmp/
+
+# 忽略特定文件
+*.log
+*.txt
+*.md
+
+# 忽略特定路径下的文件
+src/assets/*.png
+src/**/*.test.js
+
+# 忽略特定文件夹下的文件
+src/stories/*.js
+
+# 忽略特定文件夹
+tests/
+
+# 忽略特定文件路径
+.eslintrc.js
+.babelrc
+.prettierignore

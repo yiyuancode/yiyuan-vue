@@ -1,12 +1,12 @@
-let path = require('path')
-const webpack = require('webpack')
-const ThemeColorReplacer = require('webpack-theme-color-replacer')
-const {getThemeColors, modifyVars} = require('./src/utils/themeUtil')
-const {resolveCss} = require('./src/utils/theme-color-replacer-extend')
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
+let path = require('path');
+const webpack = require('webpack');
+const ThemeColorReplacer = require('webpack-theme-color-replacer');
+const { getThemeColors, modifyVars } = require('./src/utils/themeUtil');
+const { resolveCss } = require('./src/utils/theme-color-replacer-extend');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
-const productionGzipExtensions = ['js', 'css']
-const isProd = process.env.NODE_ENV === 'production'
+const productionGzipExtensions = ['js', 'css'];
+const isProd = process.env.NODE_ENV === 'production';
 
 const assetsCDN = {
   // webpack build externals
@@ -20,8 +20,7 @@ const assetsCDN = {
     '@antv/data-set': 'DataSet',
     'js-cookie': 'Cookies'
   },
-  css: [
-  ],
+  css: [],
   js: [
     '//cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js',
     '//cdn.jsdelivr.net/npm/vue-router@3.3.4/dist/vue-router.min.js',
@@ -32,7 +31,7 @@ const assetsCDN = {
     '//cdn.jsdelivr.net/npm/@antv/data-set@0.11.4/build/data-set.min.js',
     '//cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js'
   ]
-}
+};
 
 module.exports = {
   devServer: {
@@ -49,14 +48,14 @@ module.exports = {
   pluginOptions: {
     'style-resources-loader': {
       preProcessor: 'less',
-      patterns: [path.resolve(__dirname, "./src/theme/theme.less")],
+      patterns: [path.resolve(__dirname, './src/theme/theme.less')]
     }
   },
-  configureWebpack: config => {
-    config.entry.app = ["babel-polyfill", "whatwg-fetch", "./src/main.js"];
+  configureWebpack: (config) => {
+    config.entry.app = ['babel-polyfill', 'whatwg-fetch', './src/main.js'];
     config.performance = {
       hints: false
-    }
+    };
     config.plugins.push(
       new ThemeColorReplacer({
         fileName: 'css/theme-colors-[contenthash:8].css',
@@ -64,40 +63,40 @@ module.exports = {
         injectCss: true,
         resolveCss
       })
-    )
+    );
     // Ignore all locale files of moment.js
-    config.plugins.push(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/))
+    config.plugins.push(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/));
     // 生产环境下将资源压缩成gzip格式
     if (isProd) {
       // add `CompressionWebpack` plugin to webpack plugins
-      config.plugins.push(new CompressionWebpackPlugin({
-        algorithm: 'gzip',
-        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
-        threshold: 10240,
-        minRatio: 0.8
-      }))
+      config.plugins.push(
+        new CompressionWebpackPlugin({
+          algorithm: 'gzip',
+          test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+          threshold: 10240,
+          minRatio: 0.8
+        })
+      );
     }
     // if prod, add externals
     if (isProd) {
-      config.externals = assetsCDN.externals
+      config.externals = assetsCDN.externals;
     }
   },
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     // 生产环境下关闭css压缩的 colormin 项，因为此项优化与主题色替换功能冲突
     if (isProd) {
-      config.plugin('optimize-css')
-        .tap(args => {
-            args[0].cssnanoOptions.preset[1].colormin = false
-          return args
-        })
+      config.plugin('optimize-css').tap((args) => {
+        args[0].cssnanoOptions.preset[1].colormin = false;
+        return args;
+      });
     }
     // 生产环境下使用CDN
     if (isProd) {
-      config.plugin('html')
-        .tap(args => {
-          args[0].cdn = assetsCDN
-        return args
-      })
+      config.plugin('html').tap((args) => {
+        args[0].cdn = assetsCDN;
+        return args;
+      });
     }
   },
   css: {
@@ -114,4 +113,4 @@ module.exports = {
   outputDir: 'dist',
   assetsDir: 'static',
   productionSourceMap: false
-}
+};

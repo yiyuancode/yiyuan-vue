@@ -1,5 +1,5 @@
-import AlertMixin from './alertMixin'
+import AlertMixin from './alertMixin';
 
-export default ({Vue}) => {
-  Vue.use(AlertMixin)
-}
+export default ({ Vue }) => {
+  Vue.use(AlertMixin);
+};

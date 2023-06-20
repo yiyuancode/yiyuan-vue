@@ -1,5 +1,5 @@
-import TabsView from '@/layouts/tabs/TabsView'
-import BlankView from '@/layouts/BlankView'
+import TabsView from '@/layouts/tabs/TabsView';
+import BlankView from '@/layouts/BlankView';
 
 // 路由配置
 const options = {
@@ -12,12 +12,12 @@ const options = {
     {
       path: '*',
       name: '404',
-      component: () => import('@/pages/exception/404'),
+      component: () => import('@/pages/exception/404')
     },
     {
       path: '/403',
       name: '403',
-      component: () => import('@/pages/exception/403'),
+      component: () => import('@/pages/exception/403')
     },
     {
       path: '/',
@@ -41,13 +41,13 @@ const options = {
                   closable: false
                 }
               },
-              component: () => import('@/pages/dashboard/workplace'),
-            },
+              component: () => import('@/pages/dashboard/workplace')
+            }
           ]
-        },
+        }
       ]
-    },
+    }
   ]
-}
+};
 
-export default options
+export default options;

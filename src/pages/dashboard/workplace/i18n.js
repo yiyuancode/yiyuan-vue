@@ -35,6 +35,6 @@ module.exports = {
       degree: 'degree',
       team: 'Team',
       add: 'Add'
-    },
+    }
   }
-}
+};
