@@ -2,10 +2,10 @@
   <div class="footer">
     <div class="links">
       <a
-        target="_blank"
-        :key="index"
-        :href="item.link ? item.link : 'javascript: void(0)'"
         v-for="(item, index) in linkList"
+        :key="index"
+        target="_blank"
+        :href="item.link ? item.link : 'javascript: void(0)'"
       >
         <a-icon v-if="item.icon" :type="item.icon" />{{ item.name }}
       </a>

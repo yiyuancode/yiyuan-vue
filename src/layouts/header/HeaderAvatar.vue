@@ -4,7 +4,7 @@
       <a-avatar class="avatar" size="small" shape="circle" :src="user.avatar" />
       <span class="name">{{ user.name }}</span>
     </div>
-    <a-menu :class="['avatar-menu']" slot="overlay">
+    <a-menu slot="overlay" :class="['avatar-menu']" >
       <a-menu-item>
         <a-icon type="user" />
         <span>个人中心</span>

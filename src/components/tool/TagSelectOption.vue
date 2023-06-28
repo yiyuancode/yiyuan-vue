@@ -1,8 +1,8 @@
 <template>
   <a-checkable-tag
-    @change="$emit('click')"
-    class="tag-default"
     v-model="checked"
+    class="tag-default"
+    @change="$emit('click')"
   >
     <slot></slot>
   </a-checkable-tag>

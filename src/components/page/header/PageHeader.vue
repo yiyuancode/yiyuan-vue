@@ -3,7 +3,7 @@
     <div class="page-header-wide">
       <div class="breadcrumb">
         <a-breadcrumb>
-          <a-breadcrumb-item :key="index" v-for="(item, index) in breadcrumb">
+          <a-breadcrumb-item v-for="(item, index) in breadcrumb" :key="index">
             <span>{{ item }}</span>
           </a-breadcrumb-item>
         </a-breadcrumb>

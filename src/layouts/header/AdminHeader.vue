@@ -44,9 +44,9 @@
         <a-dropdown class="lang header-item">
           <div><a-icon type="global" /> {{ langAlias }}</div>
           <a-menu
-            @click="(val) => setLang(val.key)"
-            :selected-keys="[lang]"
             slot="overlay"
+            :selected-keys="[lang]"
+            @click="(val) => setLang(val.key)"
           >
             <a-menu-item v-for="lang in langList" :key="lang.key">{{
               lang.key.toLowerCase() + ' ' + lang.name

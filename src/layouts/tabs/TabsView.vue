@@ -24,9 +24,9 @@
         :direction="animate.direction"
       >
         <a-keep-alive
-          :exclude-keys="excludeKeys"
           v-if="multiPage && cachePage"
           v-model="clearCaches"
+          :exclude-keys="excludeKeys"
         >
           <router-view
             v-if="!refreshing"
@@ -34,7 +34,7 @@
             :key="$route.fullPath"
           />
         </a-keep-alive>
-        <router-view ref="tabContent" v-else-if="!refreshing" />
+        <router-view v-else-if="!refreshing" ref="tabContent" />
       </page-toggle-transition>
     </div>
   </admin-layout>
@@ -89,30 +89,6 @@ export default {
       return this.multiPage ? 24 : 0;
     }
   },
-  created() {
-    this.loadCacheConfig(this.$router?.options?.routes);
-    this.loadCachedTabs();
-    const route = this.$route;
-    if (
-      this.pageList.findIndex((item) => item.path === route.fullPath) === -1
-    ) {
-      this.pageList.push(this.createPage(route));
-    }
-    this.activePage = route.fullPath;
-    if (this.multiPage) {
-      this.$nextTick(() => {
-        this.setCachedKey(route);
-      });
-      this.addListener();
-    }
-  },
-  mounted() {
-    this.correctPageMinHeight(-this.tabsOffset);
-  },
-  beforeDestroy() {
-    this.removeListener();
-    this.correctPageMinHeight(this.tabsOffset);
-  },
   watch: {
     '$router.options.routes': function (val) {
       this.excludeKeys = [];
@@ -148,6 +124,31 @@ export default {
       this.correctPageMinHeight(oldVal - newVal);
     }
   },
+  created() {
+    this.loadCacheConfig(this.$router?.options?.routes);
+    this.loadCachedTabs();
+    const route = this.$route;
+    if (
+      this.pageList.findIndex((item) => item.path === route.fullPath) === -1
+    ) {
+      this.pageList.push(this.createPage(route));
+    }
+    this.activePage = route.fullPath;
+    if (this.multiPage) {
+      this.$nextTick(() => {
+        this.setCachedKey(route);
+      });
+      this.addListener();
+    }
+  },
+  mounted() {
+    this.correctPageMinHeight(-this.tabsOffset);
+  },
+  beforeDestroy() {
+    this.removeListener();
+    this.correctPageMinHeight(this.tabsOffset);
+  },
+
   methods: {
     changePage(key) {
       this.activePage = key;
@@ -379,7 +380,7 @@ export default {
       });
     },
     ...mapMutations('setting', ['correctPageMinHeight'])
-  }
+  },
 };
 </script>
 

@@ -7,8 +7,8 @@
       </div>
       <div
         v-if="showHandler"
-        :class="['handler-container', placement, visible ? 'open' : 'close']"
         ref="handler"
+        :class="['handler-container', placement, visible ? 'open' : 'close']"
         @click="toggle"
       >
         <slot v-if="$slots.handler" name="handler"></slot>
@@ -23,9 +23,6 @@
 <script>
 export default {
   name: 'Drawer',
-  data() {
-    return {};
-  },
   model: {
     prop: 'visible',
     event: 'change'
@@ -47,6 +44,12 @@ export default {
       default: true
     }
   },
+  data() {
+    return {
+ 
+    };
+  },
+
   methods: {
     open() {
       this.$emit('change', true);

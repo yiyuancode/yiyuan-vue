@@ -10,9 +10,9 @@
       />
     </drawer>
     <side-menu
+      v-else-if="layout === 'side' || layout === 'mix'"
       :class="[fixedSideBar ? 'fixed-side' : '']"
       :theme="theme.mode"
-      v-else-if="layout === 'side' || layout === 'mix'"
       :menuData="sideMenuData"
       :collapsed="collapsed"
       :collapsible="true"
@@ -23,7 +23,7 @@
       class="virtual-side"
     ></div>
     <drawer v-if="!hideSetting" v-model="showSetting" placement="right">
-      <div class="setting" slot="handler">
+      <div slot="handler" class="setting">
         <a-icon :type="showSetting ? 'close' : 'setting'" />
       </div>
       <setting />
@@ -43,6 +43,7 @@
         @toggleCollapse="toggleCollapse"
       />
       <a-layout-header
+        v-show="fixedHeader"
         :class="[
           'virtual-header',
           {
@@ -51,7 +52,6 @@
             'multi-page': multiPage
           }
         ]"
-        v-show="fixedHeader"
       ></a-layout-header>
       <a-layout-content
         class="admin-layout-content"
@@ -81,6 +81,7 @@ import { mapState, mapMutations, mapGetters } from 'vuex';
 export default {
   name: 'AdminLayout',
   components: { Setting, SideMenu, Drawer, PageFooter, AdminHeader },
+
   data() {
     return {
       minHeight: window.innerHeight - 64 - 122,
@@ -94,19 +95,7 @@ export default {
       adminLayout: this
     };
   },
-  watch: {
-    $route(val) {
-      this.setActivated(val);
-    },
-    layout() {
-      this.setActivated(this.$route);
-    },
-    isMobile(val) {
-      if (!val) {
-        this.drawerOpen = false;
-      }
-    }
-  },
+
   computed: {
     ...mapState('setting', [
       'isMobile',
@@ -141,6 +130,26 @@ export default {
       return layout === 'mix' ? subMenu : menuData;
     }
   },
+  watch: {
+    $route(val) {
+      this.setActivated(val);
+    },
+    layout() {
+      this.setActivated(this.$route);
+    },
+    isMobile(val) {
+      if (!val) {
+        this.drawerOpen = false;
+      }
+    }
+  },
+  created() {
+    this.correctPageMinHeight(this.minHeight - 24);
+    this.setActivated(this.$route);
+  },
+  beforeDestroy() {
+    this.correctPageMinHeight(-this.minHeight + 24);
+  },
   methods: {
     ...mapMutations('setting', ['correctPageMinHeight', 'setActivatedFirst']),
     toggleCollapse() {
@@ -162,13 +171,6 @@ export default {
         }
       }
     }
-  },
-  created() {
-    this.correctPageMinHeight(this.minHeight - 24);
-    this.setActivated(this.$route);
-  },
-  beforeDestroy() {
-    this.correctPageMinHeight(-this.minHeight + 24);
   }
 };
 </script>

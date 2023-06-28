@@ -1,6 +1,6 @@
 <template>
   <page-layout :desc="desc" :linkList="linkList">
-    <div v-if="this.extraImage && !isMobile" slot="extra" class="extraImg">
+    <div v-if="extraImage && !isMobile" slot="extra" class="extraImg">
       <img :src="extraImage" />
     </div>
     <page-toggle-transition

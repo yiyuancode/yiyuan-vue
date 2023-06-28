@@ -2,7 +2,7 @@
   <div class="tag-select">
     <tag-select-option @click="toggleCheck">全部</tag-select-option>
     <slot></slot>
-    <a @click="toggle" v-show="showTrigger" ref="trigger" class="trigger"
+    <a v-show="showTrigger" ref="trigger" class="trigger" @click="toggle"
       >展开<a-icon style="margin-left: 5px" :type="collapsed ? 'down' : 'up'"
     /></a>
   </div>

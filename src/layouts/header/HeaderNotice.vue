@@ -1,5 +1,5 @@
 <template>
-  <a-dropdown :trigger="['click']" v-model="show">
+  <a-dropdown v-model="show" :trigger="['click']">
     <div slot="overlay">
       <a-spin :spinning="loading">
         <a-tabs
@@ -7,7 +7,7 @@
           :tabBarStyle="{ textAlign: 'center' }"
           :style="{ width: '297px' }"
         >
-          <a-tab-pane tab="通知" key="1">
+          <a-tab-pane key="1" tab="通知">
             <a-list class="tab-pane">
               <a-list-item>
                 <a-list-item-meta
@@ -15,8 +15,8 @@
                   description="一年前"
                 >
                   <a-avatar
-                    style="background-color: white"
                     slot="avatar"
+                    style="background-color: white"
                     src="https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png"
                   />
                 </a-list-item-meta>
@@ -27,8 +27,8 @@
                   description="一年前"
                 >
                   <a-avatar
-                    style="background-color: white"
                     slot="avatar"
+                    style="background-color: white"
                     src="https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png"
                   />
                 </a-list-item-meta>
@@ -39,24 +39,24 @@
                   description="一年前"
                 >
                   <a-avatar
-                    style="background-color: white"
                     slot="avatar"
+                    style="background-color: white"
                     src="https://gw.alipayobjects.com/zos/rmsportal/kISTdvpyTAhtGxpovNWd.png"
                   />
                 </a-list-item-meta>
               </a-list-item>
             </a-list>
           </a-tab-pane>
-          <a-tab-pane tab="消息" key="2">
+          <a-tab-pane key="2" tab="消息">
             <a-list class="tab-pane"></a-list>
           </a-tab-pane>
-          <a-tab-pane tab="待办" key="3">
+          <a-tab-pane key="3" tab="待办">
             <a-list class="tab-pane"></a-list>
           </a-tab-pane>
         </a-tabs>
       </a-spin>
     </div>
-    <span @click="fetchNotice" class="header-notice">
+    <span class="header-notice" @click="fetchNotice">
       <a-badge class="notice-badge" count="12">
         <a-icon :class="['header-notice-icon']" type="bell" />
       </a-badge>

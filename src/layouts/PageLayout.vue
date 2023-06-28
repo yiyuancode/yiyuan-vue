@@ -8,16 +8,14 @@
       :logo="logo"
       :avatar="avatar"
     >
-      <slot name="action" slot="action"></slot>
+      <slot slot="action" name="action"></slot>
       <slot slot="content" name="headerContent"></slot>
-      <div slot="content" v-if="!this.$slots.headerContent && desc">
+      <div v-if="!$slots.headerContent && desc" slot="content">
         <p>{{ desc }}</p>
-        <div v-if="this.linkList" class="link">
-          <template v-for="(link, index) in linkList">
-            <a :key="index" :href="link.href"
-              ><a-icon :type="link.icon" />{{ link.title }}</a
-            >
-          </template>
+        <div v-if="linkList" class="link">
+          <a v-for="(link, index) in linkList" :key="index" :href="link.href"
+            ><a-icon :type="link.icon" />{{ link.title }}</a
+          >
         </div>
       </div>
       <slot v-if="this.$slots.extra" slot="extra" name="extra"></slot>
@@ -42,31 +40,6 @@ export default {
       page: {},
       pageHeaderHeight: 0
     };
-  },
-  watch: {
-    $route() {
-      this.page = this.$route.meta.page;
-    }
-  },
-  updated() {
-    if (!this._inactive) {
-      this.updatePageHeight();
-    }
-  },
-  activated() {
-    this.updatePageHeight();
-  },
-  deactivated() {
-    this.updatePageHeight(0);
-  },
-  mounted() {
-    this.updatePageHeight();
-  },
-  created() {
-    this.page = this.$route.meta.page;
-  },
-  beforeDestroy() {
-    this.updatePageHeight(0);
   },
   computed: {
     ...mapState('setting', [
@@ -106,6 +79,32 @@ export default {
       return this.multiPage ? 24 : 0;
     }
   },
+  watch: {
+    $route() {
+      this.page = this.$route.meta.page;
+    }
+  },
+  updated() {
+    if (!this._inactive) {
+      this.updatePageHeight();
+    }
+  },
+  activated() {
+    this.updatePageHeight();
+  },
+  deactivated() {
+    this.updatePageHeight(0);
+  },
+  mounted() {
+    this.updatePageHeight();
+  },
+  created() {
+    this.page = this.$route.meta.page;
+  },
+  beforeDestroy() {
+    this.updatePageHeight(0);
+  },
+
   methods: {
     ...mapMutations('setting', ['correctPageMinHeight']),
     getRouteBreadcrumb() {

@@ -8,26 +8,23 @@
       <div class="desc">一源源码 全开源 天一生水 未来可期</div>
     </div>
     <div class="login">
-      <a-form @submit="onSubmit" :form="form">
+      <a-form :form="form" @submit="onSubmit">
         <a-tabs
           size="large"
           :tabBarStyle="{ textAlign: 'center' }"
           style="padding: 0 2px"
         >
-          <a-tab-pane tab="账户密码登录" key="1">
+          <a-tab-pane key="1" tab="账户密码登录">
             <a-alert
+              v-show="error"
               type="error"
               :closable="true"
-              v-show="error"
               :message="error"
               showIcon
               style="margin-bottom: 24px"
             />
             <a-form-item>
               <a-input
-                autocomplete="autocomplete"
-                size="large"
-                placeholder="admin"
                 v-decorator="[
                   'name',
                   {
@@ -40,16 +37,15 @@
                     ]
                   }
                 ]"
+                autocomplete="autocomplete"
+                size="large"
+                placeholder="admin"
               >
                 <a-icon slot="prefix" type="user" />
               </a-input>
             </a-form-item>
             <a-form-item>
               <a-input
-                size="large"
-                placeholder="888888"
-                autocomplete="autocomplete"
-                type="password"
                 v-decorator="[
                   'password',
                   {
@@ -62,12 +58,16 @@
                     ]
                   }
                 ]"
+                size="large"
+                placeholder="888888"
+                autocomplete="autocomplete"
+                type="password"
               >
                 <a-icon slot="prefix" type="lock" />
               </a-input>
             </a-form-item>
           </a-tab-pane>
-          <a-tab-pane tab="手机号登录" key="2">
+          <a-tab-pane key="2" tab="手机号登录">
             <a-form-item>
               <a-input size="large" placeholder="mobile number">
                 <a-icon slot="prefix" type="mobile" />

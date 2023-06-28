@@ -15,12 +15,12 @@
       :active-key="active"
       :hide-add="true"
     >
-      <a-tooltip placement="left" :title="lockTitle" slot="tabBarExtraContent">
+      <a-tooltip slot="tabBarExtraContent" placement="left" :title="lockTitle">
         <a-icon
+          :type="fixedTabs ? 'lock' : 'unlock'"
+          class="header-lock"
           theme="filled"
           @click="onLockClick"
-          class="header-lock"
-          :type="fixedTabs ? 'lock' : 'unlock'"
         />
       </a-tooltip>
       <a-tab-pane v-for="page in pageList" :key="page.path">
@@ -30,21 +30,21 @@
           @contextmenu="(e) => onContextmenu(page.path, e)"
         >
           <a-icon
-            @click="onRefresh(page)"
+            :type="page.loading ? 'loading' : 'sync'"
             :class="[
               'icon-sync',
               { hide: page.path !== active && !page.loading }
             ]"
-            :type="page.loading ? 'loading' : 'sync'"
+            @click="onRefresh(page)"
           />
           <div class="title" @click="onTabClick(page.path)">
             {{ pageName(page) }}
           </div>
           <a-icon
             v-if="!page.unclose"
-            @click="onClose(page.path)"
             class="icon-close"
             type="close"
+            @click="onClose(page.path)"
           />
         </div>
       </a-tab-pane>
@@ -86,9 +86,6 @@ export default {
     };
   },
   inject: ['adminLayout'],
-  created() {
-    this.affixed = this.fixedTabs;
-  },
   computed: {
     ...mapState('setting', [
       'layout',
@@ -101,6 +98,10 @@ export default {
       return this.$t(this.fixedTabs ? 'unlock' : 'lock');
     }
   },
+  created() {
+    this.affixed = this.fixedTabs;
+  },
+
   methods: {
     ...mapMutations('setting', ['setFixedTabs']),
     onLockClick() {
