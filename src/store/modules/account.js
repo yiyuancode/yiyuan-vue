@@ -42,6 +42,7 @@ export default {
           console.error(e.message);
         }
       }
+      console.log(state.roles);
       return state.roles;
     },
     routesConfig: (state) => {

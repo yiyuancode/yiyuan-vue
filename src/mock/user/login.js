@@ -7,7 +7,8 @@ const user = Mock.mock({
   address: '@CITY',
   position: '@POSITION'
 });
-Mock.mock(`${process.env.VUE_APP_API_BASE_URL}/login`, 'post', ({ body }) => {
+
+Mock.mock("/auth/login", 'post', ({ body }) => {
   let result = { data: {} };
   const { name, password } = JSON.parse(body);
 
@@ -27,7 +28,7 @@ Mock.mock(`${process.env.VUE_APP_API_BASE_URL}/login`, 'post', ({ body }) => {
 
   if (success) {
     result.code = 0;
-    result.message = Mock.mock('@TIMEFIX').CN + '，欢迎回来';
+    result.message = '欢迎回来!!';
     result.data.user = user;
     result.data.token = 'Authorization:' + Math.random();
     result.data.expireAt = new Date(new Date().getTime() + 30 * 60 * 1000);

@@ -41,7 +41,7 @@ const options = {
                   closable: false
                 }
               },
-              component: () => import('@/pages/dashboard/workplace')
+              component: () => import('@/pages/dashboard/workplace/index')
             }
           ]
         }
