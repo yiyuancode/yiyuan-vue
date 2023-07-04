@@ -86,7 +86,6 @@
 </template>
 
 <script>
-import {message} from "ant-design-vue";
 import CommonLayout from '@/layouts/CommonLayout';
 import { login, getRoutesConfig } from "@/api/auth/adminApi"
 import { setAuthorization } from '@/utils/request';
@@ -150,7 +149,6 @@ export default {
         });
       } else {
         this.error = loginRes.message;
-        message.error(loginRes.message);
       }
     }
   }

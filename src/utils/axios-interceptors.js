@@ -37,13 +37,15 @@ const reqCommon = {
 // 响应通用
 const respCommon = {
   onFulfilled(response, options) {
-    const data = response.data.data;
-    if(data.token){
-      response.headers["satoken"] = data.token;
-    }
+    const { data, message: msg, code } = response.data;
     const { message } = options;
-    if (response.code === 401) {
-      message.error('无此权限');
+
+    if (code !== 200) {
+      message.error(msg);
+    } else {
+      if (data && data.token) {
+        response.headers["satoken"] = data.token;
+      }
     }
     return response;
   },
