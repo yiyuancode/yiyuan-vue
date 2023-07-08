@@ -1,5 +1,5 @@
 
-import { request, METHOD, removeAuthorization } from '@/utils/request';
+import { request, METHOD } from '@/utils/request';
 
 
 /**
@@ -12,9 +12,9 @@ export async function login(username, password) {
     const resp = await request("/auth/login", METHOD.POST, {
         username,
         password
-    },{
-        headers:{
-            "platform" : "0", //平台端
+    }, {
+        headers: {
+            "platform": "0", //平台端
         }
     });
 
@@ -25,17 +25,9 @@ export async function getRoutesConfig() {
     return request("/routes", METHOD.GET);
 }
 
-/**
- * 退出登录
- */
-export function logout() {
-    localStorage.removeItem(process.env.VUE_APP_ROUTES_KEY);
-    localStorage.removeItem(process.env.VUE_APP_PERMISSIONS_KEY);
-    localStorage.removeItem(process.env.VUE_APP_ROLES_KEY);
-    removeAuthorization();
-}
+
+
 export default {
     login,
-    logout,
     getRoutesConfig
 };

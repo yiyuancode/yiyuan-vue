@@ -8,13 +8,13 @@
       <div class="desc">一源源码 全开源 天一生水 未来可期</div>
     </div>
     <div class="login">
-      <a-form :form="form" @submit="onSubmit">
+      <a-form :form="form" @submit="loginHandle">
         <a-tabs size="large" :tabBarStyle="{ textAlign: 'center' }" style="padding: 0 2px">
           <a-tab-pane key="1" tab="账户密码登录">
             <a-alert v-show="error" type="error" :closable="true" :message="error" showIcon style="margin-bottom: 24px" />
             <a-form-item>
               <a-input v-decorator="[
-                'name',
+                'username',
                 {
                   rules: [
                     {
@@ -86,22 +86,12 @@
 </template>
 
 <script>
-import {message} from "ant-design-vue";
 import CommonLayout from '@/layouts/CommonLayout';
-import { login, getRoutesConfig } from "@/api/auth/adminApi"
+import { getRoutesConfig } from "@/api/auth/adminApi"
 import { setAuthorization } from '@/utils/request';
 import { loadRoutes } from '@/utils/routerUtil';
 import { mapMutations } from 'vuex';
 
-import Mock from 'mockjs';
-import '@/mock/extend';
-
-const user = Mock.mock({
-  name: '@ADMIN',
-  avatar: '@AVATAR',
-  address: '@CITY',
-  position: '@POSITION'
-});
 
 export default {
   name: 'Login',
@@ -119,17 +109,45 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('account', ['setUser']),
-    onSubmit(e) {
-      e.preventDefault();
-      this.form.validateFields((err) => {
-        if (!err) {
-          this.logging = true;
-          const name = this.form.getFieldValue('name');
-          const password = this.form.getFieldValue('password');
-          login(name, password).then(this.afterLogin);
+    ...mapMutations('account', ['setUser', "setPermissions", "setRoles"]),
+
+    async loginHandle(e) {
+      this.logging = true;
+      try {
+        e.preventDefault();
+        await this.form.validateFields();
+
+        const username = this.form.getFieldValue('username');
+        const password = this.form.getFieldValue('password');
+
+        const loginRes = await this.$store.dispatch("account/login", { username, password });
+        // 登录成功
+        if (loginRes.code === 200) {
+          const testUser = {
+            name: 'ADMIN',
+            avatar: 'https://gw.alipayobjects.com/zos/rmsportal/cnrhVkzwxjPwAaCfPbdc.png',
+            address: '北京',
+            position: 'Java工程师 | 蚂蚁金服-计算服务事业群-微信平台部'
+          }
+
+          // 设置token搜全用户权限角色等等信息
+          setAuthorization(loginRes.token);
+          this.setUser(testUser)
+          this.setPermissions([])
+          this.setRoles([])
+
+          // 获取路由信息
+          const routerRes = await getRoutesConfig();
+          loadRoutes(routerRes.data.data);
+          this.$router.push('/dashboard/workplace');
+          this.$message.success(loginRes.message)
         }
-      });
+
+      } catch (err) {
+        console.log(err);
+      }
+
+      this.logging = false;
     },
     afterLogin(res) {
       this.logging = false;
@@ -137,7 +155,7 @@ export default {
       if (loginRes.code === 200) {
         const { token } = loginRes.data;
 
-        this.setUser(user);
+        // this.setUser(user);
         setAuthorization({
           token,
         });
@@ -150,7 +168,6 @@ export default {
         });
       } else {
         this.error = loginRes.message;
-        message.error(loginRes.message);
       }
     }
   }

@@ -1,3 +1,6 @@
+import { login } from "@/api/auth/adminApi";
+import { removeAuthorization} from "@/utils/request";
+
 export default {
   namespaced: true,
   state: {
@@ -42,7 +45,6 @@ export default {
           console.error(e.message);
         }
       }
-      console.log(state.roles);
       return state.roles;
     },
     routesConfig: (state) => {
@@ -85,6 +87,25 @@ export default {
         process.env.VUE_APP_ROUTES_KEY,
         JSON.stringify(routesConfig)
       );
+    }
+  },
+  actions: {
+    // 进行登录
+    async login(state, userInfo) {
+      const {
+        username,
+        password
+      } = userInfo;
+
+      const loginRes = await login(username, password);
+      return loginRes.data;
+    },
+
+    logout(){
+      localStorage.removeItem(process.env.VUE_APP_ROUTES_KEY);
+      localStorage.removeItem(process.env.VUE_APP_PERMISSIONS_KEY);
+      localStorage.removeItem(process.env.VUE_APP_ROLES_KEY);
+      removeAuthorization();
     }
   }
 };

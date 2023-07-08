@@ -1,4 +1,4 @@
-import Cookie from 'js-cookie';
+// import Cookie from 'js-cookie';
 
 
 // 请求通用
@@ -15,7 +15,7 @@ const reqCommon = {
     if (
       url.indexOf('login') === -1 &&
       xsrfCookieName &&
-      !Cookie.get(xsrfCookieName)
+      !localStorage.getItem(xsrfCookieName)
     ) {
       message.warning('认证 token 已过期，请重新登录');
     }
@@ -37,13 +37,15 @@ const reqCommon = {
 // 响应通用
 const respCommon = {
   onFulfilled(response, options) {
-    const data = response.data.data;
-    if(data.token){
-      response.headers["satoken"] = data.token;
-    }
+    const { data, message: msg, code } = response.data;
     const { message } = options;
-    if (response.code === 401) {
-      message.error('无此权限');
+
+    if (code !== 200 && msg) {
+      message.error(msg);
+    } else {
+      if (data && data.token) {
+        response.headers["satoken"] = data.token;
+      }
     }
     return response;
   },

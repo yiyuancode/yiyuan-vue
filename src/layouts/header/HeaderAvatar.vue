@@ -14,7 +14,7 @@
         <span>设置</span>
       </a-menu-item>
       <a-menu-divider />
-      <a-menu-item @click="logout">
+      <a-menu-item @click="logoutHandle">
         <a-icon style="margin-right: 8px" type="poweroff" />
         <span>退出登录</span>
       </a-menu-item>
@@ -24,7 +24,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { logout } from '@/api/auth/adminApi';
 
 export default {
   name: 'HeaderAvatar',
@@ -32,9 +31,14 @@ export default {
     ...mapGetters('account', ['user'])
   },
   methods: {
-    logout() {
-      logout();
+    logoutHandle() {
+      // 进行退出登录操作
+      this.$store.dispatch("account/logout");
+
+      // 跳转回首页
       this.$router.push('/login');
+
+      this.$message.success("退出登录成功!!");
     }
   }
 };
