@@ -1,4 +1,11 @@
-import account from './account';
-import setting from './setting';
+const requireModule = require.context('@/store/modules', false, /\.js$/);
+const modules = {};
 
-export default { account, setting };
+requireModule.keys().forEach((fileName) => {
+  if(fileName === "./index.html") return;
+  const moduleName = fileName.replace(/(\.\/|\.js)/g, '');
+  const moduleConfig = requireModule(fileName)
+  modules[moduleName] = moduleConfig.default || moduleConfig
+})
+
+export default modules

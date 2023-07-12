@@ -12,10 +12,6 @@ export async function login(username, password) {
     const resp = await request("/auth/login", METHOD.POST, {
         username,
         password
-    }, {
-        headers: {
-            "platform": "0", //平台端
-        }
     });
 
     return resp;

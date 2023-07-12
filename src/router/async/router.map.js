@@ -24,7 +24,16 @@ const routerMap = {
   },
   workplace: {
     name: '工作台',
-    component: () => import('@/pages/dashboard/workplace/index')
-  }
+    component: () => import('@/pages/dashboard/workplace/index'),
+  },
+  auth : {
+    name : "权限管理",
+    component: view.blank
+  },
+  role:{
+    path : "/sys/role",
+    name : "角色管理",
+    component : ()=> import('@/pages/sys/role/index'),
+  },
 };
 export default routerMap;

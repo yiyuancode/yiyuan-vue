@@ -19,6 +19,9 @@ const reqCommon = {
     ) {
       message.warning('认证 token 已过期，请重新登录');
     }
+    const satokn = localStorage.getItem(xsrfCookieName);
+    config.headers["satoken"] = satokn;
+    config.headers["platform"] = "0";
     return config;
   },
   /**
@@ -37,17 +40,13 @@ const reqCommon = {
 // 响应通用
 const respCommon = {
   onFulfilled(response, options) {
-    const { data, message: msg, code } = response.data;
+    const { message: msg, code } = response.data;
     const { message } = options;
 
     if (code !== 200 && msg) {
       message.error(msg);
-    } else {
-      if (data && data.token) {
-        response.headers["satoken"] = data.token;
-      }
     }
-    return response;
+    return response.data;
   },
   onRejected(error, options) {
     const { message } = options;

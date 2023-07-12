@@ -14,6 +14,13 @@ Mock.mock(`/routes`, 'get', () => {
             router : 'workplace',
           }]
         },
+        {
+          icon : "security-scan",
+          router : "auth",
+          children :[{
+            router : "role"
+          }]
+        }
       ]
     }
   ];

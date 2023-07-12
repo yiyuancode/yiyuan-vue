@@ -2,7 +2,6 @@ import { hasAuthority } from '@/utils/authority-utils';
 import { loginIgnore } from '@/router/index';
 import { checkAuthorization } from '@/utils/request';
 import NProgress from 'nprogress';
-
 NProgress.configure({ showSpinner: false });
 
 /**
@@ -28,10 +27,12 @@ const progressStart = (to, from, next) => {
  */
 const loginGuard = (to, from, next, options) => {
   const { message } = options;
+  // 如果访问的页面不是忽略登录拦截的并且检测权限没有通过的，就进入这个判断
   if (!loginIgnore.includes(to) && !checkAuthorization()) {
     message.warning('登录已失效，请重新登录');
     next({ path: '/login' });
-  } else {
+  }
+  else {
     next();
   }
 };

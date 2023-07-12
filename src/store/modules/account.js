@@ -1,5 +1,5 @@
-import { login } from "@/api/auth/adminApi";
-import { removeAuthorization} from "@/utils/request";
+import { login } from "@/api/auth/admin";
+import { setAuthorization, removeAuthorization } from "@/utils/request";
 
 export default {
   namespaced: true,
@@ -7,7 +7,8 @@ export default {
     user: undefined,
     permissions: null,
     roles: null,
-    routesConfig: null
+    routesConfig: null,
+    isLogin: false,
   },
   getters: {
     user: (state) => {
@@ -87,21 +88,27 @@ export default {
         process.env.VUE_APP_ROUTES_KEY,
         JSON.stringify(routesConfig)
       );
+    },
+    setIsLogin(state, isLogin) {
+      state.isLogin = isLogin;
     }
   },
   actions: {
     // 进行登录
-    async login(state, userInfo) {
+    async login({ commit }, userInfo) {
       const {
         username,
         password
       } = userInfo;
 
       const loginRes = await login(username, password);
-      return loginRes.data;
+      setAuthorization(loginRes.data.token);
+      commit("setIsLogin", true);
+
+      return loginRes;
     },
 
-    logout(){
+    logout() {
       localStorage.removeItem(process.env.VUE_APP_ROUTES_KEY);
       localStorage.removeItem(process.env.VUE_APP_PERMISSIONS_KEY);
       localStorage.removeItem(process.env.VUE_APP_ROLES_KEY);
