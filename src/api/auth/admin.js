@@ -1,5 +1,5 @@
 
-import { request, METHOD } from '@/utils/request';
+import { request } from '@/utils/request';
 
 
 /**
@@ -9,16 +9,22 @@ import { request, METHOD } from '@/utils/request';
  * @returns {Promise<AxiosResponse<T>>}
  */
 export async function login(username, password) {
-    const resp = await request("/auth/login", METHOD.POST, {
-        username,
-        password
+    const resp = await request({
+        url: "/auth/login",
+        method: "post",
+        data: {
+            username,
+            password
+        }
     });
 
     return resp;
 }
 
 export async function getRoutesConfig() {
-    return request("/routes", METHOD.GET);
+    return request({
+        url : "/routes"
+    });
 }
 
 

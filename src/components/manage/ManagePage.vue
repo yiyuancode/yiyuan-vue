@@ -10,7 +10,7 @@
             <div class="content-container">
                 <div class="operate-btn-container">
                     <!-- <slot name=""></slot> -->
-                    <a-button v-if="uRenderObj.addBtn.isOpen" type="primary">
+                    <a-button v-if="uRenderObj.addBtn.isOpen" type="primary" @click="addHandle">
                         {{ uRenderObj.addBtn.text }}
                     </a-button>
                     <!-- <a-button type="primary">分配权限</a-button> -->
@@ -19,13 +19,17 @@
                 <!-- 列表容器 -->
                 <div class="list-container">
                     <a-table :columns="theadDataArr" :data-source="data" :pagination="false" style="margin-bottom: 10px;"
-                        :loading="uRenderObj.isLoading">
+                        :loading="uRenderObj.isLoading" :rowKey="(record, index) => { return index }">
                         <span slot="action" slot-scope="text, record">
                             <div v-if="uRenderObj.operateMode === 1" class="operate-btn-container">
                                 <a-button v-if="uRenderObj.editBtn.isOpen" type="primary" @click="editHandle(record.id)">{{
                                     uRenderObj.editBtn.text }}</a-button>
-                                <a-button v-if="uRenderObj.deleteBtn.isOpen" type="primary"
-                                    @click="editHandle(record.id)">删除</a-button>
+
+                                <!-- 删除 -->
+                                <a-popconfirm title="是否要删除这条信息?" ok-text="确认" cancel-text="取消"
+                                    @confirm="confirmDeleteHandle(record.id)">
+                                    <a-button v-if="uRenderObj.deleteBtn.isOpen" type="primary">删除</a-button>
+                                </a-popconfirm>
                             </div>
                         </span>
                     </a-table>
@@ -37,6 +41,31 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="modal-container">
+            <a-drawer :title="submitModalTitle" placement="right" :closable="true"
+                :visible="addModalVisble" :width="450" @close="closeAddModalHandle">
+                <slot name="addModal"></slot>
+                <div :style="{
+                    position: 'absolute',
+                    right: 0,
+                    bottom: 0,
+                    width: '100%',
+                    borderTop: '1px solid #e9e9e9',
+                    padding: '10px 16px',
+                    background: '#fff',
+                    textAlign: 'right',
+                    zIndex: 1,
+                }">
+                    <a-button :style="{ marginRight: '8px' }">
+                        重置
+                    </a-button>
+                    <a-button type="primary" :loading="submitLoading" @click="submitAddHandle">
+                        确认
+                    </a-button>
+                </div>
+            </a-drawer>
         </div>
     </div>
 </template>
@@ -52,10 +81,6 @@ const defaultRenderobj = {
         isOpen: true,
         text: "编辑",
     },
-    watchBtn: {
-        isOpen: true,
-        text: "查看",
-    },
     deleteBtn: {
         isOpen: true,
         text: "删除"
@@ -70,7 +95,7 @@ const defaultRenderobj = {
     },
     otherOperateList: [], //其他操作列表
     operateMode: 1,   // 操作按钮的显示模式，可以做几种显示模式，目前两种，一种是直接按钮铺开，一种是按钮组，下拉菜单(1表示按钮铺开，2表示按钮组下拉菜单)
-    loading: false
+    loading: false,
 }
 /**
  * 管理页面的插件
@@ -82,6 +107,9 @@ export default {
             default: () => {
                 return defaultRenderobj
             },
+        },
+        modalManageObj: {
+            type: Object,
         },
         //表头数据数组
         theadDataArr: {
@@ -102,17 +130,58 @@ export default {
             type: Number,
             default: 10
         },
-        total : {
-            type : Number,
-            default : 0
+        total: {
+            type: Number,
+            default: 0
+        },
+    },
+
+    data() {
+        return {
+            addModalVisble: false,
+            submitOpType: "", //提交的操作类型
+            submitModalTitle: "",
+            submitLoading: false,
+            currentId: null
         }
     },
     computed: {
-        uRenderObj(){
-            return Object.assign(defaultRenderobj,this.renderObj);
+        uRenderObj() {
+            return Object.assign(defaultRenderobj, this.renderObj);
         }
     },
-   
+    methods: {
+        // 显示添加模态框的处理
+        addHandle() {
+            this.setModalVisible("addModalVisble", true);
+            this.submitOpType = "add";
+            this.submitModalTitle = "添加";
+        },
+        // 关闭添加模态框
+        closeAddModalHandle() {
+            this.setModalVisible("addModalVisble", false);
+        },
+        editHandle(id) {
+            this.setModalVisible("addModalVisble", true);
+            console.log(this.addModalVisble);
+            this.submitOpType = "edit";
+            this.$emit("editHandle", id);
+            this.currentId = id;
+            this.submitModalTitle = "编辑";
+        },
+        // 确认删除的处理函数
+        confirmDeleteHandle(id) {
+            this.$emit('confirmDeleteHandle', id);
+        },
+        setModalVisible(modalVisibleObj, visible) {
+            this[modalVisibleObj] = visible;
+        },
+        // 提交添加的一个处理函数
+        submitAddHandle() {
+            this.$emit('submitAddHandle', this.submitOpType, this.currentId);
+        }
+    }
+
 }   
 </script>
 
