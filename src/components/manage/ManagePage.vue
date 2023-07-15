@@ -13,6 +13,10 @@
                     <a-button v-if="uRenderObj.addBtn.isOpen" type="primary" @click="addHandle">
                         {{ uRenderObj.addBtn.text }}
                     </a-button>
+
+                    <slot name="otherOperationList">
+
+                    </slot>
                     <!-- <a-button type="primary">分配权限</a-button> -->
                 </div>
 
@@ -30,6 +34,8 @@
                                     @confirm="confirmDeleteHandle(record.id)">
                                     <a-button v-if="uRenderObj.deleteBtn.isOpen" type="primary">删除</a-button>
                                 </a-popconfirm>
+
+                                <slot name="otherOpContainer" :data="record"></slot>
                             </div>
                         </span>
                     </a-table>
@@ -41,36 +47,19 @@
                     </div>
                 </div>
             </div>
+
+            <slot></slot>
         </div>
 
-        <div class="modal-container">
-            <a-drawer :title="submitModalTitle" placement="right" :closable="true"
-                :visible="addModalVisble" :width="450" @close="closeAddModalHandle">
-                <slot name="addModal"></slot>
-                <div :style="{
-                    position: 'absolute',
-                    right: 0,
-                    bottom: 0,
-                    width: '100%',
-                    borderTop: '1px solid #e9e9e9',
-                    padding: '10px 16px',
-                    background: '#fff',
-                    textAlign: 'right',
-                    zIndex: 1,
-                }">
-                    <a-button :style="{ marginRight: '8px' }">
-                        重置
-                    </a-button>
-                    <a-button type="primary" :loading="submitLoading" @click="submitAddHandle">
-                        确认
-                    </a-button>
-                </div>
-            </a-drawer>
-        </div>
+        <Modal :modalTitle="submitModalTitle" :modalVisible="addModalVisble" :submitLoading="submitLoading"
+            @submitHandle="submitAddHandle" @closeModalHandle="addModalVisble = false" @resetHandle="resetHandle">
+            <slot ref="addModal" name="addModal"></slot>
+        </Modal>
     </div>
 </template>
 
 <script>
+import Modal from "@/components/modal/Modal";
 // 默认的渲染对象配置
 const defaultRenderobj = {
     addBtn: {
@@ -101,6 +90,9 @@ const defaultRenderobj = {
  * 管理页面的插件
  */
 export default {
+    components: {
+        Modal
+    },
     props: {
         renderObj: {
             type: Object,
@@ -153,19 +145,27 @@ export default {
     methods: {
         // 显示添加模态框的处理
         addHandle() {
-            this.setModalVisible("addModalVisble", true);
+            this.addModalVisble = true;
             this.submitOpType = "add";
+            this.$emit("addHandle", (form, formRef) => {
+                for (let prop in form) {
+                    form[prop] = '';
+                }
+                formRef.resetFields();
+            });
             this.submitModalTitle = "添加";
         },
         // 关闭添加模态框
         closeAddModalHandle() {
-            this.setModalVisible("addModalVisble", false);
+            this.addModalVisble = false;
         },
+        // 编辑的处理
         editHandle(id) {
-            this.setModalVisible("addModalVisble", true);
-            console.log(this.addModalVisble);
+            this.addModalVisble = true;
             this.submitOpType = "edit";
-            this.$emit("editHandle", id);
+            this.$emit("editHandle", id, (formRef) => {
+                formRef.resetFields();
+            });
             this.currentId = id;
             this.submitModalTitle = "编辑";
         },
@@ -173,12 +173,20 @@ export default {
         confirmDeleteHandle(id) {
             this.$emit('confirmDeleteHandle', id);
         },
-        setModalVisible(modalVisibleObj, visible) {
-            this[modalVisibleObj] = visible;
-        },
         // 提交添加的一个处理函数
         submitAddHandle() {
-            this.$emit('submitAddHandle', this.submitOpType, this.currentId);
+            this.submitLoading = true;
+            this.$emit('submitAddHandle', this.submitOpType, this.currentId, () => {
+                // this.addModalVisble = false;
+                this.submitLoading = false;
+            });
+        },
+        // 重置处理
+        resetHandle() {
+            this.$emit("resetHandle", (formRef) => {
+                formRef.resetFields();
+                this.$message.success("重置信息成功!!");
+            });
         }
     }
 
@@ -204,6 +212,8 @@ export default {
 
 // 操作按钮容器
 .operate-btn-container {
+    display: flex;
+
     .ant-btn {
         margin-right: 10px;
     }

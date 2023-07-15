@@ -21,6 +21,18 @@ export async function login(username, password) {
     return resp;
 }
 
+/**
+ * 获取菜单列表
+ * @returns 
+ */
+export async function getMenuTree(){
+    const resp = await request({
+        url: "/auth/adminGetMenuTree",
+        method: "get",
+    });
+    return resp.data;
+}
+
 export async function getRoutesConfig() {
     return request({
         url : "/routes"

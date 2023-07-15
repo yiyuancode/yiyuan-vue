@@ -67,7 +67,7 @@ export async function addRole(roleInfo = {}) {
  * @returns 
  */
 export async function editRole(roleInfo, id) {
-    const { 
+    const {
         name,
         code,
         roleDesc
@@ -100,4 +100,23 @@ export async function deleteRole(ids) {
         }
     });
     return resp.data;
+}
+
+
+/**
+ * 分配角色菜单
+ * @param {*} roleId 角色id
+ * @param {*} menuIdList 菜单id列表
+ * @returns 
+ */
+export async function assignMenu(roleId, menuIdList) {
+    const resp = await request({
+        url: "/auth/role/assignMenu",
+        method: "post",
+        data: {
+            roleId,
+            menuIdList
+        }
+    });
+    return resp;
 }

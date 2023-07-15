@@ -45,6 +45,7 @@ const respCommon = {
 
     if (code !== 200 && msg) {
       message.error(msg);
+      return Promise.reject(msg);
     }
     return response.data;
   },
