@@ -52,9 +52,9 @@ const respCommon = {
   onRejected(error, options) {
     const { message } = options;
     const { response } = error;
-    if (response.status === 403) {
-      message.error('请求被拒绝');
-    }
+    if (response.status === 502) {
+      message.error('网关错误');
+    } 
     return Promise.reject(error);
   }
 }

@@ -1,35 +1,37 @@
 <template>
-    <ManagePage :theadDataArr="columns" :data="data" :total="total" :pageSize="pageSize" :pageNum="pageNum"
-        :renderObj="renderObj" @submitAddHandle="submitAddHandle" @confirmDeleteHandle="confirmDeleteHandle"
-        @addHandle="addHandle" @editHandle="editHandle" @resetHandle="resetHandle">
+    <ManagePage :theadData="columns" :data="data" :total="total" :pageSize="pageSize" :pageNum="pageNum"
+        :renderObj="renderObj" @submitHandle="submitHandle" @confirmDeleteHandle="confirmDeleteHandle"
+        @addHandle="addHandle" @editHandle="editHandle" @resetHandle="resetHandle" @batchDeleteHandle="batchDeleteHandle">
 
+        <!-- 其他的操作插槽 -->
+        <template #otherOperationsContainer="scope">
+            <a-button type="primary" @click="assignPermission(scope.data.id)">分配权限</a-button>
 
-        <div slot="otherOpContainer" slot-scope="slotProps">
-            <a-button type="primary" @click="assignPermission(slotProps.data.id)">分配权限</a-button>
-        </div>
+        </template>
 
-        <div slot="addModal">
-            <a-form-model ref="addRoleForm" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
-                <a-form-model-item ref="code" label="角色编码" prop="code">
+        <!-- 默认模态框插槽 -->
+        <div slot="submitModal">
+            <a-form-model ref="roleForm" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
+                <a-form-model-item ref="code" has-feedback label="角色编码" prop="code">
                     <a-input v-model="form.code" />
                 </a-form-model-item>
-                <a-form-model-item ref="name" label="角色名称" prop="name">
+                <a-form-model-item ref="name" has-feedback label="角色名称" prop="name">
                     <a-input v-model="form.name" />
                 </a-form-model-item>
-                <a-form-model-item ref="roleDesc" label="角色描述" prop="roleDesc">
+                <a-form-model-item ref="roleDesc" has-feedback label="角色描述" prop="roleDesc">
                     <a-input v-model="form.roleDesc" type="textarea" :auto-size="{ minRows: 3, maxRows: 5 }" />
                 </a-form-model-item>
             </a-form-model>
         </div>
 
-        <Modal modalTitle="分配角色权限" :modalVisible="assignPermissionVisible"
+        <!-- 分配角色权限模态框 -->
+        <Modal modalTitle="分配角色权限" :modalVisible="assignPermissionVisible" :submitLoading="submitAssignPermissionLoading"
             @closeModalHandle="assignPermissionVisible = false" @resetHandle="resetAssignPermissionHandle"
             @submitHandle="assignPermissionHandle">
-            <a-form-model ref="assignPermissionForm" :model="assignPermissionForm" :rules="assignPermissionRules"
-                :label-col="labelCol" :wrapper-col="wrapperCol">
-                <a-form-model-item ref="code" label="角色权限" prop="code">
+            <a-form-model :label-col="labelCol" :wrapper-col="wrapperCol">
+                <a-form-model-item label="角色权限">
                     <div class="role-permission-container">
-                        <div class="">
+                        <div>
                             <a-checkbox v-model="isCollapseCheckbox" @change="toggleMenuList">
                                 展开/收起
                             </a-checkbox>
@@ -71,18 +73,13 @@ const columns = [
     },
     {
         title: '创建时间',
-        key: 'createdTime',
-        dataIndex: 'createdTime',
+        key: 'createTime',
+        dataIndex: 'createTime',
     },
     {
         title: '更新时间',
-        key: 'updatedTime',
-        dataIndex: 'updatedTime',
-    },
-    {
-        title: '操作',
-        key: 'action',
-        scopedSlots: { customRender: 'action' },
+        key: 'updateTime',
+        dataIndex: 'updateTime',
     },
 ];
 
@@ -105,7 +102,6 @@ export default {
             renderObj: {
                 isLoading: false
             },
-            isLoading: false,
             labelCol: { span: 6 },
             wrapperCol: { span: 18 },
             other: '',
@@ -114,10 +110,6 @@ export default {
                 code: '',
                 roleDesc: ""
             },
-            assignPermissionForm: {
-
-            },
-            assignPermissionRules: {},
             rules: {
                 code: [
                     { required: true, message: '请输入角色代码', trigger: 'blur' },
@@ -137,18 +129,10 @@ export default {
             isCollapseCheckbox: false,
             isSelectAllCheckbox: false,
             roleId: null, //分配角色点击的id
+            submitAssignPermissionLoading: false, //提交分配权限按钮是否加载
+            treeKeyData: [],
+
         };
-    },
-    computed: {
-        treeKeyData: function () {
-            return this.treeData.reduce((keys, node) => {
-                keys.push(node.key);
-                if (node.children) {
-                    keys.push(...node.children.map(child => child.key));
-                }
-                return keys;
-            }, []);
-        }
     },
     // 组件生命周期
     async created() {
@@ -157,9 +141,10 @@ export default {
 
     methods: {
         // 进行提交
-        async submitAddHandle(opType, id, callback) {
+        async submitHandle(opType, id, callback) {
+            let operationFlag = false;
             try {
-                const validateRes = await this.$refs.addRoleForm.validate();
+                const validateRes = await this.$refs.roleForm.validate();
                 // 校验成功
                 if (validateRes) {
                     if (opType === "add" || opType === "edit") {
@@ -172,24 +157,31 @@ export default {
                         }
                         // 重新获取数据
                         await this.getData();
+                        operationFlag = true;
 
                     }
                 }
             } catch (e) {
                 console.log(e);
+                operationFlag = false;
             }
-            callback();
+            callback(operationFlag, this.$refs.roleForm);
         },
         // 获取数据
         async getData() {
             this.renderObj.isLoading = true;
-            const rolePageResult = await getRolePageList(this.pageSize, this.pageNum);
-            if (rolePageResult) {
-                const { total, records } = rolePageResult;
-                this.total = total;
-                this.data = records;
-                this.renderObj.isLoading = false;
+            try {
+                const rolePageResult = await getRolePageList(this.pageSize, this.pageNum);
+                if (rolePageResult) {
+                    const { total, records } = rolePageResult;
+                    this.total = total;
+                    this.data = records;
+                }
+            } catch (e) {
+                Promise.reject(e);
             }
+            this.renderObj.isLoading = false;
+
         },
         // 确认删除的回调函数
         async confirmDeleteHandle(id) {
@@ -207,27 +199,34 @@ export default {
                 roleDesc: ''
             };
             this.$nextTick(() => {
-                callback(this.form, this.$refs.addRoleForm);
+                callback(this.form, this.$refs.roleForm);
             });
         },
         // 编辑回调
         editHandle(id, callback) {
             this.roleFormBackFill(id);
             this.$nextTick(() => {
-                callback(this.$refs.addRoleForm);
+                callback(this.$refs.roleForm);
             });
         },
         // 重置回调
         resetHandle(callback) {
-            callback(this.$refs.addRoleForm);
+            callback(this.$refs.roleForm);
+        },
+        // 进行批量删除
+        async batchDeleteHandle(ids) {
+            await deleteRole(ids);
+            await this.getData();
+            this.$message.success("批量删除成功")
         },
         // 分配权限点击
         async assignPermission(id) {
             this.assignPermissionVisible = true;
             this.roleId = id;
             const menuList = await getMenuTree();
-            const treeData = this.getTreeData(menuList);
+            const { treeData, treeKeyData } = this.getTreeData(menuList);
             this.treeData = treeData;
+            this.treeKeyData = treeKeyData;
         },
         // 角色表单信息回填
         async roleFormBackFill(id) {
@@ -242,7 +241,8 @@ export default {
 
             this.form = newForm;
         },
-        getTreeData(menuList) {
+        // 根据获取的菜单拿到所有的数级数据
+        getTreeData(menuList, treeKeyData = []) {
             const treeData = [];
             for (let i = 0; i < menuList.length; i++) {
                 const { name, children, id } = menuList[i];
@@ -251,22 +251,22 @@ export default {
                     title: name,
                     key: id,
                 }
+                treeKeyData.push(id);
                 if (children && children.length) {
-                    const newChildren = this.getTreeData(children);
-                    treeDataObj.children = newChildren;
+                    const newChildren = this.getTreeData(children, treeKeyData);
+                    treeDataObj.children = newChildren.treeData;
                 }
 
                 treeData.push(treeDataObj);
             }
-            return treeData;
+            return { treeData, treeKeyData };
         },
-        getAllNodeKeys() {
-
-        },
+        // 展开事件
         onExpand(expandedKeys) {
             this.expandedKeys = expandedKeys;
             this.autoExpandParent = false;
         },
+        // 选择事件
         onSelect(selectedKeys, info) {
             console.log('onSelect', info);
             this.selectedKeys = selectedKeys;
@@ -280,7 +280,7 @@ export default {
                 this.expandedKeys = [];
             }
         },
-        // 展开选中菜单列表
+        // 选中菜单列表
         toggleSelectMenuList() {
             if (this.isSelectAllCheckbox) {
                 this.checkedKeys = this.treeKeyData;
@@ -297,6 +297,7 @@ export default {
         },
         // 分配权限
         async assignPermissionHandle() {
+            this.submitAssignPermissionLoading = true;
             if (!this.checkedKeys.length) {
                 this.$message.error("请至少选择一个菜单");
                 return;
@@ -304,35 +305,13 @@ export default {
             // 进行分配角色
             await assignMenu(this.roleId, this.checkedKeys);
             this.$message.success("分配角色权限成功!!");
+            this.submitAssignPermissionLoading = false;
         }
     },
 }
 </script>
 
 <style lang="less" scoped>
-.search-container,
-.content-container {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #fff;
-}
-
-.list-container {
-    margin-top: 10px
-}
-
-.page-container {
-    display: flex;
-    justify-content: flex-end;
-}
-
-// 操作按钮容器
-.operate-btn-container {
-    .ant-btn {
-        margin-right: 10px;
-    }
-}
-
 .role-permission-container {
     padding: 10px 20px;
     border: 1px solid #e5e7eb;

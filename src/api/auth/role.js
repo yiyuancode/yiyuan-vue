@@ -1,6 +1,16 @@
 
 import { request } from '@/utils/request';
 
+/**
+ * 获取所有角色信息
+ */
+export async function getRoleList() {
+    const resp = await request({
+        url: "/auth/role/list",
+    });
+    return resp.data;
+}
+
 
 /**
  * 获取角色信息(分页)
@@ -35,9 +45,9 @@ export async function getRoleDetail(id) {
 /**
  * 添加角色
  * @param {*} roleInfo
- * @param {*} name 角色名称
- * @param {*} code 角色代码
- * @param {*} roleDesc 角色描述
+ *  @param {*} name 角色名称
+ *  @param {*} code 角色代码
+ *  @param {*} roleDesc 角色描述
  * @returns 
  */
 
@@ -63,6 +73,9 @@ export async function addRole(roleInfo = {}) {
 /**
  * 编辑角色
  * @param {*} roleInfo 角色信息
+ *  @param {*} code 角色代码
+ *  @param {*} roleDesc 角色描述
+ * 
  * @param {*} id 角色id
  * @returns 
  */

@@ -26,14 +26,38 @@ const routerMap = {
     name: '工作台',
     component: () => import('@/pages/dashboard/workplace/index'),
   },
-  auth : {
-    name : "权限管理",
+  sys: {
+    name: "系统管理",
     component: view.blank
   },
-  role:{
-    path : "/sys/role",
-    name : "角色管理",
-    component : ()=> import('@/pages/sys/role/index'),
+  role: {
+    path: "/sys/role",
+    name: "角色管理",
+    component: () => import('@/pages/sys/role/index'),
   },
+  user: {
+    path: "/sys/user",
+    name: "用户管理",
+    component: () => import('@/pages/sys/user/index'),
+  },
+  tenant: {
+    name: "租户管理",
+    component: view.blank
+  },
+  tenantList: {
+    name: "租户列表",
+    path: "/sys/tenant/list",
+    component: () => import('@/pages/sys/tenant/tenantList/index'),
+  },
+  tenantPackage: {
+    name: "租户列表",
+    path: "/sys/tenant/package",
+    component: () => import('@/pages/sys/tenant/tenantPackage/index'),
+  },
+  menu: {
+    name: "菜单管理",
+    path: "/sys/menu",
+    component: () => import('@/pages/sys/menu/index'),
+  }
 };
 export default routerMap;
