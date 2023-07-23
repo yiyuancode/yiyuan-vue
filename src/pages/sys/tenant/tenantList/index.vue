@@ -1,7 +1,12 @@
 <template>
-    <ManagePage :theadData="columns" :data="data" :total="total" :pageSize="pageSize" :pageNum="pageNum"
-        :renderObj="renderObj" @submitHandle="submitHandle" @addHandle="addHandle" @editHandle="editHandle"
-        @confirmDeleteHandle="confirmDeleteHandle" @batchDeleteHandle="batchDeleteHandle" @resetHandle="resetHandle">
+    <ManagePage :theadData="columns" :data="data" :pageInfo="pageInfo" :renderObj="renderObj" :formRules="rules"
+        :formModel="form" @submitHandle="submitHandle" @confirmDeleteHandle="confirmDeleteHandle"
+        @batchDeleteHandle="batchDeleteHandle" @resetHandle="resetHandle">
+
+        <!-- 
+            @addHandle="addHandle"
+            @editHandle="editHandle"
+         -->
 
         <!-- 默认模态框插槽 -->
         <template #submitModal>
@@ -40,23 +45,52 @@ const columns = [
         title: '租户名称',
         dataIndex: 'name',
         key: 'name',
+        isSearch: true,
     },
     {
         title: '租户代码',
         dataIndex: 'code',
         key: 'code',
+        isSearch: true,
     },
     {
         title: "开始时间",
         dataIndex: "startTime",
-        key: "startTime"
+        key: "startTime",
+        isSearch: true,
+        searchObj: {
+            type: "rangePicker"
+        }
     },
     {
         title: '结束时间',
         key: 'endTime',
         dataIndex: 'endTime',
+        isSearch: true,
+        searchObj: {
+            type: "rangePicker"
+        }
     },
+    {
+        title: "创建时间",
+        key: "createTime",
+        dataIndex: 'createTime',
+        isSearch: true,
+        searchObj: {
+            type: "rangePicker"
+        }
+    },
+    {
+        title: "修改时间",
+        key: "updateTime",
+        dataIndex: 'updateTime',
+        isSearch: true,
+        searchObj: {
+            type: "rangePicker"
+        }
+    }
 ];
+
 
 // 默认表单数据
 const defaultForm = {
@@ -101,9 +135,11 @@ export default {
         return {
             data: [],
             columns,
-            pageSize: 10,
-            pageNum: 1,
-            total: 0,
+            pageInfo: {
+                pageSize: 10,
+                pageNum: 1,
+                total: 0,
+            },
             renderObj: {
                 isLoading: false
             },
@@ -181,7 +217,7 @@ export default {
                     this.total = total;
                     this.data = records;
                 }
-            }catch(e){
+            } catch (e) {
                 Promise.reject(e);
             }
             this.renderObj.isLoading = false;
@@ -195,19 +231,19 @@ export default {
             this.$message.success("删除租户信息成功!!");
         },
         // 添加回调
-        addHandle(callback) {
-            this.form = defaultForm;
-            this.$nextTick(() => {
-                callback(this.form, this.$refs.tenantForm);
-            });
-        },
-        // 编辑回调
-        editHandle(id, callback) {
-            this.tenantFormBackFill(id);
-            this.$nextTick(() => {
-                callback(this.$refs.tenantForm);
-            });
-        },
+        // addHandle(callback) {
+        //     this.form = defaultForm;
+        //     this.$nextTick(() => {
+        //         callback(this.form, this.$refs.tenantForm);
+        //     });
+        // },
+        // // 编辑回调
+        // editHandle(id, callback) {
+        //     this.tenantFormBackFill(id);
+        //     this.$nextTick(() => {
+        //         callback(this.$refs.tenantForm);
+        //     });
+        // },
         // 重置回调
         resetHandle(callback) {
             callback(this.$refs.tenantForm);

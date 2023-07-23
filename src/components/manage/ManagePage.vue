@@ -1,14 +1,19 @@
 <template>
     <div>
+
         <!-- 管理容器 -->
         <div class="manage-container">
+
             <!-- 查询操作容器 -->
             <div class="search-container">
-                <a-input-search style="width: 300px;" placeholder="请输入角色名称" enter-button />
+                <searchForm :searchFormList="searchFormList">
+
+                </searchForm>
             </div>
 
             <!-- 主体内容区域  -->
             <div class="content-container">
+
                 <div class="operate-btn-container">
                     <!-- 添加 -->
                     <a-button v-if="uRenderObj.addBtn.isOpen" type="primary" @click="addHandle">
@@ -45,6 +50,12 @@
                         :loading="uRenderObj.isLoading" :rowKey="(record, index) => { return index }"
                         :row-selection="rowSelection">
 
+                        <!-- 进行一个自定义插槽的遍历 -->
+                        <template v-for="(item, index) in tdColumnData" :slot="item.scopedSlots?.customRender"
+                            slot-scope="text,record">
+                            <!-- {{ record }} -->
+                            <slot :name="'table-' + item.scopedSlots?.customRender" v-bind="{ text, record }"></slot>
+                        </template>
 
                         <span slot="action" slot-scope="text, record">
                             <div v-if="uRenderObj.operateMode === 1" class="operate-btn-container">
@@ -66,8 +77,8 @@
 
                     <!-- 分页容器 -->
                     <div class="page-container">
-                        <a-pagination show-quick-jumper show-size-changer :total="total" :show-total="total => `共${total}条`"
-                            :current="pageNum" />
+                        <a-pagination show-quick-jumper show-size-changer :total="pageInfo.total"
+                            :show-total="total => `共${total}条`" :current="pageInfo.pageNum" />
                     </div>
                 </div>
             </div>
@@ -76,7 +87,7 @@
         </div>
 
         <Modal :modalTitle="submitModalTitle" :modalVisible="modalVisble" :submitLoading="submitLoading"
-            @submitHandle="submitHandle" @closeModalHandle="modalVisble = false" @resetHandle="resetHandle">
+            @submitHandle="submitHandle" @closeModalHandle="modalVisble = false" @resetHandle="resetHandle" >
             <slot ref="submitModal" name="submitModal" :opType="submitOpType"></slot>
         </Modal>
     </div>
@@ -84,6 +95,7 @@
 
 <script>
 import Modal from "@/components/modal/Modal";
+import searchForm from "@/components/search/searchForm"
 // 默认的渲染对象配置
 const defaultRenderobj = {
     addBtn: {
@@ -120,9 +132,9 @@ const defaultRenderobj = {
  */
 export default {
     components: {
-        Modal
+        Modal,
+        searchForm,
     },
-
     props: {
         renderObj: {
             type: Object,
@@ -135,23 +147,27 @@ export default {
             type: Array,
             required: true,
         },
+        // 分页相关数据
+        pageInfo: {
+            type: Object,
+            default: () => ({
+                pageSize: 10,
+                pageNum: 1,
+                total: 0,
+            })
+        },
         // 表格数据
         data: {
             type: Array,
             required: true
         },
-        pageNum: {
-            type: Number,
-            default: 1
+        // 表单的规则
+        formRules:{
+            type : Object,
         },
-        pageSize: {
-            type: Number,
-            default: 10
-        },
-        total: {
-            type: Number,
-            default: 0
-        },
+        formModel:{
+            type : Object,
+        }
     },
 
     data() {
@@ -162,6 +178,7 @@ export default {
             submitLoading: false,
             currentId: null,
             selectedRows: [],
+            searchFormList: [],
         }
     },
 
@@ -170,18 +187,20 @@ export default {
         uRenderObj() {
             return Object.assign(defaultRenderobj, this.renderObj);
         },
+
         // 表头进行处理，增加操作
         uTheadData() {
             return [...this.theadData, {
                 title: '操作',
                 key: 'action',
                 scopedSlots: { customRender: 'action' },
+                fixed: 'right',
             }];
         },
         // 插槽
-        slotTdColumnArr(){
-            return this.uTheadData.filter(ut=>{
-                return ut.scopedSlots;
+        tdColumnData() {
+            return this.uTheadData.filter(ut => {
+                return ut.scopedSlots && ut.scopedSlots?.customRender !== 'action';
             });
         },
         // 表格复选框的一个显示配置
@@ -201,18 +220,55 @@ export default {
             }
         }
     },
+    created() {
+        // 将theadData里面带isSearch进行一个处理，处理成searchForm需要的数据 
+        this.getSearchFormList();
+    },
     methods: {
+        getSearchFormList() {
+            const searchFormList = [];
+            this.theadData.forEach(theadItem => {
+                if (typeof theadItem === "object") {
+                    const {
+                        key,
+                        title,
+                        isSearch,
+                        searchObj, //查询的配置对象
+                    } = theadItem;
+
+                    // 是否可以搜索
+                    if (isSearch) {
+                        const searchFormObj = {
+                            key,
+                            title,
+                            isSearch,
+                        }
+
+                        if (searchObj) {
+                            for(let prop in searchObj){
+                                searchFormObj[prop] = searchObj[prop];
+                            }
+                        }
+
+                        searchFormList.push(searchFormObj);
+                    }
+                }
+                else {
+                    Promise.reject("theadData里面的每一项必须是对象");
+                    return;
+                }
+            });
+            this.searchFormList = searchFormList;
+        },
         // 显示添加模态框的处理
-        addHandle() {
+        async addHandle() {
             this.modalVisble = true;
             this.submitOpType = "add";
-            this.$emit("addHandle", (form, formRef) => {
-                for (let prop in form) {
-                    form[prop] = '';
-                }
-                formRef.resetFields();
-            });
             this.submitModalTitle = "添加";
+            await this.$emit("modalShow");
+            this.$nextTick(()=>{
+                console.log(this.$refs);
+            })
         },
         importHandle() {
             this.noDeveloped();
@@ -232,7 +288,7 @@ export default {
                 return;
             }
 
-            this.$emit("batchDeleteHandle", ids,()=>{
+            this.$emit("batchDeleteHandle", ids, () => {
                 this.selectedRows = [];
             });
         },
@@ -281,7 +337,8 @@ export default {
         noDeveloped() {
             this.$message.warning("该功能还没有开发..");
         }
-    }
+    },
+
 
 }   
 </script>
@@ -295,7 +352,18 @@ export default {
 }
 
 .list-container {
-    margin-top: 10px
+
+    margin-top: 10px;
+
+    /deep/ .ant-table {
+        tr {
+
+            td,
+            th {
+                min-width: 60px;
+            }
+        }
+    }
 }
 
 .page-container {

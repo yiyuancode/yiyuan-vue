@@ -1,7 +1,12 @@
 <template>
     <ManagePage :theadData="columns" :data="data" :total="total" :pageSize="pageSize" :pageNum="pageNum"
-        :renderObj="renderObj" @submitHandle="submitHandle" @addHandle="addHandle" @editHandle="editHandle"
+        :renderObj="renderObj" @submitHandle="submitHandle"  @addHandle="addHandle" @editHandle="editHandle"
         @confirmDeleteHandle="confirmDeleteHandle" @batchDeleteHandle="batchDeleteHandle" @resetHandle="resetHandle">
+
+        <span slot="table-userRoles" slot-scope="{text,record}">
+            <a-tag v-if="record.userRoles">{{ text }}</a-tag>
+        </span>
+
 
         <!-- 其他的操作插槽 -->
         <template #otherOperationsContainer="scope">
@@ -64,6 +69,7 @@ const columns = [
         title: "角色",
         dataIndex: "userRoles",
         keys: "userRoles",
+        scopedSlots: { customRender: 'userRoles' },
     },
     {
         title: '所属平台',
