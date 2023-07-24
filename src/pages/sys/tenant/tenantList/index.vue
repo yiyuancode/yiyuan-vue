@@ -1,7 +1,7 @@
 <template>
     <ManagePage :theadData="columns" :data="data" :pageInfo="pageInfo" :renderObj="renderObj" :formRules="rules"
-        :formModel="form" @submitHandle="submitHandle" @confirmDeleteHandle="confirmDeleteHandle"
-        @batchDeleteHandle="batchDeleteHandle" @resetHandle="resetHandle">
+        :formModel="form" @modalShow="modalShow" @submitHandle="submitHandle" @confirmDeleteHandle="confirmDeleteHandle"
+        @batchDeleteHandle="batchDeleteHandle" @resetHandle="resetHandle" ref="managePageRef">
 
         <!-- 
             @addHandle="addHandle"
@@ -10,27 +10,27 @@
 
         <!-- 默认模态框插槽 -->
         <template #submitModal>
-            <a-form-model ref="tenantForm" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
-                <a-form-model-item ref="code" has-feedback label="租户编码" prop="code">
-                    <a-input v-model="form.code" />
-                </a-form-model-item>
-                <a-form-model-item ref="name" has-feedback label="租户名称" prop="name">
-                    <a-input v-model="form.name" />
-                </a-form-model-item>
-                <a-form-model-item ref="startTime" has-feedback label="开始时间" prop="startTime">
-                    <a-date-picker v-model="form.startTime" show-time style="width:100%" />
-                </a-form-model-item>
-                <a-form-model-item ref="endTime" has-feedback label="结束时间" prop="endTime">
-                    <a-date-picker v-model="form.endTime" show-time style="width:100%" />
-                </a-form-model-item>
-                <a-form-model-item ref="status" label="状态" prop="status">
-                    <a-radio-group v-model="form.status">
-                        <a-radio-button v-for="(item, index) in statusList" :key="index" :value="item.val">
-                            {{ item.name }}
-                        </a-radio-button>
-                    </a-radio-group>
-                </a-form-model-item>
-            </a-form-model>
+            <!-- <a-form-model ref="tenantForm" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol"> -->
+            <a-form-model-item ref="code" has-feedback label="租户编码" prop="code">
+                <a-input v-model="form.code" />
+            </a-form-model-item>
+            <a-form-model-item ref="name" has-feedback label="租户名称" prop="name">
+                <a-input v-model="form.name" />
+            </a-form-model-item>
+            <a-form-model-item ref="startTime" has-feedback label="开始时间" prop="startTime">
+                <a-date-picker v-model="form.startTime" show-time style="width:100%" />
+            </a-form-model-item>
+            <a-form-model-item ref="endTime" has-feedback label="结束时间" prop="endTime">
+                <a-date-picker v-model="form.endTime" show-time style="width:100%" />
+            </a-form-model-item>
+            <a-form-model-item ref="status" label="状态" prop="status">
+                <a-radio-group v-model="form.status">
+                    <a-radio-button v-for="(item, index) in statusList" :key="index" :value="item.val">
+                        {{ item.name }}
+                    </a-radio-button>
+                </a-radio-group>
+            </a-form-model-item>
+            <!-- </a-form-model> -->
         </template>
     </ManagePage>
 </template>
@@ -98,7 +98,7 @@ const defaultForm = {
     name: '',
     startTime: null,
     endTime: null,
-    status: 0 //启用
+    status: 0, //启用
 }
 export default {
     components: {
@@ -154,6 +154,7 @@ export default {
                 name: "冻结",
                 val: 1
             }],
+            modalFormRefs: null,
             rules: {
                 code: [
                     { required: true, message: '请输入租户编码', trigger: 'blur' },
@@ -176,11 +177,15 @@ export default {
     async created() {
         this.getData();
     },
-
     methods: {
+        modalShow() {
+            this.$nextTick(() => {
+                console.log(this.$refs);
+            });
+        },
         // 进行提交
-        async submitHandle(opType, id, callback) {
-            let operationFlag = false;
+        async submitHandle(opType, id) {
+            // let operationFlag = false;
             try {
                 const validateRes = await this.$refs.tenantForm.validate();
                 this.form.startTime = this.form.startTime.format('YYYY-MM-DD hh:mm:ss');
@@ -197,15 +202,15 @@ export default {
                         }
                         // 重新获取数据
                         await this.getData();
-                        operationFlag = true;
+                        // operationFlag = true;
 
                     }
                 }
             } catch (e) {
                 console.log(e);
-                operationFlag = false;
+                // operationFlag = false;
             }
-            callback(operationFlag, this.$refs.tenantForm);
+            // callback(operationFlag, this.$refs.tenantForm);
         },
         // 获取数据
         async getData() {
@@ -245,15 +250,15 @@ export default {
         //     });
         // },
         // 重置回调
-        resetHandle(callback) {
-            callback(this.$refs.tenantForm);
+        resetHandle() {
+            // callback(this.$refs.tenantForm);
         },
         // 进行批量删除
-        async batchDeleteHandle(ids, callback) {
+        async batchDeleteHandle(ids) {
             await deleteTenant(ids);
             await this.getData();
             this.$message.success("批量删除成功");
-            callback();
+            // callback();
         },
         // 租户表单信息回填
         async tenantFormBackFill(id) {

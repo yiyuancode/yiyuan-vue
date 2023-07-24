@@ -87,8 +87,11 @@
         </div>
 
         <Modal :modalTitle="submitModalTitle" :modalVisible="modalVisble" :submitLoading="submitLoading"
-            @submitHandle="submitHandle" @closeModalHandle="modalVisble = false" @resetHandle="resetHandle" >
-            <slot ref="submitModal" name="submitModal" :opType="submitOpType"></slot>
+            @submitHandle="submitHandle" @closeModalHandle="modalVisble = false" @resetHandle="resetHandle">
+            <a-form-model ref="submitModalForm" :model="formModel" :rules="formRules" :label-col="labelCol"
+                :wrapper-col="wrapperCol">
+                <slot ref="submitModal" name="submitModal" :opType="submitOpType"></slot>
+            </a-form-model>
         </Modal>
     </div>
 </template>
@@ -162,12 +165,16 @@ export default {
             required: true
         },
         // 表单的规则
-        formRules:{
-            type : Object,
+        formRules: {
+            type: Object,
         },
-        formModel:{
-            type : Object,
-        }
+        formModel: {
+            type: Object,
+        },
+        modalFormRefs: {
+            type: Object,
+            default: null,
+        },
     },
 
     data() {
@@ -179,6 +186,8 @@ export default {
             currentId: null,
             selectedRows: [],
             searchFormList: [],
+            labelCol: { span: 6 },
+            wrapperCol: { span: 18 },
         }
     },
 
@@ -245,7 +254,7 @@ export default {
                         }
 
                         if (searchObj) {
-                            for(let prop in searchObj){
+                            for (let prop in searchObj) {
                                 searchFormObj[prop] = searchObj[prop];
                             }
                         }
@@ -265,10 +274,10 @@ export default {
             this.modalVisble = true;
             this.submitOpType = "add";
             this.submitModalTitle = "添加";
-            await this.$emit("modalShow");
-            this.$nextTick(()=>{
+            this.$emit("modalShow");
+            this.$nextTick(() => {
                 console.log(this.$refs);
-            })
+            });
         },
         importHandle() {
             this.noDeveloped();
