@@ -18,12 +18,10 @@ Mock.mock(`/routes`, 'get', () => {
           icon: "security-scan",
           router: "sys",
           children: [{
-            router: "tenant",
-            children: [{
-              router: "tenantList"
-            }, {
-              router: "tenantPackage"
-            }]
+            router: "tenantList",
+          },
+          {
+            router: "tenantPackage",
           },
           {
             router: "user"

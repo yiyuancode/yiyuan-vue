@@ -4,12 +4,6 @@
         <!-- 默认插槽 -->
         <slot ref="modalContent"></slot>
 
-        <!-- <a-form-model ref="assignPermissionForm" :model="assignPermissionForm" :rules="assignPermissionRules"
-            :label-col="labelCol" :wrapper-col="wrapperCol">
-            <a-form-model-item ref="code" label="角色权限" prop="code">
-                <a-input v-model="form.code" />
-            </a-form-model-item>
-        </a-form-model> -->
 
         <div class="modal-footer">
             <a-button :style="{ marginRight: '8px' }" @click="resetHandle">
@@ -46,14 +40,14 @@ export default {
     methods: {
         // 进行重置
         resetHandle() {
-            this.$emit("resetHandle");
+            this.$emit("onReset");
         },
         // 进行确认
         submitHandle() {
-            this.$emit("submitHandle");
+            this.$emit("onSubmit");
         },
         closeModalHandle(){
-            this.$emit("closeModalHandle");
+            this.$emit("onCloseModal");
         }
     }
 }

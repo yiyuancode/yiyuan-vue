@@ -40,19 +40,15 @@ const routerMap = {
     name: "用户管理",
     component: () => import('@/pages/sys/user/index'),
   },
-  tenant: {
-    name: "租户管理",
-    component: view.blank
-  },
   tenantList: {
     name: "租户列表",
     path: "/sys/tenant/list",
-    component: () => import('@/pages/sys/tenant/tenantList/index'),
+    component: () => import('@/pages/sys/tenantList/index'),
   },
   tenantPackage: {
     name: "租户列表",
     path: "/sys/tenant/package",
-    component: () => import('@/pages/sys/tenant/tenantPackage/index'),
+    component: () => import('@/pages/sys/tenantPackage/index'),
   },
   menu: {
     name: "菜单管理",

@@ -3,7 +3,6 @@
 
         <!-- 管理容器 -->
         <div class="manage-container">
-
             <!-- 查询操作容器 -->
             <div class="search-container">
                 <searchForm :searchFormList="searchFormList">
@@ -13,7 +12,6 @@
 
             <!-- 主体内容区域  -->
             <div class="content-container">
-
                 <div class="operate-btn-container">
                     <!-- 添加 -->
                     <a-button v-if="uRenderObj.addBtn.isOpen" type="primary" @click="addHandle">
@@ -87,7 +85,7 @@
         </div>
 
         <Modal :modalTitle="submitModalTitle" :modalVisible="modalVisble" :submitLoading="submitLoading"
-            @submitHandle="submitHandle" @closeModalHandle="modalVisble = false" @resetHandle="resetHandle">
+            @onSubmit="submitHandle" @onCloseModal="modalVisble = false" @onReset="resetHandle">
             <a-form-model ref="submitModalForm" :model="formModel" :rules="formRules" :label-col="labelCol"
                 :wrapper-col="wrapperCol">
                 <slot ref="submitModal" name="submitModal" :opType="submitOpType"></slot>
@@ -129,6 +127,7 @@ const defaultRenderobj = {
     loading: false, //加载
     isOpenSelectCheckbox: true,
     idProp: "id", //需要批量操作使用的data的id属性值
+    submitLoading: false, //表单提交按钮loading
 }
 /**
  * 管理页面的插件
@@ -188,13 +187,18 @@ export default {
             searchFormList: [],
             labelCol: { span: 6 },
             wrapperCol: { span: 18 },
+            isLoading: true,
         }
     },
 
     computed: {
         // 渲染对象和默认渲染对象进行一个混合
         uRenderObj() {
-            return Object.assign(defaultRenderobj, this.renderObj);
+            const uRenderObj = {
+                ...defaultRenderobj,
+                ...this.renderObj
+            }
+            return uRenderObj
         },
 
         // 表头进行处理，增加操作
@@ -274,9 +278,9 @@ export default {
             this.modalVisble = true;
             this.submitOpType = "add";
             this.submitModalTitle = "添加";
-            this.$emit("modalShow");
+            this.$emit("onSave");
             this.$nextTick(() => {
-                console.log(this.$refs);
+                this.$refs.submitModalForm.resetFields();
             });
         },
         importHandle() {
@@ -286,7 +290,7 @@ export default {
             this.noDeveloped();
         },
         // 批量删除
-        batchDeleteHandle() {
+        async batchDeleteHandle() {
             const idProp = this.uRenderObj.idProp;
             const ids = this.selectedRows.map(selRow => {
                 return selRow[idProp];
@@ -297,52 +301,47 @@ export default {
                 return;
             }
 
-            this.$emit("batchDeleteHandle", ids, () => {
-                this.selectedRows = [];
-            });
+            this.$emit("onDelete", "batchdelete", ids);
+            this.selectedRows = [];
         },
         // 编辑的处理
         editHandle(id) {
             this.modalVisble = true;
             this.submitOpType = "edit";
-            this.$emit("editHandle", id, (formRef) => {
-                formRef.resetFields();
+            this.submitModalTitle = "编辑";
+            this.$emit("onSave", id);
+            this.$nextTick(() => {
+                this.$refs.submitModalForm.resetFields();
             });
             this.currentId = id;
-            this.submitModalTitle = "编辑";
         },
         // 确认删除的处理函数
         confirmDeleteHandle(id) {
-            this.$emit('confirmDeleteHandle', id);
+            this.$emit('onDelete', "delete", id);
         },
         // 提交添加的一个处理函数
-        submitHandle() {
+        async submitHandle() {
             this.submitLoading = true;
-            this.$emit('submitHandle', this.submitOpType, this.currentId, (flag, formRef) => {
+            try {
+                const validateRes = await this.$refs.submitModalForm.validate();
+                if (validateRes) {
+                    this.$emit("onSubmit", this.submitOpType, this.currentId, () => {
+                        this.submitLoading = false;
+                    });
+                }
+            } catch (e) {
+                Promise.reject(e);
+                this.$message.error('请先完成表单校验');
                 this.submitLoading = false;
-
-                // 添加
-                if (this.submitOpType === "add") {
-                    if (flag) {
-                        this.$message.success("添加成功");
-                        formRef.resetFields();
-                    }
-                }
-                // 编辑
-                else if (this.submitOpType === "edit") {
-                    if (flag) {
-                        this.$message.success("修改成功")
-                    }
-                }
-            });
+            }
         },
         // 重置处理
         resetHandle() {
-            this.$emit("resetHandle", (formRef) => {
-                formRef.resetFields();
-                this.$message.success("重置信息成功!!");
-            });
+            this.$emit("resetHandle");
+            this.$refs.submitModalForm.resetFields();
+            this.$message.success("重置信息成功!!");
         },
+
         noDeveloped() {
             this.$message.warning("该功能还没有开发..");
         }

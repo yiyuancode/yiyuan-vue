@@ -1,7 +1,7 @@
 <template>
     <div class="search-form-container">
         <a-row>
-            <a-col :xl="{ span: 16 }" :lg="{ span: 24 }" :xxl="{ span: 20 }">
+            <a-col :xxl="{ span: 20 }" :xl="{ span: 18 }" :lg="{ span: 24 }" >
                 <a-row class="search-form-row">
                     <a-col v-for="(searchItem, index) in uSearchFormList" :key="index" :lg="{ span: 8 }" :md="{ span: 12 }">
                         <div v-if="isExpand || (!isExpand && searchItem.currentMdSpan <= 24)" class="search-form-item">
@@ -33,7 +33,7 @@
                     </a-col>
                 </a-row>
             </a-col>
-            <a-col :xl="{ span: 8 }" :lg="{ span: 24 }" :xxl="{ span: 4 }">
+            <a-col :xxl="{ span: 4 }" :xl="{ span: 6 }" :lg="{ span: 24 }" >
                 <div class="search-btn-container">
                     <a-button type="primary" @click="searchForm">查询</a-button>
                     <a-button type="primary" @click="resetForm">重置</a-button>
