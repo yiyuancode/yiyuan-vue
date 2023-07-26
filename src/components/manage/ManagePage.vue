@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <!-- 管理容器 -->
         <div class="manage-container">
             <!-- 查询操作容器 -->
@@ -170,10 +169,6 @@ export default {
         formModel: {
             type: Object,
         },
-        modalFormRefs: {
-            type: Object,
-            default: null,
-        },
     },
 
     data() {
@@ -337,7 +332,6 @@ export default {
         },
         // 重置处理
         resetHandle() {
-            this.$emit("resetHandle");
             this.$refs.submitModalForm.resetFields();
             this.$message.success("重置信息成功!!");
         },

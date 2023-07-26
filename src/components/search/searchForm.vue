@@ -145,7 +145,7 @@ export default {
                     searchFormInfoObj
                 }
             });
-            this.$emit('searchForm', this.uSearchFormList);
+            this.$emit('onSearch', this.uSearchFormList);
         },
         // 重置表单
         resetForm() {

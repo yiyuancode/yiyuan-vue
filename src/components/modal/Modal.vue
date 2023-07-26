@@ -30,7 +30,7 @@ export default {
         },
         modalVisible: {
             type: Boolean,
-            default: true
+            default: false
         },
         submitLoading: {
             type: Boolean,
