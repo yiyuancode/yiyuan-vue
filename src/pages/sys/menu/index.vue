@@ -187,7 +187,7 @@ const menuStatusList = [{
 }]
 
 
-import { getMenuTree } from "@/api/auth/admin"
+// import { getMenuTree } from "@/api/auth/admin"
 
 export default {
     data() {
@@ -235,10 +235,10 @@ export default {
         }
     },
     async created() {
-        const menuList = await getMenuTree();
-        const { treeData, treeKeyData } = this.getTreeData(menuList);
-        this.treeData = treeData;
-        this.treeKeyData = treeKeyData;
+        // const menuList = await getMenuTree();
+        // const { treeData, treeKeyData } = this.getTreeData(menuList);
+        // this.treeData = treeData;
+        // this.treeKeyData = treeKeyData;
     },
  
     methods: {

@@ -53,7 +53,7 @@
 import Modal from "@/components/modal/Modal";
 import ManagePage from "@/components/manage/ManagePage.vue";
 
-import { getMenuTree } from "@/api/auth/admin"
+// import { getMenuTree } from "@/api/auth/admin"
 import manage from "@/mixins/manage";
 import { columns, form, moduleConfig, formRules } from "./pageConfig";
 const { assignMenu } = moduleConfig.module;
@@ -92,10 +92,10 @@ export default {
         async assignPermission(id) {
             this.assignPermissionVisible = true;
             this.roleId = id;
-            const menuList = await getMenuTree();
-            const { treeData, treeKeyData } = this.getTreeData(menuList);
-            this.treeData = treeData;
-            this.treeKeyData = treeKeyData;
+            // const menuList = await getMenuTree();
+            // const { treeData, treeKeyData } = this.getTreeData(menuList);
+            // this.treeData = treeData;
+            // this.treeKeyData = treeKeyData;
         },
         // 租户表单信息回填
         async formBackFill(id) {

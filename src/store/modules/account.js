@@ -1,4 +1,4 @@
-import { login } from "@/api/auth/admin";
+import { login } from "@/api/login";
 import { setAuthorization, removeAuthorization } from "@/utils/request";
 
 export default {

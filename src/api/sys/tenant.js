@@ -10,7 +10,7 @@ import { request } from '@/utils/request';
  */
 export async function getTenantPageList(pageSize, pageNum) {
     const resp = await request({
-        url: "/sys/tenant/pages",
+        url: "/sys/tenant/page",
         params: {
             pageSize,
             pageNum

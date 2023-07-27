@@ -87,7 +87,7 @@
 
 <script>
 import CommonLayout from '@/layouts/CommonLayout';
-import { getRoutesConfig } from "@/api/auth/admin"
+import { getRoutesConfig } from "@/api/login"
 import { loadRoutes } from '@/utils/routerUtil';
 import { mapMutations } from 'vuex';
 
@@ -129,13 +129,16 @@ export default {
             position: 'Java工程师 | 蚂蚁金服-计算服务事业群-微信平台部'
           }
 
+          // console.log(userInfoRes);
+
           // 设置token用户权限角色等等信息
           this.setUser(testUser)
           this.setPermissions([])
           this.setRoles([])
 
-          // 获取路由信息
           const routerRes = await getRoutesConfig();
+
+          // 获取路由信息
           loadRoutes(routerRes.data);
 
           this.$router.push('/dashboard/workplace');

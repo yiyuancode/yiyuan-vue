@@ -20,7 +20,7 @@ export async function getRoleList() {
  */
 export async function getRolePageList(pageSize, pageNum) {
     const resp = await request({
-        url: "/auth/role/pages",
+        url: "/auth/role/page",
         params: {
             pageSize,
             pageNum
