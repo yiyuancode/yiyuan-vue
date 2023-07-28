@@ -87,7 +87,7 @@
 
 <script>
 import CommonLayout from '@/layouts/CommonLayout';
-import { getRoutesConfig } from "@/api/login"
+import { getUserInfo } from "@/api/login"
 import { loadRoutes } from '@/utils/routerUtil';
 import { mapMutations } from 'vuex';
 
@@ -108,7 +108,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('account', ['setUser', "setPermissions", "setRoles"]),
+    ...mapMutations('account', ['setUser', 'setPermissions', 'setRoles', 'setMenuTreeList']),
 
     async loginHandle(e) {
       this.logging = true;
@@ -122,35 +122,65 @@ export default {
         const loginRes = await this.$store.dispatch("account/login", { username, password });
         // 登录成功
         if (loginRes.code === 200) {
+          // 获取用户信息
+          const userInfo = await getUserInfo();
+
           const testUser = {
-            name: 'ADMIN',
-            avatar: 'https://gw.alipayobjects.com/zos/rmsportal/cnrhVkzwxjPwAaCfPbdc.png',
-            address: '北京',
-            position: 'Java工程师 | 蚂蚁金服-计算服务事业群-微信平台部'
+            name: userInfo.username,
+            avatar: "https://img1.baidu.com/it/u=2526782352,137544254&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1690650000&t=53a347dfa7b7b0f10bac989e71dc852e"
           }
-
-          // console.log(userInfoRes);
-
-          // 设置token用户权限角色等等信息
-          this.setUser(testUser)
-          this.setPermissions([])
-          this.setRoles([])
-
-          const routerRes = await getRoutesConfig();
-
+          // 设置用户
+          this.setUser(testUser);
+          // 设置权限
+          this.setPermissions(userInfo.permissionsList);
+          // 设置角色
+          this.setRoles(userInfo.roleList);
+          // 设置菜单列表
+          this.setMenuTreeList(userInfo.menuTreeList);
+          let routes = this.getRoutes(userInfo.menuTreeList);
+          routes = [{
+            router : "root",
+            children : routes
+          }]
           // 获取路由信息
-          loadRoutes(routerRes.data);
+          loadRoutes(routes);
 
-          this.$router.push('/dashboard/workplace');
+          this.$router.push('/auth/admin');
           this.$message.success(loginRes.message)
         }
 
       } catch (err) {
         console.log(err);
+        console.log(err);
       }
 
       this.logging = false;
     },
+
+    getRoutes(menuTreeList) {
+      const routes = [];
+
+      menuTreeList.forEach(mt => {
+        const {
+          type,
+          router,
+          children
+        } = mt;
+
+        // 菜单或者目录
+        if (type.value === 0 || type.value === 1) {
+          const routesObj = {
+            router,
+          }
+          if(children && children.length){
+            routesObj.children = this.getRoutes(children)
+          }
+          routes.push(routesObj);
+        }
+      });
+
+      return routes;
+    }
   }
 };
 </script>

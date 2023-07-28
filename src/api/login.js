@@ -23,19 +23,20 @@ export async function login(username, password) {
  * 获取用户信息
  * @returns 
  */
-export async function getUserInfo(){
+export async function getUserInfo() {
     const resp = await request({
         url: "/login/getUserInfo",
         method: "get",
     });
 
-    return resp;
+    return resp.data;
 }
 
-export async function getRoutesConfig(){
-    return await request({
-        url : "/routes",
+export async function getRoutesConfig() {
+    const resp = await request({
+        url: "/routes",
     });
+    return resp.data;
 }
 
 export default {

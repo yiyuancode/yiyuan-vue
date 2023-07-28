@@ -17,11 +17,11 @@ axios.defaults.baseURL = '/';
 //   AUTH2: 'auth2'
 // };
 
-// http method
-const METHOD = {
-  GET: 'get',
-  POST: 'post'
-};
+// // http method
+// const METHOD = {
+//   GET: 'get',
+//   POST: 'post'
+// };
 
 const request = axios;
 
@@ -115,7 +115,6 @@ function parseUrlParams(url) {
 
 
 export {
-  METHOD,
   request,
   setAuthorization,
   removeAuthorization,

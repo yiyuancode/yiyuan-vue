@@ -28,32 +28,37 @@ const routerMap = {
   },
   sys: {
     name: "系统管理",
-    component: view.blank
+    component: view.blank,
+    icon : "setting"
   },
   role: {
-    path: "/sys/role",
     name: "角色管理",
     component: () => import('@/pages/sys/role/index'),
   },
-  user: {
-    path: "/sys/user",
-    name: "用户管理",
-    component: () => import('@/pages/sys/user/index'),
+  auth : {
+    name : "权限管理",
+    component: view.blank,
+    icon: "security-scan",
   },
-  tenantList: {
+  admin: {
+    name: "用户管理",
+    component: () => import('@/pages/sys/admin/index'),
+  },
+  tenant: {
     name: "租户列表",
-    path: "/sys/tenant/list",
     component: () => import('@/pages/sys/tenantList/index'),
   },
   tenantPackage: {
     name: "租户列表",
-    path: "/sys/tenant/package",
     component: () => import('@/pages/sys/tenantPackage/index'),
   },
   menu: {
     name: "菜单管理",
-    path: "/sys/menu",
     component: () => import('@/pages/sys/menu/index'),
+  },
+  host:{
+    name : "主机记录管理",
+    component: () => import('@/pages/sys/host/index'),
   }
 };
 export default routerMap;

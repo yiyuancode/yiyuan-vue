@@ -9,6 +9,7 @@ export default {
     roles: null,
     routesConfig: null,
     isLogin: false,
+    menuTreeList: [],
   },
   getters: {
     user: (state) => {
@@ -61,7 +62,21 @@ export default {
         }
       }
       return state.routesConfig;
-    }
+    },
+    menuTreeList: (state) => {
+      if (!state.menuTreeList.length) {
+        try {
+          const menuTreeList = localStorage.getItem(
+            process.env.VUE_APP_MENU_TREE_KEY
+          );
+          state.menuTreeList = JSON.parse(menuTreeList);
+          state.menuTreeList = state.menuTreeList ? state.menuTreeList : [];
+        } catch (e) {
+          console.error(e.message);
+        }
+      }
+      return state.menuTreeList;
+    },
   },
   mutations: {
     setUser(state, user) {
@@ -87,6 +102,14 @@ export default {
       localStorage.setItem(
         process.env.VUE_APP_ROUTES_KEY,
         JSON.stringify(routesConfig)
+      );
+    },
+    // 设置菜单列表
+    setMenuTreeList(state, menuTreeList) {
+      state.menuTreeList = menuTreeList;
+      localStorage.setItem(
+        process.env.VUE_APP_MENU_TREE_KEY,
+        JSON.stringify(menuTreeList)
       );
     },
     setIsLogin(state, isLogin) {

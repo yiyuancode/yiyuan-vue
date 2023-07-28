@@ -36,94 +36,98 @@
                     </p>
                     <a-divider />
 
-                    <div class="menu-form-container">
-                        <span class="menu-form-title">
-                            <a-divider orientation="left">
-                                基本设置
-                            </a-divider>
-                        </span>
+                    <a-row>
+                        <a-col :xl="{span : 20}" :lg="{ span: 16 }">
+                            <div class="menu-form-container">
+                                <span class="menu-form-title">
+                                    <a-divider orientation="left">
+                                        基本设置
+                                    </a-divider>
+                                </span>
 
-                        <a-form-model ref="menuForm" :model="menuForm" :rules="menuRules" :label-col="labelCol"
-                            :wrapper-col="wrapperCol">
-                            <a-form-model-item ref="type" label="类型" prop="type">
-                                <a-radio-group v-model="menuForm.type">
-                                    <a-radio-button v-for="(item, index) in menuTypeList" :key="index" :value="item.val">
-                                        {{ item.name }}
-                                    </a-radio-button>
-                                </a-radio-group>
-                            </a-form-model-item>
-                            <a-form-model-item ref="parentId" :label="menuTypeLabelInfo.parentMenuLabel" prop="parentId">
-                                <a-tree-select v-model="menuForm.parentId" style="width: 100%"
-                                    :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }" :tree-data="treeData"
-                                    placeholder="请选择" tree-default-expand-all allow-clear>
-                                </a-tree-select>
-                            </a-form-model-item>
+                                <a-form-model ref="menuForm" :model="menuForm" :rules="menuRules" :label-col="labelCol"
+                                    :wrapper-col="wrapperCol">
+                                    <a-form-model-item ref="type" label="类型" prop="type">
+                                        <a-radio-group v-model="menuForm.type">
+                                            <a-radio-button v-for="(item, index) in menuTypeList" :key="index"
+                                                :value="item.val">
+                                                {{ item.name }}
+                                            </a-radio-button>
+                                        </a-radio-group>
+                                    </a-form-model-item>
+                                    <a-form-model-item ref="parentId" :label="menuTypeLabelInfo.parentMenuLabel"
+                                        prop="parentId">
+                                        <a-tree-select v-model="menuForm.parentId" style="width: 100%"
+                                            :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }" :tree-data="treeData"
+                                            placeholder="请选择" tree-default-expand-all allow-clear>
+                                        </a-tree-select>
+                                    </a-form-model-item>
 
 
-                            <div class="menu-form-item">
-                                <a-form-model-item ref="name" :label="menuTypeLabelInfo.menuNameLabel" prop="name" :label-col="{ span: 12 }"
-                                    :wrapper-col="{ span: 12 }">
-                                    <a-input v-model="menuForm.name" placeholder="目录名称" />
-                                </a-form-model-item>
+                                    <div class="menu-form-item">
+                                        <a-form-model-item ref="name" :label="menuTypeLabelInfo.menuNameLabel" prop="name"
+                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
+                                            <a-input v-model="menuForm.name" placeholder="目录名称" />
+                                        </a-form-model-item>
 
-                                <a-form-model-item ref="icon" label="目录图标" prop="icon" :label-col="{ span: 12 }"
-                                    :wrapper-col="{ span: 12 }">
-                                    <a-input v-model="menuForm.icon" placeholder="目录图标" />
-                                </a-form-model-item>
-                            </div>
+                                        <a-form-model-item ref="icon" label="目录图标" prop="icon" :label-col="{ span: 12 }"
+                                            :wrapper-col="{ span: 12 }">
+                                            <a-input v-model="menuForm.icon" placeholder="目录图标" />
+                                        </a-form-model-item>
+                                    </div>
 
-                            <div class="menu-form-item">
-                                <a-form-model-item ref="routePath" label="路由地址" prop="routePath" :label-col="{ span: 12 }"
-                                    :wrapper-col="{ span: 12 }">
-                                    <a-input v-model="menuForm.routePath" placeholder="路由地址" />
-                                </a-form-model-item>
+                                    <div class="menu-form-item">
+                                        <a-form-model-item ref="routePath" label="路由地址" prop="routePath"
+                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
+                                            <a-input v-model="menuForm.routePath" placeholder="路由地址" />
+                                        </a-form-model-item>
 
-                                <a-form-model-item ref="routeName" label="路由名称" prop="routeName" :label-col="{ span: 12 }"
-                                    :wrapper-col="{ span: 12 }">
-                                    <a-input v-model="menuForm.routeName" placeholder="路由名称" />
-                                </a-form-model-item>
-                            </div>
+                                        <a-form-model-item ref="routeName" label="路由名称" prop="routeName"
+                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
+                                            <a-input v-model="menuForm.routeName" placeholder="路由名称" />
+                                        </a-form-model-item>
+                                    </div>
 
-                            <div class="menu-form-item">
-                                <a-form-model-item ref="routeRedirect" label="默认路由" prop="routeRedirect"
-                                    :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
-                                    <a-input v-model="menuForm.routeRedirect" placeholder="路由重定向地址" />
-                                </a-form-model-item>
+                                    <div class="menu-form-item">
+                                        <a-form-model-item ref="routeRedirect" label="默认路由" prop="routeRedirect"
+                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
+                                            <a-input v-model="menuForm.routeRedirect" placeholder="路由重定向地址" />
+                                        </a-form-model-item>
 
-                                <a-form-model-item ref="sort" label="显示排序" prop="sort" :label-col="{ span: 12 }"
-                                    :wrapper-col="{ span: 12 }">
-                                    <a-input-number v-model="menuForm.sort" :min="0" placeholder="显示排序" />
-                                </a-form-model-item>
-                            </div>
+                                        <a-form-model-item ref="sort" label="显示排序" prop="sort" :label-col="{ span: 12 }"
+                                            :wrapper-col="{ span: 12 }">
+                                            <a-input-number v-model="menuForm.sort" :min="0" placeholder="显示排序" />
+                                        </a-form-model-item>
+                                    </div>
 
-                            <a-form-model-item ref="routeComponent" label="组件路径" prop="routeComponent">
-                                <a-input v-model="menuForm.routeComponent" placeholder="路由对应组件路径" />
-                            </a-form-model-item>
+                                    <a-form-model-item ref="routeComponent" label="组件路径" prop="routeComponent">
+                                        <a-input v-model="menuForm.routeComponent" placeholder="路由对应组件路径" />
+                                    </a-form-model-item>
 
-                            <span class="menu-form-title">
-                                <a-divider orientation="left">
-                                    功能设置
-                                </a-divider>
-                            </span>
+                                    <span class="menu-form-title">
+                                        <a-divider orientation="left">
+                                            功能设置
+                                        </a-divider>
+                                    </span>
 
-                            <div class="menu-form-item">
-                                <a-form-model-item ref="status" label="目录状态" prop="status" :label-col="{ span: 12 }"
-                                    :wrapper-col="{ span: 12 }">
-                                    <a-radio-group v-model="menuForm.status">
-                                        <a-radio-button v-for="(item, index) in menuStatusList" :key="index"
-                                            :value="item.val">
-                                            {{ item.name }}
-                                        </a-radio-button>
-                                    </a-radio-group>
-                                </a-form-model-item>
+                                    <div class="menu-form-item">
+                                        <a-form-model-item ref="status" label="目录状态" prop="status" :label-col="{ span: 12 }"
+                                            :wrapper-col="{ span: 12 }">
+                                            <a-radio-group v-model="menuForm.status">
+                                                <a-radio-button v-for="(item, index) in menuStatusList" :key="index"
+                                                    :value="item.val">
+                                                    {{ item.name }}
+                                                </a-radio-button>
+                                            </a-radio-group>
+                                        </a-form-model-item>
 
-                                <a-form-model-item ref="isAffix" label="多页签" prop="isAffix" :label-col="{ span: 12 }"
-                                    :wrapper-col="{ span: 12 }">
-                                    <a-switch v-model="menuForm.isAffix" default-checked />
-                                </a-form-model-item>
-                            </div>
+                                        <a-form-model-item ref="isAffix" label="多页签" prop="isAffix"
+                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
+                                            <a-switch v-model="menuForm.isAffix" default-checked />
+                                        </a-form-model-item>
+                                    </div>
 
-                            <!-- <div class="menu-form-item">
+                                    <!-- <div class="menu-form-item">
                                 <a-form-model-item ref="routePath" label="显示状态" prop="routePath" :label-col="{ span: 12 }"
                                     :wrapper-col="{ span: 12 }">
                                 </a-form-model-item>
@@ -133,27 +137,30 @@
                                 </a-form-model-item>
                             </div> -->
 
-                            <div class="menu-form-item">
-                                <a-form-model-item ref="isFrame" label="是否外链" prop="isFrame" :label-col="{ span: 12 }"
-                                    :wrapper-col="{ span: 12 }">
-                                    <a-radio-group v-model="menuForm.isFrame">
-                                        <a-radio-button :value="1">
-                                            是
-                                        </a-radio-button>
-                                        <a-radio-button :value="0">
-                                            否
-                                        </a-radio-button>
-                                    </a-radio-group>
-                                </a-form-model-item>
+                                    <div class="menu-form-item">
+                                        <a-form-model-item ref="isFrame" label="是否外链" prop="isFrame"
+                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
+                                            <a-radio-group v-model="menuForm.isFrame">
+                                                <a-radio-button :value="1">
+                                                    是
+                                                </a-radio-button>
+                                                <a-radio-button :value="0">
+                                                    否
+                                                </a-radio-button>
+                                            </a-radio-group>
+                                        </a-form-model-item>
 
-                                <a-form-model-item ref="isAlwaysShow" label="简化路由" prop="isAlwaysShow"
-                                    :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
-                                    <a-switch v-model="menuForm.isAlwaysShow" default-checked />
-                                </a-form-model-item>
+                                        <a-form-model-item ref="isAlwaysShow" label="简化路由" prop="isAlwaysShow"
+                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
+                                            <a-switch v-model="menuForm.isAlwaysShow" default-checked />
+                                        </a-form-model-item>
+                                    </div>
+
+                                </a-form-model>
                             </div>
+                        </a-col>
+                    </a-row>
 
-                        </a-form-model>
-                    </div>
                 </div>
             </a-col>
         </a-row>
@@ -186,8 +193,7 @@ const menuStatusList = [{
     val: 0
 }]
 
-
-// import { getMenuTree } from "@/api/auth/admin"
+import { mapGetters } from 'vuex'
 
 export default {
     data() {
@@ -217,16 +223,17 @@ export default {
             menuStatusList,  //菜单状态
         }
     },
-    computed:{
-        menuTypeLabelInfo(){
+    computed: {
+        ...mapGetters('account', ['menuTreeList']),
+        menuTypeLabelInfo() {
             let labelInfo = {};
-            if(this.menuForm.type === 0){
+            if (this.menuForm.type === 0) {
                 labelInfo.parentMenuLabel = "上级目录";
                 labelInfo.menuNameLabel = "目录名称";
-            }else if(this.menuForm.type === 1){
+            } else if (this.menuForm.type === 1) {
                 labelInfo.parentMenuLabel = "上级菜单";
                 labelInfo.menuNameLabel = "菜单名称";
-            }else if(this.menuForm.type === 2){
+            } else if (this.menuForm.type === 2) {
                 labelInfo.parentMenuLabel = "按钮对应菜单";
                 labelInfo.menuNameLabel = "按钮名称";
             }
@@ -235,12 +242,12 @@ export default {
         }
     },
     async created() {
-        // const menuList = await getMenuTree();
-        // const { treeData, treeKeyData } = this.getTreeData(menuList);
-        // this.treeData = treeData;
-        // this.treeKeyData = treeKeyData;
+        const menuList = this.menuTreeList;
+        const { treeData, treeKeyData } = this.getTreeData(menuList);
+        this.treeData = treeData;
+        this.treeKeyData = treeKeyData;
     },
- 
+
     methods: {
         // 根据获取的菜单拿到所有的数级数据
         getTreeData(menuList, treeKeyData = []) {
@@ -321,7 +328,6 @@ export default {
 
 // 菜单表单容器
 .menu-form-container {
-    width: 50%;
 
     // 菜单表单标题
     .menu-form-title {
@@ -337,6 +343,10 @@ export default {
         .ant-form-item {
             flex: 1 1 50%;
         }
+    }
+
+    .ant-input-number{
+        width: 100%;
     }
 }
 </style>
