@@ -4,16 +4,50 @@ import { request } from '@/utils/request';
 
 /**
  * 获取用户信息(分页)
- * @param {*} pageSize 每页显示数量
- * @param {*} pageNum 当前页面
+ * @param {*} opts
+ *  @param {*} pageSize 每页显示数量
+ *  @param {*} pageNum 当前页面
+ *  @param {*} startTimeStart 租户开始时间（开始）
+ *  @param {*} startTimeEnd 租户开始时间（结束）
+ *  @param {*} endTimeStart 租户结束时间（开始）
+ *  @param {*} endTimeEnd 租户结束时间（结束）
+ *  @param {*} updateTimeStart 更新时间（开始）
+ *  @param {*} updateTimeEnd 更新时间（结束）
+ *  @param {*} createTimeStart 创建时间（开始）
+ *  @param {*} createTimeEnd 创建时间（结束）
  * @returns 
  */
-export async function getAdminPageList(pageSize, pageNum) {
+export async function getAdminPageList(opts = {}) {
+    const {
+        pageSize,
+        pageNum,
+        username,
+        platform,
+        startTimeStart,
+        startTimeEnd,
+        endTimeStart,
+        endTimeEnd,
+        updateTimeStart,
+        updateTimeEnd,
+        createTimeStart,
+        createTimeEnd
+    } = opts;
+
     const resp = await request({
         url: "/auth/admin/page",
-        params: {
+        params : {
             pageSize,
-            pageNum
+            pageNum,
+            username,
+            platform,
+            startTimeStart,
+            startTimeEnd,
+            endTimeStart,
+            endTimeEnd,
+            updateTimeStart,
+            updateTimeEnd,
+            createTimeStart,
+            createTimeEnd
         }
     });
     return resp.data;
@@ -52,8 +86,8 @@ export async function addAdmin(adminInfo = {}) {
         data: {
             username,
             password,
-            platform : "0", //平台端
-            tenantId : "0" //平台端租户id填写0
+            platform: "0", //平台端
+            tenantId: "0" //平台端租户id填写0
         }
     });
     return resp.data;
@@ -103,7 +137,7 @@ export async function deleteAdmin(ids) {
  * @param {*} userId 用户id
  * @param {*} roleIdList 角色id列表
  */
-export async function assignRole(userId,rolesIdList){
+export async function assignRole(userId, rolesIdList) {
     const resp = await request({
         url: "/auth/admin/assignRole",
         method: "post",

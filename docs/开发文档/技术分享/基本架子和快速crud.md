@@ -131,7 +131,7 @@ export  {
 > 页面的视图，使用ManagePage组件
 
 ```vue
-<ManagePage :theadData="columns" :data="data" :pageInfo="pageInfo" :renderObj="renderObj" :formRules="rules"
+<ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" :formRules="rules"
         :formModel="form" @onSave="saveHandle" @onSubmit="submitHandle" @onDelete="deleteHandle">
             
  </ManagePage>
@@ -181,8 +181,8 @@ async formBackFill(id) {
 
 ```js
 handleSubmitData() {
-    const startTime = this.form.startTime.format('YYYY-MM-DD hh:mm:ss');
-    const endTime = this.form.endTime.format('YYYY-MM-DD hh:mm:ss');
+    const startTime = this.form.startTime.format('YYYY-MM-DD HH:mm:ss');
+    const endTime = this.form.endTime.format('YYYY-MM-DD HH:mm:ss');
 
     const tenantInfo = {
         ...this.form,

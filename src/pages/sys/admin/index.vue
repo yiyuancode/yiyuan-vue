@@ -1,6 +1,7 @@
 <template>
-    <ManagePage :theadData="columns" :data="data" :pageInfo="pageInfo" :renderObj="renderObj" :formRules="rules"
-        :formModel="form" @onSave="saveHandle" @onSubmit="submitHandle" @onDelete="deleteHandle">
+    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" :formRules="rules"
+        :formModel="form" :submitFormList="submitFormList" @onSave="saveHandle" @onSubmit="submitHandle"
+        @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle">
 
         <span slot="table-userRoles" slot-scope="{text,record}">
             <a-tag v-if="record.userRoles">{{ text }}</a-tag>
@@ -20,7 +21,7 @@
         <!-- </template> -->
 
         <!-- 默认模态框插槽 -->
-        <template #submitModal="scope">
+        <!-- <template #submitModal="scope">
             <a-form-model ref="adminForm" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
                 <a-form-model-item ref="username" has-feedback label="用户名" prop="username">
                     <a-input v-model="form.username" />
@@ -33,7 +34,7 @@
                     <a-input v-model="form.rePassword" type="password" />
                 </a-form-model-item>
             </a-form-model>
-        </template>
+        </template> -->
 
         <!-- 分配角色模态框 -->
         <Modal modalTitle="分配角色" :modalVisible="assignRoleVisible" :submitLoading="assignRoleLoading"
@@ -100,7 +101,30 @@ export default {
             assignRoleLoading: false,
             roleList: [],
             selectRoleList: [],// 选择的角色列表
-            currentUserId: null
+            currentUserId: null,
+            submitFormList: [{
+                prop: "username",
+                label: "用户名",
+                placeholder : "用户名",
+                value : "",
+                type : "input",
+            }]
+
+            /* 
+            , {
+                prop: "password",
+                label: "密码",
+                placeholder : "密码",
+                value : "",
+                type : "input"
+            }, {
+                prop: "rePassword",
+                label: "确认密码",
+                placeholder : "确认密码",
+                value : "",
+                type : "input"
+            }
+            */
         };
     },
 
@@ -109,7 +133,8 @@ export default {
         handleRecords(records) {
             for (let i = 0; i < records.length; i++) {
                 const {
-                    roleList
+                    roleList,
+                    platform
                 } = records[i];
 
                 let userRoles = "";
@@ -119,6 +144,7 @@ export default {
                     }).join(",");
                 }
 
+                records[i].platform = platform.desc;
                 records[i].userRoles = userRoles;
             }
         },
@@ -162,7 +188,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-/deep/ .ant-tag{
+/deep/ .ant-tag {
     white-space: normal;
 }
 </style>

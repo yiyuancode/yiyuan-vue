@@ -1,39 +1,35 @@
 <template>
     <div class="search-form-container">
         <a-row>
-            <a-col :xxl="{ span: 20 }" :xl="{ span: 18 }" :lg="{ span: 24 }" >
+            <a-col :xxl="{ span: 20 }" :xl="{ span: 18 }" :lg="{ span: 24 }">
                 <a-row class="search-form-row">
                     <a-col v-for="(searchItem, index) in uSearchFormList" :key="index" :lg="{ span: 8 }" :md="{ span: 12 }">
                         <div v-if="isExpand || (!isExpand && searchItem.currentMdSpan <= 24)" class="search-form-item">
                             <label>{{ searchItem.labelText }}</label>
+                            <FormItem :formItem="searchItem" />
                             <!-- 普通的文本框 -->
-                            <a-input v-if="searchItem.type === 'input'" v-model="searchItem.value"
+                            <!-- <a-input v-if="searchItem.type === 'input'" v-model="searchItem.value"
                                 :placeholder="searchItem.placeholder" />
-                            <!-- 带搜索的文本框 -->
                             <a-input-search v-else-if="searchItem.type === 'inputSearch'" v-model="searchItem.value"
                                 :placeholder="searchItem.placeholder" />
-                            <!-- 日期选择器 -->
                             <a-date-picker v-else-if="searchItem.type === 'datePicker'" v-model="searchItem.value"
                                 :placeholder="searchItem.placeholder" :format="searchItem.format" />
-                            <!-- 日期范围选择器 -->
                             <a-range-picker v-else-if="searchItem.type === 'rangePicker'" v-model="searchItem.value"
                                 :format="searchItem.format" />
 
-                            <!-- 选择器 -->
                             <a-select v-else-if="searchItem.type === 'select'" v-model="searchItem.value"
                                 style="width: 100%;">
                                 <a-select-option v-for="(optionItem, optionIndex) in searchItem.options" :key="optionIndex"
                                     :value="optionItem.value">
                                     {{ optionItem.name }}
                                 </a-select-option>
-                            </a-select>
-
+                            </a-select> -->
                         </div>
 
                     </a-col>
                 </a-row>
             </a-col>
-            <a-col :xxl="{ span: 4 }" :xl="{ span: 6 }" :lg="{ span: 24 }" >
+            <a-col :xxl="{ span: 4 }" :xl="{ span: 6 }" :lg="{ span: 24 }">
                 <div class="search-btn-container">
                     <a-button type="primary" @click="searchForm">查询</a-button>
                     <a-button type="primary" @click="resetForm">重置</a-button>
@@ -48,7 +44,11 @@
 </template>
 
 <script>
+import FormItem from "../tool/FormItem";
 export default {
+    components: {
+        FormItem
+    },
     props: {
         // 既然使用到了这个组件，这个属性就是必须传递的
         /**
@@ -100,8 +100,9 @@ export default {
                     searchItem.format = "YYYY-MM-DD HH:mm:ss";
                 } else if (type === 'select') {
                     searchItem.options = searchItem.options || [];
+                    value = value || undefined;
                 } else if (type === 'rangePicker') {
-                    // mdSpan = 12;
+                    searchItem.format = "YYYY-MM-DD HH:mm:ss";
                     placeholder = placeholder || [];
                     value = value || null;
                 }
@@ -121,41 +122,70 @@ export default {
 
                 return newSearchFormObj;
             });
+
         },
         // 查询表单
         searchForm() {
-            // const searchFormInfoList = [];
+            const searchFormInfoObj = {};
+
             // 每次进行一个提交的时候对数据进行一个处理
             this.uSearchFormList.forEach(searchFormItem => {
                 const {
                     type,
                     key,
-                    value
+                    value,
                 } = searchFormItem;
 
-                const searchFormInfoObj = {
-                    key,
-                    value
-                };
+                let tempValue = value;
+                if (Object.prototype.toString.call(value) === '[object Object]') {
+                    tempValue = { ...value }
+                } else if(Object.prototype.toString.call(value) === '[object Array]'){
+                    tempValue = [ ...value ]
+                }
 
                 // 时间和时间范围
                 if (type === 'rangePicker') {
-                    searchFormInfoObj
+                    if (tempValue && tempValue.length) {
+                        for (let i = 0; i < tempValue.length; i++) {
+                            tempValue[i] = tempValue[i].format('YYYY-MM-DD HH:mm:ss');
+                            let tempKey;
+                            if (i === 0) {
+                                tempKey = `${key}Start`;
+                            } else {
+                                tempKey = `${key}End`;
+                            }
+                            searchFormInfoObj[tempKey] = tempValue[i];
+                        }
+                    }
+
                 } else if (type === 'datePicker') {
-                    searchFormInfoObj
+                    if (tempValue !== '' && tempValue !== undefined) {
+                        searchFormInfoObj[key] = tempValue.format('YYYY-MM-DD HH:mm:ss');
+                    }
                 }
+
+                if (tempValue !== '' && tempValue !== undefined) {
+                    if (type !== 'rangePicker') {
+                        searchFormInfoObj[key] = tempValue;
+                    }
+                }
+
             });
-            this.$emit('onSearch', this.uSearchFormList);
+
+            this.$emit('onSearch', searchFormInfoObj);
         },
         // 重置表单
         resetForm() {
             this.uSearchFormList.forEach(searchFormItem => {
                 if (searchFormItem.type === 'rangePicker' || searchFormItem.type === 'datePicker') {
                     searchFormItem.value = null;
+                } else if (searchFormItem.type === 'select') {
+                    searchFormItem.value = undefined;
                 } else {
                     searchFormItem.value = '';
                 }
             });
+            this.$emit('onReset');
             this.$message.success("重置查询表单成功");
         },
         // 切换展开状态
@@ -178,7 +208,7 @@ export default {
         padding-right: 12px;
     }
 
-    /deep/ .ant-calendar-picker{
+    /deep/ .ant-calendar-picker {
         width: 100%;
     }
 }

@@ -1,4 +1,16 @@
 import * as tenant from "@/api/sys/tenant";
+import _ from "lodash";
+
+// 其他数据配置
+const otherDataConfig = {
+    statusList: [{
+        name: "正常",
+        value: 0
+    }, {
+        name: "冻结",
+        value: 1
+    }],
+}
 
 // 表格的table配置项
 const columns = [
@@ -13,6 +25,19 @@ const columns = [
         dataIndex: 'code',
         key: 'code',
         isSearch: true,
+    },
+    {
+        title : "租户状态",
+        dataIndex :'status',
+        key : 'status',
+        isSearch : true,
+        // 显示值得对象
+        showValType : "object",
+        showValObj : {},
+        searchObj : {
+            type : "select",
+            options : _.cloneDeep(otherDataConfig.statusList)
+        }
     },
     {
         title: "开始时间",
@@ -73,16 +98,6 @@ const moduleConfig = {
     moduleName : "租户",
 }
 
-// 其他数据配置
-const otherDataConfig = {
-    statusList: [{
-        name: "正常",
-        val: 0
-    }, {
-        name: "冻结",
-        val: 1
-    }],
-}
 
 export  {
     columns,

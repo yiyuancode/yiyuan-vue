@@ -1,6 +1,7 @@
 <template>
-    <ManagePage :theadData="columns" :data="data" :pageInfo="pageInfo" :renderObj="renderObj" :formRules="rules"
-        :formModel="form" @onSave="saveHandle" @onSubmit="submitHandle" @onDelete="deleteHandle">
+    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" :formRules="rules"
+        :formModel="form" @onSave="saveHandle" @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle"
+        @onReset="resetHandle">
 
         <!-- 其他的操作插槽 -->
         <template #otherOperationsContainer="scope">
@@ -63,7 +64,7 @@ export default {
         ManagePage,
         Modal
     },
-    mixins: [manage({form})],
+    mixins: [manage({ form })],
 
     data() {
         return {
@@ -88,8 +89,8 @@ export default {
             treeKeyData: [],
         };
     },
-    computed:{
-        ...mapState('account',['menuTreeList'])
+    computed: {
+        ...mapState('account', ['menuTreeList'])
     },
 
     methods: {

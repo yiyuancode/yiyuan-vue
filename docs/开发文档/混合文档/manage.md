@@ -9,9 +9,9 @@
 const defaultOpts = {
      submitData: null, //提交表单的数据
      moduleName: '', //模块名称，主要用于提示
-     pageInfo: {  //默认分页
+     pagination: {  //默认分页
          pageSize: 10,
-         pageNum: 1,
+         current: 1,
          total: 0,
      },
      data: [], //数据

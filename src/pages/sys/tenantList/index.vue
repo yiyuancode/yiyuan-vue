@@ -1,7 +1,7 @@
 <template>
-    <ManagePage :theadData="columns" :data="data" :pageInfo="pageInfo" :renderObj="renderObj" :formRules="rules"
-        :formModel="form" @onSave="saveHandle" @onSubmit="submitHandle" @onDelete="deleteHandle">
-
+    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" :formRules="rules"
+        :formModel="form" @onSave="saveHandle" @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle"
+        @onReset="resetHandle">
 
         <!-- 默认模态框插槽 -->
         <template #submitModal>
@@ -19,7 +19,7 @@
             </a-form-model-item>
             <a-form-model-item ref="status" label="状态" prop="status">
                 <a-radio-group v-model="form.status">
-                    <a-radio-button v-for="(item, index) in statusList" :key="index" :value="item.val">
+                    <a-radio-button v-for="(item, index) in statusList" :key="index" :value="item.value">
                         {{ item.name }}
                     </a-radio-button>
                 </a-radio-group>
@@ -44,7 +44,7 @@ export default {
             if (!this.form.endTime) {
                 callback();
             } else {
-                const endTime = this.form.endTime.format('YYYY-MM-DD hh:mm:ss');
+                const endTime = this.form.endTime.format('YYYY-MM-DD HH:mm:ss');
                 const startTime = value.format('YYYY-MM-DD mm:ss');
                 if (new Date(startTime).getTime() > new Date(endTime).getTime()) {
                     callback('开始日期不能超过结束日期');
@@ -58,7 +58,7 @@ export default {
             if (!this.form.startTime) {
                 callback();
             } else {
-                const startTime = this.form.startTime.format('YYYY-MM-DD hh:mm:ss');
+                const startTime = this.form.startTime.format('YYYY-MM-DD HH:mm:ss');
                 const endTime = value.format('YYYY-MM-DD mm:ss');
                 if (new Date(endTime).getTime() < new Date(startTime).getTime()) {
                     callback('结束时间不能低于开始日期');
@@ -98,8 +98,8 @@ export default {
     methods: {
         // 处理提交数据
         handleSubmitData() {
-            const startTime = this.form.startTime.format('YYYY-MM-DD hh:mm:ss');
-            const endTime = this.form.endTime.format('YYYY-MM-DD hh:mm:ss');
+            const startTime = this.form.startTime.format('YYYY-MM-DD HH:mm:ss');
+            const endTime = this.form.endTime.format('YYYY-MM-DD HH:mm:ss');
 
             const tenantInfo = {
                 ...this.form,

@@ -14,16 +14,42 @@ export async function getRoleList() {
 
 /**
  * 获取角色信息(分页)
- * @param {*} pageSize 每页显示数量
- * @param {*} pageNum 当前页面
+ * @param {*} opts
+ *  @param {*} pageSize 每页显示数量
+ *  @param {*} pageNum 当前页面
+ *  @param {*} name 角色名称
+ *  @param {*} code 角色代码
+ *  @param {*} createTimeStart 创建时间（开始）
+ *  @param {*} createTimeEnd 创建时间（结束）
+ *  @param {*} updateTimeStart 更新时间（开始）
+ *  @param {*} updateTimeEnd 更新时间（结束）
+ * 
+ * 
  * @returns 
  */
-export async function getRolePageList(pageSize, pageNum) {
+export async function getRolePageList(opts = {}) {
+    const {
+        pageSize,
+        pageNum,
+        name,
+        code,
+        createTimeStart,
+        createTimeEnd,
+        updateTimeStart,
+        updateTimeEnd
+    } = opts;
+
     const resp = await request({
         url: "/auth/role/page",
         params: {
             pageSize,
-            pageNum
+            pageNum,
+            name,
+            code,
+            createTimeStart,
+            createTimeEnd,
+            updateTimeStart,
+            updateTimeEnd
         }
     });
     return resp.data;

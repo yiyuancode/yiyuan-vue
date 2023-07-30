@@ -8,17 +8,32 @@ export default function (opts = {}) {
     const defaultOpts = {
         submitData: null, //提交表单的数据
         moduleName: '', //模块名称，主要用于提示
-        pageInfo: {  //默认分页
+        pagination: {  //默认分页
+            current: 1,
             pageSize: 10,
-            pageNum: 1,
-            total: 0,
+            total : 0,
+            showQuickJumper : true,
+            showSizeChanger : true,
+            showTotal : function(total) {
+                return `共${total}条`;
+            }
         },
+    
         data: [], //数据
         renderObj: { //渲染对象
             isLoading: false
         },
         submitLoading: false, //提交的loading
-        form : {},
+        form: {},
+    }
+
+    defaultOpts.searchObj = {
+        pageSize : defaultOpts.pagination.pageSize,
+        pageNum : defaultOpts.pagination.current,
+    }
+
+    const defaultSearchObj = {
+        ...defaultOpts.searchObj
     }
 
     const newOpts = {
@@ -38,9 +53,9 @@ export default function (opts = {}) {
             // 提交的回调
             async submitHandle(opType, id, done) {
                 // 如果处理数据方法存在
-                if(this.handleSubmitData){
+                if (this.handleSubmitData) {
                     this.handleSubmitData();
-                }else{
+                } else {
                     this.submitData = this.form;
                 }
 
@@ -75,16 +90,16 @@ export default function (opts = {}) {
             async getData() {
                 this.renderObj.isLoading = true;
                 try {
-                    const dataResult = await this.module[this.moduleGetList](this.pageInfo.pageSize, this.pageInfo.pageNum);
+                    const dataResult = await this.module[this.moduleGetList](this.searchObj);
                     if (dataResult) {
                         const { total, records } = dataResult;
-
+                        
                         // 处理返回的一个记录数据
-                        if(this.handleRecords){
+                        if (this.handleRecords) {
                             this.handleRecords(records);
                         }
 
-                        this.pageInfo.total = total;
+                        this.pagination.total = total;
                         this.data = records;
                     }
                 } catch (e) {
@@ -103,6 +118,23 @@ export default function (opts = {}) {
             getDetail(id) {
                 const detailInfo = this.module[this.moduleGetDetail](id);
                 return detailInfo;
+            },
+            // 查询的回调
+            searchHandle(searchFormInfoObj){
+                this.searchObj = {
+                    ...defaultSearchObj,
+                    ...searchFormInfoObj
+                }
+
+                this.getData();
+            },
+            // 重置的回调
+            resetHandle(){
+                this.searchObj = {
+                    ...defaultSearchObj,
+                }
+
+                this.getData();
             }
         }
     }

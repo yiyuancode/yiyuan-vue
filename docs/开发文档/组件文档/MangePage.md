@@ -29,8 +29,8 @@
 | 参数      | 说明                                                 | 类型   | 默认值/实例                | 是否必填 | 版本 |
 | --------- | ---------------------------------------------------- | ------ | -------------------------- | -------- | ---- |
 | renderObj | 管理页面的渲染对象配置                               | Object | [crtl点击查看](#renderObj) | 否       |      |
-| theadData | 管理页面的表头配置                                   | Array  | [ctrl点击查看](#theadData) | 是       |      |
-| pageInfo  | 管理页面的分页配置                                   | Object | [ctrl点击查看](#pageInfo)  |          |      |
+| columns | 管理页面的表头配置                                   | Array  | [ctrl点击查看](#columns) | 是       |      |
+| pagination  | 管理页面的分页配置                                   | Object | [ctrl点击查看](#pagination)  |          |      |
 | data      | 管理页面的表格数据内容,这里的数据的key会和表头的匹配 | Array  |                            |          |      |
 | formRules | 管理页面添加和编辑时候的表单规则                     | Object | [ctrl点击查看](#formRules) |          |      |
 | formModel | 管理页面添加和编辑时候的表单对象                     | Object | [ctrl点击查看](#formModel) |          |      |
@@ -152,7 +152,7 @@ submitLoading: false, //表单提交按钮loading
 
 
 
-<span id = "theadData">**theadData示例**</span>
+<span id = "columns">**columns示例**</span>
 
 ```js
 //需要传递的是一个数组，这个数组的对象里面的属性
@@ -192,7 +192,7 @@ const columns = [
 
 
 
-<span id = "pageInfo">**pageInfo示例**</span>
+<span id = "pagination">**pagination示例**</span>
 
 ```js
 {
@@ -215,7 +215,7 @@ const validateStartTime = (rule, value, callback) => {
      if (!this.form.endTime) {
          callback();
      } else {
-         const endTime = this.form.endTime.format('YYYY-MM-DD hh:mm:ss');
+         const endTime = this.form.endTime.format('YYYY-MM-DD HH:mm:ss');
          const startTime = value.format('YYYY-MM-DD mm:ss');
          if (new Date(startTime).getTime() > new Date(endTime).getTime()) {
              callback('开始日期不能超过结束日期');
@@ -229,7 +229,7 @@ const validateEndTime = (rule, value, callback) => {
     if (!this.form.startTime) {
         callback();
     } else {
-        const startTime = this.form.startTime.format('YYYY-MM-DD hh:mm:ss');
+        const startTime = this.form.startTime.format('YYYY-MM-DD HH:mm:ss');
         const endTime = value.format('YYYY-MM-DD mm:ss');
         if (new Date(endTime).getTime() < new Date(startTime).getTime()) {
             callback('结束时间不能低于开始日期');

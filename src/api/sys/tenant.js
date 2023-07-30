@@ -8,7 +8,12 @@ import { request } from '@/utils/request';
  * @param {*} pageNum 当前页面
  * @returns 
  */
-export async function getTenantPageList(pageSize, pageNum) {
+export async function getTenantPageList(opts={}) {
+    const {
+        pageSize,
+        pageNum
+    } = opts;
+    
     const resp = await request({
         url: "/sys/tenant/page",
         params: {

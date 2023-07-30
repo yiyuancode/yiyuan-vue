@@ -4,7 +4,7 @@
         <div class="manage-container">
             <!-- 查询操作容器 -->
             <div class="search-container">
-                <searchForm :searchFormList="searchFormList">
+                <searchForm :searchFormList="searchFormList" v-on="$listeners">
 
                 </searchForm>
             </div>
@@ -43,7 +43,7 @@
 
                 <!-- 列表容器 -->
                 <div class="list-container">
-                    <a-table style="margin-bottom: 10px;" :columns="uTheadData" :data-source="data" :pagination="false"
+                    <a-table style="margin-bottom: 10px;" :columns="uTheadData" :data-source="data" :pagination="pagination"
                         :loading="uRenderObj.isLoading" :rowKey="(record, index) => { return index }"
                         :row-selection="rowSelection">
 
@@ -71,12 +71,6 @@
                             </div>
                         </span>
                     </a-table>
-
-                    <!-- 分页容器 -->
-                    <div class="page-container">
-                        <a-pagination show-quick-jumper show-size-changer :total="pageInfo.total"
-                            :show-total="total => `共${total}条`" :current="pageInfo.pageNum" />
-                    </div>
                 </div>
             </div>
 
@@ -87,7 +81,9 @@
             @onSubmit="submitHandle" @onCloseModal="modalVisble = false" @onReset="resetHandle">
             <a-form-model ref="submitModalForm" :model="formModel" :rules="formRules" :label-col="labelCol"
                 :wrapper-col="wrapperCol">
-                <slot ref="submitModal" name="submitModal" :opType="submitOpType"></slot>
+                <!-- <slot ref="submitModal" name="submitModal" :opType="submitOpType"></slot> -->
+                {{ submitFormList }}
+                <submit-form :submitFormList="submitFormList"></submit-form>
             </a-form-model>
         </Modal>
     </div>
@@ -95,6 +91,7 @@
 
 <script>
 import Modal from "@/components/modal/Modal";
+import submitForm from "./submitForm";
 import searchForm from "@/components/search/searchForm"
 // 默认的渲染对象配置
 const defaultRenderobj = {
@@ -135,6 +132,7 @@ export default {
     components: {
         Modal,
         searchForm,
+        submitForm,
     },
     props: {
         renderObj: {
@@ -144,17 +142,20 @@ export default {
             },
         },
         //表头数据数组
-        theadData: {
+        columns: {
             type: Array,
             required: true,
         },
         // 分页相关数据
-        pageInfo: {
+        pagination: {
             type: Object,
             default: () => ({
                 pageSize: 10,
-                pageNum: 1,
+                current: 1,
                 total: 0,
+                showQuickJumper: true,
+                showSizeChanger: true,
+                showTotal: (total) => `共${total}条`
             })
         },
         // 表格数据
@@ -169,6 +170,10 @@ export default {
         formModel: {
             type: Object,
         },
+        submitFormList: {
+            type: Array,
+            required: true
+        }
     },
 
     data() {
@@ -198,7 +203,7 @@ export default {
 
         // 表头进行处理，增加操作
         uTheadData() {
-            return [...this.theadData, {
+            return [...this.columns, {
                 title: '操作',
                 key: 'action',
                 scopedSlots: { customRender: 'action' },
@@ -226,16 +231,16 @@ export default {
             } else {
                 return null;
             }
-        }
+        },
     },
     created() {
-        // 将theadData里面带isSearch进行一个处理，处理成searchForm需要的数据 
+        // 将columns里面带isSearch进行一个处理，处理成searchForm需要的数据 
         this.getSearchFormList();
     },
     methods: {
         getSearchFormList() {
             const searchFormList = [];
-            this.theadData.forEach(theadItem => {
+            this.columns.forEach(theadItem => {
                 if (typeof theadItem === "object") {
                     const {
                         key,
@@ -262,7 +267,7 @@ export default {
                     }
                 }
                 else {
-                    Promise.reject("theadData里面的每一项必须是对象");
+                    Promise.reject("columns里面的每一项必须是对象");
                     return;
                 }
             });
@@ -273,10 +278,10 @@ export default {
             this.modalVisble = true;
             this.submitOpType = "add";
             this.submitModalTitle = "添加";
-            this.$emit("onSave");
-            this.$nextTick(() => {
-                this.$refs.submitModalForm.resetFields();
-            });
+            // this.$emit("onSave");
+            // this.$nextTick(() => {
+            // this.$refs.submitModalForm.resetFields();
+            // });
         },
         importHandle() {
             this.noDeveloped();
@@ -305,9 +310,9 @@ export default {
             this.submitOpType = "edit";
             this.submitModalTitle = "编辑";
             this.$emit("onSave", id);
-            this.$nextTick(() => {
-                this.$refs.submitModalForm.resetFields();
-            });
+            // this.$nextTick(() => {
+            //     this.$refs.submitModalForm.resetFields();
+            // });
             this.currentId = id;
         },
         // 确认删除的处理函数
@@ -338,6 +343,9 @@ export default {
 
         noDeveloped() {
             this.$message.warning("该功能还没有开发..");
+        },
+        searchFormHandle(searchFormInfoList) {
+            console.log(searchFormInfoList);
         }
     },
 
@@ -368,10 +376,10 @@ export default {
     }
 }
 
-.page-container {
-    display: flex;
-    justify-content: flex-end;
-}
+// .page-container {
+//     display: flex;
+//     justify-content: flex-end;
+// }
 
 // 操作按钮容器
 .operate-btn-container {

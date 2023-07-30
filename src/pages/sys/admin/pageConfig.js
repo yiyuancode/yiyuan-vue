@@ -11,15 +11,27 @@ const columns = [
     {
         title: "角色",
         dataIndex: "userRoles",
-        keys: "userRoles",
+        key: "userRoles",
         scopedSlots: { customRender: 'userRoles' },
-        isSearch : true
     },
     {
         title: '所属平台',
         dataIndex: 'platform',
         key: 'platform',
-        isSearch : true
+        isSearch : true,
+        searchObj:{
+            type : "select",
+            options : [{
+                name : "平台端",
+                value : 0
+            },{
+                name : "租户端",
+                value : 1
+            },{
+                name : "移动端",
+                value : 2
+            }]
+        }
     },
     {
         title: "创建时间",
