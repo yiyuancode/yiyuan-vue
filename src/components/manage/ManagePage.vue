@@ -79,11 +79,14 @@
 
         <Modal :modalTitle="submitModalTitle" :modalVisible="modalVisble" :submitLoading="submitLoading"
             @onSubmit="submitHandle" @onCloseModal="modalVisble = false" @onReset="resetHandle">
-            <a-form-model ref="submitModalForm" :model="formModel" :rules="formRules" :label-col="labelCol"
+            <a-form-model ref="submitModalForm" :model="model" :rules="rules" :label-col="labelCol"
                 :wrapper-col="wrapperCol">
-                <!-- <slot ref="submitModal" name="submitModal" :opType="submitOpType"></slot> -->
-                {{ submitFormList }}
-                <submit-form :submitFormList="submitFormList"></submit-form>
+                <a-form-model-item v-for="(submitFormItem, index) in submitFormList" :key="index" has-feedback
+                    :label="submitFormItem.label" :prop="submitFormItem.prop">
+                    <FormItem v-model="model[submitFormItem.prop]" :formItem="submitFormItem"
+                        :placeholder="submitFormItem.label" :type="submitFormItem.type" />
+                </a-form-model-item>
+                
             </a-form-model>
         </Modal>
     </div>
@@ -91,8 +94,8 @@
 
 <script>
 import Modal from "@/components/modal/Modal";
-import submitForm from "./submitForm";
 import searchForm from "@/components/search/searchForm"
+import FormItem from "@/components/tool/FormItem"
 // 默认的渲染对象配置
 const defaultRenderobj = {
     addBtn: {
@@ -132,7 +135,7 @@ export default {
     components: {
         Modal,
         searchForm,
-        submitForm,
+        FormItem
     },
     props: {
         renderObj: {
@@ -164,10 +167,10 @@ export default {
             required: true
         },
         // 表单的规则
-        formRules: {
+        rules: {
             type: Object,
         },
-        formModel: {
+        model: {
             type: Object,
         },
         submitFormList: {
@@ -236,6 +239,7 @@ export default {
     created() {
         // 将columns里面带isSearch进行一个处理，处理成searchForm需要的数据 
         this.getSearchFormList();
+
     },
     methods: {
         getSearchFormList() {
@@ -278,10 +282,10 @@ export default {
             this.modalVisble = true;
             this.submitOpType = "add";
             this.submitModalTitle = "添加";
-            // this.$emit("onSave");
-            // this.$nextTick(() => {
-            // this.$refs.submitModalForm.resetFields();
-            // });
+            this.$emit("onSave", this.submitOpType);
+            this.$nextTick(() => {
+                this.$refs.submitModalForm.resetFields();
+            });
         },
         importHandle() {
             this.noDeveloped();
@@ -309,10 +313,10 @@ export default {
             this.modalVisble = true;
             this.submitOpType = "edit";
             this.submitModalTitle = "编辑";
-            this.$emit("onSave", id);
-            // this.$nextTick(() => {
-            //     this.$refs.submitModalForm.resetFields();
-            // });
+            this.$emit("onSave", this.submitOpType, id);
+            this.$nextTick(() => {
+                this.$refs.submitModalForm.resetFields();
+            });
             this.currentId = id;
         },
         // 确认删除的处理函数
@@ -346,7 +350,7 @@ export default {
         },
         searchFormHandle(searchFormInfoList) {
             console.log(searchFormInfoList);
-        }
+        },
     },
 
 

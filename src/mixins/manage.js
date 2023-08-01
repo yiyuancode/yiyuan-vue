@@ -11,25 +11,27 @@ export default function (opts = {}) {
         pagination: {  //默认分页
             current: 1,
             pageSize: 10,
-            total : 0,
-            showQuickJumper : true,
-            showSizeChanger : true,
-            showTotal : function(total) {
+            total: 0,
+            showQuickJumper: true,
+            showSizeChanger: true,
+            showTotal: function (total) {
                 return `共${total}条`;
             }
         },
-    
+
         data: [], //数据
         renderObj: { //渲染对象
             isLoading: false
         },
         submitLoading: false, //提交的loading
-        form: {},
+        submitFormList: [],
+        model: {},
+        rules: {},
     }
 
     defaultOpts.searchObj = {
-        pageSize : defaultOpts.pagination.pageSize,
-        pageNum : defaultOpts.pagination.current,
+        pageSize: defaultOpts.pagination.pageSize,
+        pageNum: defaultOpts.pagination.current,
     }
 
     const defaultSearchObj = {
@@ -50,13 +52,31 @@ export default function (opts = {}) {
             this.getData();
         },
         methods: {
+            // 拿到表单和规则
+            getFormAndRules() {
+                const newRules = {};
+                const newForm = {};
+                this.submitFormList.forEach(submitFormItem => {
+                    const {
+                        prop,
+                        value,
+                        rules
+                    } = submitFormItem;
+
+                    newForm[prop] = value;
+                    newRules[prop] = rules;
+                })
+
+                this.model = newForm;
+                this.rules = newRules;
+            },
             // 提交的回调
             async submitHandle(opType, id, done) {
                 // 如果处理数据方法存在
                 if (this.handleSubmitData) {
                     this.handleSubmitData();
                 } else {
-                    this.submitData = this.form;
+                    this.submitData = this.model;
                 }
 
                 if (opType === "add" || opType === "edit") {
@@ -93,7 +113,7 @@ export default function (opts = {}) {
                     const dataResult = await this.module[this.moduleGetList](this.searchObj);
                     if (dataResult) {
                         const { total, records } = dataResult;
-                        
+
                         // 处理返回的一个记录数据
                         if (this.handleRecords) {
                             this.handleRecords(records);
@@ -109,7 +129,11 @@ export default function (opts = {}) {
                 this.renderObj.isLoading = false;
             },
             // 点击添加和编辑
-            saveHandle(id) {
+            saveHandle(opType, id) {
+                if (this.getSubmitFormList) {
+                    this.submitFormList = this.getSubmitFormList(this, opType);
+                }
+                this.getFormAndRules();
                 if (id) {
                     this.formBackFill(id);
                 }
@@ -120,7 +144,7 @@ export default function (opts = {}) {
                 return detailInfo;
             },
             // 查询的回调
-            searchHandle(searchFormInfoObj){
+            searchHandle(searchFormInfoObj) {
                 this.searchObj = {
                     ...defaultSearchObj,
                     ...searchFormInfoObj
@@ -129,7 +153,7 @@ export default function (opts = {}) {
                 this.getData();
             },
             // 重置的回调
-            resetHandle(){
+            resetHandle() {
                 this.searchObj = {
                     ...defaultSearchObj,
                 }

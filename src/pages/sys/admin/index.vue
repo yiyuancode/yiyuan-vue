@@ -1,6 +1,6 @@
 <template>
-    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" :formRules="rules"
-        :formModel="form" :submitFormList="submitFormList" @onSave="saveHandle" @onSubmit="submitHandle"
+    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" :rules="rules"
+        :model="model" :submitFormList="submitFormList" @onSave="saveHandle" @onSubmit="submitHandle"
         @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle">
 
         <span slot="table-userRoles" slot-scope="{text,record}">
@@ -14,27 +14,28 @@
 
         </template>
 
+        
         <!-- <template #tableTdColumnsContainer> -->
         <!-- <span slot="userRoles" slot-scope="userRoles">
-            {{ userRoles }}
-        </span> -->
+          {{ userRoles }}
+      </span> -->
         <!-- </template> -->
 
         <!-- 默认模态框插槽 -->
         <!-- <template #submitModal="scope">
-            <a-form-model ref="adminForm" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
-                <a-form-model-item ref="username" has-feedback label="用户名" prop="username">
-                    <a-input v-model="form.username" />
-                </a-form-model-item>
-                <a-form-model-item v-if="scope.opType === 'add'" ref="password" has-feedback label="密码" prop="password">
-                    <a-input v-model="form.password" type="password" />
-                </a-form-model-item>
-                <a-form-model-item v-if="scope.opType === 'add'" ref="rePassword" has-feedback label="确认密码"
-                    prop="rePassword">
-                    <a-input v-model="form.rePassword" type="password" />
-                </a-form-model-item>
-            </a-form-model>
-        </template> -->
+          <a-form-model ref="adminForm" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
+              <a-form-model-item ref="username" has-feedback label="用户名" prop="username">
+                  <a-input v-model="form.username" />
+              </a-form-model-item>
+              <a-form-model-item v-if="scope.opType === 'add'" ref="password" has-feedback label="密码" prop="password">
+                  <a-input v-model="form.password" type="password" />
+              </a-form-model-item>
+              <a-form-model-item v-if="scope.opType === 'add'" ref="rePassword" has-feedback label="确认密码"
+                  prop="rePassword">
+                  <a-input v-model="form.rePassword" type="password" />
+              </a-form-model-item>
+          </a-form-model>
+      </template> -->
 
         <!-- 分配角色模态框 -->
         <Modal modalTitle="分配角色" :modalVisible="assignRoleVisible" :submitLoading="assignRoleLoading"
@@ -58,42 +59,18 @@ import ManagePage from "@/components/manage/ManagePage.vue";
 import { getRoleList } from "@/api/auth/role";
 import manage from "@/mixins/manage";
 const { assignRole } = moduleConfig.module;
-import { columns, form, moduleConfig } from "./pageConfig";
+import { columns, moduleConfig, getSubmitFormList } from "./pageConfig";
+
 
 export default {
     components: {
         ManagePage,
         Modal
     },
-    mixins: [manage({ form })],
+    mixins: [manage({ getSubmitFormList })],
     data() {
-        // 校验密码
-        const validatePassWord = (rule, value, callback) => {
-            if (value !== this.form.password) {
-                callback(new Error("两次密码输入不一致"));
-            } else {
-                callback();
-            }
-        };
-
-        // 表单规则配置
-        const formRules = {
-            username: [
-                { required: true, message: '请输入用户名', trigger: 'blur' },
-            ],
-            password: [
-                { required: true, message: '请输入密码', trigger: 'blur' },
-            ],
-            rePassword: [
-                { required: true, message: '请再次输入密码', trigger: 'blur' },
-                { validator: validatePassWord, trigger: 'blur' }
-            ]
-        };
-
         return {
             columns,
-            form,
-            rules: formRules,
             ...moduleConfig,
             labelCol: { span: 6 },
             wrapperCol: { span: 18 },
@@ -102,32 +79,8 @@ export default {
             roleList: [],
             selectRoleList: [],// 选择的角色列表
             currentUserId: null,
-            submitFormList: [{
-                prop: "username",
-                label: "用户名",
-                placeholder : "用户名",
-                value : "",
-                type : "input",
-            }]
-
-            /* 
-            , {
-                prop: "password",
-                label: "密码",
-                placeholder : "密码",
-                value : "",
-                type : "input"
-            }, {
-                prop: "rePassword",
-                label: "确认密码",
-                placeholder : "确认密码",
-                value : "",
-                type : "input"
-            }
-            */
         };
     },
-
     methods: {
         // 对返回的一个记录数据进行处理
         handleRecords(records) {
@@ -158,7 +111,7 @@ export default {
 
             const newForm = { username };
 
-            this.form = newForm;
+            this.model = newForm;
         },
         // 选择角色
         selectRoleChange(value) {

@@ -4,10 +4,10 @@
 -->
 
 <template>
-        <a-form-model-item has-feedback
-            :label="submitFormItem.label" prop="submitFormItem.">
-            {{ submitFormItem }}
-        </a-form-model-item>
+    <a-form-model-item has-feedback :label="submitFormItem.label" prop="submitFormItem.prop">
+        <!-- {{ submitFormItem }} -->
+
+    </a-form-model-item>
     <!-- <div v-if="formType === 'formModel'">
         <a-form-model-item v-for="(submitFormItem, index) in submitFormList" :key="index" has-feedback
             :label="submitFormItem.label" prop="submitFormItem.">

@@ -1,102 +1,171 @@
 <template>
-    <!-- 自动完成 -->
-    <a-auto-complete v-if="formItem.type === 'autoComplete'" v-model="formItem.value"></a-auto-complete>
-
-    <!-- 级联选择 -->
-    <a-cascader v-else-if="formItem.type === 'cascader'" v-model="formItem.value"></a-cascader>
-
-    <!-- 多选框 -->
-    <a-checkbox v-else-if="formItem.type === 'checkbox'" v-model="formItem.value"></a-checkbox>
-
-    <!-- 多选框组 -->
-    <a-checkbox-group v-else-if="formItem.type === 'checkboxGroup'" v-model="formItem.value" />
-
-
-    <!-- 日期选择器 -->
-    <a-date-picker v-else-if="formItem.type === 'datePicker'" v-model="formItem.value" :placeholder="formItem.placeholder"
-        :format="formItem.format" />
-
-    <!-- 月份选择器 -->
-    <a-month-picker v-else-if="formItem.type === 'monthPicker'" v-model="formItem.value" />
-
-    <!-- 日期范围选择器 -->
-    <a-range-picker v-else-if="formItem.type === 'rangePicker'" v-model="formItem.value" format="YYYY-MM-DD HH:mm:ss"
-        :show-time="showTime" />
-
-    <!-- 星期选择器 -->
-    <a-week-picker v-else-if="formItem.type === 'weekPicker'" v-model="formItem.value" />
-
-    <!-- 时间选择框 -->
-    <a-time-picker v-else-if="formItem.type === 'timePicker'" v-model="formItem.value" />
-
-    <!-- 输入框 -->
-    <a-input v-else-if="formItem.type === 'input'" v-model="formItem.value" :placeholder="formItem.placeholder" />
-
-    <!-- 带搜索按钮的输入框 -->
-    <a-input-search v-else-if="formItem.type === 'searchInput'" v-model="formItem.value"
-        :placeholder="formItem.placeholder" />
-
-
-    <!-- 输入框组 -->
-    <a-input-group v-else-if="formItem.type === 'inputGroup'"></a-input-group>
-
-    <!-- 文本域 -->
-    <a-textarea v-else-if="formItem.type === 'textarea'" v-model="formItem.value"></a-textarea>
-
-
-    <!-- 数字输入框 -->
-    <a-input-number v-else-if="formItem.type === 'inputNumber'" v-model="formItem.value"></a-input-number>
-
-    <!-- 单选框 -->
-    <a-radio v-else-if="formItem.type === 'radio'" v-model="formItem.value"></a-radio>
-
-    <!-- 单选框组 -->
-    <a-radio-group v-else-if="formItem.type === 'radioGroup'" v-model="formItem.value"></a-radio-group>
-
-    <!-- 评分 -->
-    <a-rate v-else-if="formItem.type === 'rate'" v-model="formItem.value" />
-
-    <!-- 选择器 -->
-    <a-select v-else-if="formItem.type === 'select'" v-model="formItem.value" style="width: 100%;"
-        :placeholder="formItem.placeholder">
-        <a-select-option v-for="(opItem, opIndex) in formItem.options" :key="opIndex" :value="opItem.value">
-            {{ opItem.name }}
-        </a-select-option>
-    </a-select>
-
-    <!-- 树选择 -->
-    <a-tree-select v-else-if="formItem.type === 'treeSelect'" v-model="formItem.value">
-
-    </a-tree-select>
-
-    <!-- 滑动输入条 -->
-    <a-slider v-else-if="formItem.type === 'slider'" v-model="formItem.value" />
-
-    <!-- 开关 -->
-    <a-switch v-else-if="formItem.type === 'switch'" v-model="formItem.value" />
-
-    <!-- 上传 -->
-    <a-upload v-else-if="formItem.type === 'upload'" v-model="formItem.value"></a-upload>
+    <component :is="getComponentType()" :value="value" v-bind="$attrs" @input="handleInput"
+        @change="handleChange" @blur="handleBlur"/>
 </template>
 
 <script>
-import moment from "moment";
+
+import {
+    AutoComplete,
+    Cascader,
+    Checkbox,
+    DatePicker,
+    TimePicker,
+    Input,
+    InputNumber,
+    Radio,
+    Rate,
+    Select,
+    TreeSelect,
+    Slider,
+    Switch,
+    Upload
+} from "ant-design-vue";
+
+const {
+    Group: CheckboxGroup
+} = Checkbox;
+
+const {
+    MonthPicker,
+    RangePicker,
+    WeekPicker
+} = DatePicker;
+
+const {
+    Search: InputSearch,
+    TextArea,
+    Group: InputGroup,
+} = Input;
+
+const {
+    Group: RadioGroup,
+    Button: RadioButton
+} = Radio;
+
+
+// import moment from "moment";
 export default {
-    props: {
-        formItem: {
-            type: Object,
-            required: true,
-        }
+    components: {
+        AutoComplete,
+        Cascader,
+        Checkbox,
+        CheckboxGroup,
+        DatePicker,
+        MonthPicker,
+        RangePicker,
+        WeekPicker,
+        TimePicker,
+        Input,
+        InputSearch,
+        TextArea,
+        InputGroup,
+        InputNumber,
+        Radio,
+        RadioGroup,
+        RadioButton,
+        Rate,
+        Select,
+        TreeSelect,
+        Slider,
+        ASwitch: Switch,
+        Upload
     },
+    props: {
+        type: {
+            type: String,
+            default : "input"
+        },
+        value: [String, Number, Boolean, Array],
+    },
+
     data() {
         return {
-            moment,
-            showTime: {
-                hideDisabledOptions: true,
-                defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('00:00:00', 'HH:mm:ss')],
-            }
+            internalValue: this.value
         }
     },
+    watch: {
+        value(newValue) {
+            // 监听外部传入的 value 值变化，同步更新内部的值
+            this.internalValue = newValue;
+        },
+        internalValue(newValue) {
+            // 监听内部值的变化，同步更新外部传入的 value 值
+            this.$emit('input', newValue);
+        },
+    },
+    methods: {
+        // 获取组件的类型
+        getComponentType() {
+            // 根据 formItem.type 返回对应的组件名称
+            // 这里可以根据需求添加更多的表单元素类型
+            switch (this.type) {
+                case 'autoComplete':
+                    return 'AutoComplete';
+                case 'cascader':
+                    return 'Cascader';
+                case 'checkbox':
+                    return 'Checkbox';
+                case 'checkboxGroup':
+                    return 'CheckboxGroup';
+                case 'datePicker':
+                    return 'DatePicker';
+                case 'monthPicker':
+                    return 'MonthPicker';
+                case 'rangePicker':
+                    return 'RangePicker';
+                case 'weekPicker':
+                    return 'WeekPicker';
+                case 'timePicker':
+                    return 'timePicker';
+                case 'input':
+                    return 'Input';
+                case 'searchInput':
+                    return 'inputSearch';
+                case 'textarea':
+                    return 'TextArea';
+                case 'inputGroup':
+                    return 'InputGroup';
+                case 'inputNumber':
+                    return 'InputNumber';
+                case 'radio':
+                    return 'Radio';
+                case 'radioGroup':
+                    return 'RadioGroup';
+                case 'rate':
+                    return 'Rate';
+                case 'select':
+                    return 'Select';
+                case 'treeSelect':
+                    return 'TreeSelect';
+                case 'slider':
+                    return 'Slider';
+                case 'switch':
+                    return 'ASwitch';
+                case 'upload':
+                    return 'Upload';
+                default:
+                    return 'Input';
+            }
+        },
+
+        handleInput(e){
+            const newValue = e.target.value;
+            this.internalValue = newValue;
+            this.$emit('input', newValue);
+        },
+
+        handleChange(newValue) {
+            this.internalValue = newValue;
+            // 对于支持 change 事件的表单组件，触发 change 事件
+            this.$emit('input', newValue);
+        },
+
+        // 失去焦点的事件
+        handleBlur(){
+            this.$emit('blur');
+        }
+    }
 }
 </script>
 
