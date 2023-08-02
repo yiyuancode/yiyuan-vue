@@ -1,10 +1,10 @@
 <template>
-    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" :formRules="rules"
-        :formModel="form" @onSave="saveHandle" @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle"
+    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" :rules="rules"
+        :model="model" :submitFormList="submitFormList" @onSave="saveHandle" @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle"
         @onReset="resetHandle">
 
         <!-- 默认模态框插槽 -->
-        <template #submitModal>
+        <!-- <template #submitModal>
             <a-form-model-item ref="code" has-feedback label="租户编码" prop="code">
                 <a-input v-model="form.code" />
             </a-form-model-item>
@@ -24,7 +24,7 @@
                     </a-radio-button>
                 </a-radio-group>
             </a-form-model-item>
-        </template>
+        </template> -->
     </ManagePage>
 </template>
 
@@ -32,77 +32,28 @@
 import moment from "moment";
 import ManagePage from "@/components/manage/ManagePage.vue";
 import manage from "@/mixins/manage";
-import { columns, form, moduleConfig, otherDataConfig } from "./pageConfig";
+import { columns, moduleConfig,getSubmitFormList } from "./pageConfig";
 
 export default {
     components: {
         ManagePage,
     },
-    mixins: [manage({})],
+    mixins: [manage({getSubmitFormList})],
     data() {
-        const validateStartTime = (rule, value, callback) => {
-            if (!this.form.endTime) {
-                callback();
-            } else {
-                const endTime = this.form.endTime.format('YYYY-MM-DD HH:mm:ss');
-                const startTime = value.format('YYYY-MM-DD mm:ss');
-                if (new Date(startTime).getTime() > new Date(endTime).getTime()) {
-                    callback('开始日期不能超过结束日期');
-                } else {
-                    callback();
-                }
-            }
-        };
-
-        const validateEndTime = (rule, value, callback) => {
-            if (!this.form.startTime) {
-                callback();
-            } else {
-                const startTime = this.form.startTime.format('YYYY-MM-DD HH:mm:ss');
-                const endTime = value.format('YYYY-MM-DD mm:ss');
-                if (new Date(endTime).getTime() < new Date(startTime).getTime()) {
-                    callback('结束时间不能低于开始日期');
-                } else {
-                    callback();
-                }
-            }
-        };
-
-        // 表单规则配置
-        const formRules = {
-            code: [
-                { required: true, message: '请输入租户编码', trigger: 'blur' },
-            ],
-            name: [
-                { required: true, message: '请输入租户名称', trigger: 'blur' },
-            ],
-            startTime: [
-                { required: true, message: '请选择日期时间', trigger: 'change' },
-                { validator: validateStartTime, trigger: 'change' }
-            ],
-            endTime: [
-                { required: true, message: '请选择日期时间', trigger: 'change' },
-                { validator: validateEndTime, trigger: 'change' }
-            ]
-        };
-
         return {
             columns,
-            form,
-            rules: formRules,
             ...moduleConfig,
-            ...otherDataConfig,
         };
     },
 
     methods: {
         // 处理提交数据
         handleSubmitData() {
-            const startTime = this.form.startTime.format('YYYY-MM-DD HH:mm:ss');
-            const endTime = this.form.endTime.format('YYYY-MM-DD HH:mm:ss');
+            const startTime = this.model.startTime.format('YYYY-MM-DD HH:mm:ss');
+            const endTime = this.model.endTime.format('YYYY-MM-DD HH:mm:ss');
 
             const tenantInfo = {
-                ...this.form,
+                ...this.model,
                 startTime,
                 endTime
             }
@@ -110,7 +61,7 @@ export default {
         },
 
         // 租户表单信息回填
-        async formBackFill(id) {
+        async getFormModel(id) {
             const tenantDetailInfo = await this.getDetail(id);
             const {
                 code,
@@ -126,9 +77,8 @@ export default {
                 startTime: moment(startTime),
                 endTime: moment(endTime),
                 status: status.value
-            };
-
-            this.form = newForm;
+            };  
+            return newForm;
         },
     },
 }

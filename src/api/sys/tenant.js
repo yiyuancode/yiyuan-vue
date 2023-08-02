@@ -1,24 +1,57 @@
 
 import { request } from '@/utils/request';
 
-
 /**
  * 获取所有的租户信息(分页)
- * @param {*} pageSize 每页显示数量
- * @param {*} pageNum 当前页面
+ * @param {*} opts
+ *   @param {*} pageSize 每页显示数量
+ *   @param {*} pageNum 当前页面
+ *   @param {*} name 租户名称
+ *   @param {*} code 租户代码
+ *   @param {*} status 租户状态
+ *   @param {*} startTimeStart 租户开始时间（开始）
+ *   @param {*} startTimeEnd 租户开始时间（结束）
+ *   @param {*} endTimeStart 租户结束时间（开始）
+ *   @param {*} endTimeEnd 租户结束时间（结束）
+ *   @param {*} createTimeStart 创建时间（开始）
+ *   @param {*} createTimeEnd 创建时间（结束）
+ *   @param {*} updateTimeStart 更新时间（开始）
+ *   @param {*} updateTimeEnd 更新时间（结束）
  * @returns 
  */
-export async function getTenantPageList(opts={}) {
+export async function getTenantPageList(opts = {}) {
     const {
         pageSize,
-        pageNum
+        pageNum,
+        name,
+        code,
+        status,
+        startTimeStart,
+        startTimeEnd,
+        endTimeStart,
+        endTimeEnd,
+        createTimeStart,
+        createTimeEnd,
+        updateTimeStart,
+        updateTimeEnd,
     } = opts;
-    
+
     const resp = await request({
         url: "/sys/tenant/page",
         params: {
             pageSize,
-            pageNum
+            pageNum,
+            name,
+            code,
+            status,
+            startTimeStart,
+            startTimeEnd,
+            endTimeStart,
+            endTimeEnd,
+            createTimeStart,
+            createTimeEnd,
+            updateTimeStart,
+            updateTimeEnd,
         }
     });
     return resp.data;

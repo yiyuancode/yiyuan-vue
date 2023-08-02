@@ -51,6 +51,13 @@ export default function (opts = {}) {
         async created() {
             this.getData();
         },
+        computed: {
+            objColumns() {
+                return this.columns.filter(c => {
+                    return c.valType === 'object';
+                });
+            }
+        },
         methods: {
             // 拿到表单和规则
             getFormAndRules() {
@@ -115,8 +122,18 @@ export default function (opts = {}) {
                         const { total, records } = dataResult;
 
                         // 处理返回的一个记录数据
-                        if (this.handleRecords) {
-                            this.handleRecords(records);
+                        if (this.objColumns.length || this.handleRecord) {
+                            for (let i = 0; i < records.length; i++) {
+                                for (let j = 0; j < this.objColumns.length; j++) {
+                                    const {
+                                        key
+                                    } = this.objColumns[j];
+
+                                    records[i][key] = records[i][key].desc;
+                                }
+
+                                this.handleRecord && this.handleRecord(records[i]);
+                            }
                         }
 
                         this.pagination.total = total;
@@ -129,13 +146,14 @@ export default function (opts = {}) {
                 this.renderObj.isLoading = false;
             },
             // 点击添加和编辑
-            saveHandle(opType, id) {
+            async saveHandle(opType, id) {
                 if (this.getSubmitFormList) {
                     this.submitFormList = this.getSubmitFormList(this, opType);
                 }
                 this.getFormAndRules();
                 if (id) {
-                    this.formBackFill(id);
+                    const newModel = await this.getFormModel(id);
+                    this.model = newModel;
                 }
             },
             // 获取数据详情

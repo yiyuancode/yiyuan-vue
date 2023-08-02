@@ -4,10 +4,10 @@ import _ from "lodash";
 // 其他数据配置
 const otherDataConfig = {
     statusList: [{
-        name: "正常",
+        label: "正常",
         value: 0
     }, {
-        name: "冻结",
+        label: "冻结",
         value: 1
     }],
 }
@@ -27,16 +27,18 @@ const columns = [
         isSearch: true,
     },
     {
-        title : "租户状态",
-        dataIndex :'status',
-        key : 'status',
-        isSearch : true,
+        title: "租户状态",
+        dataIndex: 'status',
+        key: 'status',
+        isSearch: true,
         // 显示值得对象
-        showValType : "object",
-        showValObj : {},
-        searchObj : {
-            type : "select",
-            options : _.cloneDeep(otherDataConfig.statusList)
+        // showValObj:{
+        //     prop : ""
+        // },
+        valType : "object",
+        searchObj: {
+            formType: "select",
+            options: otherDataConfig.statusList
         }
     },
     {
@@ -45,7 +47,7 @@ const columns = [
         key: "startTime",
         isSearch: true,
         searchObj: {
-            type: "rangePicker"
+            formType: "rangePicker"
         }
     },
     {
@@ -54,7 +56,7 @@ const columns = [
         dataIndex: 'endTime',
         isSearch: true,
         searchObj: {
-            type: "rangePicker"
+            formType: "rangePicker"
         }
     },
     {
@@ -63,7 +65,7 @@ const columns = [
         dataIndex: 'createTime',
         isSearch: true,
         searchObj: {
-            type: "rangePicker"
+            formType: "rangePicker"
         }
     },
     {
@@ -72,20 +74,96 @@ const columns = [
         dataIndex: 'updateTime',
         isSearch: true,
         searchObj: {
-            type: "rangePicker"
+            formType: "rangePicker"
         }
     }
 ];
 
-// 添加，编辑的一个表单
-const form = {
-    code: '', //租户代码
-    name: '', //租户名称
-    startTime: null, //开始时间 
-    endTime: null, //结束时间
-    status: 0, //启用
+
+function getSubmitFormList(vm) {
+    const submitFormList = [{
+        prop: "code",
+        ref: "code",
+        label: "租户代码",
+        value: "",
+        formType: "input",
+        rules: [
+            { required: true, message: '请输入租户编码', trigger: 'blur' },
+        ],
+    }, {
+        prop: "name",
+        ref: "name",
+        label: "租户名称",
+        value: "",
+        formType: "input",
+        rules: [
+            { required: true, message: '请输入租户名称', trigger: 'blur' },
+        ],
+    }, {
+        prop: "startTime",
+        ref: "startTime",
+        label: "开始时间",
+        value: null,
+        formType: "datePicker",
+        showTime : true,
+        rules: [
+            { required: true, message: '请选择日期时间', trigger: 'change' },
+            { validator: validateStartTime.bind(vm), trigger: 'change' }
+        ],
+    }, {
+        prop: "endTime",
+        ref: "endTime",
+        label: "结束时间",
+        value: null,
+        formType: "datePicker",
+        showTime : true,
+        rules: [
+            { required: true, message: '请选择日期时间', trigger: 'change' },
+            { validator: validateEndTime.bind(vm), trigger: 'change' }
+        ],
+    }, {
+        prop: "status",
+        ref: "status",
+        label: "状态",
+        value: "",
+        formType: "radioGroup",
+        options: _.cloneDeep(otherDataConfig.statusList),
+        rules: [
+            { required: true, message: '请选择一个状态', trigger: 'change' },
+        ],
+    }]
+    return submitFormList;
 }
 
+function validateStartTime (rule, value, callback) {
+    if (!this.model.endTime) {
+        callback();
+    } else {
+        const endTime = this.model.endTime.format('YYYY-MM-DD HH:mm:ss');
+        const startTime = value.format('YYYY-MM-DD mm:ss');
+
+        if (new Date(startTime).getTime() > new Date(endTime).getTime()) {
+            callback('开始日期不能超过结束日期');
+        } else {
+            callback();
+        }
+    }
+}
+
+function validateEndTime (rule, value, callback) {
+    if (!this.model.startTime) {
+        callback();
+    } else {
+        const startTime = this.model.startTime.format('YYYY-MM-DD HH:mm:ss');
+        const endTime = value.format('YYYY-MM-DD mm:ss');
+        console.log(startTime,endTime);
+        if (new Date(endTime).getTime() < new Date(startTime).getTime()) {
+            callback('结束时间不能低于开始日期');
+        } else {
+            callback();
+        }
+    }
+}
 
 // 模块配置
 const moduleConfig = {
@@ -93,15 +171,15 @@ const moduleConfig = {
     moduleAdd: "addTenant",
     moduleEdit: "editTenant",
     moduleDelete: "deleteTenant",
-    moduleGetList : "getTenantPageList",
-    moduleGetDetail : "getTenantDetail",
-    moduleName : "租户",
+    moduleGetList: "getTenantPageList",
+    moduleGetDetail: "getTenantDetail",
+    moduleName: "租户",
 }
 
 
-export  {
+export {
     columns,
-    form,
     moduleConfig,
+    getSubmitFormList,
     otherDataConfig
 };

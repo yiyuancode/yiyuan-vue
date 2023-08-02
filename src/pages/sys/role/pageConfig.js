@@ -25,7 +25,7 @@ const columns = [
         dataIndex: 'createTime',
         isSearch: true,
         searchObj: {
-            type: "rangePicker"
+            formType: "rangePicker"
         }
     },
     {
@@ -34,31 +34,37 @@ const columns = [
         dataIndex: 'updateTime',
         isSearch: true,
         searchObj: {
-            type: "rangePicker"
+            formType: "rangePicker"
         }
     },
 ];
 
-// 添加，编辑的一个表单
-const form = {
-    name: '', //角色名称
-    code: '', //角色代码
-    roleDesc: "" //角色描述
-}
-
-
-
-// 表单规则配置
-const formRules = {
-    code: [
-        { required: true, message: '请输入角色代码', trigger: 'blur' },
+const submitFormList = [{
+    prop: "code",
+    ref: "code",
+    label: "角色代码",
+    value: "",
+    formType: "input",
+    rules: [
+        { required: true, message: '请输入角色代码', trigger: 'blur', }
     ],
-    name: [
-        { required: true, message: '请输入角色名称', trigger: 'blur' },
+}, {
+    prop: "name",
+    ref: "name",
+    label: "角色名称",
+    value: "",
+    formType: "input",
+    rules: [
+        { required: true, message: '请输入密码', trigger: 'blur', }
     ],
-};
-
-
+    
+}, {
+    prop: "roleDesc",
+    ref: "roleDesc",
+    label: "角色描述",
+    value: "",
+    formType: "textarea",
+}]
 
 // 模块配置
 const moduleConfig = {
@@ -74,7 +80,6 @@ const moduleConfig = {
 
 export  {
     columns,
-    form,
-    formRules,
     moduleConfig,
+    submitFormList
 };

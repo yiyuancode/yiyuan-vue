@@ -6,7 +6,7 @@
                     <a-col v-for="(searchItem, index) in uSearchFormList" :key="index" :lg="{ span: 8 }" :md="{ span: 12 }">
                         <div v-if="isExpand || index <= 2" class="search-form-item">
                             <label>{{ searchItem.labelText }}</label>
-                            <FormItem v-model="searchItem.value" :type="searchItem.type" :options="searchItem.options"
+                            <FormItem v-model="searchItem.value" :formType="searchItem.formType" :options="searchItem.options"
                                 :style="{ width: '100%' }" :placeholder="searchItem.placeholder" :show-time="searchItem.showTime"/>
                         </div>
 
@@ -58,7 +58,7 @@ export default {
         getUSearchFormList() {
             this.uSearchFormList = this.searchFormList.map(searchItem => {
                 const {
-                    type,
+                    formType,
                     labelText,
                     title,
                     options,
@@ -71,7 +71,7 @@ export default {
                 let placeholder = title;
 
                 // 进行一些初始化配置
-                if (type === 'datePicker' || type === "rangePicker") {
+                if (formType === 'datePicker' || formType === "rangePicker") {
                     format = "YYYY-MM-DD HH:mm:ss";
                     value = null;
                     placeholder = undefined;
@@ -79,13 +79,13 @@ export default {
                         defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('00:00:00', 'HH:mm:ss')]
                     }
                 }
-                else if (type === "select") {
+                else if (formType === "select") {
                     value = undefined;
                 }
 
                 const newSearchFormObj = {
                     key,
-                    type,
+                    formType,
                     labelText: labelText || title,
                     value,
                     format,
@@ -104,7 +104,7 @@ export default {
             // 每次进行一个提交的时候对数据进行一个处理
             this.uSearchFormList.forEach(searchFormItem => {
                 const {
-                    type,
+                    formType,
                     key,
                     value,
                 } = searchFormItem;
@@ -117,7 +117,7 @@ export default {
                 }
 
                 // 时间和时间范围
-                if (type === 'rangePicker') {
+                if (formType === 'rangePicker') {
                     if (tempValue && tempValue.length) {
                         for (let i = 0; i < tempValue.length; i++) {
                             tempValue[i] = tempValue[i].format('YYYY-MM-DD HH:mm:ss');
@@ -127,18 +127,19 @@ export default {
                             } else {
                                 tempKey = `${key}End`;
                             }
+
                             searchFormInfoObj[tempKey] = tempValue[i];
                         }
                     }
 
-                } else if (type === 'datePicker') {
+                } else if (formType === 'datePicker') {
                     if (tempValue !== '' && tempValue !== undefined) {
                         searchFormInfoObj[key] = tempValue.format('YYYY-MM-DD HH:mm:ss');
                     }
                 }
 
                 if (tempValue !== '' && tempValue !== undefined) {
-                    if (type !== 'rangePicker') {
+                    if (formType !== 'rangePicker') {
                         searchFormInfoObj[key] = tempValue;
                     }
                 }
@@ -150,9 +151,9 @@ export default {
         // 重置表单
         resetForm() {
             this.uSearchFormList.forEach(searchFormItem => {
-                if (searchFormItem.type === 'rangePicker' || searchFormItem.type === 'datePicker') {
+                if (searchFormItem.formType === 'rangePicker' || searchFormItem.formType === 'datePicker') {
                     searchFormItem.value = null;
-                } else if (searchFormItem.type === 'select') {
+                } else if (searchFormItem.formType === 'select') {
                     searchFormItem.value = undefined;
                 } else {
                     searchFormItem.value = '';

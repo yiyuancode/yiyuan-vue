@@ -7,10 +7,6 @@ import { request } from '@/utils/request';
  * @param {*} opts
  *  @param {*} pageSize 每页显示数量
  *  @param {*} pageNum 当前页面
- *  @param {*} startTimeStart 租户开始时间（开始）
- *  @param {*} startTimeEnd 租户开始时间（结束）
- *  @param {*} endTimeStart 租户结束时间（开始）
- *  @param {*} endTimeEnd 租户结束时间（结束）
  *  @param {*} updateTimeStart 更新时间（开始）
  *  @param {*} updateTimeEnd 更新时间（结束）
  *  @param {*} createTimeStart 创建时间（开始）
@@ -23,14 +19,10 @@ export async function getAdminPageList(opts = {}) {
         pageNum,
         username,
         platform,
-        startTimeStart,
-        startTimeEnd,
-        endTimeStart,
-        endTimeEnd,
+        createTimeStart,
+        createTimeEnd,
         updateTimeStart,
         updateTimeEnd,
-        createTimeStart,
-        createTimeEnd
     } = opts;
 
     const resp = await request({
@@ -40,14 +32,10 @@ export async function getAdminPageList(opts = {}) {
             pageNum,
             username,
             platform,
-            startTimeStart,
-            startTimeEnd,
-            endTimeStart,
-            endTimeEnd,
+            createTimeStart,
+            createTimeEnd,
             updateTimeStart,
             updateTimeEnd,
-            createTimeStart,
-            createTimeEnd
         }
     });
     return resp.data;

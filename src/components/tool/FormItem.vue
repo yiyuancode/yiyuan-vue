@@ -1,6 +1,6 @@
 <template>
-    <component :is="getComponentType()" :value="value" v-bind="$attrs" @input="handleInput"
-        @change="handleChange" @blur="handleBlur"/>
+    <component :is="getComponentType()" :value="value" v-bind="$attrs" @input="handleInput" @change="handleChange"
+        @blur="handleBlur" />
 </template>
 
 <script>
@@ -46,6 +46,7 @@ const {
 
 // import moment from "moment";
 export default {
+
     components: {
         AutoComplete,
         Cascader,
@@ -72,11 +73,11 @@ export default {
         Upload
     },
     props: {
-        type: {
+        formType: {
             type: String,
-            default : "input"
+            default: "input"
         },
-        value: [String, Number, Boolean, Array],
+        value: [String, Number, Boolean, Array, Object],
     },
 
     data() {
@@ -99,7 +100,7 @@ export default {
         getComponentType() {
             // 根据 formItem.type 返回对应的组件名称
             // 这里可以根据需求添加更多的表单元素类型
-            switch (this.type) {
+            switch (this.formType) {
                 case 'autoComplete':
                     return 'AutoComplete';
                 case 'cascader':
@@ -149,20 +150,28 @@ export default {
             }
         },
 
-        handleInput(e){
-            const newValue = e.target.value;
+        handleInput(newValue) {
+            // console.log(1);
+            if (this.formType !== 'radioGroup') {
+                newValue = newValue.target.value;
+            }
             this.internalValue = newValue;
             this.$emit('input', newValue);
         },
 
         handleChange(newValue) {
+            if (this.formType === "radioGroup") {
+                newValue = newValue.target.value;
+            }
             this.internalValue = newValue;
             // 对于支持 change 事件的表单组件，触发 change 事件
+            // 抛出两个事件
             this.$emit('input', newValue);
+            this.$emit('change', newValue);
         },
 
         // 失去焦点的事件
-        handleBlur(){
+        handleBlur() {
             this.$emit('blur');
         }
     }

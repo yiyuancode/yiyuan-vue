@@ -19,8 +19,9 @@ const columns = [
         dataIndex: 'platform',
         key: 'platform',
         isSearch: true,
+        valType : "object",
         searchObj: {
-            type: "select",
+            formType: "select",
             options: [{
                 label: "平台端",
                 value: 0
@@ -39,7 +40,7 @@ const columns = [
         key: "createTime",
         isSearch: true,
         searchObj: {
-            type: "rangePicker"
+            formType: "rangePicker"
         }
     },
     {
@@ -48,7 +49,7 @@ const columns = [
         dataIndex: 'updateTime',
         isSearch: true,
         searchObj: {
-            type: "rangePicker"
+            formType: "rangePicker"
         }
     },
 ]
@@ -64,14 +65,13 @@ const moduleConfig = {
     moduleName: "用户",
 }
 
-
 function getSubmitFormList(vm, opType) {
     const submitFormList = [{
         prop: "username",
         ref: "username",
         label: "用户名",
         value: "",
-        type: "input",
+        formType: "input",
         rules: [
             { required: true, message: '请输入用户名', trigger: 'blur', }
         ],
@@ -81,7 +81,8 @@ function getSubmitFormList(vm, opType) {
         ref: "password",
         label: "密码",
         value: "",
-        type: "input",
+        formType: "input",
+        type : "password",
         rules: [
             { required: true, message: '请输入密码', trigger: 'blur', }
         ],
@@ -91,7 +92,8 @@ function getSubmitFormList(vm, opType) {
         ref: "rePassword",
         label: "确认密码",
         value: "",
-        type: "input",
+        formType: "input",
+        type : "password",
         rules: [
             { required: true, message: '请再次输入密码', trigger: 'blur' },
             { validator: validatePassWord.bind(vm), trigger: 'blur' }

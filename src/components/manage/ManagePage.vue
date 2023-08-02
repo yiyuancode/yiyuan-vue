@@ -83,10 +83,10 @@
                 :wrapper-col="wrapperCol">
                 <a-form-model-item v-for="(submitFormItem, index) in submitFormList" :key="index" has-feedback
                     :label="submitFormItem.label" :prop="submitFormItem.prop">
-                    <FormItem v-model="model[submitFormItem.prop]" :formItem="submitFormItem"
-                        :placeholder="submitFormItem.label" :type="submitFormItem.type" />
+                    <FormItem v-model="model[submitFormItem.prop]" :placeholder="submitFormItem.label"
+                        :formType="submitFormItem.formType" :type="submitFormItem.type" :style="{ width: '100%' }" :options="submitFormItem.options" :showTime="submitFormItem.showTime"/>
                 </a-form-model-item>
-                
+
             </a-form-model>
         </Modal>
     </div>
@@ -327,6 +327,8 @@ export default {
         async submitHandle() {
             this.submitLoading = true;
             try {
+                // console.log(this.model);
+                // console.log(this.rules);
                 const validateRes = await this.$refs.submitModalForm.validate();
                 if (validateRes) {
                     this.$emit("onSubmit", this.submitOpType, this.currentId, () => {

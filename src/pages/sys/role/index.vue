@@ -1,7 +1,7 @@
 <template>
-    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" :formRules="rules"
-        :formModel="form" @onSave="saveHandle" @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle"
-        @onReset="resetHandle">
+    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" :rules="rules"
+        :model="model" :submitFormList="submitFormList" @onSave="saveHandle" @onSubmit="submitHandle"
+        @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle">
 
         <!-- 其他的操作插槽 -->
         <template #otherOperationsContainer="scope">
@@ -9,24 +9,12 @@
 
         </template>
 
-        <!-- 默认模态框插槽 -->
-        <div slot="submitModal">
-            <a-form-model-item ref="code" has-feedback label="角色编码" prop="code">
-                <a-input v-model="form.code" />
-            </a-form-model-item>
-            <a-form-model-item ref="name" has-feedback label="角色名称" prop="name">
-                <a-input v-model="form.name" />
-            </a-form-model-item>
-            <a-form-model-item ref="roleDesc" has-feedback label="角色描述" prop="roleDesc">
-                <a-input v-model="form.roleDesc" type="textarea" :auto-size="{ minRows: 3, maxRows: 5 }" />
-            </a-form-model-item>
-        </div>
-
         <!-- 分配角色权限模态框 -->
         <Modal modalTitle="分配角色权限" :modalVisible="assignPermissionVisible" :submitLoading="submitAssignPermissionLoading"
             @onCloseModal="assignPermissionVisible = false" @onReset="resetAssignPermissionHandle"
             @onSubmit="assignPermissionHandle">
-            <a-form-model :label-col="labelCol" :wrapper-col="wrapperCol">
+            <a-form-model :model="assignPermissionModel" :roles="assignPermissionRules" :label-col="labelCol"
+                :wrapper-col="wrapperCol">
                 <a-form-model-item label="角色权限">
                     <div class="role-permission-container">
                         <div>
@@ -39,7 +27,7 @@
                             </a-checkbox>
                         </div>
                         <a-divider style="margin: 12px 0;" />
-                        <a-tree v-model="checkedKeys" checkable :expanded-keys="expandedKeys"
+                        <a-tree v-model="assignPermissionModel.rolePermissions" checkable :expanded-keys="expandedKeys"
                             :auto-expand-parent="autoExpandParent" :selected-keys="selectedKeys" :tree-data="treeData"
                             :defaultExpandAll="true" :defaultCheckedKeys="selectedKeys" @expand="onExpand"
                             @select="onSelect" />
@@ -54,28 +42,25 @@
 import Modal from "@/components/modal/Modal";
 import ManagePage from "@/components/manage/ManagePage.vue";
 
-// import { getMenuTree } from "@/api/auth/admin"
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import manage from "@/mixins/manage";
-import { columns, form, moduleConfig, formRules } from "./pageConfig";
+import { columns, moduleConfig, submitFormList } from "./pageConfig";
 const { assignMenu } = moduleConfig.module;
 export default {
     components: {
         ManagePage,
         Modal
     },
-    mixins: [manage({ form })],
+    mixins: [manage({ submitFormList })],
 
     data() {
         return {
             columns,
-            form,
-            rules: formRules,
             ...moduleConfig,
             labelCol: { span: 6 },
             wrapperCol: { span: 18 },
             assignPermissionVisible: false,
-            checkedKeys: [], //自定选中的树节点
+            // checkedKeys: [], //自定选中的树节点
             expandedKeys: [], //展开指定的树节点
             autoExpandParent: true, //是否自定展开父节点
             selectedKeys: [], //设置选中的树节点
@@ -87,10 +72,18 @@ export default {
             roleId: null, //分配角色点击的id
             submitAssignPermissionLoading: false, //提交分配权限按钮是否加载
             treeKeyData: [],
+            assignPermissionModel: {
+                rolePermissions: [],
+            },
+            assignPermissionRules: {
+                rolePermissions: [
+                    { required: true, message: '请至少选择一个菜单权限', trigger: 'change', }
+                ],
+            }
         };
     },
     computed: {
-        ...mapState('account', ['menuTreeList'])
+        ...mapGetters('account', ['menuTreeList'])
     },
 
     methods: {
@@ -104,7 +97,7 @@ export default {
             this.treeKeyData = treeKeyData;
         },
         // 租户表单信息回填
-        async formBackFill(id) {
+        async getFormModel(id) {
             const roleDetailInfo = await this.getDetail(id);
             const {
                 code,
@@ -113,8 +106,7 @@ export default {
             } = roleDetailInfo;
 
             const newForm = { code, name, roleDesc };
-
-            this.form = newForm;
+            return newForm;
         },
         // 根据获取的菜单拿到所有的数级数据
         getTreeData(menuList, treeKeyData = []) {
@@ -142,8 +134,7 @@ export default {
             this.autoExpandParent = false;
         },
         // 选择事件
-        onSelect(selectedKeys, info) {
-            console.log('onSelect', info);
+        onSelect(selectedKeys) {
             this.selectedKeys = selectedKeys;
         },
         // 展开菜单列表
@@ -158,14 +149,14 @@ export default {
         // 选中菜单列表
         toggleSelectMenuList() {
             if (this.isSelectAllCheckbox) {
-                this.checkedKeys = this.treeKeyData;
+                this.assignPermissionModel.rolePermissions = this.treeKeyData;
             } else {
-                this.checkedKeys = [];
+                this.assignPermissionModel.rolePermissions = [];
             }
         },
         // 重置分配角色的处理
         resetAssignPermissionHandle() {
-            this.checkedKeys = [];
+            this.assignPermissionModel.rolePermissions = [];
             this.expandedKeys = [];
             this.isCollapseCheckbox = false;
             this.isSelectAllCheckbox = false;
@@ -174,12 +165,12 @@ export default {
         // 分配权限
         async assignPermissionHandle() {
             this.submitAssignPermissionLoading = true;
-            if (!this.checkedKeys.length) {
+            if (!this.assignPermissionModel.rolePermissions.length) {
                 this.$message.error("请至少选择一个菜单");
                 return;
             }
             // 进行分配角色
-            await assignMenu(this.roleId, this.checkedKeys);
+            await assignMenu(this.roleId, this.assignPermissionModel.rolePermissions);
             this.$message.success("分配角色权限成功!!");
             this.submitAssignPermissionLoading = false;
         }
