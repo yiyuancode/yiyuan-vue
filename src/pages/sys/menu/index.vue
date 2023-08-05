@@ -6,8 +6,8 @@
             <a-col :xl="{ span: 6 }" :lg="{ span: 24 }" class="menu-left">
                 <div class="menu-show-container">
                     <!-- 菜单操作按钮容器 -->
-                    <div class="menu-operation-btn-container">
-                        <a-button type="primary">
+                    <div class="menu-operation-btn-container" style="margin-bottom:10px">
+                        <a-button type="primary" @click="handleAddMenuClick">
                             添加菜单
                         </a-button>
 
@@ -15,13 +15,26 @@
                             {{ isExpandAll ? '全部收起' : '全部展开' }}
                         </a-button>
                     </div>
+                    <div class="menu-operation-btn-container">
+                        <a-popconfirm title="是否要删除这条信息?" ok-text="确认" cancel-text="取消" @confirm="deleteMenuHandle">
+                            <a-button type="primary">删除</a-button>
+                        </a-popconfirm>
+
+
+                        <!-- <a-popconfirm title="是否要批量删除这些信息?" ok-text="确认" cancel-text="取消" @confirm="batchdeleteMenuHandle">
+                            <a-button type="primary">批量删除</a-button>
+                        </a-popconfirm> -->
+                    </div>
+
                     <a-divider style="margin:15px 0" />
 
                     <div class="menu-list-container">
                         <a-input-search placeholder="输入菜单名称进行搜索" />
 
-                        <a-tree :tree-data="treeData" :expanded-keys="expandedKeys" @select="selectMenuHandle"
-                            @expand="onExpand" />
+                        <div class="tree-container beauty-scroll">
+                            <a-tree :tree-data="treeData" :expanded-keys="expandedKeys" @select="selectMenuHandle"
+                                @expand="onExpand" />
+                        </div>
                     </div>
                 </div>
             </a-col>
@@ -34,221 +47,127 @@
                         <a-divider type="vertical" style="margin : 0 20px" />
                         <span>从左侧列表选择一项后，进行编辑</span>
                     </p>
+
                     <a-divider />
 
                     <a-row>
-                        <a-col :xl="{span : 20}" :lg="{ span: 16 }">
-                            <div class="menu-form-container">
-                                <span class="menu-form-title">
-                                    <a-divider orientation="left">
-                                        基本设置
-                                    </a-divider>
-                                </span>
-
-                                <a-form-model ref="menuForm" :model="menuForm" :rules="menuRules" :label-col="labelCol"
-                                    :wrapper-col="wrapperCol">
-                                    <a-form-model-item ref="type" label="类型" prop="type">
-                                        <a-radio-group v-model="menuForm.type">
-                                            <a-radio-button v-for="(item, index) in menuTypeList" :key="index"
-                                                :value="item.val">
-                                                {{ item.name }}
-                                            </a-radio-button>
-                                        </a-radio-group>
-                                    </a-form-model-item>
-                                    <a-form-model-item ref="parentId" :label="menuTypeLabelInfo.parentMenuLabel"
-                                        prop="parentId">
-                                        <a-tree-select v-model="menuForm.parentId" style="width: 100%"
-                                            :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }" :tree-data="treeData"
-                                            placeholder="请选择" tree-default-expand-all allow-clear>
-                                        </a-tree-select>
-                                    </a-form-model-item>
-
-
-                                    <div class="menu-form-item">
-                                        <a-form-model-item ref="name" :label="menuTypeLabelInfo.menuNameLabel" prop="name"
-                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
-                                            <a-input v-model="menuForm.name" placeholder="目录名称" />
-                                        </a-form-model-item>
-
-                                        <a-form-model-item ref="icon" label="目录图标" prop="icon" :label-col="{ span: 12 }"
-                                            :wrapper-col="{ span: 12 }">
-                                            <a-input v-model="menuForm.icon" placeholder="目录图标" />
-                                        </a-form-model-item>
-                                    </div>
-
-                                    <div class="menu-form-item">
-                                        <a-form-model-item ref="routePath" label="路由地址" prop="routePath"
-                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
-                                            <a-input v-model="menuForm.routePath" placeholder="路由地址" />
-                                        </a-form-model-item>
-
-                                        <a-form-model-item ref="routeName" label="路由名称" prop="routeName"
-                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
-                                            <a-input v-model="menuForm.routeName" placeholder="路由名称" />
-                                        </a-form-model-item>
-                                    </div>
-
-                                    <div class="menu-form-item">
-                                        <a-form-model-item ref="routeRedirect" label="默认路由" prop="routeRedirect"
-                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
-                                            <a-input v-model="menuForm.routeRedirect" placeholder="路由重定向地址" />
-                                        </a-form-model-item>
-
-                                        <a-form-model-item ref="sort" label="显示排序" prop="sort" :label-col="{ span: 12 }"
-                                            :wrapper-col="{ span: 12 }">
-                                            <a-input-number v-model="menuForm.sort" :min="0" placeholder="显示排序" />
-                                        </a-form-model-item>
-                                    </div>
-
-                                    <a-form-model-item ref="routeComponent" label="组件路径" prop="routeComponent">
-                                        <a-input v-model="menuForm.routeComponent" placeholder="路由对应组件路径" />
-                                    </a-form-model-item>
-
-                                    <span class="menu-form-title">
-                                        <a-divider orientation="left">
-                                            功能设置
-                                        </a-divider>
-                                    </span>
-
-                                    <div class="menu-form-item">
-                                        <a-form-model-item ref="status" label="目录状态" prop="status" :label-col="{ span: 12 }"
-                                            :wrapper-col="{ span: 12 }">
-                                            <a-radio-group v-model="menuForm.status">
-                                                <a-radio-button v-for="(item, index) in menuStatusList" :key="index"
-                                                    :value="item.val">
-                                                    {{ item.name }}
-                                                </a-radio-button>
-                                            </a-radio-group>
-                                        </a-form-model-item>
-
-                                        <a-form-model-item ref="isAffix" label="多页签" prop="isAffix"
-                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
-                                            <a-switch v-model="menuForm.isAffix" default-checked />
-                                        </a-form-model-item>
-                                    </div>
-
-                                    <!-- <div class="menu-form-item">
-                                <a-form-model-item ref="routePath" label="显示状态" prop="routePath" :label-col="{ span: 12 }"
-                                    :wrapper-col="{ span: 12 }">
-                                </a-form-model-item>
-
-                                <a-form-model-item ref="routeName" label="是否缓存" prop="routeName" :label-col="{ span: 12 }"
-                                    :wrapper-col="{ span: 12 }">
-                                </a-form-model-item>
-                            </div> -->
-
-                                    <div class="menu-form-item">
-                                        <a-form-model-item ref="isFrame" label="是否外链" prop="isFrame"
-                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
-                                            <a-radio-group v-model="menuForm.isFrame">
-                                                <a-radio-button :value="1">
-                                                    是
-                                                </a-radio-button>
-                                                <a-radio-button :value="0">
-                                                    否
-                                                </a-radio-button>
-                                            </a-radio-group>
-                                        </a-form-model-item>
-
-                                        <a-form-model-item ref="isAlwaysShow" label="简化路由" prop="isAlwaysShow"
-                                            :label-col="{ span: 12 }" :wrapper-col="{ span: 12 }">
-                                            <a-switch v-model="menuForm.isAlwaysShow" default-checked />
-                                        </a-form-model-item>
-                                    </div>
-
-                                </a-form-model>
-                            </div>
+                        <a-col :xl="{ span: 20 }" :lg="{ span: 16 }">
+                            <menuForm ref="saveMenuFormCon" formRef="saveMenuForm" :model="menuModel" :rules="menuRules"
+                                :treeData="treeData" @onSave="saveMenuHandle('edit')"></menuForm>
                         </a-col>
                     </a-row>
-
                 </div>
             </a-col>
         </a-row>
-        <!-- 左侧的操作以及菜单列表显示 -->
 
-
-        <!-- 右侧的菜单详情显示 -->
+        <Modal modalTitle="添加菜单" :modalWidth="600" :modalVisible="addMenuVisible" :submitLoading="addMenuLoading"
+            @onCloseModal="addMenuVisible = false" @onReset="resetHandle" @onSubmit="saveMenuHandle('add')">
+            <menuForm ref="addMenuFormCon" formRef="addMenuForm" :model="addMenuModel" :rules="addMenuRules"
+                :treeData="treeData" mode="add"></menuForm>
+        </Modal>
     </div>
 </template>
 
 <script>
-// 菜单类型
-const menuTypeList = [{
-    name: "目录",
-    val: 0
-}, {
-    name: "菜单",
-    val: 1,
-}, {
-    name: "按钮",
-    val: 2
-}]
 
-// 菜单状态
-const menuStatusList = [{
-    name: "正常",
-    val: 1,
-}, {
-    name: "停用",
-    val: 0
-}]
+import { mapGetters, mapMutations } from 'vuex'
+import { getMenuDetail, addMenu, editMenu, deleteMenu } from "@/api/sys/menu";
+import { getUserInfo } from "@/api/login"
+import menuForm from "./menuForm";
+import Modal from "@/components/modal/Modal";
+import _ from "lodash";
 
-import { mapGetters } from 'vuex'
+const defaultMenuModel = {
+    name: "", //名称
+    type: 0, //菜单类型
+    parentId: null,  //上级目录/上级菜单
+    icon: "", //菜单图标
+    routeName: "", //路由名称
+    routePath: "", //路由地址
+    sort: 0, //显示排序
+    routeRedirect: "", //路由重定向地址
+    routeComponent: "", //路由对应组件路径
+    status: 1, //菜单状态
+    isAffix: false, //是否固定多页签
+    isAlwaysShow: false, //是否简化路由
+    isFrame: 0, //是否外链
+    isCache: false,
+    openType: 0, //当前窗口
+    permission: "",
+}
+
+const menuModel = _.cloneDeep(defaultMenuModel);
+
+const menuRules = {
+    name: [
+        { required: true, message: "请输入目录名称", trigger: 'blur' }
+    ],
+    routePath: [
+        { required: true, message: "请输入路由地址", trigger: 'blur' }
+    ],
+    routeName: [
+        { required: true, message: "请输入路由名称", trigger: 'blur' }
+    ],
+    routeComponent: [
+        { required: true, message: "请输入组件路径", trigger: 'blur' }
+    ],
+    permission: [
+        { required: true, message: "请输入权限表达式", trigger: 'blur' }
+    ]
+};
+
+const addMenuModel = _.cloneDeep(defaultMenuModel);
+const addMenuRules = _.cloneDeep(menuRules);
+const booleanPropArr = ["isAffix", "isAlwaysShow", "isCache"];
 
 export default {
+    components: {
+        menuForm,
+        Modal,
+    },
     data() {
         return {
             treeData: [], //树列表
             treeKeyData: [], //所有的树key列表
             expandedKeys: [], //展开的列表
             isExpandAll: false, //是否展开全部
-            menuForm: {
-                type: 0, //菜单类型
-                parentId: null,  //上级目录/上级菜单
-                icon: "", //菜单图标
-                routeName: "", //路由名称
-                routePath: "", //路由地址
-                sort: 0, //显示排序
-                routeRedirect: "", //路由重定向地址
-                routeComponent: "", //路由对应组件路径
-                status: 1, //菜单状态
-                isAffix: false, //是否固定多页签
-                isAlwaysShow: false, //是否简化路由
-                isFrame: 0, //是否外链
-            },
-            menuRules: {},
-            labelCol: { span: 6 },
-            wrapperCol: { span: 18 },
-            menuTypeList, //菜单类型
-            menuStatusList,  //菜单状态
+            menuModel,
+            menuRules,
+            addMenuModel,
+            addMenuRules,
+            addMenuVisible: false,
+            addMenuLoading: false,
+            selectMenuId: undefined, //选择的菜单id
         }
     },
     computed: {
         ...mapGetters('account', ['menuTreeList']),
-        menuTypeLabelInfo() {
-            let labelInfo = {};
-            if (this.menuForm.type === 0) {
-                labelInfo.parentMenuLabel = "上级目录";
-                labelInfo.menuNameLabel = "目录名称";
-            } else if (this.menuForm.type === 1) {
-                labelInfo.parentMenuLabel = "上级菜单";
-                labelInfo.menuNameLabel = "菜单名称";
-            } else if (this.menuForm.type === 2) {
-                labelInfo.parentMenuLabel = "按钮对应菜单";
-                labelInfo.menuNameLabel = "按钮名称";
-            }
-
-            return labelInfo;
+    },
+    watch: {
+        menuTreeList() {
+            this.setTreeData();
         }
     },
     async created() {
-        const menuList = this.menuTreeList;
-        const { treeData, treeKeyData } = this.getTreeData(menuList);
-        this.treeData = treeData;
-        this.treeKeyData = treeKeyData;
+        this.setTreeData();
     },
 
     methods: {
+        ...mapMutations('account', ['setMenuTreeList']),
+
+        setTreeData() {
+            const menuList = this.menuTreeList;
+            const { treeData, treeKeyData } = this.getTreeData(menuList);
+            this.treeData = treeData;
+            this.treeKeyData = treeKeyData;
+        },
+        // 处理添加菜单点击
+        handleAddMenuClick() {
+            this.addMenuVisible = true;
+            this.$nextTick(()=>{
+                this.$refs.addMenuFormCon.$refs.menuForm.resetFields();
+            });
+        },
         // 根据获取的菜单拿到所有的数级数据
         getTreeData(menuList, treeKeyData = []) {
             const treeData = [];
@@ -272,7 +191,6 @@ export default {
         },
         onExpand(expandedKeys) {
             this.expandedKeys = expandedKeys;
-            // if(JSON.stringify())
         },
         // 切换展开菜单
         toggleExpandMenuHandle() {
@@ -283,14 +201,104 @@ export default {
             }
             this.isExpandAll = !this.isExpandAll;
         },
-        // 选择菜单类型处理
-        // selectMenuTypeHandle(){
-        //     this.
-        // },
         // 选择
-        selectMenuHandle() {
+        async selectMenuHandle(selected) {
+            const menuId = selected[0];
+            if (menuId) {
+                const menuInfo = await getMenuDetail(menuId);
+                const newMenuInfo = this.handleMenuInfo(menuInfo);
+                this.menuModel = newMenuInfo;
+            }
+            this.selectMenuId = menuId;
         },
+        handleMenuInfo(menuInfo) {
+            const objPropArr = ["isAffix", "isAlwaysShow", "isCache", "isFrame", "openType", "status", "type"];
+            const newMenuInfo = {};
 
+            for (let prop in menuInfo) {
+                if (objPropArr.includes(prop)) {
+                    newMenuInfo[prop] = menuInfo[prop].value;
+                } else {
+                    newMenuInfo[prop] = menuInfo[prop];
+                }
+
+                if (booleanPropArr.includes(prop)) {
+                    newMenuInfo[prop] = newMenuInfo[prop] === 1 ? true : false;
+                }
+            }
+            if (newMenuInfo.parentId === "0") {
+                delete newMenuInfo.parentId;
+            }
+
+            return newMenuInfo;
+        },
+        // 保存菜单
+        async saveMenuHandle(opType) {
+            this.addMenuLoading = true;
+            try {
+                // 添加
+                if (opType === "add") {
+                    await this.$refs.addMenuFormCon.$refs.menuForm.validate();
+                    // 处理提交的菜单信息
+                    const submitMenuInfo = this.handleSubmitMenuInfo(this.addMenuModel);
+
+                    await addMenu(submitMenuInfo);
+                    this.$refs.addMenuFormCon.$refs.menuForm.resetFields();
+                    this.$message.success("新增菜单成功!!");
+                }
+                // 编辑
+                else if (opType === "edit") {
+                    if (!this.selectMenuId) {
+                        this.$message.error("请先选择一个菜单项再来进行编辑操作");
+                        return;
+                    }
+                    await this.$refs.saveMenuFormCon.$refs.menuForm.validate();
+
+                    const submitMenuInfo = this.handleSubmitMenuInfo(this.menuModel);
+                    await editMenu(submitMenuInfo, this.selectMenuId);
+                    this.$message.success("编辑菜单成功!!");
+                }
+
+                const userInfo = await getUserInfo();
+                this.setMenuTreeList(userInfo.menuTreeList);
+            } catch (e) {
+                Promise.reject(e);
+            }
+            this.addMenuLoading = false;
+        },
+        handleSubmitMenuInfo(menuInfo) {
+            const submitMenuInfo = {
+                ...menuInfo,
+            }
+
+            for (let prop in submitMenuInfo) {
+                if (booleanPropArr.includes(prop)) {
+                    submitMenuInfo[prop] = submitMenuInfo[prop] ? 1 : 0;
+                }
+            }
+
+            submitMenuInfo.parentId = submitMenuInfo.parentId ? submitMenuInfo.parentId : "0"; //如果没有就是0
+            return submitMenuInfo;
+        },
+        resetHandle() {
+            this.$refs.addMenuFormCon.$refs.menuForm.resetFields();
+
+            this.$message.success("重置成功!!");
+        },
+        async deleteMenuHandle() {
+            if (!this.selectMenuId) {
+                this.$message.error("请先选择一个菜单再进行删除");
+                return;
+            }
+
+            await deleteMenu(this.selectMenuId);
+            const userInfo = await getUserInfo();
+            this.setMenuTreeList(userInfo.menuTreeList);
+            this.$message.success("删除菜单信息成功!!");
+        },
+        async batchdeleteMenuHandle() {
+
+        }
     },
 
 }
@@ -309,6 +317,7 @@ export default {
     background-color: #fff;
     // margin-right: 20px;
     padding: 10px 15px;
+    // width: 100%;
 }
 
 
@@ -326,27 +335,64 @@ export default {
     }
 }
 
-// 菜单表单容器
-.menu-form-container {
 
-    // 菜单表单标题
-    .menu-form-title {
-        .ant-divider {
-            padding-left: 5%;
+.tree-container {
+    max-height: 650px;
+    overflow: auto;
+
+    /deep/ li[role='treeitem'] {
+        position: relative;
+
+        &.ant-tree-treenode-selected {
+            .ant-tree-node-selected {
+                background-color: transparent;
+            }
+
+            >.ant-tree-checkbox {
+                position: relative;
+                z-index: 1;
+            }
+
+            >.ant-tree-node-content-wrapper {
+                &::before {
+                    background-color: @primary-color;
+                }
+
+                >.ant-tree-title {
+                    color: white;
+                }
+            }
         }
     }
 
-    // 菜单表单项
-    .menu-form-item {
-        display: flex;
-
-        .ant-form-item {
-            flex: 1 1 50%;
-        }
+    /deep/ .ant-tree-switcher {
+        z-index: 1;
     }
 
-    .ant-input-number{
-        width: 100%;
+    /deep/ .ant-tree-node-content-wrapper {
+        &::before {
+            position: absolute;
+            right: 0;
+            left: 0;
+            height: 24px;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            content: '';
+        }
+
+        &:hover {
+            background-color: transparent;
+
+            &::before {
+                background-color: @hover-bg-color;
+            }
+        }
+
+        .ant-tree-title {
+            position: relative;
+            z-index: 1;
+        }
+
     }
 }
 </style>

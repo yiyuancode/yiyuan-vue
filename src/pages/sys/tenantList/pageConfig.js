@@ -31,10 +31,7 @@ const columns = [
         dataIndex: 'status',
         key: 'status',
         isSearch: true,
-        // 显示值得对象
-        // showValObj:{
-        //     prop : ""
-        // },
+        //值类型
         valType : "object",
         searchObj: {
             formType: "select",
@@ -83,51 +80,50 @@ const columns = [
 function getSubmitFormList(vm) {
     const submitFormList = [{
         prop: "code",
-        ref: "code",
         label: "租户代码",
-        value: "",
         formType: "input",
         rules: [
             { required: true, message: '请输入租户编码', trigger: 'blur' },
         ],
     }, {
         prop: "name",
-        ref: "name",
         label: "租户名称",
-        value: "",
         formType: "input",
         rules: [
             { required: true, message: '请输入租户名称', trigger: 'blur' },
         ],
     }, {
         prop: "startTime",
-        ref: "startTime",
         label: "开始时间",
-        value: null,
         formType: "datePicker",
-        showTime : true,
+        props : {
+            showTime : true,
+            style : {width : '100%'}
+        },
         rules: [
             { required: true, message: '请选择日期时间', trigger: 'change' },
             { validator: validateStartTime.bind(vm), trigger: 'change' }
         ],
     }, {
         prop: "endTime",
-        ref: "endTime",
         label: "结束时间",
-        value: null,
         formType: "datePicker",
-        showTime : true,
+        props : {
+            showTime : true,
+            style : {width : '100%'}
+        },
         rules: [
             { required: true, message: '请选择日期时间', trigger: 'change' },
             { validator: validateEndTime.bind(vm), trigger: 'change' }
         ],
     }, {
         prop: "status",
-        ref: "status",
         label: "状态",
-        value: "",
         formType: "radioGroup",
-        options: _.cloneDeep(otherDataConfig.statusList),
+        props : {
+            options: _.cloneDeep(otherDataConfig.statusList),
+            style : {width : '100%'}
+        },
         rules: [
             { required: true, message: '请选择一个状态', trigger: 'change' },
         ],

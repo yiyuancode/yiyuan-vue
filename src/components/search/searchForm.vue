@@ -6,8 +6,7 @@
                     <a-col v-for="(searchItem, index) in uSearchFormList" :key="index" :lg="{ span: 8 }" :md="{ span: 12 }">
                         <div v-if="isExpand || index <= 2" class="search-form-item">
                             <label>{{ searchItem.labelText }}</label>
-                            <FormItem v-model="searchItem.value" :formType="searchItem.formType" :options="searchItem.options"
-                                :style="{ width: '100%' }" :placeholder="searchItem.placeholder" :show-time="searchItem.showTime"/>
+                            <FormItem v-model="searchItem.value" :formType="searchItem.formType" :props="searchItem.props"/>
                         </div>
 
                     </a-col>
@@ -65,7 +64,6 @@ export default {
                     key,
                 } = searchItem;
 
-                let value = "";
                 let format = "";
                 let showTime = "";
                 let placeholder = title;
@@ -73,25 +71,23 @@ export default {
                 // 进行一些初始化配置
                 if (formType === 'datePicker' || formType === "rangePicker") {
                     format = "YYYY-MM-DD HH:mm:ss";
-                    value = null;
                     placeholder = undefined;
                     showTime = {
                         defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('00:00:00', 'HH:mm:ss')]
                     }
                 }
-                else if (formType === "select") {
-                    value = undefined;
-                }
-
+          
                 const newSearchFormObj = {
                     key,
                     formType,
                     labelText: labelText || title,
-                    value,
-                    format,
-                    options,
-                    placeholder,
-                    showTime
+                    props: {
+                        format,
+                        options,
+                        placeholder,
+                        showTime,
+                        style : {width : '100%'}
+                    }
                 };
 
                 return newSearchFormObj;

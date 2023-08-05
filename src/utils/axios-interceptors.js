@@ -52,7 +52,10 @@ const respCommon = {
   onRejected(error, options) {
     const { message } = options;
     const { response } = error;
-    if (response.status === 502) {
+    if(error.code === "ECONNABORTED"){
+      message.error("请求超时!!");
+    }
+    else if (response && response.status === 502) {
       message.error('网关错误');
     } 
     return Promise.reject(error);

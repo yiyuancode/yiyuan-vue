@@ -1,6 +1,7 @@
 <template>
-    <component :is="getComponentType()" :value="value" v-bind="$attrs" @input="handleInput" @change="handleChange"
-        @blur="handleBlur" />
+    <component :is="getComponentType()" :value="value" v-bind="props" @input="handleInput" @change="handleChange" 
+        @blur="handleBlur">
+    </component>
 </template>
 
 <script>
@@ -44,9 +45,8 @@ const {
 } = Radio;
 
 
-// import moment from "moment";
 export default {
-
+    name : "FormItem",
     components: {
         AutoComplete,
         Cascader,
@@ -76,6 +76,10 @@ export default {
         formType: {
             type: String,
             default: "input"
+        },
+        props: {
+            type: Object,
+            default: () => { }
         },
         value: [String, Number, Boolean, Array, Object],
     },
@@ -151,7 +155,6 @@ export default {
         },
 
         handleInput(newValue) {
-            // console.log(1);
             if (this.formType !== 'radioGroup') {
                 newValue = newValue.target.value;
             }
@@ -160,7 +163,7 @@ export default {
         },
 
         handleChange(newValue) {
-            if (this.formType === "radioGroup") {
+            if (this.formType === "radioGroup" || this.formType === 'textarea') {
                 newValue = newValue.target.value;
             }
             this.internalValue = newValue;

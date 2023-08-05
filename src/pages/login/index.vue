@@ -150,8 +150,7 @@ export default {
         }
 
       } catch (err) {
-        console.log(err);
-        console.log(err);
+        Promise.reject(err)
       }
 
       this.logging = false;

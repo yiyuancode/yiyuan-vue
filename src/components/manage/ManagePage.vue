@@ -79,23 +79,16 @@
 
         <Modal :modalTitle="submitModalTitle" :modalVisible="modalVisble" :submitLoading="submitLoading"
             @onSubmit="submitHandle" @onCloseModal="modalVisble = false" @onReset="resetHandle">
-            <a-form-model ref="submitModalForm" :model="model" :rules="rules" :label-col="labelCol"
-                :wrapper-col="wrapperCol">
-                <a-form-model-item v-for="(submitFormItem, index) in submitFormList" :key="index" has-feedback
-                    :label="submitFormItem.label" :prop="submitFormItem.prop">
-                    <FormItem v-model="model[submitFormItem.prop]" :placeholder="submitFormItem.label"
-                        :formType="submitFormItem.formType" :type="submitFormItem.type" :style="{ width: '100%' }" :options="submitFormItem.options" :showTime="submitFormItem.showTime"/>
-                </a-form-model-item>
-
-            </a-form-model>
+            <submitModalForm ref="submitModalForm" :formRef="formRef" :model="model" :rules="rules"
+                :submitFormList="submitFormList" />
         </Modal>
     </div>
 </template>
 
 <script>
 import Modal from "@/components/modal/Modal";
+import submitModalForm from "./submitModalForm.vue";
 import searchForm from "@/components/search/searchForm"
-import FormItem from "@/components/tool/FormItem"
 // 默认的渲染对象配置
 const defaultRenderobj = {
     addBtn: {
@@ -135,7 +128,8 @@ export default {
     components: {
         Modal,
         searchForm,
-        FormItem
+        // FormItem,
+        submitModalForm
     },
     props: {
         renderObj: {
@@ -191,6 +185,7 @@ export default {
             labelCol: { span: 6 },
             wrapperCol: { span: 18 },
             isLoading: true,
+            formRef: "submitForm",
         }
     },
 
@@ -284,7 +279,7 @@ export default {
             this.submitModalTitle = "添加";
             this.$emit("onSave", this.submitOpType);
             this.$nextTick(() => {
-                this.$refs.submitModalForm.resetFields();
+                this.$refs.submitModalForm.$refs[this.formRef].resetFields();
             });
         },
         importHandle() {
@@ -315,7 +310,7 @@ export default {
             this.submitModalTitle = "编辑";
             this.$emit("onSave", this.submitOpType, id);
             this.$nextTick(() => {
-                this.$refs.submitModalForm.resetFields();
+                this.$refs.submitModalForm.$refs[this.formRef].resetFields();
             });
             this.currentId = id;
         },
@@ -327,13 +322,17 @@ export default {
         async submitHandle() {
             this.submitLoading = true;
             try {
-                // console.log(this.model);
-                // console.log(this.rules);
-                const validateRes = await this.$refs.submitModalForm.validate();
+                const validateRes = await this.$refs.submitModalForm.$refs[this.formRef].validate();
                 if (validateRes) {
                     this.$emit("onSubmit", this.submitOpType, this.currentId, () => {
                         this.submitLoading = false;
+
+                        // 提交完重置表单
+                        if (this.submitOpType === "add") {
+                            this.$refs.submitModalForm.$refs[this.formRef].resetFields();
+                        }
                     });
+
                 }
             } catch (e) {
                 Promise.reject(e);
@@ -343,7 +342,7 @@ export default {
         },
         // 重置处理
         resetHandle() {
-            this.$refs.submitModalForm.resetFields();
+            this.$refs.submitModalForm.$refs[this.formRef].resetFields();
             this.$message.success("重置信息成功!!");
         },
 
@@ -381,11 +380,6 @@ export default {
         }
     }
 }
-
-// .page-container {
-//     display: flex;
-//     justify-content: flex-end;
-// }
 
 // 操作按钮容器
 .operate-btn-container {

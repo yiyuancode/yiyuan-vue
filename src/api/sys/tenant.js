@@ -82,7 +82,6 @@ export async function getTenantDetail(id) {
  */
 
 export async function addTenant(tenantInfo = {}) {
-    console.log(tenantInfo);
     const {
         name,
         code,

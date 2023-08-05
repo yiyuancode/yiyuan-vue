@@ -1,5 +1,5 @@
 <template>
-    <a-drawer :title="modalTitle" :closable="true" :width="450" :visible="modalVisible" @close="closeModalHandle">
+    <a-drawer :title="modalTitle" :closable="true" :width="modalWidth" :visible="modalVisible" @close="closeModalHandle">
 
         <!-- 默认插槽 -->
         <slot ref="modalContent"></slot>

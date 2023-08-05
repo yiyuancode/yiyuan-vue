@@ -68,9 +68,7 @@ const moduleConfig = {
 function getSubmitFormList(vm, opType) {
     const submitFormList = [{
         prop: "username",
-        ref: "username",
         label: "用户名",
-        value: "",
         formType: "input",
         rules: [
             { required: true, message: '请输入用户名', trigger: 'blur', }
@@ -78,22 +76,22 @@ function getSubmitFormList(vm, opType) {
         isShow : true,
     }, {
         prop: "password",
-        ref: "password",
         label: "密码",
-        value: "",
         formType: "input",
-        type : "password",
+        props : {
+            type : "password",
+        },
         rules: [
             { required: true, message: '请输入密码', trigger: 'blur', }
         ],
         isShow: opType === "edit" ? false : true,
     }, {
         prop: "rePassword",
-        ref: "rePassword",
         label: "确认密码",
-        value: "",
         formType: "input",
-        type : "password",
+        props : {
+            type : "password",
+        },
         rules: [
             { required: true, message: '请再次输入密码', trigger: 'blur' },
             { validator: validatePassWord.bind(vm), trigger: 'blur' }
