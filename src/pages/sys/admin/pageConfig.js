@@ -6,7 +6,6 @@ const columns = [
         title: '用户名',
         dataIndex: 'username',
         key: 'username',
-        isSearch: true,
         rules: [
             { required: true, message: '请输入用户名', trigger: 'blur', }
         ],
@@ -16,6 +15,7 @@ const columns = [
         dataIndex: 'password',
         key: 'password',
         noShow : true,
+        noSearch : true,
         props : {
             type : "password"
         },
@@ -39,6 +39,7 @@ const columns = [
             ]
         },
         noEdit : true,
+        noSearch : true,
     },
     {
         title: "角色",
@@ -47,12 +48,12 @@ const columns = [
         scopedSlots: { customRender: 'userRoles' },
         noAdd : true,
         noEdit : true,
+        noSearch : true,
     },
     {
         title: '所属平台',
         dataIndex: 'platform',
         key: 'platform',
-        isSearch: true,
         valType : "object",
         searchObj: {
             formType: "select",
@@ -74,7 +75,6 @@ const columns = [
         title: "创建时间",
         dataIndex: "createTime",
         key: "createTime",
-        isSearch: true,
         searchObj: {
             formType: "rangePicker"
         },
@@ -85,7 +85,6 @@ const columns = [
         title: '更新时间',
         key: 'updateTime',
         dataIndex: 'updateTime',
-        isSearch: true,
         searchObj: {
             formType: "rangePicker"
         },

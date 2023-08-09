@@ -105,6 +105,8 @@ export default {
                     value,
                 } = searchFormItem;
 
+                console.log(value);
+
                 let tempValue = value;
                 if (Object.prototype.toString.call(value) === '[object Object]') {
                     tempValue = { ...value }

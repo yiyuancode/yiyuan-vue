@@ -56,68 +56,66 @@ export default function (opts = {}) {
             columnsObj() {
                 const vm = this;
                 // 添加表单
-                const addFormList = this.columns.filter(con=>{
+                const addFormList = this.columns.filter(con => {
                     return !con.noAdd;
-                }).map(con=>{
+                }).map(con => {
                     const {
                         key,
                         title,
                         props,
                         formType,
                         formSort,
-                        listSort,
+                        defaultValue
                     } = con;
 
                     let rules = con.rules;
-                    if(typeof rules === "function"){
+                    if (typeof rules === "function") {
                         rules = rules.call(vm);
                     }
 
                     return {
-                        label : title,
-                        prop : key,
+                        label: title,
+                        prop: key,
                         rules,
-                        formType : formType ? formType : "input",
+                        formType: formType ? formType : "input",
                         props,
-                        formSort : formSort ? formSort : 0,
-                        listSort : listSort ? listSort : 0
+                        formSort: formSort ? formSort : 0,
+                        defaultValue
                     }
                 });
 
                 // 编辑表单
-                const editFormList = this.columns.filter(con=>{
+                const editFormList = this.columns.filter(con => {
                     return !con.noEdit;
-                }).map(con=>{
+                }).map(con => {
                     const {
                         key,
                         title,
                         props,
                         formType,
                         formSort,
-                        listSort,
                     } = con;
 
                     let rules = con.rules;
-                    if(typeof rules === "function"){
+                    if (typeof rules === "function") {
                         rules = rules.call(vm);
                     }
 
                     return {
-                        label : title,
-                        prop : key,
+                        label: title,
+                        prop: key,
                         rules,
-                        formType : formType ? formType : "input",
+                        formType: formType ? formType : "input",
                         props,
-                        formSort : formSort ? formSort : 0,
-                        listSort : listSort ? listSort : 0
+                        formSort: formSort ? formSort : 0,
                     }
                 });
 
-                addFormList.sort((ad1,ad2)=>{
+                addFormList.sort((ad1, ad2) => {
                     return ad1.formSort - ad2.formSort;
                 });
 
-                editFormList.sort((ed1,ed2)=>{
+                editFormList.sort((ed1, ed2) => {
                     return ed1.formSort - ed2.formSort;
                 });
 
@@ -130,7 +128,7 @@ export default function (opts = {}) {
                         key
                     } = columns[i];
 
-                    if(valType && valType === "object"){
+                    if (valType && valType === "object") {
                         objColumnsArr.push(key);
                     }
                 }
@@ -151,10 +149,11 @@ export default function (opts = {}) {
                     const {
                         prop,
                         value,
-                        rules
+                        rules,
+                        defaultValue
                     } = submitFormItem;
 
-                    newForm[prop] = value;
+                    newForm[prop] = defaultValue !== undefined ? defaultValue : value;
                     newRules[prop] = rules;
                 })
 
@@ -201,6 +200,7 @@ export default function (opts = {}) {
             async getData() {
                 this.renderObj.isLoading = true;
                 try {
+                    console.log(this.searchObj);
                     const dataResult = await this.module[this.moduleGetList](this.searchObj);
                     if (dataResult) {
                         const { total, records } = dataResult;
@@ -229,12 +229,12 @@ export default function (opts = {}) {
             },
             // 点击添加和编辑
             async saveHandle(opType, id) {
-                if(opType === "add"){
+                if (opType === "add") {
                     this.submitFormList = this.columnsObj.addFormList;
-                }else if(opType === "edit"){
+                } else if (opType === "edit") {
                     this.submitFormList = this.columnsObj.editFormList;
                 }
-           
+
                 this.getFormAndRules();
                 if (id) {
                     const newModel = await this.getFormModel(id);

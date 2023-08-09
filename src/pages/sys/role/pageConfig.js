@@ -6,7 +6,6 @@ const columns = [
         title: '角色名称',
         dataIndex: 'name',
         key: 'name',
-        isSearch: true,
         rules: [
             { required: true, message: '请输入角色名称', trigger: 'blur', }
         ],
@@ -15,7 +14,6 @@ const columns = [
         title: '角色代码',
         dataIndex: 'code',
         key: 'code',
-        isSearch: true,
         rules: [
             { required: true, message: '请输入角色代码', trigger: 'blur', }
         ],
@@ -25,12 +23,12 @@ const columns = [
         dataIndex: "roleDesc",
         key: "roleDesc",
         formType: "textarea",
+        noSearch : true,
     },
     {
         title: '创建时间',
         key: 'createTime',
         dataIndex: 'createTime',
-        isSearch: true,
         searchObj: {
             formType: "rangePicker"
         },
@@ -41,7 +39,6 @@ const columns = [
         title: '更新时间',
         key: 'updateTime',
         dataIndex: 'updateTime',
-        isSearch: true,
         searchObj: {
             formType: "rangePicker"
         },

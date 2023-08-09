@@ -18,7 +18,6 @@ const columns = [
         title: '租户名称',
         dataIndex: 'name',
         key: 'name',
-        isSearch: true,
         rules: [
             { required: true, message: '请输入租户名称', trigger: 'blur' },
         ],
@@ -27,7 +26,6 @@ const columns = [
         title: '租户代码',
         dataIndex: 'code',
         key: 'code',
-        isSearch: true,
         rules: [
             { required: true, message: '请输入租户编码', trigger: 'blur' },
         ],
@@ -36,7 +34,6 @@ const columns = [
         title: "租户状态",
         dataIndex: 'status',
         key: 'status',
-        isSearch: true,
         //值类型
         valType: "object",
         searchObj: {
@@ -57,7 +54,6 @@ const columns = [
         title: "开始时间",
         dataIndex: "startTime",
         key: "startTime",
-        isSearch: true,
         searchObj: {
             formType: "rangePicker"
         },
@@ -77,7 +73,6 @@ const columns = [
         title: '结束时间',
         key: 'endTime',
         dataIndex: 'endTime',
-        isSearch: true,
         searchObj: {
             formType: "rangePicker"
         },
@@ -97,7 +92,6 @@ const columns = [
         title: "创建时间",
         key: "createTime",
         dataIndex: 'createTime',
-        isSearch: true,
         searchObj: {
             formType: "rangePicker"
         },
@@ -108,7 +102,6 @@ const columns = [
         title: "修改时间",
         key: "updateTime",
         dataIndex: 'updateTime',
-        isSearch: true,
         searchObj: {
             formType: "rangePicker"
         },
@@ -163,6 +156,5 @@ const moduleConfig = {
 export {
     columns,
     moduleConfig,
-    // getSubmitFormList,
     otherDataConfig
 };

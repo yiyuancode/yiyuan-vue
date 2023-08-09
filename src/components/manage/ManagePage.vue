@@ -77,17 +77,18 @@
             <slot></slot>
         </div>
 
-        <Modal :modalTitle="submitModalTitle" :modalVisible="modalVisble" :submitLoading="submitLoading"
-            @onSubmit="submitHandle" @onCloseModal="modalVisble = false" @onReset="resetHandle">
+        <Modal :modalWidth="submitModalObj.modalWidth" :modalTitle="submitModalTitle" :modalVisible="modalVisble"
+            :submitLoading="submitLoading" @onSubmit="submitHandle" @onCloseModal="modalVisble = false"
+            @onReset="resetHandle">
             <submitModalForm ref="submitModalForm" :formRef="formRef" :model="model" :rules="rules"
-                :submitFormList="submitFormList" />
+                :submitFormList="submitFormList" :labelCol="submitModalObj.labelCol" :wrapperCol="submitModalObj.wrapperCol" />
         </Modal>
     </div>
 </template>
 
 <script>
 import Modal from "@/components/modal/Modal";
-import submitModalForm from "./submitModalForm.vue";
+import submitModalForm from "./submitModalForm";
 import searchForm from "@/components/search/searchForm"
 // 默认的渲染对象配置
 const defaultRenderobj = {
@@ -170,6 +171,16 @@ export default {
         submitFormList: {
             type: Array,
             required: true
+        },
+        submitModalObj: {
+            type: Object,
+            default: () => {
+                return {
+                    labelCol: { span: 8 },
+                    wrapperCol: { span: 16 },
+                    modalWidth : 450
+                }
+            }
         }
     },
 
@@ -201,9 +212,20 @@ export default {
 
         // 表头进行处理，增加操作
         uTheadData() {
-            const newColumns = this.columns.filter(item=>{
+            const newColumns = this.columns.filter(item => {
                 return !item.noShow;
+            }).map(item => {
+                const newItem = {
+                    ...item,
+                    listSort: item.listSort || 0
+                }
+                return newItem;
             });
+
+            newColumns.sort((c1, c2) => {
+                return c1.listSort - c2.listSort;
+            });
+
             return [...newColumns, {
                 title: '操作',
                 key: 'action',
@@ -247,16 +269,15 @@ export default {
                     const {
                         key,
                         title,
-                        isSearch,
                         searchObj, //查询的配置对象
                     } = theadItem;
 
                     // 是否可以搜索
-                    if (isSearch) {
+                    if (!theadItem.noSearch) {
                         const searchFormObj = {
                             key,
                             title,
-                            isSearch,
+                            isSearch: !theadItem.noSearch,
                         }
 
                         if (searchObj) {
@@ -282,7 +303,7 @@ export default {
             this.submitModalTitle = "添加";
             this.$emit("onSave", this.submitOpType);
             this.$nextTick(() => {
-                this.$refs.submitModalForm.$refs[this.formRef].resetFields();
+                this.$refs.submitModalForm.$refs[this.formRef].resetFields();       
             });
         },
         importHandle() {

@@ -46,14 +46,22 @@ export default {
         formRef: {
             type: String,
             required: true,
+        },
+        labelCol: {
+            type: Object,
+            default: () => ({span : 6})
+        },
+        wrapperCol: {
+            type: Object,
+            default: () => ({span : 18})
         }
     },
-    data() {
-        return {
-            labelCol: { span: 6 },
-            wrapperCol: { span: 18 },
-        }
-    },
+    // data() {
+    //     return {
+    //         labelCol: { span: 6 },
+    //         wrapperCol: { span: 18 },
+    //     }
+    // },
     computed: {
         uSubmitFormList() {
             return this.submitFormList.map(sf => {
