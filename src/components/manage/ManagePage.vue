@@ -201,7 +201,10 @@ export default {
 
         // 表头进行处理，增加操作
         uTheadData() {
-            return [...this.columns, {
+            const newColumns = this.columns.filter(item=>{
+                return !item.noShow;
+            });
+            return [...newColumns, {
                 title: '操作',
                 key: 'action',
                 scopedSlots: { customRender: 'action' },

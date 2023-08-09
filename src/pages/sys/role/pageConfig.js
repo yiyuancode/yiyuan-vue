@@ -7,17 +7,24 @@ const columns = [
         dataIndex: 'name',
         key: 'name',
         isSearch: true,
+        rules: [
+            { required: true, message: '请输入角色名称', trigger: 'blur', }
+        ],
     },
     {
         title: '角色代码',
         dataIndex: 'code',
         key: 'code',
         isSearch: true,
+        rules: [
+            { required: true, message: '请输入角色代码', trigger: 'blur', }
+        ],
     },
     {
         title: "角色描述",
         dataIndex: "roleDesc",
-        key: "roleDesc"
+        key: "roleDesc",
+        formType: "textarea",
     },
     {
         title: '创建时间',
@@ -26,7 +33,9 @@ const columns = [
         isSearch: true,
         searchObj: {
             formType: "rangePicker"
-        }
+        },
+        noAdd: true,
+        noEdit: true,
     },
     {
         title: '更新时间',
@@ -35,30 +44,12 @@ const columns = [
         isSearch: true,
         searchObj: {
             formType: "rangePicker"
-        }
+        },
+        noAdd: true,
+        noEdit: true,
     },
 ];
 
-const submitFormList = [{
-    prop: "code",
-    label: "角色代码",
-    formType: "input",
-    rules: [
-        { required: true, message: '请输入角色代码', trigger: 'blur', }
-    ],
-}, {
-    prop: "name",
-    label: "角色名称",
-    formType: "input",
-    rules: [
-        { required: true, message: '请输入密码', trigger: 'blur', }
-    ],
-    
-}, {
-    prop: "roleDesc",
-    label: "角色描述",
-    formType: "textarea",
-}]
 
 // 模块配置
 const moduleConfig = {
@@ -66,14 +57,13 @@ const moduleConfig = {
     moduleAdd: "addRole",
     moduleEdit: "editRole",
     moduleDelete: "deleteRole",
-    moduleGetList : "getRolePageList",
-    moduleGetDetail : "getRoleDetail",
-    moduleName : "角色",
+    moduleGetList: "getRolePageList",
+    moduleGetDetail: "getRoleDetail",
+    moduleName: "角色",
 }
 
 
-export  {
+export {
     columns,
     moduleConfig,
-    submitFormList
 };

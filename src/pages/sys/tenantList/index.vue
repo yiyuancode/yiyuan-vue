@@ -32,13 +32,13 @@
 import moment from "moment";
 import ManagePage from "@/components/manage/ManagePage.vue";
 import manage from "@/mixins/manage";
-import { columns, moduleConfig,getSubmitFormList } from "./pageConfig";
+import { columns, moduleConfig } from "./pageConfig";
 
 export default {
     components: {
         ManagePage,
     },
-    mixins: [manage({getSubmitFormList})],
+    mixins: [manage()],
     data() {
         return {
             columns,

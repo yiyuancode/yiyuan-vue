@@ -44,14 +44,14 @@ import ManagePage from "@/components/manage/ManagePage.vue";
 
 import { mapGetters } from "vuex";
 import manage from "@/mixins/manage";
-import { columns, moduleConfig, submitFormList } from "./pageConfig";
+import { columns, moduleConfig } from "./pageConfig";
 const { assignMenu } = moduleConfig.module;
 export default {
     components: {
         ManagePage,
         Modal
     },
-    mixins: [manage({ submitFormList })],
+    mixins: [manage()],
 
     data() {
         return {

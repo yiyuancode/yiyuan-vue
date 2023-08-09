@@ -14,16 +14,10 @@
                         <a-button type="primary" @click="toggleExpandMenuHandle">
                             {{ isExpandAll ? '全部收起' : '全部展开' }}
                         </a-button>
-                    </div>
-                    <div class="menu-operation-btn-container">
+
                         <a-popconfirm title="是否要删除这条信息?" ok-text="确认" cancel-text="取消" @confirm="deleteMenuHandle">
                             <a-button type="primary">删除</a-button>
                         </a-popconfirm>
-
-
-                        <!-- <a-popconfirm title="是否要批量删除这些信息?" ok-text="确认" cancel-text="取消" @confirm="batchdeleteMenuHandle">
-                            <a-button type="primary">批量删除</a-button>
-                        </a-popconfirm> -->
                     </div>
 
                     <a-divider style="margin:15px 0" />
@@ -329,9 +323,12 @@ export default {
 // 菜单操作按钮的容器
 .menu-operation-btn-container {
     display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 
     .ant-btn {
         margin-right: 12px;
+        margin-bottom: 10px;
     }
 }
 

@@ -44,7 +44,7 @@ import ManagePage from "@/components/manage/ManagePage.vue";
 import { getRoleList } from "@/api/auth/role";
 import manage from "@/mixins/manage";
 const { assignRole } = moduleConfig.module;
-import { columns, moduleConfig, getSubmitFormList } from "./pageConfig";
+import { columns, moduleConfig } from "./pageConfig";
 
 
 export default {
@@ -52,7 +52,7 @@ export default {
         ManagePage,
         Modal
     },
-    mixins: [manage({ getSubmitFormList })],
+    mixins: [manage()],
     data() {
         return {
             columns,

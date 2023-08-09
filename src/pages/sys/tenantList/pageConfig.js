@@ -19,12 +19,18 @@ const columns = [
         dataIndex: 'name',
         key: 'name',
         isSearch: true,
+        rules: [
+            { required: true, message: '请输入租户名称', trigger: 'blur' },
+        ],
     },
     {
         title: '租户代码',
         dataIndex: 'code',
         key: 'code',
         isSearch: true,
+        rules: [
+            { required: true, message: '请输入租户编码', trigger: 'blur' },
+        ],
     },
     {
         title: "租户状态",
@@ -32,11 +38,20 @@ const columns = [
         key: 'status',
         isSearch: true,
         //值类型
-        valType : "object",
+        valType: "object",
         searchObj: {
             formType: "select",
             options: otherDataConfig.statusList
-        }
+        },
+        formType: "radioGroup",
+        props: {
+            options: _.cloneDeep(otherDataConfig.statusList),
+            style: { width: '100%' }
+        },
+        rules: [
+            { required: true, message: '请选择一个状态', trigger: 'change' },
+        ],
+        formSort : 1,
     },
     {
         title: "开始时间",
@@ -45,7 +60,18 @@ const columns = [
         isSearch: true,
         searchObj: {
             formType: "rangePicker"
-        }
+        },
+        props: {
+            showTime: true,
+            style: { width: '100%' }
+        },
+        formType: "datePicker",
+        rules: function () {
+            return [
+                { required: true, message: '请选择日期时间', trigger: 'change' },
+                { validator: validateStartTime.bind(this), trigger: 'change' }
+            ]
+        },
     },
     {
         title: '结束时间',
@@ -54,7 +80,18 @@ const columns = [
         isSearch: true,
         searchObj: {
             formType: "rangePicker"
-        }
+        },
+        formType: "datePicker",
+        props: {
+            showTime: true,
+            style: { width: '100%' }
+        },
+        rules: function(){
+            return [
+                { required: true, message: '请选择日期时间', trigger: 'change' },
+                { validator: validateEndTime.bind(this), trigger: 'change' }
+            ]
+        } ,
     },
     {
         title: "创建时间",
@@ -63,7 +100,9 @@ const columns = [
         isSearch: true,
         searchObj: {
             formType: "rangePicker"
-        }
+        },
+        noEdit: true,
+        noAdd: true,
     },
     {
         title: "修改时间",
@@ -72,66 +111,14 @@ const columns = [
         isSearch: true,
         searchObj: {
             formType: "rangePicker"
-        }
+        },
+        noEdit: true,
+        noAdd: true,
     }
 ];
 
 
-function getSubmitFormList(vm) {
-    const submitFormList = [{
-        prop: "code",
-        label: "租户代码",
-        formType: "input",
-        rules: [
-            { required: true, message: '请输入租户编码', trigger: 'blur' },
-        ],
-    }, {
-        prop: "name",
-        label: "租户名称",
-        formType: "input",
-        rules: [
-            { required: true, message: '请输入租户名称', trigger: 'blur' },
-        ],
-    }, {
-        prop: "startTime",
-        label: "开始时间",
-        formType: "datePicker",
-        props : {
-            showTime : true,
-            style : {width : '100%'}
-        },
-        rules: [
-            { required: true, message: '请选择日期时间', trigger: 'change' },
-            { validator: validateStartTime.bind(vm), trigger: 'change' }
-        ],
-    }, {
-        prop: "endTime",
-        label: "结束时间",
-        formType: "datePicker",
-        props : {
-            showTime : true,
-            style : {width : '100%'}
-        },
-        rules: [
-            { required: true, message: '请选择日期时间', trigger: 'change' },
-            { validator: validateEndTime.bind(vm), trigger: 'change' }
-        ],
-    }, {
-        prop: "status",
-        label: "状态",
-        formType: "radioGroup",
-        props : {
-            options: _.cloneDeep(otherDataConfig.statusList),
-            style : {width : '100%'}
-        },
-        rules: [
-            { required: true, message: '请选择一个状态', trigger: 'change' },
-        ],
-    }]
-    return submitFormList;
-}
-
-function validateStartTime (rule, value, callback) {
+function validateStartTime(rule, value, callback) {
     if (!this.model.endTime) {
         callback();
     } else {
@@ -146,13 +133,13 @@ function validateStartTime (rule, value, callback) {
     }
 }
 
-function validateEndTime (rule, value, callback) {
+function validateEndTime(rule, value, callback) {
     if (!this.model.startTime) {
         callback();
     } else {
         const startTime = this.model.startTime.format('YYYY-MM-DD HH:mm:ss');
         const endTime = value.format('YYYY-MM-DD mm:ss');
-        console.log(startTime,endTime);
+        console.log(startTime, endTime);
         if (new Date(endTime).getTime() < new Date(startTime).getTime()) {
             callback('结束时间不能低于开始日期');
         } else {
@@ -176,6 +163,6 @@ const moduleConfig = {
 export {
     columns,
     moduleConfig,
-    getSubmitFormList,
+    // getSubmitFormList,
     otherDataConfig
 };

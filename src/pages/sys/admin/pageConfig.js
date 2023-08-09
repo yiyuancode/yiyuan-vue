@@ -6,13 +6,47 @@ const columns = [
         title: '用户名',
         dataIndex: 'username',
         key: 'username',
-        isSearch: true
+        isSearch: true,
+        rules: [
+            { required: true, message: '请输入用户名', trigger: 'blur', }
+        ],
+    },
+    {
+        title: '密码',
+        dataIndex: 'password',
+        key: 'password',
+        noShow : true,
+        props : {
+            type : "password"
+        },
+        rules: [
+            { required: true, message: '请输入密码', trigger: 'blur', }
+        ],
+        noEdit : true,
+    },
+    {
+        title: '确认密码',
+        dataIndex: 'rePassword',
+        key: 'rePassword',
+        props : {
+            type : "password"
+        },
+        noShow : true,
+        rules: function(){
+            return [
+                { required: true, message: '请再次输入密码', trigger: 'blur' },
+                { validator: validatePassWord.bind(this), trigger: 'blur' }
+            ]
+        },
+        noEdit : true,
     },
     {
         title: "角色",
         dataIndex: "userRoles",
         key: "userRoles",
         scopedSlots: { customRender: 'userRoles' },
+        noAdd : true,
+        noEdit : true,
     },
     {
         title: '所属平台',
@@ -32,7 +66,9 @@ const columns = [
                 label: "移动端",
                 value: 2
             }]
-        }
+        },
+        noAdd : true,
+        noEdit : true,
     },
     {
         title: "创建时间",
@@ -41,7 +77,9 @@ const columns = [
         isSearch: true,
         searchObj: {
             formType: "rangePicker"
-        }
+        },
+        noAdd : true,
+        noEdit : true,
     },
     {
         title: '更新时间',
@@ -50,7 +88,9 @@ const columns = [
         isSearch: true,
         searchObj: {
             formType: "rangePicker"
-        }
+        },
+        noAdd : true,
+        noEdit : true,
     },
 ]
 
@@ -63,45 +103,6 @@ const moduleConfig = {
     moduleGetList: "getAdminPageList",
     moduleGetDetail: "getAdminDetail",
     moduleName: "用户",
-}
-
-function getSubmitFormList(vm, opType) {
-    const submitFormList = [{
-        prop: "username",
-        label: "用户名",
-        formType: "input",
-        rules: [
-            { required: true, message: '请输入用户名', trigger: 'blur', }
-        ],
-        isShow : true,
-    }, {
-        prop: "password",
-        label: "密码",
-        formType: "input",
-        props : {
-            type : "password",
-        },
-        rules: [
-            { required: true, message: '请输入密码', trigger: 'blur', }
-        ],
-        isShow: opType === "edit" ? false : true,
-    }, {
-        prop: "rePassword",
-        label: "确认密码",
-        formType: "input",
-        props : {
-            type : "password",
-        },
-        rules: [
-            { required: true, message: '请再次输入密码', trigger: 'blur' },
-            { validator: validatePassWord.bind(vm), trigger: 'blur' }
-        ],
-        isShow: opType === "edit" ? false : true,
-    }]
-
-    return submitFormList.filter(sf=>{
-        return sf.isShow;
-    });
 }
 
 // 校验密码
@@ -117,5 +118,4 @@ function validatePassWord(rule, value, callback) {
 export {
     columns,
     moduleConfig,
-    getSubmitFormList,
 };
