@@ -5,7 +5,7 @@
                 <a-row class="search-form-row">
                     <a-col v-for="(searchItem, index) in uSearchFormList" :key="index" :lg="{ span: 8 }" :md="{ span: 12 }">
                         <div v-if="isExpand || index <= 2" class="search-form-item">
-                            <label>{{ searchItem.labelText }} {{ searchItem.value }}</label>
+                            <label>{{ searchItem.labelText }} </label>
                             <FormItem v-model="searchItem.value" :formType="searchItem.formType"
                                 :props="searchItem.props" />
                         </div>
@@ -30,6 +30,7 @@
 <script>
 import FormItem from "../tool/FormItem";
 import moment from "moment";
+import _ from "lodash";
 export default {
     components: {
         FormItem
@@ -147,9 +148,11 @@ export default {
         },
         // 重置表单
         resetForm() {
-            this.uSearchFormList.forEach(searchFormItem => {
+            const uSearchFormList = _.cloneDeep(this.uSearchFormList);
+            uSearchFormList.forEach(searchFormItem => {
                 searchFormItem.value = undefined;
             });
+            this.uSearchFormList = uSearchFormList;
 
             this.$emit('onReset');
             this.$message.success("重置查询表单成功");

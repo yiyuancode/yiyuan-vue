@@ -97,6 +97,7 @@ export default {
         internalValue(newValue) {
             // 监听内部值的变化，同步更新外部传入的 value 值
             this.$emit('input', newValue);
+            this.$emit('change', newValue);
         },
     },
     methods: {
@@ -159,7 +160,6 @@ export default {
                 newValue = newValue.target.value;
             }
             this.internalValue = newValue;
-            this.$emit('input', newValue);
         },
 
         handleChange(newValue) {
@@ -168,9 +168,7 @@ export default {
             }
             this.internalValue = newValue;
             // 对于支持 change 事件的表单组件，触发 change 事件
-            // 抛出两个事件
-            this.$emit('input', newValue);
-            this.$emit('change', newValue);
+            // this.$emit("change");
         },
 
         // 失去焦点的事件
