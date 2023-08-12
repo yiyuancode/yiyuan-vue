@@ -4,7 +4,7 @@
         <div class="manage-container">
             <!-- 查询操作容器 -->
             <div class="search-container">
-                <searchForm :searchFormList="searchFormList" v-on="$listeners">
+                <searchForm :searchFormList="columnsObj.searchFormList" v-on="$listeners">
 
                 </searchForm>
             </div>
@@ -43,12 +43,13 @@
 
                 <!-- 列表容器 -->
                 <div class="list-container">
-                    <a-table style="margin-bottom: 10px;" :columns="uTheadData" :data-source="data" :pagination="pagination"
-                        :loading="uRenderObj.isLoading" :rowKey="(record, index) => { return index }"
-                        :row-selection="rowSelection">
+                    <a-table style="margin-bottom: 10px;" :columns="columnsObj.uTheadData" :data-source="data"
+                        :pagination="pagination" :loading="uRenderObj.isLoading"
+                        :rowKey="(record, index) => { return index }" :row-selection="rowSelection">
 
                         <!-- 进行一个自定义插槽的遍历 -->
-                        <template v-for="(item, index) in tdColumnData" :slot="item.scopedSlots?.customRender"
+
+                        <template v-for="(item, index) in columnsObj.tdColumnData" :slot="item.scopedSlots?.customRender"
                             slot-scope="text,record">
                             <!-- {{ record }} -->
                             <slot :name="'table-' + item.scopedSlots?.customRender" v-bind="{ text, record }"></slot>
@@ -81,12 +82,14 @@
             :submitLoading="submitLoading" @onSubmit="submitHandle" @onCloseModal="modalVisble = false"
             @onReset="resetHandle">
             <submitModalForm ref="submitModalForm" :formRef="formRef" :model="model" :rules="rules"
-                :submitFormList="submitFormList" :labelCol="submitModalObj.labelCol" :wrapperCol="submitModalObj.wrapperCol" />
+                :submitFormList="submitFormList" :labelCol="submitModalObj.labelCol"
+                :wrapperCol="submitModalObj.wrapperCol" />
         </Modal>
     </div>
 </template>
 
 <script>
+import eventBus from "@/eventBus";
 import Modal from "@/components/modal/Modal";
 import submitModalForm from "./submitModalForm";
 import searchForm from "@/components/search/searchForm"
@@ -161,24 +164,13 @@ export default {
             type: Array,
             required: true
         },
-        // 表单的规则
-        rules: {
-            type: Object,
-        },
-        model: {
-            type: Object,
-        },
-        submitFormList: {
-            type: Array,
-            required: true
-        },
         submitModalObj: {
             type: Object,
             default: () => {
                 return {
                     labelCol: { span: 8 },
                     wrapperCol: { span: 16 },
-                    modalWidth : 450
+                    modalWidth: 450
                 }
             }
         }
@@ -192,11 +184,13 @@ export default {
             submitLoading: false,
             currentId: null,
             selectedRows: [],
-            searchFormList: [],
             labelCol: { span: 6 },
             wrapperCol: { span: 18 },
             isLoading: true,
             formRef: "submitForm",
+            rules: {},
+            model: {},
+            submitFormList: []
         }
     },
 
@@ -211,33 +205,114 @@ export default {
         },
 
         // 表头进行处理，增加操作
-        uTheadData() {
-            const newColumns = this.columns.filter(item => {
-                return !item.noShow;
-            }).map(item => {
-                const newItem = {
-                    ...item,
-                    listSort: item.listSort || 0
+        columnsObj() {
+            const vm = this;
+            /**
+             * 通过columns 拿到添加表单的列表，编辑表单的类别，以及后端传过来的对象需要.desc的值处理，uTheadData处理,td插槽数据处理，查询表单处理
+             */
+            const addFormList = [], editFormList = [], objColumnsArr = [], uTheadData = [], tdColumnData = [], searchFormList = [];
+            for (let i = 0; i < this.columns.length; i++) {
+                const column = this.columns[i];
+                const {
+                    noAdd,
+                    noEdit,
+                    noShow,
+                    noSearch,
+                    key,
+                    title,
+                    props,
+                    formType,
+                    formSort,
+                    defaultValue,
+                    valType,
+                    scopedSlots,
+                    searchObj
+                } = column;
+
+                let rules = column.rules;
+                if (typeof rules === "function") {
+                    rules = rules.call(vm);
                 }
-                return newItem;
-            });
 
-            newColumns.sort((c1, c2) => {
-                return c1.listSort - c2.listSort;
-            });
+                const formObj = {
+                    label: title,
+                    prop: key,
+                    rules,
+                    formType: formType ? formType : "input",
+                    props,
+                    formSort: formSort ? formSort : 0,
+                }
 
-            return [...newColumns, {
+                // 添加的表单列表
+                if (!noAdd) {
+                    formObj.defaultValue = defaultValue;
+                    addFormList.push(formObj);
+                }
+
+                // 编辑的表单列表
+                if (!noEdit) {
+                    editFormList.push(formObj);
+                }
+
+                //一些key需要处理
+                if (valType && valType === "object") {
+                    objColumnsArr.push(key);
+                }
+
+                // 所有显示的列表
+                if (!noShow) {
+                    const uTheadObj = {
+                        ...column,
+                        listSort: column.listSort || 0,
+                    }
+                    uTheadData.push(uTheadObj);
+
+                    // 插槽的列表
+                    if (scopedSlots && scopedSlots?.customRender !== 'action') {
+                        tdColumnData.push(uTheadObj);
+                    }
+                }
+
+                // 搜索列表
+                if (!noSearch) {
+                    const searchFormObj = {
+                        key,
+                        title,
+                        isSearch: !noSearch,
+                    }
+
+                    if (searchObj) {
+                        for (let prop in searchObj) {
+                            searchFormObj[prop] = searchObj[prop];
+                        }
+                    }
+                    searchFormList.push(searchFormObj);
+                }
+            }
+
+            uTheadData.push({
                 title: '操作',
                 key: 'action',
                 scopedSlots: { customRender: 'action' },
                 fixed: 'right',
-            }];
-        },
-        // 插槽
-        tdColumnData() {
-            return this.uTheadData.filter(ut => {
-                return ut.scopedSlots && ut.scopedSlots?.customRender !== 'action';
             });
+
+            addFormList.sort((ad1, ad2) => {
+                return ad1.formSort - ad2.formSort;
+            });
+
+            editFormList.sort((ed1, ed2) => {
+                return ed1.formSort - ed2.formSort;
+            });
+
+            return {
+                objColumnsArr,
+                addFormList,
+                editFormList,
+                uTheadData,
+                tdColumnData,
+                searchFormList
+            }
         },
         // 表格复选框的一个显示配置
         rowSelection() {
@@ -258,54 +333,22 @@ export default {
     },
     created() {
         // 将columns里面带isSearch进行一个处理，处理成searchForm需要的数据 
-        this.getSearchFormList();
-
+        eventBus.$emit('getObjColumn', this.columnsObj.objColumnsArr);
     },
     methods: {
-        getSearchFormList() {
-            const searchFormList = [];
-            this.columns.forEach(theadItem => {
-                if (typeof theadItem === "object") {
-                    const {
-                        key,
-                        title,
-                        searchObj, //查询的配置对象
-                    } = theadItem;
-
-                    // 是否可以搜索
-                    if (!theadItem.noSearch) {
-                        const searchFormObj = {
-                            key,
-                            title,
-                            isSearch: !theadItem.noSearch,
-                        }
-
-                        if (searchObj) {
-                            for (let prop in searchObj) {
-                                searchFormObj[prop] = searchObj[prop];
-                            }
-                        }
-
-                        searchFormList.push(searchFormObj);
-                    }
-                }
-                else {
-                    Promise.reject("columns里面的每一项必须是对象");
-                    return;
-                }
-            });
-            this.searchFormList = searchFormList;
-        },
         // 显示添加模态框的处理
         async addHandle() {
             this.modalVisble = true;
             this.submitOpType = "add";
             this.submitModalTitle = "添加";
-            this.$emit("onSave", this.submitOpType);
+
+            this.getSubmitFormList();
+            this.$emit("onSave");
             this.$nextTick(() => {
-                this.$refs.submitModalForm.$refs[this.formRef].resetFields();       
+                this.$refs.submitModalForm.$refs[this.formRef].resetFields();
             });
         },
+
         importHandle() {
             this.noDeveloped();
         },
@@ -332,11 +375,46 @@ export default {
             this.modalVisble = true;
             this.submitOpType = "edit";
             this.submitModalTitle = "编辑";
-            this.$emit("onSave", this.submitOpType, id);
+            this.getSubmitFormList();
+            this.$emit("onSave", {
+                id,
+                done: (model) => {
+                    this.model = model;
+                }
+            });
             this.$nextTick(() => {
                 this.$refs.submitModalForm.$refs[this.formRef].resetFields();
             });
             this.currentId = id;
+        },
+        // 获取提交表单的列表
+        getSubmitFormList() {
+            const opType = this.submitOpType;
+            if (opType === "add") {
+                this.submitFormList = this.columnsObj.addFormList;
+            } else if (opType === "edit") {
+                this.submitFormList = this.columnsObj.editFormList;
+            }
+            this.getFormAndRules();
+        },
+        // 获取form和rules
+        getFormAndRules() {
+            const newRules = {};
+            const newForm = {};
+            this.submitFormList.forEach(submitFormItem => {
+                const {
+                    prop,
+                    value,
+                    rules,
+                    defaultValue
+                } = submitFormItem;
+
+                newForm[prop] = defaultValue !== undefined ? defaultValue : value;
+                newRules[prop] = rules;
+            })
+
+            this.model = newForm;
+            this.rules = newRules;
         },
         // 确认删除的处理函数
         confirmDeleteHandle(id) {
@@ -348,12 +426,17 @@ export default {
             try {
                 const validateRes = await this.$refs.submitModalForm.$refs[this.formRef].validate();
                 if (validateRes) {
-                    this.$emit("onSubmit", this.submitOpType, this.currentId, () => {
-                        this.submitLoading = false;
+                    this.$emit("onSubmit", {
+                        opType: this.submitOpType,
+                        id: this.currentId,
+                        model: this.model,
+                        done: () => {
+                            this.submitLoading = false;
 
-                        // 提交完重置表单
-                        if (this.submitOpType === "add") {
-                            this.$refs.submitModalForm.$refs[this.formRef].resetFields();
+                            // 提交完重置表单
+                            if (this.submitOpType === "add") {
+                                this.$refs.submitModalForm.$refs[this.formRef].resetFields();
+                            }
                         }
                     });
 
@@ -372,9 +455,6 @@ export default {
 
         noDeveloped() {
             this.$message.warning("该功能还没有开发..");
-        },
-        searchFormHandle(searchFormInfoList) {
-            console.log(searchFormInfoList);
         },
     },
 

@@ -1,6 +1,5 @@
 <template>
-    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" :rules="rules"
-        :model="model" :submitFormList="submitFormList" @onSave="saveHandle" @onSubmit="submitHandle"
+    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj"  @onSave="saveHandle" @onSubmit="submitHandle"
         @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle">
 
         <span slot="table-userRoles" slot-scope="{text,record}">
@@ -13,13 +12,6 @@
             <a-button type="primary" @click="assignRole(scope.data.id)">分配角色</a-button>
 
         </template>
-
-
-        <!-- <template #tableTdColumnsContainer> -->
-        <!-- <span slot="userRoles" slot-scope="userRoles">
-          {{ userRoles }}
-      </span> -->
-        <!-- </template> -->
 
         <!-- 分配角色模态框 -->
         <Modal modalTitle="分配角色" :modalVisible="assignRoleVisible" :submitLoading="assignRoleLoading"

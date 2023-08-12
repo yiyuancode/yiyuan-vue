@@ -1,3 +1,4 @@
+import eventBus from "@/eventBus";
 /**
  * 
  * @param {*} opts 
@@ -24,9 +25,7 @@ export default function (opts = {}) {
             isLoading: false
         },
         submitLoading: false, //提交的loading
-        submitFormList: [],
-        model: {},
-        rules: {},
+        objColumnsArr: [],
     }
 
     defaultOpts.searchObj = {
@@ -50,123 +49,27 @@ export default function (opts = {}) {
         // 组件生命周期
         async created() {
             this.getData();
-        },
-        computed: {
-            // 处理成一个对象
-            columnsObj() {
-                const vm = this;
-                // 添加表单
-                const addFormList = this.columns.filter(con => {
-                    return !con.noAdd;
-                }).map(con => {
-                    const {
-                        key,
-                        title,
-                        props,
-                        formType,
-                        formSort,
-                        defaultValue
-                    } = con;
+            // 获取columns中属性valueType === object的
+            eventBus.$on('getObjColumn', objColumnsArr => {
+                this.objColumnsArr = objColumnsArr;
+            })
 
-                    let rules = con.rules;
-                    if (typeof rules === "function") {
-                        rules = rules.call(vm);
-                    }
-
-                    return {
-                        label: title,
-                        prop: key,
-                        rules,
-                        formType: formType ? formType : "input",
-                        props,
-                        formSort: formSort ? formSort : 0,
-                        defaultValue
-                    }
-                });
-
-                // 编辑表单
-                const editFormList = this.columns.filter(con => {
-                    return !con.noEdit;
-                }).map(con => {
-                    const {
-                        key,
-                        title,
-                        props,
-                        formType,
-                        formSort,
-                    } = con;
-
-                    let rules = con.rules;
-                    if (typeof rules === "function") {
-                        rules = rules.call(vm);
-                    }
-
-                    return {
-                        label: title,
-                        prop: key,
-                        rules,
-                        formType: formType ? formType : "input",
-                        props,
-                        formSort: formSort ? formSort : 0,
-                    }
-                });
-
-                addFormList.sort((ad1, ad2) => {
-                    return ad1.formSort - ad2.formSort;
-                });
-
-                editFormList.sort((ed1, ed2) => {
-                    return ed1.formSort - ed2.formSort;
-                });
-
-
-                const objColumnsArr = [];
-                const columns = this.columns;
-                for (let i = 0; i < columns.length; i++) {
-                    const {
-                        valType,
-                        key
-                    } = columns[i];
-
-                    if (valType && valType === "object") {
-                        objColumnsArr.push(key);
-                    }
-                }
-
-                return {
-                    objColumnsArr,
-                    addFormList,
-                    editFormList
-                }
-            }
         },
         methods: {
-            // 拿到表单和规则
-            getFormAndRules() {
-                const newRules = {};
-                const newForm = {};
-                this.submitFormList.forEach(submitFormItem => {
-                    const {
-                        prop,
-                        value,
-                        rules,
-                        defaultValue
-                    } = submitFormItem;
-
-                    newForm[prop] = defaultValue !== undefined ? defaultValue : value;
-                    newRules[prop] = rules;
-                })
-
-                this.model = newForm;
-                this.rules = newRules;
-            },
             // 提交的回调
-            async submitHandle(opType, id, done) {
+            async submitHandle(opts = {}) {
+                const {
+                    opType,
+                    id,
+                    model,
+                    done
+                } = opts;
+
                 // 如果处理数据方法存在
                 if (this.handleSubmitData) {
-                    this.handleSubmitData();
+                    this.submitData = this.handleSubmitData(model);
                 } else {
-                    this.submitData = this.model;
+                    this.submitData = model;
                 }
 
                 if (opType === "add" || opType === "edit") {
@@ -200,24 +103,21 @@ export default function (opts = {}) {
             async getData() {
                 this.renderObj.isLoading = true;
                 try {
-                    console.log(this.searchObj);
                     const dataResult = await this.module[this.moduleGetList](this.searchObj);
                     if (dataResult) {
                         const { total, records } = dataResult;
 
                         // 处理返回的一个记录数据
-                        if (this.columnsObj.objColumnsArr.length || this.handleRecord) {
+                        if (this.objColumnsArr.length || this.handleRecord) {
                             for (let i = 0; i < records.length; i++) {
-                                for (let j = 0; j < this.columnsObj.objColumnsArr.length; j++) {
-                                    const key = this.columnsObj.objColumnsArr[j];
-
+                                for (let j = 0; j < this.objColumnsArr.length; j++) {
+                                    const key = this.objColumnsArr[j];
                                     records[i][key] = records[i][key].desc;
                                 }
 
                                 this.handleRecord && this.handleRecord(records[i]);
                             }
                         }
-
                         this.pagination.total = total;
                         this.data = records;
                     }
@@ -228,17 +128,15 @@ export default function (opts = {}) {
                 this.renderObj.isLoading = false;
             },
             // 点击添加和编辑
-            async saveHandle(opType, id) {
-                if (opType === "add") {
-                    this.submitFormList = this.columnsObj.addFormList;
-                } else if (opType === "edit") {
-                    this.submitFormList = this.columnsObj.editFormList;
-                }
+            async saveHandle(opts={}) {
+                const {
+                    id,
+                    done
+                } = opts;
 
-                this.getFormAndRules();
                 if (id) {
                     const newModel = await this.getFormModel(id);
-                    this.model = newModel;
+                    done(newModel);
                 }
             },
             // 获取数据详情

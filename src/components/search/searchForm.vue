@@ -5,8 +5,9 @@
                 <a-row class="search-form-row">
                     <a-col v-for="(searchItem, index) in uSearchFormList" :key="index" :lg="{ span: 8 }" :md="{ span: 12 }">
                         <div v-if="isExpand || index <= 2" class="search-form-item">
-                            <label>{{ searchItem.labelText }}</label>
-                            <FormItem v-model="searchItem.value" :formType="searchItem.formType" :props="searchItem.props"/>
+                            <label>{{ searchItem.labelText }} {{ searchItem.value }}</label>
+                            <FormItem v-model="searchItem.value" :formType="searchItem.formType"
+                                :props="searchItem.props" />
                         </div>
 
                     </a-col>
@@ -76,7 +77,7 @@ export default {
                         defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('00:00:00', 'HH:mm:ss')]
                     }
                 }
-          
+
                 const newSearchFormObj = {
                     key,
                     formType,
@@ -86,7 +87,7 @@ export default {
                         options,
                         placeholder,
                         showTime,
-                        style : {width : '100%'}
+                        style: { width: '100%' }
                     }
                 };
 
@@ -104,8 +105,6 @@ export default {
                     key,
                     value,
                 } = searchFormItem;
-
-                console.log(value);
 
                 let tempValue = value;
                 if (Object.prototype.toString.call(value) === '[object Object]') {
@@ -149,14 +148,9 @@ export default {
         // 重置表单
         resetForm() {
             this.uSearchFormList.forEach(searchFormItem => {
-                if (searchFormItem.formType === 'rangePicker' || searchFormItem.formType === 'datePicker') {
-                    searchFormItem.value = null;
-                } else if (searchFormItem.formType === 'select') {
-                    searchFormItem.value = undefined;
-                } else {
-                    searchFormItem.value = '';
-                }
+                searchFormItem.value = undefined;
             });
+
             this.$emit('onReset');
             this.$message.success("重置查询表单成功");
         },

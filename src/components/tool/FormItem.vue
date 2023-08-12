@@ -163,7 +163,7 @@ export default {
         },
 
         handleChange(newValue) {
-            if (this.formType === "radioGroup" || this.formType === 'textarea') {
+            if (this.formType === "radioGroup" || this.formType === 'textarea' || this.formType === 'input') {
                 newValue = newValue.target.value;
             }
             this.internalValue = newValue;

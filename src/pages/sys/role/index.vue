@@ -1,6 +1,5 @@
 <template>
-    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" :rules="rules"
-        :model="model" :submitFormList="submitFormList" @onSave="saveHandle" @onSubmit="submitHandle"
+    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj"  @onSave="saveHandle" @onSubmit="submitHandle"
         @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle">
 
         <!-- 其他的操作插槽 -->

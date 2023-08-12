@@ -16,12 +16,6 @@
 
 
 
-
-
-
-
-
-
 ## API
 
 ### 属性列表
@@ -29,11 +23,10 @@
 | 参数      | 说明                                                 | 类型   | 默认值/实例                | 是否必填 | 版本 |
 | --------- | ---------------------------------------------------- | ------ | -------------------------- | -------- | ---- |
 | renderObj | 管理页面的渲染对象配置                               | Object | [crtl点击查看](#renderObj) | 否       |      |
-| columns | 管理页面的表头配置                                   | Array  | [ctrl点击查看](#columns) | 是       |      |
+| columns | 管理页面的表头配置（和ant-design-vue的a-table组件的columns基本一致，多了一些新增的属性） | Array  | [ctrl点击查看](#columns) | 是       |      |
 | pagination  | 管理页面的分页配置                                   | Object | [ctrl点击查看](#pagination)  |          |      |
 | data      | 管理页面的表格数据内容,这里的数据的key会和表头的匹配 | Array  |                            |          |      |
-| formRules | 管理页面添加和编辑时候的表单规则                     | Object | [ctrl点击查看](#formRules) |          |      |
-| formModel | 管理页面添加和编辑时候的表单对象                     | Object | [ctrl点击查看](#formModel) |          |      |
+| submitModalObj | 提交表单的一些信息配置{labelCol: { span: 8 },wrapperCol: { span: 16 },modalWidth : 450} | Object |                             |          |      |
 
 
 
@@ -58,8 +51,6 @@
 - opType  操作类型，batchdelete | delete，用来判断删除的类型是批量还是单个
 - ids  id的一个字符串，批量删除的话id会通过,分隔，单个删除只有一个id
 - Tips：这个基本不需要动
-
-
 
 
 
@@ -113,167 +104,66 @@ scopedSlots:{
 
 
 
-
-
 <span id = "renderObj">**renderObj默认值**</span>
 
-```js
-//主要是针对一些按钮是否开启（默认会都是开启的）
-addBtn: {
-    isOpen: true,
-    text: "添加",
-},
-editBtn: {
-    isOpen: true,
-    text: "编辑",
-},
-deleteBtn: {
-    isOpen: true,
-    text: "删除"
-},
-importBtn: {
-    isOpen: true,
-    text: "导入",
-},
-exportBtn: {
-    isOpen: true,
-    text: "导出",
-},
-batchDeleteBtn: {
-    isOpen: true,
-    text: "批量删除",
-},
-operateMode: 1,   // 操作按钮的显示模式，可以做几种显示模式，目前两种，一种是直接按钮铺开，一种是按钮组，下拉菜单(1表示按钮铺开，2表示按钮组下拉菜单)
-loading: false, //表格的加载效果
-isOpenSelectCheckbox: true, //是否开启选择下拉框（这个），这个可以用这个来控制
-idProp: "id", //需要批量操作使用的data的id属性值，删除和编辑会用的到
-submitLoading: false, //表单提交按钮loading
-```
+| 属性                 | 属性值                                            | 含义                               |
+| -------------------- | ------------------------------------------------- | ---------------------------------- |
+| addBtn               | {isOpen:true,text:"添加"}                         | 添加按钮是否开启，以及文字配置     |
+| editBtn              | {isOpen:true,text:"编辑"}                         | 编辑按钮是否开启，以及文字配置     |
+| deleteBtn            | {isOpen:true,text:"删除"}                         | 删除按钮是否开启，以及文字配置     |
+| importBtn            | {isOpen:true,text:"导入"}                         | 导入按钮是否开启，以及文字配置     |
+| exportBtn            | {isOpen:true,text:"导出"}                         | 导出按钮是否开启，以及文字配置     |
+| batchDeleteBtn       | {isOpen:true,text:"批量删除"}                     | 批量删除按钮是否开启，以及文字配置 |
+| operateMode          | 默认1，枚举值(1表示按钮铺开，2表示按钮组下拉菜单) | 操作按钮的显示模式，目前只做了1    |
+| loading              | 默认false，可传递boolean值                        | 表格的加载状态                     |
+| isOpenSelectCheckbox | 默认true，可传递boolean值                         | 是否开启复选框                     |
+| idProp               | 默认"id"，可传递String值                          | id的属性（用于编辑和删除以及回写） |
+| submitLoading        | 默认false，可传递boolean值                        | 提交按钮的加载状态                 |
+
+
 
 
 
 <span id = "columns">**columns示例**</span>
 
-```js
-//需要传递的是一个数组，这个数组的对象里面的属性
-{
-    title, 
-    dataIndex,
-    key,
-   //上面三个都是ant-design-vue的a-table组件里面的columns数组提供的，目前这个组件只使用了这三个，如果想拓展a-table的功能具体可以参阅它的一个官网，地址	为：https://1x.antdv.com/components/table-cn#Column
-   //下面就是我们自己的一个自定义的字段
-   isSearch :true, //这个就代表加入搜索的字段列表
-   searchObj : { //搜索字段列表的具体配置信息，具体请查看SearchForm组件   
-		
-   }
-}
-const columns = [
-    {
-        title: '租户名称', 
-        dataIndex: 'name',
-        key: 'name',
-        isSearch: true,
-    },
-    {
-        title: "开始时间",
-        dataIndex: "startTime",
-        key: "startTime",
-        isSearch: true,
-        searchObj: {
-            type: "rangePicker"
-        }
-    },
-];
+**属性列表**
 
-
-```
+| 属性      | 属性值                                                       | 含义                   |
+| --------- | ------------------------------------------------------------ | ---------------------- |
+| noAdd     | true                                                         | 代表不出现在添加里面   |
+| noEdit    | true                                                         | 代表不出现在编辑里面   |
+| noSearch  | true                                                         | 代表不出现在查询里面   |
+| formType  | 默认是input，具体查看formItem组件的这个属性                  | 代表表单的属性配置     |
+| listSort  | number数字                                                   | 代表列表的排序         |
+| formSort  | number数字                                                   | 代表表单的排序         |
+| searchObj | 查询的对象                                                   | 代表查询表单的一些配置 |
+| props     | 和formType配合使用的，标识可以添加给表单元素的任意属性，具体查看ant-design-vue文档 | 代表表单元素的属性对象 |
+| rules     | 这里的规则配置和ant-design-vue的a-form-item的一致            |                        |
 
 
 
+**searchObj**
 
+**属性列表**
 
-<span id = "pagination">**pagination示例**</span>
+| 属性     | 属性值                                                       | 含义                       |
+| -------- | ------------------------------------------------------------ | -------------------------- |
+| formType | 默认是input，具体查看formItem组件的这个属性                  | 代表查询表单的属性配置     |
+| options  | 和formType配合使用的，如果type是select的话就可以配置这个属性 | 代表查询表单元素的属性对象 |
 
-```js
-{
-    pageSize: 10, //每个显示的条数
- 	pageNum: 1, //当前页
-	total: 0, //总页数
-}
-不过这个正常情况下默认就可以了
-```
-
+**Tips：这里单独使用options而不是使用props里面对象写属性的形式，主要是查询用不到太多的组件，所以所需要的参数不多，这里就直接给几个属性，也方便理解**
 
 
 
+<span id = "pagination">**pagination**</span>
 
-<span id = "formRules">**formRules示例**</span>
+**属性列表**
 
-```js
-//这里有this的部分都需要写到data()里面,这里的规则实际上是根据我们的表单对象来的
-const validateStartTime = (rule, value, callback) => {
-     if (!this.form.endTime) {
-         callback();
-     } else {
-         const endTime = this.form.endTime.format('YYYY-MM-DD HH:mm:ss');
-         const startTime = value.format('YYYY-MM-DD mm:ss');
-         if (new Date(startTime).getTime() > new Date(endTime).getTime()) {
-             callback('开始日期不能超过结束日期');
-         } else {
-             callback();
-         }
-     }
- };
-
-const validateEndTime = (rule, value, callback) => {
-    if (!this.form.startTime) {
-        callback();
-    } else {
-        const startTime = this.form.startTime.format('YYYY-MM-DD HH:mm:ss');
-        const endTime = value.format('YYYY-MM-DD mm:ss');
-        if (new Date(endTime).getTime() < new Date(startTime).getTime()) {
-            callback('结束时间不能低于开始日期');
-        } else {
-            callback();
-        }
-    }
-};
-
-// 表单规则配置
-const formRules = {
-    code: [
-        { required: true, message: '请输入租户编码', trigger: 'blur' },
-    ],
-    name: [
-        { required: true, message: '请输入租户名称', trigger: 'blur' },
-    ],
-    startTime: [
-        { required: true, message: '请选择日期时间', trigger: 'change' },
-        { validator: validateStartTime, trigger: 'change' }
-    ],
-    endTime: [
-        { required: true, message: '请选择日期时间', trigger: 'change' },
-        { validator: validateEndTime, trigger: 'change' }
-    ]
-};
-```
-
-
-
-
-
-<span id = "formModel">**formModel示例**</span>
-
-```js
-// 其实就是一个对象，就是记录表单需要提交的一些信息
-const form = {
-    code: '', //租户代码
-    name: '', //租户名称
-    startTime: null, //开始时间 
-    endTime: null, //结束时间
-    status: 0, //启用
-}
-```
+| 属性     | 属性值                 | 含义           |
+| -------- | ---------------------- | -------------- |
+| pageSize | 默认10，可填写number值 | 代表每页条数   |
+| pageNum  | 默认1，可填写number值  | 代表当前页     |
+| total    | 默认0，可填写number值  | 代表每页总页数 |
 
 
 

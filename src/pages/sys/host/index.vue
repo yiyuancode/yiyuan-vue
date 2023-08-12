@@ -1,13 +1,13 @@
 <template>
     <ManagePage :submitModalObj="submitModalObj" :columns="columns" :data="data" :pagination="pagination"
-        :renderObj="renderObj" :rules="rules" :model="model" :submitFormList="submitFormList" @onSave="saveHandle"
-        @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle">
+        :renderObj="renderObj" @onSave="saveHandle" @onSubmit="submitHandle" @onDelete="deleteHandle"
+        @onSearch="searchHandle" @onReset="resetHandle">
 
 
         <!-- 其他的操作插槽 -->
         <template #otherOperationsContainer>
             <!-- #otherOperationsContainer="scope" -->
-            <a-button type="primary" >监控</a-button>
+            <a-button type="primary">监控</a-button>
         </template>
     </ManagePage>
 </template>

@@ -49,6 +49,7 @@ const columns = [
             { required: true, message: '请选择一个状态', trigger: 'change' },
         ],
         formSort : 1,
+        defaultValue : 0,
     },
     {
         title: "开始时间",
