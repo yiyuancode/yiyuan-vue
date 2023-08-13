@@ -82,16 +82,6 @@ export default {
             record.userRoles = userRoles;
         },
 
-        // 用户表单信息回填
-        async getFormModel(id) {
-            const adminDetailInfo = await this.getDetail(id);
-            const {
-                username,
-            } = adminDetailInfo;
-
-            const newForm = { username };
-            return newForm;
-        },
         // 分配角色
         async assignRole(id) {
             this.assignRoleVisible = true;

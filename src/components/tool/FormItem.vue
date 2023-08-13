@@ -123,7 +123,7 @@ export default {
                 case 'weekPicker':
                     return 'WeekPicker';
                 case 'timePicker':
-                    return 'timePicker';
+                    return 'TimePicker';
                 case 'input':
                     return 'Input';
                 case 'searchInput':

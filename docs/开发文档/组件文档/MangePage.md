@@ -10,23 +10,19 @@
 
 
 
-## 代码演示
-
-
-
 
 
 ## API
 
 ### 属性列表
 
-| 参数      | 说明                                                 | 类型   | 默认值/实例                | 是否必填 | 版本 |
-| --------- | ---------------------------------------------------- | ------ | -------------------------- | -------- | ---- |
-| renderObj | 管理页面的渲染对象配置                               | Object | [crtl点击查看](#renderObj) | 否       |      |
-| columns | 管理页面的表头配置（和ant-design-vue的a-table组件的columns基本一致，多了一些新增的属性） | Array  | [ctrl点击查看](#columns) | 是       |      |
-| pagination  | 管理页面的分页配置                                   | Object | [ctrl点击查看](#pagination)  |          |      |
-| data      | 管理页面的表格数据内容,这里的数据的key会和表头的匹配 | Array  |                            |          |      |
-| submitModalObj | 提交表单的一些信息配置{labelCol: { span: 8 },wrapperCol: { span: 16 },modalWidth : 450} | Object |                             |          |      |
+| 参数      | 说明                                                 | 类型   | 默认值/实例                | 是否必填 |
+| --------- | ---------------------------------------------------- | ------ | -------------------------- | -------- |
+| renderObj | 管理页面的渲染对象配置                               | Object | [crtl点击查看](#renderObj) | 否       |
+| columns | 管理页面的表头配置（和ant-design-vue的a-table组件的columns基本一致，多了一些新增的属性） | Array  | [ctrl点击查看](#columns) | 是       |
+| pagination  | 管理页面的分页配置                                   | Object | [ctrl点击查看](#pagination)  |          |
+| data      | 管理页面的表格数据内容,这里的数据的key会和表头的匹配 | Array  |                            |          |
+| submitModalObj | 提交表单的一些信息配置{labelCol: { span: 8 },wrapperCol: { span: 16 },modalWidth : 450} | Object |                             |          |
 
 
 
@@ -46,65 +42,65 @@
 
 <span id = "onDelParams">**onDelete参数**</span>
 
-（opType，ids）
+| 参数   | 类型   | 含义            |
+| ------ | ------ | --------------- |
+| opType | String | 操作类型        |
+| ids    | String | 删除所需要的ids |
 
-- opType  操作类型，batchdelete | delete，用来判断删除的类型是批量还是单个
-- ids  id的一个字符串，批量删除的话id会通过,分隔，单个删除只有一个id
-- Tips：这个基本不需要动
+**opType返回值**
+
+| 值          | 含义                 |
+| ----------- | -------------------- |
+| batchdelete | 删除的类型是批量删除 |
+| delete      | 删除的类型是单个删除 |
 
 
 
 <span id = "onSubParams">**onSubmit参数**</span>
 
-（opType，id，回调函数）
+| 参数   | 类型   | 含义                           |
+| ------ | ------ | ------------------------------ |
+| opType | String | 操作类型                       |
+| id     | String | 如果是edit就存在id，否则不存在 |
 
-- opType  操作类型，add|edit 后续可能会新增一些类型
-- id，如果edit的话就有id
-- Tips：这个基本不需要改
+**opType返回值**
+
+| 值   | 含义             |
+| ---- | ---------------- |
+| add  | 保存的类型是添加 |
+| edit | 保存的类型是编辑 |
 
 
 
 ### 插槽
 
-#### 具名插槽
+| 插槽名称                                      | 插槽含义                                               | 插槽提供的参数                                        |
+| --------------------------------------------- | ------------------------------------------------------ | ----------------------------------------------------- |
+| **otherOperationsGOContainer**                | 管理页面的其他操作（如果存在某些公共操作可以加入这里） | 无                                                    |
+| **otherOperationsContainer**                  | 管理页面的其他操作，在每一行的右边显示                 | 无                                                    |
+| **table-{columns的scopedSlots.customRender}** | 管理页面的表格中的某一列配置                           | text,record，text代表这个列的值，record标识这一行的值 |
 
-**submitModal**
+**table-{columns的scopedSlots.customRender}示例**
 
-这个插槽目前是专门用来存放form-model-item的，因为目前这边的一个crud组件，会变动的只有里面表单的内容，不过ant-design-vue提供了两个表单，formModel，以及form，后续会把form也加入进来
-
-
-
-**otherOperationsGOContainer**
-
-其他操作全局的容器，目前这个插槽主要是放在我们的添加，导入，导出，批量删除按钮的右边的，比如有一些管理页面需要自定义的一个按钮，我们就可以在这边进行一个配置（目前这个模块还没有做完善）
-
-
-
-**otherOperationsContainer**
-
-这里就是每一行右边的操作栏的其他按钮的追加，会追加到我们编辑删除的后面
-
-
-
-**列表a-table的插槽**
-
-这里需要注意，我们管理页面的列表的每一行的每一列的具体的详情，我们可以通过插槽来进行配置，根据我们columns里面定义的一个属性
-
+```js
+columns = [{
+    ...,
+    {
+       ...,
+       scopedSlots:{
+        customRender : "userRoles"
+      }
+    }
+}]
 ```
-scopedSlots:{
-	customRender : 'xxx'
-}
-```
-
-然后我们要是用这个插槽的时候，只需要这么写
 
 ```vue
-<span slot="table-xxx" slot-scope="{text,record}"></span> 这里的text就是指具体的值，record就是这一行的值
+<span slot="table-userRoles" slot-scope="{text,record}">{{text}}</span> 这里的text就是指具体的值，record就是这一行的值
 ```
 
 
 
-<span id = "renderObj">**renderObj默认值**</span>
+<span id = "renderObj">**renderObj属性列表**</span>
 
 | 属性                 | 属性值                                            | 含义                               |
 | -------------------- | ------------------------------------------------- | ---------------------------------- |
@@ -124,9 +120,7 @@ scopedSlots:{
 
 
 
-<span id = "columns">**columns示例**</span>
-
-**属性列表**
+<span id = "columns">**columns属性列表**</span>
 
 | 属性      | 属性值                                                       | 含义                   |
 | --------- | ------------------------------------------------------------ | ---------------------- |
@@ -139,6 +133,7 @@ scopedSlots:{
 | searchObj | 查询的对象                                                   | 代表查询表单的一些配置 |
 | props     | 和formType配合使用的，标识可以添加给表单元素的任意属性，具体查看ant-design-vue文档 | 代表表单元素的属性对象 |
 | rules     | 这里的规则配置和ant-design-vue的a-form-item的一致            |                        |
+| noShow    | true                                                         | 代表不加入显示的表单   |
 
 
 
@@ -155,9 +150,7 @@ scopedSlots:{
 
 
 
-<span id = "pagination">**pagination**</span>
-
-**属性列表**
+<span id = "pagination">**pagination属性列表**</span>
 
 | 属性     | 属性值                 | 含义           |
 | -------- | ---------------------- | -------------- |

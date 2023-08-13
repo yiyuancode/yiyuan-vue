@@ -12,10 +12,6 @@
 
 
 
-## 代码演示
-
-
-
 
 
 ## API
@@ -40,41 +36,33 @@
 
 
 
+<span id = "onSearchParams">**onSearch参数列表**</span>
+
+| 值                          | 含义           |
+| --------------------------- | -------------- |
+| uSearchFormList，每一个item | 查询的表单列表 |
+
+
+
+**uSearchFormList的Item**
+
+| 值    | 含义                                  |
+| ----- | ------------------------------------- |
+| key   | 代表查询的key，也就是columns配置的key |
+| value | 代表查询的值                          |
 
 
 
 
-<span id = "onSearchParams">**onSearch参数**</span>
 
-（uSearchFormList）
+<span id = "searchFormList">**searchFormList属性列表**</span>
 
-```js
-uSearchFormList : [{
-    key : "", //传递过来的searchFormList的key
-    value : "", //这个key的一个查询表单项对应的查询的query值
-}]
-```
-
+| 属性     | 类型   | 默认值              | 含义                                         |
+| -------- | ------ | ------------------- | -------------------------------------------- |
+| formType | String | input               | 查询的表单类型                               |
+| title    | String | ''                  | 查询时的label以及placeholder                 |
+| format   | String | YYYY-MM-DD HH:mm:ss | 类型为datePicker，它所需要的属性，时间格式化 |
+| options  | Array  | []                  | 类型为select，它的options，下拉菜单选项      |
 
 
-
-
-<span id = "searchFormList">**searchFormList示例**</span>
-
-```js
-searchFormList : [{
-	type, //默认值是input  'input' | 'inputSearch' | 'datePicker' | 'rangePicker' | 'select'   
-    /*
-    	input         <a-input />    普通搜索框
-    	inputSearch   <a-input-search />  带查询图标的搜索框
-    	datePicker    <a-date-picker />  format 格式化显示，YYYY-MM-DD HH:MM:SS 日期选择器
-    	rangePicker   <a-range-picker /> format placeholder = [] 日期的范围选择器
-    	select        <a-select ></a-select> 
-    */
-    title, //'默认值为'' 查询字段名称',
-    format, //默认值: YYYY-MM-DD HH:mm:ss  类型为datePicker的时候
-    options, //默认值: [] 类型为select的时候
-    labelText, //默认值是title label显示的字段文字
-}]
-```
 

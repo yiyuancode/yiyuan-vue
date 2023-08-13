@@ -95,18 +95,6 @@ export default {
             this.treeData = treeData;
             this.treeKeyData = treeKeyData;
         },
-        // 租户表单信息回填
-        async getFormModel(id) {
-            const roleDetailInfo = await this.getDetail(id);
-            const {
-                code,
-                name,
-                roleDesc
-            } = roleDetailInfo;
-
-            const newForm = { code, name, roleDesc };
-            return newForm;
-        },
         // 根据获取的菜单拿到所有的数级数据
         getTreeData(menuList, treeKeyData = []) {
             const treeData = [];

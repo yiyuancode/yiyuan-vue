@@ -128,14 +128,22 @@ export default function (opts = {}) {
                 this.renderObj.isLoading = false;
             },
             // 点击添加和编辑
-            async saveHandle(opts={}) {
+            async saveHandle(opts = {}) {
                 const {
                     id,
                     done
                 } = opts;
 
                 if (id) {
-                    const newModel = await this.getFormModel(id);
+                    const detailInfo = await this.getDetail(id);
+
+                    const newModel = { ...detailInfo };
+                    for (let prop in detailInfo) {
+                        if (this.objColumnsArr.includes(prop)) {
+                            newModel[prop] = newModel[prop].value;
+                        }
+                    }
+                    this.handleDetailModel && this.handleDetailModel(newModel);
                     done(newModel);
                 }
             },

@@ -106,6 +106,7 @@ const moduleConfig = {
     moduleGetList: "getHostPageList",
     moduleGetDetail: "getHostDetail",
     moduleName: "用户",
+    
 }
 
 

@@ -60,7 +60,6 @@ export default {
             this.uSearchFormList = this.searchFormList.map(searchItem => {
                 const {
                     formType,
-                    labelText,
                     title,
                     options,
                     key,
@@ -82,7 +81,7 @@ export default {
                 const newSearchFormObj = {
                     key,
                     formType,
-                    labelText: labelText || title,
+                    labelText:  title,
                     props: {
                         format,
                         options,

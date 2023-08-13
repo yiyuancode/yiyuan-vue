@@ -38,25 +38,9 @@ export default {
             return tenantInfo;
         },
 
-        // 租户表单信息回填
-        async getFormModel(id) {
-            const tenantDetailInfo = await this.getDetail(id);
-            const {
-                code,
-                name,
-                startTime,
-                endTime,
-                status
-            } = tenantDetailInfo;
-
-            const newForm = {
-                code,
-                name,
-                startTime: moment(startTime),
-                endTime: moment(endTime),
-                status: status.value
-            };
-            return newForm;
+        handleDetailModel(model){
+            model.startTime = moment(model.startTime);
+            model.endTime = moment(model.endTime);
         },
     },
 }

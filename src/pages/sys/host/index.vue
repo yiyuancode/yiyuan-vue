@@ -32,29 +32,6 @@ export default {
             }
         }
     },
-    methods: {
-        async getFormModel(id) {
-            const hostDetailInfo = await this.getDetail(id);
-            const {
-                hostName,
-                host,
-                sshPort,
-                sshUsername,
-                sshPassword,
-                isMonitorEnabled
-            } = hostDetailInfo;
-
-            const newForm = {
-                hostName,
-                host,
-                sshPort,
-                sshUsername,
-                sshPassword,
-                isMonitorEnabled: isMonitorEnabled.value
-            };
-            return newForm;
-        },
-    }
 }
 </script>
 
