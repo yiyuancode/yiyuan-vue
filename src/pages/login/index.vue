@@ -139,10 +139,14 @@ export default {
           this.setMenuTreeList(userInfo.menuTreeList);
           let routes = this.getRoutes(userInfo.menuTreeList);
           routes = [{
-            router : "root",
-            children : routes
+            router: "root",
+            children: routes
           }]
-          // 获取路由信息
+
+          // let a = "main.js";
+          // const src = ()=> import(a);
+          // console.log(src);
+          // 获取路由信息 
           loadRoutes(routes);
 
           this.$router.push('/auth/admin');
@@ -163,7 +167,8 @@ export default {
         const {
           type,
           router,
-          children
+          children,
+          routeComponent,
         } = mt;
 
         // 菜单或者目录
@@ -171,7 +176,25 @@ export default {
           const routesObj = {
             router,
           }
-          if(children && children.length){
+
+          if (routeComponent) {
+            let component;
+            let url = ``;
+            if (type.value === 1) {
+              url = `${routeComponent}/index`;
+              component = () => import(`@/pages${url}`);
+            } else {
+              url = `${routeComponent}`;
+              component = () => import(`@/layouts${url}`)
+            }
+
+          
+            routesObj.component = component;
+            // console.log(routesObj.component);
+
+          }
+
+          if (children && children.length) {
             routesObj.children = this.getRoutes(children)
           }
           routes.push(routesObj);

@@ -33,7 +33,7 @@ const routerMap = {
   },
   role: {
     name: "角色管理",
-    component: () => import('@/pages/sys/role/index'),
+    component: () => import('@/pages/auth/role/index'),
   },
   auth : {
     name : "权限管理",
@@ -42,15 +42,17 @@ const routerMap = {
   },
   admin: {
     name: "用户管理",
-    component: () => import('@/pages/sys/admin/index'),
+    // component: () => import('@/pages/auth/admin/index'),
   },
+  // redis :{
+  //   component: () => import('@/pages/sys/redis/index'),
+  // },
   tenant: {
-    name: "租户列表",
-    component: () => import('@/pages/sys/tenantList/index'),
+    name: "租户管理",
+    component: () => import('@/pages/sys/tenant/index'),
   },
-  tenantPackage: {
-    name: "租户列表",
-    component: () => import('@/pages/sys/tenantPackage/index'),
+  hostMonitor:{
+    // component: () => import('@/pages/sys/hostMonitor/index'),
   },
   menu: {
     name: "菜单管理",
@@ -59,6 +61,10 @@ const routerMap = {
   host:{
     name : "主机记录管理",
     component: () => import('@/pages/sys/host/index'),
-  }
+  },
+  // qrtz : {
+  //   component: () => import('@/pages/sys/qrtz/index'),
+  // },
 };
+
 export default routerMap;

@@ -6,12 +6,12 @@ module.exports = {
         name: "系统管理",
         tenant: {
           name: "租户管理",
-          list: {
-            name: "租户列表",
-          },
-          package: {
-            name: "租户套餐",
-          }
+        },
+        redis : {
+          name : "Redis记录管理",
+        },
+        hostMonitor : {
+          name : "服务器监控采集管理",
         },
         user : {
           name : "用户管理",
@@ -21,6 +21,9 @@ module.exports = {
         },
         menu : {
           name : "菜单管理"
+        },
+        qrtz : {
+          name : "定时任务管理"
         }
       }
     },

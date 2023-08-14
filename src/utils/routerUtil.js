@@ -56,6 +56,7 @@ function parseRoutes(routesConfig, routerMap) {
       query: router.query,
       ...router.meta
     };
+
     const cfgMeta = {
       authority: routeCfg.authority,
       icon: routeCfg.icon,
@@ -75,10 +76,11 @@ function parseRoutes(routesConfig, routerMap) {
       }
     });
     Object.assign(meta, cfgMeta);
+
     const route = {
       path: routeCfg.path || router.path || routeCfg.router,
       name: routeCfg.name || router.name,
-      component: router.component,
+      component: router.component || routeCfg.component,
       redirect: routeCfg.redirect || router.redirect,
       meta: { ...meta, authority: meta.authority || '*' }
     };
