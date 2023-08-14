@@ -88,7 +88,7 @@
 <script>
 import CommonLayout from '@/layouts/CommonLayout';
 import { getUserInfo } from "@/api/login"
-import { loadRoutes } from '@/utils/routerUtil';
+import { loadRoutes, getRoutes } from '@/utils/routerUtil';
 import { mapMutations } from 'vuex';
 
 
@@ -137,15 +137,12 @@ export default {
           this.setRoles(userInfo.roleList);
           // 设置菜单列表
           this.setMenuTreeList(userInfo.menuTreeList);
-          let routes = this.getRoutes(userInfo.menuTreeList);
+          let routes = getRoutes(userInfo.menuTreeList);
           routes = [{
             router: "root",
             children: routes
           }]
 
-          // let a = "main.js";
-          // const src = ()=> import(a);
-          // console.log(src);
           // 获取路由信息 
           loadRoutes(routes);
 
@@ -160,51 +157,53 @@ export default {
       this.logging = false;
     },
 
-    getRoutes(menuTreeList) {
-      const routes = [];
+    // getRoutes(menuTreeList) {
+    //   const routes = [];
 
-      menuTreeList.forEach(mt => {
-        const {
-          type,
-          router,
-          children,
-          routeComponent,
-        } = mt;
+    //   menuTreeList.forEach(mt => {
+    //     const {
+    //       type,
+    //       router,
+    //       children,
+    //       openType,
+    //       routeComponent,
+    //     } = mt;
 
-        // 菜单或者目录
-        if (type.value === 0 || type.value === 1) {
-          const routesObj = {
-            router,
-          }
+    //     // 菜单或者目录
+    //     if (type.value === 0 || type.value === 1) {
+    //       const routesObj = {
+    //         router,
+    //       }
 
-          if (routeComponent) {
-            let component;
-            let url = ``;
-            if (type.value === 1) {
-              url = `${routeComponent}/index`;
-              component = () => import(`@/pages${url}`);
-            } else {
-              url = `${routeComponent}`;
-              component = () => import(`@/layouts${url}`)
-            }
+    //       if (routeComponent) {
+    //         let component;
+    //         let url = ``;
+    //         if (type.value === 1) {
+    //           url = `${routeComponent}/index`;
+    //           component = () => import(`@/pages${url}`);
+    //         } else {
+    //           url = `${routeComponent}`;
+    //           component = () => import(`@/layouts${url}`)
+    //         }
+    //         routesObj.component = component;
+    //         routesObj.routeComponent = routeComponent;
+    //       }
+    //       routesObj.menuType = type.value;
 
-          
-            routesObj.component = component;
-            routesObj.menuType = type.value;
-            routesObj.routeComponent = routeComponent;
-            // console.log(routesObj.component);
 
-          }
+    //       if(openType && openType.value){
+    //         routesObj.openType = openType.value;
+    //       }
 
-          if (children && children.length) {
-            routesObj.children = this.getRoutes(children)
-          }
-          routes.push(routesObj);
-        }
-      });
+    //       if (children && children.length) {
+    //         routesObj.children = this.getRoutes(children)
+    //       }
+    //       routes.push(routesObj);
+    //     }
+    //   });
 
-      return routes;
-    }
+    //   return routes;
+    // }
   }
 };
 </script>

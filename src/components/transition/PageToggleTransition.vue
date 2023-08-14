@@ -6,7 +6,7 @@
   >
     <slot></slot>
   </transition>
-  <div v-else><slot></slot></div>
+  <div  v-else style="height:100%"><slot></slot></div>
 </template>
 
 <script>

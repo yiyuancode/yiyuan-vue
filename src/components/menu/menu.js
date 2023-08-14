@@ -164,6 +164,11 @@ export default {
           style: 'overflow:hidden;white-space:normal;text-overflow:clip;'
         }
       };
+      // 新窗口
+      if(menu.meta.openType === 1){
+        config.attrs.target = "_blank";
+      }
+
       if (menu.meta && menu.meta.link) {
         tag = 'a';
         config = {

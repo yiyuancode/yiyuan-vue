@@ -65,6 +65,12 @@ const routerMap = {
   qrtz : {
     component: () => import('@/pages/sys/qrtz/index'),
   },
+  log:{
+    component : ()=>import("@/components/iframe/Iframe"),
+    props : {
+      src : "http://106.54.87.159:50007/app/kibana#/discover",
+    }
+  }
 };
 
 export default routerMap;

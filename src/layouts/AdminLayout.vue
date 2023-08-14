@@ -177,6 +177,7 @@ export default {
 
 <style lang="less" scoped>
 .admin-layout {
+  height: 100%;
   .side-menu {
     &.fixed-side {
       position: fixed;

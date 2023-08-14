@@ -1,82 +1,80 @@
 <template>
-    <div>
+    <div class="manage-container">
         <!-- 管理容器 -->
-        <div class="manage-container">
-            <!-- 查询操作容器 -->
-            <div class="search-container">
-                <searchForm :searchFormList="columnsObj.searchFormList" v-on="$listeners">
+        <!-- 查询操作容器 -->
+        <div class="search-container">
+            <searchForm :searchFormList="columnsObj.searchFormList" v-on="$listeners">
 
-                </searchForm>
-            </div>
-
-            <!-- 主体内容区域  -->
-            <div class="content-container">
-                <div class="operate-btn-container">
-                    <!-- 添加 -->
-                    <a-button v-if="uRenderObj.addBtn.isOpen" type="primary" @click="addHandle">
-                        {{ uRenderObj.addBtn.text }}
-                    </a-button>
-
-                    <!-- 导入 -->
-                    <a-button v-if="uRenderObj.importBtn.isOpen" type="primary" @click="importHandle">
-                        {{ uRenderObj.importBtn.text }}
-                    </a-button>
-
-                    <!-- 导出 -->
-                    <a-button v-if="uRenderObj.exportBtn.isOpen" type="primary" @click="exportHandle">
-                        {{ uRenderObj.exportBtn.text }}
-                    </a-button>
-
-                    <a-popconfirm title="是否要批量删除这些信息?" ok-text="确认" cancel-text="取消" @confirm="batchDeleteHandle">
-                        <a-button v-if="uRenderObj.batchDeleteBtn.isOpen" type="primary">
-                            {{ uRenderObj.batchDeleteBtn.text }}
-                        </a-button>
-                    </a-popconfirm>
-                    <!-- 批量删除 -->
-
-
-                    <!-- 代表的是全局的一个操作，和添加并列 -->
-                    <slot name="otherOperationsGOContainer">
-
-                    </slot>
-                </div>
-
-                <!-- 列表容器 -->
-                <div class="list-container">
-                    <a-table style="margin-bottom: 10px;" :columns="columnsObj.uTheadData" :data-source="data"
-                        :pagination="pagination" :loading="uRenderObj.isLoading"
-                        :rowKey="(record, index) => { return index }" :row-selection="rowSelection">
-
-                        <!-- 进行一个自定义插槽的遍历 -->
-
-                        <template v-for="(item, index) in columnsObj.tdColumnData" :slot="item.scopedSlots?.customRender"
-                            slot-scope="text,record">
-                            <!-- {{ record }} -->
-                            <slot :name="'table-' + item.scopedSlots?.customRender" v-bind="{ text, record }"></slot>
-                        </template>
-
-                        <span slot="action" slot-scope="text, record">
-                            <div v-if="uRenderObj.operateMode === 1" class="operate-btn-container">
-                                <a-button v-if="uRenderObj.editBtn.isOpen" type="primary" @click="editHandle(record.id)">{{
-                                    uRenderObj.editBtn.text }}</a-button>
-
-                                <!-- 删除 -->
-                                <a-popconfirm title="是否要删除这条信息?" ok-text="确认" cancel-text="取消"
-                                    @confirm="confirmDeleteHandle(record.id)">
-                                    <a-button v-if="uRenderObj.deleteBtn.isOpen" type="primary">删除</a-button>
-                                </a-popconfirm>
-
-                                <!-- 针对单个其他操作容器的添加 -->
-                                <slot name="otherOperationsContainer" :data="record">
-                                </slot>
-                            </div>
-                        </span>
-                    </a-table>
-                </div>
-            </div>
-
-            <slot></slot>
+            </searchForm>
         </div>
+
+        <!-- 主体内容区域  -->
+        <div class="content-container">
+            <div class="operate-btn-container">
+                <!-- 添加 -->
+                <a-button v-if="uRenderObj.addBtn.isOpen" type="primary" @click="addHandle">
+                    {{ uRenderObj.addBtn.text }}
+                </a-button>
+
+                <!-- 导入 -->
+                <a-button v-if="uRenderObj.importBtn.isOpen" type="primary" @click="importHandle">
+                    {{ uRenderObj.importBtn.text }}
+                </a-button>
+
+                <!-- 导出 -->
+                <a-button v-if="uRenderObj.exportBtn.isOpen" type="primary" @click="exportHandle">
+                    {{ uRenderObj.exportBtn.text }}
+                </a-button>
+
+                <a-popconfirm title="是否要批量删除这些信息?" ok-text="确认" cancel-text="取消" @confirm="batchDeleteHandle">
+                    <a-button v-if="uRenderObj.batchDeleteBtn.isOpen" type="primary">
+                        {{ uRenderObj.batchDeleteBtn.text }}
+                    </a-button>
+                </a-popconfirm>
+                <!-- 批量删除 -->
+
+
+                <!-- 代表的是全局的一个操作，和添加并列 -->
+                <slot name="otherOperationsGOContainer">
+
+                </slot>
+            </div>
+
+            <!-- 列表容器 -->
+            <div class="list-container">
+                <a-table style="margin-bottom: 10px;" :columns="columnsObj.uTheadData" :data-source="data"
+                    :pagination="pagination" :loading="uRenderObj.isLoading" :rowKey="(record, index) => { return index }"
+                    :row-selection="rowSelection">
+
+                    <!-- 进行一个自定义插槽的遍历 -->
+
+                    <template v-for="(item, index) in columnsObj.tdColumnData" :slot="item.scopedSlots?.customRender"
+                        slot-scope="text,record">
+                        <!-- {{ record }} -->
+                        <slot :name="'table-' + item.scopedSlots?.customRender" v-bind="{ text, record }"></slot>
+                    </template>
+
+                    <span slot="action" slot-scope="text, record">
+                        <div v-if="uRenderObj.operateMode === 1" class="operate-btn-container">
+                            <a-button v-if="uRenderObj.editBtn.isOpen" type="primary" @click="editHandle(record.id)">{{
+                                uRenderObj.editBtn.text }}</a-button>
+
+                            <!-- 删除 -->
+                            <a-popconfirm title="是否要删除这条信息?" ok-text="确认" cancel-text="取消"
+                                @confirm="confirmDeleteHandle(record.id)">
+                                <a-button v-if="uRenderObj.deleteBtn.isOpen" type="primary">删除</a-button>
+                            </a-popconfirm>
+
+                            <!-- 针对单个其他操作容器的添加 -->
+                            <slot name="otherOperationsContainer" :data="record">
+                            </slot>
+                        </div>
+                    </span>
+                </a-table>
+            </div>
+        </div>
+
+        <slot></slot>
 
         <Modal :modalWidth="submitModalObj.modalWidth" :modalTitle="submitModalTitle" :modalVisible="modalVisble"
             :submitLoading="submitLoading" @onSubmit="submitHandle" @onCloseModal="modalVisble = false"
@@ -463,6 +461,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.manage-container {
+    height: 100%;
+}
+
 .search-container,
 .content-container {
     margin-top: 20px;

@@ -46,6 +46,7 @@ function parseRoutes(routesConfig, routerMap) {
       );
       router = typeof item === 'string' ? { path: item, name: item } : item;
     }
+
     // 从 router 和 routeCfg 解析路由
     const meta = {
       authority: router.authority,
@@ -54,6 +55,7 @@ function parseRoutes(routesConfig, routerMap) {
       link: router.link,
       params: router.params,
       query: router.query,
+      openType : router.openType,
       ...router.meta
     };
 
@@ -64,6 +66,7 @@ function parseRoutes(routesConfig, routerMap) {
       link: routeCfg.link,
       params: routeCfg.params,
       query: routeCfg.query,
+      openType : routeCfg.openType,
       ...routeCfg.meta
     };
     Object.keys(cfgMeta).forEach((key) => {
@@ -82,7 +85,8 @@ function parseRoutes(routesConfig, routerMap) {
       name: routeCfg.name || router.name,
       component: router.component || routeCfg.component,
       redirect: routeCfg.redirect || router.redirect,
-      meta: { ...meta, authority: meta.authority || '*' }
+      meta: { ...meta, authority: meta.authority || '*' },
+      props : routeCfg.props || router.props
     };
     if (router.beforeEnter) {
       route.beforeEnter = router.beforeEnter;
@@ -103,6 +107,7 @@ function parseRoutes(routesConfig, routerMap) {
  * @param routesConfig {RouteConfig[]} 路由配置
  */
 function loadRoutes(routesConfig) {
+  const isHaveRouterConfig = routesConfig ? true : false; //是否传递了routeConfig
   //兼容 0.6.1 以下版本
   /*************** 兼容 version < v0.6.1 *****************/
   if (arguments.length > 0) {
@@ -133,7 +138,10 @@ function loadRoutes(routesConfig) {
   const asyncRoutes = store.state.setting.asyncRoutes;
   if (asyncRoutes) {
     if (routesConfig && routesConfig.length > 0) {
-      setRouterComponent(routesConfig); //设置路由的组件
+      // 没有传递
+      if(!isHaveRouterConfig){
+        setRouterComponent(routesConfig); //设置路由的组件
+      }
 
       const routes = parseRoutes(routesConfig, routerMap);
       const finalRoutes = mergeRoutes(basicOptions.routes, routes);
@@ -297,6 +305,55 @@ function loadGuards(guards, options) {
  * 新增方法
  */
 
+
+function getRoutes(menuTreeList) {
+  const routes = [];
+
+  menuTreeList.forEach(mt => {
+    const {
+      type,
+      router,
+      children,
+      openType,
+      routeComponent,
+    } = mt;
+
+    // 菜单或者目录
+    if (type.value === 0 || type.value === 1) {
+      const routesObj = {
+        router,
+      }
+
+      if (routeComponent) {
+        let component;
+        let url = ``;
+        if (type.value === 1) {
+          url = `${routeComponent}/index`;
+          component = () => import(`@/pages${url}`);
+        } else {
+          url = `${routeComponent}`;
+          component = () => import(`@/layouts${url}`)
+        }
+        routesObj.component = component;
+        routesObj.routeComponent = routeComponent;
+      }
+      routesObj.menuType = type.value;
+
+
+      if(openType && openType.value){
+        routesObj.openType = openType.value;
+      }
+
+      if (children && children.length) {
+        routesObj.children = getRoutes(children)
+      }
+      routes.push(routesObj);
+    }
+  });
+
+  return routes;
+}
+
 function setRouterComponent(routesConfig) {
   for (let i = 0; i < routesConfig.length; i++) {
     const {
@@ -318,7 +375,6 @@ function setRouterComponent(routesConfig) {
         importUrl = `${routeComponent}`;
         component = () => import(`@/layouts${importUrl}`)
       }
-      console.log(importUrl);
   
       routesConfig[i].component = component;
     }
@@ -337,5 +393,6 @@ export {
   loadGuards,
   deepMergeRoutes,
   formatRoutes,
-  setAppOptions
+  setAppOptions,
+  getRoutes
 };

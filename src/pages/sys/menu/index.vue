@@ -116,6 +116,7 @@ const menuRules = {
 const addMenuModel = _.cloneDeep(defaultMenuModel);
 const addMenuRules = _.cloneDeep(menuRules);
 const booleanPropArr = ["isAffix", "isAlwaysShow", "isCache"];
+import { loadRoutes, getRoutes } from '@/utils/routerUtil';
 
 export default {
     components: {
@@ -258,6 +259,15 @@ export default {
 
                 const userInfo = await getUserInfo();
                 this.setMenuTreeList(userInfo.menuTreeList);
+
+                let routes = getRoutes(userInfo.menuTreeList);
+                routes = [{
+                    router: "root",
+                    children: routes
+                }]
+
+                // 获取路由信息 
+                loadRoutes(routes);
             } catch (e) {
                 Promise.reject(e);
             }
