@@ -24,6 +24,9 @@ module.exports = {
         },
         qrtz : {
           name : "定时任务管理"
+        },
+        log:{
+          name : "日志管理"
         }
       }
     },

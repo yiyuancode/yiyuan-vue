@@ -80,7 +80,7 @@ module.exports = {
       config.externals = assetsCDN.externals;
     }
 
-    config.resolve.alias['@'] = require('path').resolve(__dirname, 'src');
+    // config.resolve.alias['@'] = require('path').resolve(__dirname, 'src');
   },
   chainWebpack: (config) => {
     // 生产环境下关闭css压缩的 colormin 项，因为此项优化与主题色替换功能冲突

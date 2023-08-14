@@ -190,6 +190,8 @@ export default {
 
           
             routesObj.component = component;
+            routesObj.menuType = type.value;
+            routesObj.routeComponent = routeComponent;
             // console.log(routesObj.component);
 
           }

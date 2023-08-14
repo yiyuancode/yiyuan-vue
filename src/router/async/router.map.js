@@ -42,17 +42,17 @@ const routerMap = {
   },
   admin: {
     name: "用户管理",
-    // component: () => import('@/pages/auth/admin/index'),
+    component: () => import('@/pages/auth/admin/index'),
   },
   // redis :{
-  //   component: () => import('@/pages/sys/redis/index'),
+    // component: () => import('@/pages/sys/redis/index'),
   // },
   tenant: {
     name: "租户管理",
     component: () => import('@/pages/sys/tenant/index'),
   },
   hostMonitor:{
-    // component: () => import('@/pages/sys/hostMonitor/index'),
+    component: () => import('@/pages/sys/hostMonitor/index'),
   },
   menu: {
     name: "菜单管理",
@@ -62,9 +62,9 @@ const routerMap = {
     name : "主机记录管理",
     component: () => import('@/pages/sys/host/index'),
   },
-  // qrtz : {
-  //   component: () => import('@/pages/sys/qrtz/index'),
-  // },
+  qrtz : {
+    component: () => import('@/pages/sys/qrtz/index'),
+  },
 };
 
 export default routerMap;

@@ -107,6 +107,9 @@ const menuRules = {
     ],
     permission: [
         { required: true, message: "请输入权限表达式", trigger: 'blur' }
+    ],
+    frameSrc: [
+        { required: true, message: "请输入外部链接地址", trigger: 'blur' }
     ]
 };
 
@@ -158,7 +161,7 @@ export default {
         // 处理添加菜单点击
         handleAddMenuClick() {
             this.addMenuVisible = true;
-            this.$nextTick(()=>{
+            this.$nextTick(() => {
                 this.$refs.addMenuFormCon.$refs.menuForm.resetFields();
             });
         },

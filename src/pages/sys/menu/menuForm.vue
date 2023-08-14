@@ -124,9 +124,11 @@
                     :wrapper-col="{ span: 12 }">
                     <a-switch v-model="model.isAlwaysShow" default-checked />
                 </a-form-model-item>
-
-
             </div>
+
+            <a-form-model-item v-if="model.isFrame" ref="frameSrc" label="外部链接地址" prop="frameSrc">
+                <a-input v-model="model.frameSrc" placeholder="外部链接地址" />
+            </a-form-model-item>
 
             <div v-if="model.type !== 2" class="menu-form-item">
                 <a-form-model-item ref="openType" label="打开方式" prop="openType" :label-col="{ span: 12 }"

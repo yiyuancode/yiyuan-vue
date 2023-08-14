@@ -128,10 +128,13 @@ function loadRoutes(routesConfig) {
   } else {
     routesConfig = store.getters['account/routesConfig'];
   }
+
   // 如果开启了异步路由，则加载异步路由配置
   const asyncRoutes = store.state.setting.asyncRoutes;
   if (asyncRoutes) {
     if (routesConfig && routesConfig.length > 0) {
+      setRouterComponent(routesConfig); //设置路由的组件
+
       const routes = parseRoutes(routesConfig, routerMap);
       const finalRoutes = mergeRoutes(basicOptions.routes, routes);
       formatRoutes(finalRoutes);
@@ -288,6 +291,42 @@ function loadGuards(guards, options) {
       router.afterEach((to, from) => guard(to, from, options));
     }
   });
+}
+
+/**
+ * 新增方法
+ */
+
+function setRouterComponent(routesConfig) {
+  for (let i = 0; i < routesConfig.length; i++) {
+    const {
+      routeComponent,
+      menuType,
+      children
+    } = routesConfig[i];
+
+    if(routeComponent){
+      let component, importUrl = "";
+      // 目录
+      if (menuType === 1) {
+        importUrl = `${routeComponent}/index`;
+        component = () => import(`@/pages${importUrl}`);
+   
+      }
+      // 菜单
+      else {
+        importUrl = `${routeComponent}`;
+        component = () => import(`@/layouts${importUrl}`)
+      }
+      console.log(importUrl);
+  
+      routesConfig[i].component = component;
+    }
+
+    if(children){
+      setRouterComponent(children);
+    }
+  }
 }
 
 export {

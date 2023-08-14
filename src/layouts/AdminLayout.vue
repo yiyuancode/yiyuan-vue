@@ -57,7 +57,7 @@
         class="admin-layout-content"
         :style="`min-height: ${minHeight}px;`"
       >
-        <div style="position: relative">
+        <div style="position: relative;width: 100%;height: 100%;">
           <slot></slot>
         </div>
       </a-layout-content>
