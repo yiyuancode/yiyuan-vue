@@ -259,13 +259,7 @@ export default {
 
                 const userInfo = await getUserInfo();
                 this.setMenuTreeList(userInfo.menuTreeList);
-
-                let routes = getRoutes(userInfo.menuTreeList);
-                routes = [{
-                    router: "root",
-                    children: routes
-                }]
-
+                const routes = this.getRoutes(userInfo.menuTreeList);
                 // 获取路由信息 
                 loadRoutes(routes);
             } catch (e) {
@@ -301,10 +295,22 @@ export default {
             await deleteMenu(this.selectMenuId);
             const userInfo = await getUserInfo();
             this.setMenuTreeList(userInfo.menuTreeList);
+            const routes = this.getRoutes(userInfo.menuTreeList);
+            // 获取路由信息 
+            loadRoutes(routes);
+
             this.$message.success("删除菜单信息成功!!");
         },
         async batchdeleteMenuHandle() {
 
+        },
+        async getRoutes(menuTreeList){
+            let routes = getRoutes(menuTreeList);
+            routes = [{
+                router: "root",
+                children: routes
+            }]
+            return routes;
         }
     },
 

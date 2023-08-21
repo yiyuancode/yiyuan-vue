@@ -1,6 +1,6 @@
 <template>
-    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj"  @onSave="saveHandle" @onSubmit="submitHandle"
-        @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle">
+    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" @onSave="saveHandle"
+        @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle">
 
         <span slot="table-userRoles" slot-scope="{text,record}">
             <a-tag v-if="record.userRoles">{{ text }}</a-tag>
@@ -72,12 +72,9 @@ export default {
                 roleList,
             } = record;
 
-            let userRoles = "";
-            if (roleList) {
-                userRoles = roleList.map(role => {
-                    return role.name
-                }).join(",");
-            }
+            const userRoles = roleList.map(role => {
+                return role.name
+            }).join(",");
 
             record.userRoles = userRoles;
         },

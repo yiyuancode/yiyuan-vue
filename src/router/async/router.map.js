@@ -44,9 +44,7 @@ const routerMap = {
     name: "用户管理",
     component: () => import('@/pages/auth/admin/index'),
   },
-  // redis :{
-    // component: () => import('@/pages/sys/redis/index'),
-  // },
+
   tenant: {
     name: "租户管理",
     component: () => import('@/pages/sys/tenant/index'),

@@ -55,7 +55,7 @@ function parseRoutes(routesConfig, routerMap) {
       link: router.link,
       params: router.params,
       query: router.query,
-      openType : router.openType,
+      openType: router.openType,
       ...router.meta
     };
 
@@ -66,7 +66,7 @@ function parseRoutes(routesConfig, routerMap) {
       link: routeCfg.link,
       params: routeCfg.params,
       query: routeCfg.query,
-      openType : routeCfg.openType,
+      openType: routeCfg.openType,
       ...routeCfg.meta
     };
     Object.keys(cfgMeta).forEach((key) => {
@@ -86,7 +86,7 @@ function parseRoutes(routesConfig, routerMap) {
       component: router.component || routeCfg.component,
       redirect: routeCfg.redirect || router.redirect,
       meta: { ...meta, authority: meta.authority || '*' },
-      props : routeCfg.props || router.props
+      props: routeCfg.props || router.props
     };
     if (router.beforeEnter) {
       route.beforeEnter = router.beforeEnter;
@@ -139,7 +139,7 @@ function loadRoutes(routesConfig) {
   if (asyncRoutes) {
     if (routesConfig && routesConfig.length > 0) {
       // 没有传递
-      if(!isHaveRouterConfig){
+      if (!isHaveRouterConfig) {
         setRouterComponent(routesConfig); //设置路由的组件
       }
 
@@ -340,7 +340,7 @@ function getRoutes(menuTreeList) {
       routesObj.menuType = type.value;
 
 
-      if(openType && openType.value){
+      if (openType && openType.value) {
         routesObj.openType = openType.value;
       }
 
@@ -355,34 +355,40 @@ function getRoutes(menuTreeList) {
 }
 
 function setRouterComponent(routesConfig) {
-  for (let i = 0; i < routesConfig.length; i++) {
-    const {
-      routeComponent,
-      menuType,
-      children
-    } = routesConfig[i];
+  // 进行异常捕获
+  try {
+    for (let i = 0; i < routesConfig.length; i++) {
+      const {
+        routeComponent,
+        menuType,
+        children
+      } = routesConfig[i];
 
-    if(routeComponent){
-      let component, importUrl = "";
-      // 目录
-      if (menuType === 1) {
-        importUrl = `${routeComponent}/index`;
-        component = () => import(`@/pages${importUrl}`);
-   
-      }
-      // 菜单
-      else {
-        importUrl = `${routeComponent}`;
-        component = () => import(`@/layouts${importUrl}`)
-      }
-  
-      routesConfig[i].component = component;
-    }
+      if (routeComponent) {
+        let component, importUrl = "";
+        // 目录
+        if (menuType === 1) {
+          importUrl = `${routeComponent}/index`;
+          component = () => import(`@/pages${importUrl}`);
 
-    if(children){
-      setRouterComponent(children);
+        }
+        // 菜单
+        else {
+          importUrl = `${routeComponent}`;
+          component = () => import(`@/layouts${importUrl}`)
+        }
+
+        routesConfig[i].component = component;
+      }
+
+      if (children) {
+        setRouterComponent(children);
+      }
     }
+  } catch (e) {
+    Promise.reject(e);
   }
+
 }
 
 export {
