@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的定时任务信息(分页)
@@ -9,14 +9,12 @@ import {request} from '@/utils/request';
  * @date 2023-08-25
  */
 export async function getQrtzPageList(data) {
-    const resp = await
-    request({
-        url: "/sys/qrtz/page",
-        params: data
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/qrtz/page',
+    params: data
+  });
+  return resp.data;
 }
-
 
 /**
  * 获取定时任务详情
@@ -27,11 +25,10 @@ export async function getQrtzPageList(data) {
  * @date 2023-08-25
  */
 export async function getQrtzDetail(id) {
-    const resp = await
-    request({
-        url: `/sys/qrtz/details/${id}`,
-    });
-    return resp.data;
+  const resp = await request({
+    url: `/sys/qrtz/details/${id}`
+  });
+  return resp.data;
 }
 
 /**
@@ -44,13 +41,12 @@ export async function getQrtzDetail(id) {
  */
 
 export async function addQrtz(data) {
-    const resp = await
-    request({
-        url: "/sys/qrtz/add",
-        method: "post",
-        data
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/qrtz/add',
+    method: 'post',
+    data
+  });
+  return resp.data;
 }
 
 /**
@@ -63,17 +59,15 @@ export async function addQrtz(data) {
  * @date 2023-08-25
  */
 export async function editQrtz(data, id) {
-    const resp = await
-    request({
-        url: "/sys/qrtz/edit",
-        method: "post",
-        data: {
-...
-    data, id
-}
-})
-    ;
-    return resp.data;
+  const resp = await request({
+    url: '/sys/qrtz/edit',
+    method: 'post',
+    data: {
+      ...data,
+      id
+    }
+  });
+  return resp.data;
 }
 /**
  * 删除定时任务（可支持批量删除）
@@ -84,14 +78,12 @@ export async function editQrtz(data, id) {
  * @date 2023-08-25
  */
 export async function deleteQrtz(ids) {
-    const resp = await
-    request({
-        url: "/sys/qrtz/delete",
-        method: "post",
-        params: {
-            ids
-        }
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/qrtz/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
+  return resp.data;
 }
-

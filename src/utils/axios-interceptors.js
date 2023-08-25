@@ -1,6 +1,5 @@
 // import Cookie from 'js-cookie';
 
-
 // 请求通用
 const reqCommon = {
   /**
@@ -20,8 +19,8 @@ const reqCommon = {
       message.warning('认证 token 已过期，请重新登录');
     }
     const satokn = localStorage.getItem(xsrfCookieName);
-    config.headers["satoken"] = satokn;
-    config.headers["platform"] = "0";
+    config.headers['satoken'] = satokn;
+    config.headers['platform'] = '0';
     return config;
   },
   /**
@@ -52,16 +51,14 @@ const respCommon = {
   onRejected(error, options) {
     const { message } = options;
     const { response } = error;
-    if(error.code === "ECONNABORTED"){
-      message.error("请求超时!!");
-    }
-    else if (response && response.status === 502) {
+    if (error.code === 'ECONNABORTED') {
+      message.error('请求超时!!');
+    } else if (response && response.status === 502) {
       message.error('网关错误');
-    } 
+    }
     return Promise.reject(error);
   }
-}
-
+};
 
 export default {
   request: [reqCommon], // 请求拦截

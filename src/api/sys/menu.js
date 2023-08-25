@@ -2,19 +2,19 @@ import { request } from '@/utils/request';
 
 /**
  * 获取菜单详情
- * @param {*} id 
+ * @param {*} id
  * @returns
  */
 export async function getMenuDetail(id) {
-    const resp = await request({
-        url: `/sys/menu/details/${id}`,
-    });
-    return resp.data;
+  const resp = await request({
+    url: `/sys/menu/details/${id}`
+  });
+  return resp.data;
 }
 
 /**
  * 添加菜单
- * @param {*} menuInfo 
+ * @param {*} menuInfo
  *  @param {*} name 菜单名称
  *  @param {*} permission 权限表达式
  *  @param {*} parentId 上级菜单
@@ -34,62 +34,62 @@ export async function getMenuDetail(id) {
  *  @param {*} routeName 路由名称
  *  @param {*} routeRedirect 路由重定向
  *  @param {*} tenantId 租户id
- * 
+ *
  */
 export async function addMenu(menuInfo) {
-    const {
-        name,
-        permission,
-        parentId,
-        icon,
-        activeMenu,
-        isFrame,
-        frameSrc,
-        isAffix,
-        status,
-        isAlwaysShow,
-        isCache,
-        type,
-        openType,
-        sort,
-        routeComponent,
-        routePath,
-        routeName,
-        routeRedirect,
-        tenantId
-    } = menuInfo;
+  const {
+    name,
+    permission,
+    parentId,
+    icon,
+    activeMenu,
+    isFrame,
+    frameSrc,
+    isAffix,
+    status,
+    isAlwaysShow,
+    isCache,
+    type,
+    openType,
+    sort,
+    routeComponent,
+    routePath,
+    routeName,
+    routeRedirect,
+    tenantId
+  } = menuInfo;
 
-    const resp = await request({
-        url: "/sys/menu/add",
-        method: "post",
-        data: {
-            name,
-            permission,
-            parentId,
-            icon,
-            activeMenu,
-            isFrame,
-            frameSrc,
-            isAffix,
-            status,
-            isAlwaysShow,
-            isCache,
-            type,
-            openType,
-            sort,
-            routeComponent,
-            routePath,
-            routeName,
-            routeRedirect,
-            tenantId
-        }
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/menu/add',
+    method: 'post',
+    data: {
+      name,
+      permission,
+      parentId,
+      icon,
+      activeMenu,
+      isFrame,
+      frameSrc,
+      isAffix,
+      status,
+      isAlwaysShow,
+      isCache,
+      type,
+      openType,
+      sort,
+      routeComponent,
+      routePath,
+      routeName,
+      routeRedirect,
+      tenantId
+    }
+  });
+  return resp.data;
 }
 
 /**
  * 编辑菜单
- * @param {*} menuInfo 
+ * @param {*} menuInfo
  *  @param {*} name 菜单名称
  *  @param {*} permission 权限表达式
  *  @param {*} parentId 上级菜单
@@ -109,74 +109,72 @@ export async function addMenu(menuInfo) {
  *  @param {*} routeName 路由名称
  *  @param {*} routeRedirect 路由重定向
  *  @param {*} tenantId 租户id
- * @param {*} id 
- * @returns 
+ * @param {*} id
+ * @returns
  */
 export async function editMenu(menuInfo, id) {
-    const {
-        name,
-        permission,
-        parentId,
-        icon,
-        activeMenu,
-        isFrame,
-        frameSrc,
-        isAffix,
-        status,
-        isAlwaysShow,
-        isCache,
-        type,
-        openType,
-        sort,
-        routeComponent,
-        routePath,
-        routeName,
-        routeRedirect,
-        tenantId
-    } = menuInfo;
+  const {
+    name,
+    permission,
+    parentId,
+    icon,
+    activeMenu,
+    isFrame,
+    frameSrc,
+    isAffix,
+    status,
+    isAlwaysShow,
+    isCache,
+    type,
+    openType,
+    sort,
+    routeComponent,
+    routePath,
+    routeName,
+    routeRedirect,
+    tenantId
+  } = menuInfo;
 
-    const resp = await request({
-        url: "/sys/menu/edit",
-        method: "post",
-        data: {
-            name,
-            permission,
-            parentId,
-            icon,
-            activeMenu,
-            isFrame,
-            frameSrc,
-            isAffix,
-            status,
-            isAlwaysShow,
-            isCache,
-            type,
-            openType,
-            sort,
-            routeComponent,
-            routePath,
-            routeName,
-            routeRedirect,
-            tenantId,
-            id,
-        }
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/menu/edit',
+    method: 'post',
+    data: {
+      name,
+      permission,
+      parentId,
+      icon,
+      activeMenu,
+      isFrame,
+      frameSrc,
+      isAffix,
+      status,
+      isAlwaysShow,
+      isCache,
+      type,
+      openType,
+      sort,
+      routeComponent,
+      routePath,
+      routeName,
+      routeRedirect,
+      tenantId,
+      id
+    }
+  });
+  return resp.data;
 }
-
-
 
 /**
  * 删除菜单（可支持批量删除）
- * @param {*} ids 
+ * @param {*} ids
  */
 export async function deleteMenu(ids) {
-    const resp = await request({
-        url: "/sys/menu/delete",
-        method: "post",
-        params: {
-            ids
-        }
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/menu/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
+  return resp.data;
 }

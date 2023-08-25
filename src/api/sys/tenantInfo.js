@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的租户信息信息(分页)
@@ -9,14 +9,12 @@ import {request} from '@/utils/request';
  * @date 2023-08-25
  */
 export async function getTenantInfoPageList(data) {
-    const resp = await
-    request({
-        url: "/sys/tenantInfo/page",
-        params: data
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/tenantInfo/page',
+    params: data
+  });
+  return resp.data;
 }
-
 
 /**
  * 获取租户信息详情
@@ -27,11 +25,10 @@ export async function getTenantInfoPageList(data) {
  * @date 2023-08-25
  */
 export async function getTenantInfoDetail(id) {
-    const resp = await
-    request({
-        url: `/sys/tenantInfo/details/${id}`,
-    });
-    return resp.data;
+  const resp = await request({
+    url: `/sys/tenantInfo/details/${id}`
+  });
+  return resp.data;
 }
 
 /**
@@ -44,13 +41,12 @@ export async function getTenantInfoDetail(id) {
  */
 
 export async function addTenantInfo(data) {
-    const resp = await
-    request({
-        url: "/sys/tenantInfo/add",
-        method: "post",
-        data
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/tenantInfo/add',
+    method: 'post',
+    data
+  });
+  return resp.data;
 }
 
 /**
@@ -63,17 +59,15 @@ export async function addTenantInfo(data) {
  * @date 2023-08-25
  */
 export async function editTenantInfo(data, id) {
-    const resp = await
-    request({
-        url: "/sys/tenantInfo/edit",
-        method: "post",
-        data: {
-...
-    data, id
-}
-})
-    ;
-    return resp.data;
+  const resp = await request({
+    url: '/sys/tenantInfo/edit',
+    method: 'post',
+    data: {
+      ...data,
+      id
+    }
+  });
+  return resp.data;
 }
 /**
  * 删除租户信息（可支持批量删除）
@@ -84,14 +78,12 @@ export async function editTenantInfo(data, id) {
  * @date 2023-08-25
  */
 export async function deleteTenantInfo(ids) {
-    const resp = await
-    request({
-        url: "/sys/tenantInfo/delete",
-        method: "post",
-        params: {
-            ids
-        }
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/tenantInfo/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
+  return resp.data;
 }
-

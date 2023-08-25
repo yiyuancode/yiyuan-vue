@@ -305,24 +305,17 @@ function loadGuards(guards, options) {
  * 新增方法
  */
 
-
 function getRoutes(menuTreeList) {
   const routes = [];
 
-  menuTreeList.forEach(mt => {
-    const {
-      type,
-      router,
-      children,
-      openType,
-      routeComponent,
-    } = mt;
+  menuTreeList.forEach((mt) => {
+    const { type, router, children, openType, routeComponent } = mt;
 
     // 菜单或者目录
     if (type.value === 0 || type.value === 1) {
       const routesObj = {
-        router,
-      }
+        router
+      };
 
       if (routeComponent) {
         let component;
@@ -332,20 +325,19 @@ function getRoutes(menuTreeList) {
           component = () => import(`@/pages${url}`);
         } else {
           url = `${routeComponent}`;
-          component = () => import(`@/layouts${url}`)
+          component = () => import(`@/layouts${url}`);
         }
         routesObj.component = component;
         routesObj.routeComponent = routeComponent;
       }
       routesObj.menuType = type.value;
 
-
       if (openType && openType.value) {
         routesObj.openType = openType.value;
       }
 
       if (children && children.length) {
-        routesObj.children = getRoutes(children)
+        routesObj.children = getRoutes(children);
       }
       routes.push(routesObj);
     }
@@ -358,24 +350,20 @@ function setRouterComponent(routesConfig) {
   // 进行异常捕获
   try {
     for (let i = 0; i < routesConfig.length; i++) {
-      const {
-        routeComponent,
-        menuType,
-        children
-      } = routesConfig[i];
+      const { routeComponent, menuType, children } = routesConfig[i];
 
       if (routeComponent) {
-        let component, importUrl = "";
+        let component,
+          importUrl = '';
         // 目录
         if (menuType === 1) {
           importUrl = `${routeComponent}/index`;
           component = () => import(`@/pages${importUrl}`);
-
         }
         // 菜单
         else {
           importUrl = `${routeComponent}`;
-          component = () => import(`@/layouts${importUrl}`)
+          component = () => import(`@/layouts${importUrl}`);
         }
 
         routesConfig[i].component = component;
@@ -388,7 +376,6 @@ function setRouterComponent(routesConfig) {
   } catch (e) {
     Promise.reject(e);
   }
-
 }
 
 export {

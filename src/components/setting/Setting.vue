@@ -4,41 +4,85 @@
       <a-button type="primary" icon="save" @click="saveSetting">{{
         $t('save')
       }}</a-button>
-      <a-button type="dashed" icon="redo" style="float: right" @click="resetSetting">{{ $t('reset') }}</a-button>
+      <a-button
+        type="dashed"
+        icon="redo"
+        style="float: right"
+        @click="resetSetting"
+        >{{ $t('reset') }}</a-button
+      >
     </setting-item>
     <setting-item :title="$t('theme.title')">
-      <img-checkbox-group :default-values="[theme.mode]" @change="(values) => setTheme({ ...theme, mode: values[0] })" >
-        <img-checkbox :title="$t('theme.dark')" img="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg"
-          value="dark" />
-        <img-checkbox :title="$t('theme.light')" img="https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg"
-          value="light" />
-        <img-checkbox :title="$t('theme.night')"
-          img="https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg" value="night" />
+      <img-checkbox-group
+        :default-values="[theme.mode]"
+        @change="(values) => setTheme({ ...theme, mode: values[0] })"
+      >
+        <img-checkbox
+          :title="$t('theme.dark')"
+          img="https://gw.alipayobjects.com/zos/rmsportal/LCkqqYNmvBEbokSDscrm.svg"
+          value="dark"
+        />
+        <img-checkbox
+          :title="$t('theme.light')"
+          img="https://gw.alipayobjects.com/zos/rmsportal/jpRkZQMyYRryryPNtyIC.svg"
+          value="light"
+        />
+        <img-checkbox
+          :title="$t('theme.night')"
+          img="https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg"
+          value="night"
+        />
       </img-checkbox-group>
     </setting-item>
     <setting-item :title="$t('theme.color')">
-      <color-checkbox-group :multiple="false" :defaultValues="[palettes.indexOf(theme.color)]"
-        @change="(values, colors) => setTheme({ ...theme, color: colors[0] })">
-        <color-checkbox v-for="(color, index) in palettes" :key="index" :color="color" :value="index" />
+      <color-checkbox-group
+        :multiple="false"
+        :defaultValues="[palettes.indexOf(theme.color)]"
+        @change="(values, colors) => setTheme({ ...theme, color: colors[0] })"
+      >
+        <color-checkbox
+          v-for="(color, index) in palettes"
+          :key="index"
+          :color="color"
+          :value="index"
+        />
       </color-checkbox-group>
     </setting-item>
     <a-divider />
     <setting-item :title="$t('navigate.title')">
-      <img-checkbox-group :default-values="[layout]" @change="(values) => setLayout(values[0])">
-        <img-checkbox :title="$t('navigate.side')"
-          img="https://gw.alipayobjects.com/zos/rmsportal/JopDzEhOqwOjeNTXkoje.svg" value="side" />
-        <img-checkbox :title="$t('navigate.head')"
-          img="https://gw.alipayobjects.com/zos/rmsportal/KDNDBbriJhLwuqMoxcAr.svg" value="head" />
-        <img-checkbox :title="$t('navigate.mix')"
-          img="https://gw.alipayobjects.com/zos/antfincdn/x8Ob%26B8cy8/LCkqqYNmvBEbokSDscrm.svg" value="mix" />
+      <img-checkbox-group
+        :default-values="[layout]"
+        @change="(values) => setLayout(values[0])"
+      >
+        <img-checkbox
+          :title="$t('navigate.side')"
+          img="https://gw.alipayobjects.com/zos/rmsportal/JopDzEhOqwOjeNTXkoje.svg"
+          value="side"
+        />
+        <img-checkbox
+          :title="$t('navigate.head')"
+          img="https://gw.alipayobjects.com/zos/rmsportal/KDNDBbriJhLwuqMoxcAr.svg"
+          value="head"
+        />
+        <img-checkbox
+          :title="$t('navigate.mix')"
+          img="https://gw.alipayobjects.com/zos/antfincdn/x8Ob%26B8cy8/LCkqqYNmvBEbokSDscrm.svg"
+          value="mix"
+        />
       </img-checkbox-group>
     </setting-item>
     <setting-item>
       <a-list :split="false">
         <a-list-item>
           {{ $t('navigate.content.title') }}
-          <a-select slot="actions" class="select-item" size="small" :getPopupContainer="getPopupContainer"
-            :value="pageWidth" @change="setPageWidth">
+          <a-select
+            slot="actions"
+            class="select-item"
+            size="small"
+            :getPopupContainer="getPopupContainer"
+            :value="pageWidth"
+            @change="setPageWidth"
+          >
             <a-select-option value="fluid">{{
               $t('navigate.content.fluid')
             }}</a-select-option>
@@ -49,11 +93,21 @@
         </a-list-item>
         <a-list-item>
           {{ $t('navigate.fixedHeader') }}
-          <a-switch slot="actions" :checked="fixedHeader" size="small" @change="setFixedHeader" />
+          <a-switch
+            slot="actions"
+            :checked="fixedHeader"
+            size="small"
+            @change="setFixedHeader"
+          />
         </a-list-item>
         <a-list-item>
           {{ $t('navigate.fixedSideBar') }}
-          <a-switch slot="actions" :checked="fixedSideBar" size="small" @change="setFixedSideBar" />
+          <a-switch
+            slot="actions"
+            :checked="fixedSideBar"
+            size="small"
+            @change="setFixedSideBar"
+          />
         </a-list-item>
       </a-list>
     </setting-item>
@@ -62,15 +116,30 @@
       <a-list :split="false">
         <a-list-item>
           {{ $t('other.weekMode') }}
-          <a-switch slot="actions" :checked="weekMode" size="small" @change="setWeekMode" />
+          <a-switch
+            slot="actions"
+            :checked="weekMode"
+            size="small"
+            @change="setWeekMode"
+          />
         </a-list-item>
         <a-list-item>
           {{ $t('other.multiPages') }}
-          <a-switch slot="actions" :checked="multiPage" size="small" @change="setMultiPage" />
+          <a-switch
+            slot="actions"
+            :checked="multiPage"
+            size="small"
+            @change="setMultiPage"
+          />
         </a-list-item>
         <a-list-item>
           {{ $t('other.hideSetting') }}
-          <a-switch slot="actions" :checked="hideSetting" size="small" @change="setHideSetting" />
+          <a-switch
+            slot="actions"
+            :checked="hideSetting"
+            size="small"
+            @change="setHideSetting"
+          />
         </a-list-item>
       </a-list>
     </setting-item>
@@ -79,32 +148,68 @@
       <a-list :split="false">
         <a-list-item>
           {{ $t('animate.disable') }}
-          <a-switch slot="actions" :checked="animate.disabled" size="small"
-            @change="(val) => setAnimate({ ...animate, disabled: val })" />
+          <a-switch
+            slot="actions"
+            :checked="animate.disabled"
+            size="small"
+            @change="(val) => setAnimate({ ...animate, disabled: val })"
+          />
         </a-list-item>
         <a-list-item>
           {{ $t('animate.effect') }}
-          <a-select slot="actions" class="select-item" size="small" :value="animate.name"
-            :getPopupContainer="getPopupContainer" @change="(val) => setAnimate({ ...animate, name: val })">
-            <a-select-option v-for="(item, index) in animates" :key="index" :value="item.name">
+          <a-select
+            slot="actions"
+            class="select-item"
+            size="small"
+            :value="animate.name"
+            :getPopupContainer="getPopupContainer"
+            @change="(val) => setAnimate({ ...animate, name: val })"
+          >
+            <a-select-option
+              v-for="(item, index) in animates"
+              :key="index"
+              :value="item.name"
+            >
               {{ item.alias }}
             </a-select-option>
           </a-select>
         </a-list-item>
         <a-list-item>
           {{ $t('animate.direction') }}
-          <a-select slot="actions" class="select-item" size="small" :value="animate.direction"
-            :getPopupContainer="getPopupContainer" @change="(val) => setAnimate({ ...animate, direction: val })">
-            <a-select-option v-for="(item, index) in directions" :key="index" :value="item">{{ item }}</a-select-option>
+          <a-select
+            slot="actions"
+            class="select-item"
+            size="small"
+            :value="animate.direction"
+            :getPopupContainer="getPopupContainer"
+            @change="(val) => setAnimate({ ...animate, direction: val })"
+          >
+            <a-select-option
+              v-for="(item, index) in directions"
+              :key="index"
+              :value="item"
+              >{{ item }}</a-select-option
+            >
           </a-select>
         </a-list-item>
       </a-list>
     </setting-item>
-    <a-alert v-if="isDev" style="max-width: 240px; margin: -16px 0 8px; word-break: break-all" type="warning"
-      :message="$t('alert')">
+    <a-alert
+      v-if="isDev"
+      style="max-width: 240px; margin: -16px 0 8px; word-break: break-all"
+      type="warning"
+      :message="$t('alert')"
+    >
     </a-alert>
-    <a-button v-if="isDev" id="copyBtn" style="width: 100%" icon="copy" :data-clipboard-text="copyConfig"
-      @click="copyCode">{{ $t('copy') }}</a-button>
+    <a-button
+      v-if="isDev"
+      id="copyBtn"
+      style="width: 100%"
+      icon="copy"
+      :data-clipboard-text="copyConfig"
+      @click="copyCode"
+      >{{ $t('copy') }}</a-button
+    >
   </div>
 </template>
 

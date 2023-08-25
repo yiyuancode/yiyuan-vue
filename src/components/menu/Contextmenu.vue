@@ -1,5 +1,11 @@
 <template>
-  <a-menu v-show="visible" class="contextmenu" :style="style" :selectedKeys="selectedKeys" @click="handleClick">
+  <a-menu
+    v-show="visible"
+    class="contextmenu"
+    :style="style"
+    :selectedKeys="selectedKeys"
+    @click="handleClick"
+  >
     <a-menu-item v-for="item in itemList" :key="item.key">
       <a-icon v-if="item.icon" :type="item.icon" />
       <span>{{ item.text }}</span>
@@ -75,6 +81,6 @@ export default {
 
 .ant-menu-item {
   margin: 0 !important // 菜单项之间的缝隙会影响点击
-  ;
+;
 }
 </style>

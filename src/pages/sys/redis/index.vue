@@ -1,15 +1,9 @@
 <template>
-    <div>
-        redis记录管理
-    </div>
+  <div>redis记录管理</div>
 </template>
 
 <script>
-    export default {
-        
-    }
+export default {};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

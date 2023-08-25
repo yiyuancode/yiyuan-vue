@@ -7,40 +7,40 @@ import { request } from '@/utils/request';
  * @returns {Promise<AxiosResponse<T>>}
  */
 export async function login(username, password) {
-    const resp = await request({
-        url: "/login/accountLogin",
-        method: "post",
-        data: {
-            username,
-            password
-        }
-    });
+  const resp = await request({
+    url: '/login/accountLogin',
+    method: 'post',
+    data: {
+      username,
+      password
+    }
+  });
 
-    return resp;
+  return resp;
 }
 
 /**
  * 获取用户信息
- * @returns 
+ * @returns
  */
 export async function getUserInfo() {
-    const resp = await request({
-        url: "/login/getUserInfo",
-        method: "get",
-    });
+  const resp = await request({
+    url: '/login/getUserInfo',
+    method: 'get'
+  });
 
-    return resp.data;
+  return resp.data;
 }
 
 export async function getRoutesConfig() {
-    const resp = await request({
-        url: "/routes",
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/routes'
+  });
+  return resp.data;
 }
 
 export default {
-    login,
-    getUserInfo,
-    getRoutesConfig
-}
+  login,
+  getUserInfo,
+  getRoutesConfig
+};

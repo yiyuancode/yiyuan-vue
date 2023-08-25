@@ -380,7 +380,7 @@ export default {
       });
     },
     ...mapMutations('setting', ['correctPageMinHeight'])
-  },
+  }
 };
 </script>
 

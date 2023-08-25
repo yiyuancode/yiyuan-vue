@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的部门信息(分页)
@@ -9,14 +9,12 @@ import {request} from '@/utils/request';
  * @date 2023-08-25
  */
 export async function getDeptPageList(data) {
-    const resp = await
-    request({
-        url: "/sys/dept/page",
-        params: data
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/dept/page',
+    params: data
+  });
+  return resp.data;
 }
-
 
 /**
  * 获取部门详情
@@ -27,11 +25,10 @@ export async function getDeptPageList(data) {
  * @date 2023-08-25
  */
 export async function getDeptDetail(id) {
-    const resp = await
-    request({
-        url: `/sys/dept/details/${id}`,
-    });
-    return resp.data;
+  const resp = await request({
+    url: `/sys/dept/details/${id}`
+  });
+  return resp.data;
 }
 
 /**
@@ -44,13 +41,12 @@ export async function getDeptDetail(id) {
  */
 
 export async function addDept(data) {
-    const resp = await
-    request({
-        url: "/sys/dept/add",
-        method: "post",
-        data
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/dept/add',
+    method: 'post',
+    data
+  });
+  return resp.data;
 }
 
 /**
@@ -63,17 +59,15 @@ export async function addDept(data) {
  * @date 2023-08-25
  */
 export async function editDept(data, id) {
-    const resp = await
-    request({
-        url: "/sys/dept/edit",
-        method: "post",
-        data: {
-...
-    data, id
-}
-})
-    ;
-    return resp.data;
+  const resp = await request({
+    url: '/sys/dept/edit',
+    method: 'post',
+    data: {
+      ...data,
+      id
+    }
+  });
+  return resp.data;
 }
 /**
  * 删除部门（可支持批量删除）
@@ -84,14 +78,12 @@ export async function editDept(data, id) {
  * @date 2023-08-25
  */
 export async function deleteDept(ids) {
-    const resp = await
-    request({
-        url: "/sys/dept/delete",
-        method: "post",
-        params: {
-            ids
-        }
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/dept/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
+  return resp.data;
 }
-

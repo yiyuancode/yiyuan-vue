@@ -15,16 +15,14 @@ export default {
   components: { PageLayout },
   data() {
     return {
-      loading: true,
+      loading: true
     };
   },
   computed: {
     ...mapState('account', { currUser: 'user' }),
     ...mapState('setting', ['lang'])
   },
-  created() {
-    
-  }
+  created() {}
 };
 </script>
 

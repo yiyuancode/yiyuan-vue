@@ -1,5 +1,5 @@
-import { login } from "@/api/login";
-import { setAuthorization, removeAuthorization } from "@/utils/request";
+import { login } from '@/api/login';
+import { setAuthorization, removeAuthorization } from '@/utils/request';
 
 export default {
   namespaced: true,
@@ -9,7 +9,7 @@ export default {
     roles: null,
     routesConfig: null,
     isLogin: false,
-    menuTreeList: [],
+    menuTreeList: []
   },
   getters: {
     user: (state) => {
@@ -76,7 +76,7 @@ export default {
         }
       }
       return state.menuTreeList;
-    },
+    }
   },
   mutations: {
     setUser(state, user) {
@@ -119,14 +119,11 @@ export default {
   actions: {
     // 进行登录
     async login({ commit }, userInfo) {
-      const {
-        username,
-        password
-      } = userInfo;
+      const { username, password } = userInfo;
 
       const loginRes = await login(username, password);
       setAuthorization(loginRes.data.token);
-      commit("setIsLogin", true);
+      commit('setIsLogin', true);
 
       return loginRes;
     },

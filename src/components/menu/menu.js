@@ -165,8 +165,8 @@ export default {
         }
       };
       // 新窗口
-      if(menu.meta.openType === 1){
-        config.attrs.target = "_blank";
+      if (menu.meta.openType === 1) {
+        config.attrs.target = '_blank';
       }
 
       if (menu.meta && menu.meta.link) {
