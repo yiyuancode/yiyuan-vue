@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
-import { initRouter } from './router';
+import {initRouter} from './router';
 import './theme/index.less';
 import Antd from 'ant-design-vue';
 import Viser from 'viser-vue';
@@ -8,9 +8,10 @@ import Viser from 'viser-vue';
 import store from './store';
 import 'animate.css/source/animate.css';
 import Plugins from '@/plugins';
-import { initI18n } from '@/utils/i18n';
+import {initI18n} from '@/utils/i18n';
 import bootstrap from '@/bootstrap';
 import 'moment/locale/zh-cn';
+
 
 
 // import LoadingDirective from '@/directives/loading';
@@ -23,7 +24,7 @@ Vue.use(Viser);
 Vue.use(Plugins);
 // Vue.directive("loading", LoadingDirective);
 
-bootstrap({ router, store, i18n, message: Vue.prototype.$message });
+bootstrap({router, store, i18n, message: Vue.prototype.$message});
 
 new Vue({
   router,

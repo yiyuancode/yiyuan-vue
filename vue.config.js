@@ -35,12 +35,12 @@ const assetsCDN = {
 
 module.exports = {
   devServer: {
-    proxy: {
-      '/': {
-        target: 'http://api.dev.yicode.net',  // 目标服务器的地址
-        changeOrigin: true
-      }
-    }
+    // proxy: {
+    //   '/': {
+    //     target: 'http://api.dev.yicode.net',  // 目标服务器的地址
+    //     changeOrigin: true
+    //   }
+    // }
   },
   pluginOptions: {
     'style-resources-loader': {

@@ -1,3 +1,23 @@
+import {console} from "vuedraggable/src/util/helper";
+
+const modulesFiles = require.context('../modules', true, /\.js$/)
+const modulesI18nMap = modulesFiles.keys().reduce((modules, modulePath) => {
+
+  const value = modulesFiles(modulePath)
+  console.log("modules2.value", value)
+  modules = {...modules, ...value.default.i18nMap}
+  return modules
+}, {})
+console.log("modulesI18nMap", modulesI18nMap)
+
+const modulesRouterMap = modulesFiles.keys().reduce((modules, modulePath) => {
+
+  const value = modulesFiles(modulePath)
+  console.log("modules2.value", value)
+  modules = {...modules, ...value.default.routerMap}
+  return modules
+}, {})
+console.log("modulesRouterMap", modulesRouterMap)
 // 视图组件
 const view = {
   tabs: () => import('@/layouts/tabs'),
@@ -26,17 +46,13 @@ const routerMap = {
     name: '工作台',
     component: () => import('@/pages/dashboard/workplace/index'),
   },
-  sys: {
-    name: "系统管理",
-    component: view.blank,
-    icon : "setting"
-  },
+
   role: {
     name: "角色管理",
     component: () => import('@/pages/auth/role/index'),
   },
-  auth : {
-    name : "权限管理",
+  auth: {
+    name: "权限管理",
     component: view.blank,
     icon: "security-scan",
   },
@@ -45,30 +61,8 @@ const routerMap = {
     component: () => import('@/pages/auth/admin/index'),
   },
 
-  tenant: {
-    name: "租户管理",
-    component: () => import('@/pages/sys/tenant/index'),
-  },
-  hostMonitor:{
-    component: () => import('@/pages/sys/hostMonitor/index'),
-  },
-  menu: {
-    name: "菜单管理",
-    component: () => import('@/pages/sys/menu/index'),
-  },
-  host:{
-    name : "主机记录管理",
-    component: () => import('@/pages/sys/host/index'),
-  },
-  qrtz : {
-    component: () => import('@/pages/sys/qrtz/index'),
-  },
-  log:{
-    component : ()=>import("@/components/iframe/Iframe"),
-    props : {
-      src : "http://106.54.87.159:50007/app/kibana#/discover",
-    }
-  }
+
+  ...modulesRouterMap
 };
 
 export default routerMap;

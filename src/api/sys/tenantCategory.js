@@ -1,17 +1,17 @@
 import {request} from '@/utils/request';
 
 /**
- * 获取所有的租户信息(分页)
+ * 获取所有的租户店铺分类信息(分页)
  *
- * @param {*} data 租户信息
+ * @param {*} data 租户店铺分类信息
  * @return
  * @author  一源团队-花和尚
  * @date 2023-08-25
  */
-export async function getTenantPageList(data) {
+export async function getTenantCategoryPageList(data) {
     const resp = await
     request({
-        url: "/sys/tenant/page",
+        url: "/sys/tenantCategory/page",
         params: data
     });
     return resp.data;
@@ -19,34 +19,34 @@ export async function getTenantPageList(data) {
 
 
 /**
- * 获取租户详情
+ * 获取租户店铺分类详情
  *
  * @param {*} id
  * @return
  * @author  一源团队-花和尚
  * @date 2023-08-25
  */
-export async function getTenantDetail(id) {
+export async function getTenantCategoryDetail(id) {
     const resp = await
     request({
-        url: `/sys/tenant/details/${id}`,
+        url: `/sys/tenantCategory/details/${id}`,
     });
     return resp.data;
 }
 
 /**
- * 添加租户
+ * 添加租户店铺分类
  *
- * @param {*} data 租户信息
+ * @param {*} data 租户店铺分类信息
  * @return
  * @author  一源团队-花和尚
  * @date 2023-08-25
  */
 
-export async function addTenant(data) {
+export async function addTenantCategory(data) {
     const resp = await
     request({
-        url: "/sys/tenant/add",
+        url: "/sys/tenantCategory/add",
         method: "post",
         data
     });
@@ -54,18 +54,18 @@ export async function addTenant(data) {
 }
 
 /**
- * 编辑租户
+ * 编辑租户店铺分类
  *
- * @param {*} data 租户信息
- * @param {*} id 租户id
+ * @param {*} data 租户店铺分类信息
+ * @param {*} id 租户店铺分类id
  * @return
  * @author  一源团队-花和尚
  * @date 2023-08-25
  */
-export async function editTenant(data, id) {
+export async function editTenantCategory(data, id) {
     const resp = await
     request({
-        url: "/sys/tenant/edit",
+        url: "/sys/tenantCategory/edit",
         method: "post",
         data: {
 ...
@@ -76,17 +76,17 @@ export async function editTenant(data, id) {
     return resp.data;
 }
 /**
- * 删除租户（可支持批量删除）
+ * 删除租户店铺分类（可支持批量删除）
  *
  * @param {*} ids
  * @return
  * @author  一源团队-花和尚
  * @date 2023-08-25
  */
-export async function deleteTenant(ids) {
+export async function deleteTenantCategory(ids) {
     const resp = await
     request({
-        url: "/sys/tenant/delete",
+        url: "/sys/tenantCategory/delete",
         method: "post",
         params: {
             ids

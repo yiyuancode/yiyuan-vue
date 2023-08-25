@@ -7,8 +7,8 @@ axios.defaults.timeout = 5000;
 axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = xsrfHeaderName;
 axios.defaults.xsrfCookieName = xsrfHeaderName;
-axios.defaults.baseURL = process.env.NODE_ENV === "development" ? '/' : process.env.VUE_APP_API_BASE_URL + '/';
-
+//axios.defaults.baseURL = process.env.NODE_ENV === "development" ? '/' : process.env.VUE_APP_API_BASE_URL + '/';
+axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
 // 认证类型
 // const AUTH_TYPE = {
 //   BEARER: 'Bearer',
@@ -59,10 +59,10 @@ function checkAuthorization() {
  * @param options
  */
 function loadInterceptors(interceptors, options) {
-  const { request, response } = interceptors;
+  const {request, response} = interceptors;
   // 加载请求拦截器
   request.forEach((item) => {
-    let { onFulfilled, onRejected } = item;
+    let {onFulfilled, onRejected} = item;
     if (!onFulfilled || typeof onFulfilled !== 'function') {
       onFulfilled = (config) => config;
     }
@@ -76,7 +76,7 @@ function loadInterceptors(interceptors, options) {
   });
   // 加载响应拦截器
   response.forEach((item) => {
-    let { onFulfilled, onRejected } = item;
+    let {onFulfilled, onRejected} = item;
     if (!onFulfilled || typeof onFulfilled !== 'function') {
       onFulfilled = (response) => response;
     }

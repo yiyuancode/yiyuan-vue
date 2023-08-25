@@ -1,17 +1,17 @@
 import {request} from '@/utils/request';
 
 /**
- * 获取所有的租户信息(分页)
+ * 获取所有的部门信息(分页)
  *
- * @param {*} data 租户信息
+ * @param {*} data 部门信息
  * @return
  * @author  一源团队-花和尚
  * @date 2023-08-25
  */
-export async function getTenantPageList(data) {
+export async function getDeptPageList(data) {
     const resp = await
     request({
-        url: "/sys/tenant/page",
+        url: "/sys/dept/page",
         params: data
     });
     return resp.data;
@@ -19,34 +19,34 @@ export async function getTenantPageList(data) {
 
 
 /**
- * 获取租户详情
+ * 获取部门详情
  *
  * @param {*} id
  * @return
  * @author  一源团队-花和尚
  * @date 2023-08-25
  */
-export async function getTenantDetail(id) {
+export async function getDeptDetail(id) {
     const resp = await
     request({
-        url: `/sys/tenant/details/${id}`,
+        url: `/sys/dept/details/${id}`,
     });
     return resp.data;
 }
 
 /**
- * 添加租户
+ * 添加部门
  *
- * @param {*} data 租户信息
+ * @param {*} data 部门信息
  * @return
  * @author  一源团队-花和尚
  * @date 2023-08-25
  */
 
-export async function addTenant(data) {
+export async function addDept(data) {
     const resp = await
     request({
-        url: "/sys/tenant/add",
+        url: "/sys/dept/add",
         method: "post",
         data
     });
@@ -54,18 +54,18 @@ export async function addTenant(data) {
 }
 
 /**
- * 编辑租户
+ * 编辑部门
  *
- * @param {*} data 租户信息
- * @param {*} id 租户id
+ * @param {*} data 部门信息
+ * @param {*} id 部门id
  * @return
  * @author  一源团队-花和尚
  * @date 2023-08-25
  */
-export async function editTenant(data, id) {
+export async function editDept(data, id) {
     const resp = await
     request({
-        url: "/sys/tenant/edit",
+        url: "/sys/dept/edit",
         method: "post",
         data: {
 ...
@@ -76,17 +76,17 @@ export async function editTenant(data, id) {
     return resp.data;
 }
 /**
- * 删除租户（可支持批量删除）
+ * 删除部门（可支持批量删除）
  *
  * @param {*} ids
  * @return
  * @author  一源团队-花和尚
  * @date 2023-08-25
  */
-export async function deleteTenant(ids) {
+export async function deleteDept(ids) {
     const resp = await
     request({
-        url: "/sys/tenant/delete",
+        url: "/sys/dept/delete",
         method: "post",
         params: {
             ids

@@ -1,38 +1,40 @@
 <template>
-    <ManagePage :submitModalObj="submitModalObj" :columns="columns" :data="data" :pagination="pagination"
-        :renderObj="renderObj" @onSave="saveHandle" @onSubmit="submitHandle" @onDelete="deleteHandle"
-        @onSearch="searchHandle" @onReset="resetHandle">
+  <ManagePage :columns="columns" :data="data" :pagination="pagination"
+              :renderObj="renderObj"
+              :submitModalObj="submitModalObj" @onDelete="deleteHandle" @onReset="resetHandle"
+              @onSave="saveHandle"
+              @onSearch="searchHandle" @onSubmit="submitHandle">
 
 
-        <!-- 其他的操作插槽 -->
-        <template #otherOperationsContainer>
-            <!-- #otherOperationsContainer="scope" -->
-            <a-button type="primary">监控</a-button>
-        </template>
-    </ManagePage>
+    <!-- 其他的操作插槽 -->
+    <template #otherOperationsContainer>
+      <!-- #otherOperationsContainer="scope" -->
+      <a-button type="primary">监控</a-button>
+    </template>
+  </ManagePage>
 </template>
 
 <script>
-import ManagePage from "@/components/manage/ManagePage.vue";
-import manage from "@/mixins/manage";
-import { columns, moduleConfig } from "./pageConfig";
+  import ManagePage from "@/components/manage/ManagePage.vue";
+  import manage from "@/mixins/manage";
+  import {columns, moduleConfig} from "./pageConfig";
 
-export default {
+  export default {
     components: {
-        ManagePage,
+      ManagePage,
     },
     mixins: [manage()],
     data() {
-        return {
-            columns,
-            ...moduleConfig,
-            submitModalObj: {
-                labelCol: { span: 8 },
-                wrapperCol: { span: 16 },
-            }
+      return {
+        columns,
+        ...moduleConfig,
+        submitModalObj: {
+          labelCol: {span: 8},
+          wrapperCol: {span: 16},
         }
+      }
     },
-}
+  }
 </script>
 
 <style lang="scss" scoped></style>
