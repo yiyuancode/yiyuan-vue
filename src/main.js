@@ -13,6 +13,17 @@ import bootstrap from '@/bootstrap';
 import 'moment/locale/zh-cn';
 
 
+import addFrom from "@/mixins/addFrom.js"
+//在main.js引入qs
+import qs from 'qs'
+
+
+
+Vue.use(addFrom)
+//配全局属性配置，在任意组件内可以使用this.$qs获取qs对象
+
+Vue.prototype.$qs = qs
+
 
 // import LoadingDirective from '@/directives/loading';
 const router = initRouter(store.state.setting.asyncRoutes);

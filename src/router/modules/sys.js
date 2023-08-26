@@ -36,14 +36,17 @@ const routerMap = {
     props: {
       src: "http://106.54.87.159:50007/app/kibana#/discover",
     }
-  }
+  },
+  table: {
+    name: "数据库管理",
+    component: () => import( '@/pages/sys/table/index'),
+  },
 }
 
 
 const i18nMap = {
   sys: {
     name: "系统管理",
-
     tenant:
       {
         name: "租户管理"
@@ -81,7 +84,12 @@ const i18nMap = {
     ,
     log: {
       name: "日志管理"
-    }
+    },
+    table:
+      {
+        name: "数据库管理"
+      }
+    ,
   }
 }
 export default {

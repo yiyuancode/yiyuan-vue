@@ -3,7 +3,7 @@ import axios from 'axios';
 // 跨域认证信息 header 名
 const xsrfHeaderName = 'satoken';
 
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 5000*50;
 axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = xsrfHeaderName;
 axios.defaults.xsrfCookieName = xsrfHeaderName;
