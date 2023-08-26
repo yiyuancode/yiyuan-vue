@@ -1,6 +1,4 @@
-
 import { request } from '@/utils/request';
-
 
 /**
  * 获取主机信息(分页)
@@ -17,59 +15,58 @@ import { request } from '@/utils/request';
  *  @param {*} updateTimeEnd 更新时间（结束）
  *  @param {*} createTimeStart 创建时间（开始）
  *  @param {*} createTimeEnd 创建时间（结束）
- * @returns 
+ * @returns
  */
 export async function getHostPageList(opts = {}) {
-    const {
-        pageSize,
-        pageNum,
-        hostName,
-        host,
-        sshPort,
-        sshUsername,
-        sshPassword,
-        isMonitorEnabled,
-        createUser,
-        updateUser,
-        createTimeStart,
-        createTimeEnd,
-        updateTimeStart,
-        updateTimeEnd,
-    } = opts;
+  const {
+    pageSize,
+    pageNum,
+    hostName,
+    host,
+    sshPort,
+    sshUsername,
+    sshPassword,
+    isMonitorEnabled,
+    createUser,
+    updateUser,
+    createTimeStart,
+    createTimeEnd,
+    updateTimeStart,
+    updateTimeEnd
+  } = opts;
 
-    const resp = await request({
-        url: "/sys/host/page",
-        params : {
-            pageSize,
-            pageNum,
-            hostName,
-            host,
-            sshPort,
-            sshUsername,
-            sshPassword,
-            isMonitorEnabled,
-            createUser,
-            updateUser,
-            createTimeStart,
-            createTimeEnd,
-            updateTimeStart,
-            updateTimeEnd,
-        }
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/host/page',
+    params: {
+      pageSize,
+      pageNum,
+      hostName,
+      host,
+      sshPort,
+      sshUsername,
+      sshPassword,
+      isMonitorEnabled,
+      createUser,
+      updateUser,
+      createTimeStart,
+      createTimeEnd,
+      updateTimeStart,
+      updateTimeEnd
+    }
+  });
+  return resp.data;
 }
-
 
 /**
  * 获取主机详情
- * @param {*} id 
+ * @param {*} id
  * @returns
  */
 export async function getHostDetail(id) {
-    const resp = await request({
-        url: `/sys/host/details/${id}`,
-    });
-    return resp.data;
+  const resp = await request({
+    url: `/sys/host/details/${id}`
+  });
+  return resp.data;
 }
 
 /**
@@ -81,32 +78,32 @@ export async function getHostDetail(id) {
  *  @param {*} sshUsername SSH登录用户名
  *  @param {*} sshPassword SSH登录密码
  *  @param {*} isMonitorEnabled 开启监控
- * @returns 
+ * @returns
  */
 
 export async function addHost(hostInfo = {}) {
-    const {
-        hostName,
-        host,
-        sshPort,
-        sshUsername,
-        sshPassword,
-        isMonitorEnabled,
-    } = hostInfo;
+  const {
+    hostName,
+    host,
+    sshPort,
+    sshUsername,
+    sshPassword,
+    isMonitorEnabled
+  } = hostInfo;
 
-    const resp = await request({
-        url: "/sys/host/add",
-        method: "post",
-        data: {
-            hostName,
-            host,
-            sshPort,
-            sshUsername,
-            sshPassword,
-            isMonitorEnabled,
-        }
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/host/add',
+    method: 'post',
+    data: {
+      hostName,
+      host,
+      sshPort,
+      sshUsername,
+      sshPassword,
+      isMonitorEnabled
+    }
+  });
+  return resp.data;
 }
 
 /**
@@ -119,46 +116,45 @@ export async function addHost(hostInfo = {}) {
  *  @param {*} sshPassword SSH登录密码
  *  @param {*} isMonitorEnabled 开启监控
  * @param {*} id 主机id
- * @returns 
+ * @returns
  */
 export async function editHost(hostInfo, id) {
-    const {
-        hostName,
-        host,
-        sshPort,
-        sshUsername,
-        sshPassword,
-        isMonitorEnabled,
-    } = hostInfo;
+  const {
+    hostName,
+    host,
+    sshPort,
+    sshUsername,
+    sshPassword,
+    isMonitorEnabled
+  } = hostInfo;
 
-    const resp = await request({
-        url: "/sys/host/edit",
-        method: "post",
-        data: {
-            hostName,
-            host,
-            sshPort,
-            sshUsername,
-            sshPassword,
-            isMonitorEnabled,
-            id
-        }
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/host/edit',
+    method: 'post',
+    data: {
+      hostName,
+      host,
+      sshPort,
+      sshUsername,
+      sshPassword,
+      isMonitorEnabled,
+      id
+    }
+  });
+  return resp.data;
 }
 
 /**
  * 删除主机（可支持批量删除）
- * @param {*} ids 
+ * @param {*} ids
  */
 export async function deleteHost(ids) {
-    const resp = await request({
-        url: "/sys/host/delete",
-        method: "post",
-        params: {
-            ids
-        }
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/host/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
+  return resp.data;
 }
-

@@ -4,7 +4,7 @@
  * @author  一源团队-花和尚
  * @date 2023-08-25
  */
-import * as table from "@/api/sys/table";
+import * as table from '@/api/sys/table';
 
 const columns = [
   {
@@ -12,10 +12,9 @@ const columns = [
     dataIndex: 'id',
     key: 'id',
 
-    rules: [{required: true, message: '请输入主键id', trigger: 'blur'},],
+    rules: [{ required: true, message: '请输入主键id', trigger: 'blur' }],
     noEdit: true,
-    noAdd: true,
-
+    noAdd: true
   },
 
   {
@@ -23,8 +22,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
 
-    rules: [{required: true, message: '请输入表名', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入表名', trigger: 'blur' }]
   },
 
   {
@@ -32,8 +30,7 @@ const columns = [
     dataIndex: 'remark',
     key: 'remark',
 
-    rules: [{required: true, message: '请输入表注释', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入表注释', trigger: 'blur' }]
   },
 
   {
@@ -41,22 +38,19 @@ const columns = [
     dataIndex: 'updateTime',
     key: 'updateTime',
     searchObj: {
-      formType: "rangePicker"
+      formType: 'rangePicker'
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择修改时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
-    noSearch: true,
-
+    noSearch: true
   },
 
   {
@@ -64,21 +58,18 @@ const columns = [
     dataIndex: 'createTime',
     key: 'createTime',
     searchObj: {
-      formType: "rangePicker"
+      formType: 'rangePicker'
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择创建时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
-    noAdd: true,
-
+    noAdd: true
   },
 
   {
@@ -101,25 +92,18 @@ const columns = [
     noAdd: true,
     noSearch: true,
     noShow: true
-
-  },
-
-
-]
-
+  }
+];
 
 // 模块配置
 const moduleConfig = {
   module: table,
-  moduleAdd: "addTable",
-  moduleEdit: "editTable",
-  moduleDelete: "deleteTable",
-  moduleGetList: "getTablePageList",
-  moduleGetDetail: "getTableDetail",
-  moduleName: "数据库",
-}
-
-export {
-  columns,
-  moduleConfig,
+  moduleAdd: 'addTable',
+  moduleEdit: 'editTable',
+  moduleDelete: 'deleteTable',
+  moduleGetList: 'getTablePageList',
+  moduleGetDetail: 'getTableDetail',
+  moduleName: '数据库'
 };
+
+export { columns, moduleConfig };

@@ -89,7 +89,7 @@ export default {
       required: true
     },
     value: {
-      required: true,
+      required: true
     },
     title: String
   },

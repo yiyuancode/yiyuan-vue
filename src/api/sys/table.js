@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的数据库信息(分页)
@@ -9,14 +9,12 @@ import {request} from '@/utils/request';
  * @date 2023-08-25
  */
 export async function getTablePageList(data) {
-  const resp = await
-    request({
-      url: "/sys/table/page",
-      params: data
-    });
+  const resp = await request({
+    url: '/sys/table/page',
+    params: data
+  });
   return resp.data;
 }
-
 
 /**
  * 获取数据库详情
@@ -27,10 +25,9 @@ export async function getTablePageList(data) {
  * @date 2023-08-25
  */
 export async function getTableDetail(id) {
-  const resp = await
-    request({
-      url: `/sys/table/details/${id}`,
-    });
+  const resp = await request({
+    url: `/sys/table/details/${id}`
+  });
   return resp.data;
 }
 
@@ -44,12 +41,11 @@ export async function getTableDetail(id) {
  */
 
 export async function addTable(data) {
-  const resp = await
-    request({
-      url: "/sys/table/add",
-      method: "post",
-      data
-    });
+  const resp = await request({
+    url: '/sys/table/add',
+    method: 'post',
+    data
+  });
   return resp.data;
 }
 
@@ -63,16 +59,14 @@ export async function addTable(data) {
  * @date 2023-08-25
  */
 export async function editTable(data, id) {
-  const resp = await
-    request({
-      url: "/sys/table/edit",
-      method: "post",
-      data: {
-        ...
-          data, id
-      }
-    })
-  ;
+  const resp = await request({
+    url: '/sys/table/edit',
+    method: 'post',
+    data: {
+      ...data,
+      id
+    }
+  });
   return resp.data;
 }
 
@@ -85,14 +79,13 @@ export async function editTable(data, id) {
  * @date 2023-08-25
  */
 export async function deleteTable(ids) {
-  const resp = await
-    request({
-      url: "/sys/table/delete",
-      method: "post",
-      params: {
-        ids
-      }
-    });
+  const resp = await request({
+    url: '/sys/table/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
   return resp.data;
 }
 
@@ -104,11 +97,10 @@ export async function deleteTable(ids) {
  * @date 2023-08-25
  */
 export async function refreshTable() {
-  const resp = await
-    request({
-      url: "/sys/table/refresh",
-      method: "post",
-    });
+  const resp = await request({
+    url: '/sys/table/refresh',
+    method: 'post'
+  });
   return resp.data;
 }
 
@@ -121,12 +113,11 @@ export async function refreshTable() {
  * @date 2023-08-25
  */
 export async function generateCodeTable(data) {
-  const resp = await
-    request({
-      url: "/sys/table/generateCode",
-      method: "post",
-      data,
-      responseType: 'blob'
-    });
+  const resp = await request({
+    url: '/sys/table/generateCode',
+    method: 'post',
+    data,
+    responseType: 'blob'
+  });
   return resp.data;
 }

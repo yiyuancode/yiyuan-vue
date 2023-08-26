@@ -1,5 +1,5 @@
-import {mapGetters} from "vuex";
-import _ from 'lodash'
+import { mapGetters } from 'vuex';
+import _ from 'lodash';
 
 export default {
   install(Vue) {
@@ -8,17 +8,16 @@ export default {
         return {
           lodash: _,
           addFormProps: {}
-        }
+        };
       },
       computed: {
-        ...mapGetters({}),
+        ...mapGetters({})
       },
       methods: {
         addFormPropsChange(data) {
           this.addFormProps = data;
         }
-
       }
-    })
+    });
   }
-}
+};

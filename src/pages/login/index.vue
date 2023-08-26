@@ -9,38 +9,60 @@
     </div>
     <div class="login">
       <a-form :form="form" @submit="loginHandle">
-        <a-tabs size="large" :tabBarStyle="{ textAlign: 'center' }" style="padding: 0 2px">
+        <a-tabs
+          size="large"
+          :tabBarStyle="{ textAlign: 'center' }"
+          style="padding: 0 2px"
+        >
           <a-tab-pane key="1" tab="账户密码登录">
-            <a-alert v-show="error" type="error" :closable="true" :message="error" showIcon style="margin-bottom: 24px" />
+            <a-alert
+              v-show="error"
+              type="error"
+              :closable="true"
+              :message="error"
+              showIcon
+              style="margin-bottom: 24px"
+            />
             <a-form-item>
-              <a-input v-decorator="[
-                'username',
-                {
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入账户名',
-                      whitespace: true
-                    }
-                  ]
-                }
-              ]" autocomplete="autocomplete" size="large" placeholder="admin">
+              <a-input
+                v-decorator="[
+                  'username',
+                  {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输入账户名',
+                        whitespace: true
+                      }
+                    ]
+                  }
+                ]"
+                autocomplete="autocomplete"
+                size="large"
+                placeholder="admin"
+              >
                 <a-icon slot="prefix" type="user" />
               </a-input>
             </a-form-item>
             <a-form-item>
-              <a-input v-decorator="[
-                'password',
-                {
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入密码',
-                      whitespace: true
-                    }
-                  ]
-                }
-              ]" size="large" placeholder="888888" autocomplete="autocomplete" type="password">
+              <a-input
+                v-decorator="[
+                  'password',
+                  {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输入密码',
+                        whitespace: true
+                      }
+                    ]
+                  }
+                ]"
+                size="large"
+                placeholder="888888"
+                autocomplete="autocomplete"
+                type="password"
+              >
                 <a-icon slot="prefix" type="lock" />
               </a-input>
             </a-form-item>
@@ -59,7 +81,12 @@
                   </a-input>
                 </a-col>
                 <a-col :span="8" style="padding-left: 4px">
-                  <a-button style="width: 100%" class="captcha-button" size="large">获取验证码</a-button>
+                  <a-button
+                    style="width: 100%"
+                    class="captcha-button"
+                    size="large"
+                    >获取验证码</a-button
+                  >
                 </a-col>
               </a-row>
             </a-form-item>
@@ -70,8 +97,14 @@
           <a style="float: right">忘记密码</a>
         </div>
         <a-form-item>
-          <a-button :loading="logging" style="width: 100%; margin-top: 24px" size="large" htmlType="submit"
-            type="primary">登录</a-button>
+          <a-button
+            :loading="logging"
+            style="width: 100%; margin-top: 24px"
+            size="large"
+            htmlType="submit"
+            type="primary"
+            >登录</a-button
+          >
         </a-form-item>
         <!-- <div>
           其他登录方式
@@ -87,10 +120,9 @@
 
 <script>
 import CommonLayout from '@/layouts/CommonLayout';
-import { getUserInfo } from "@/api/login"
+import { getUserInfo } from '@/api/login';
 import { loadRoutes, getRoutes } from '@/utils/routerUtil';
 import { mapMutations } from 'vuex';
-
 
 export default {
   name: 'Login',
@@ -108,7 +140,12 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('account', ['setUser', 'setPermissions', 'setRoles', 'setMenuTreeList']),
+    ...mapMutations('account', [
+      'setUser',
+      'setPermissions',
+      'setRoles',
+      'setMenuTreeList'
+    ]),
 
     async loginHandle(e) {
       this.logging = true;
@@ -119,7 +156,10 @@ export default {
         const username = this.form.getFieldValue('username');
         const password = this.form.getFieldValue('password');
 
-        const loginRes = await this.$store.dispatch("account/login", { username, password });
+        const loginRes = await this.$store.dispatch('account/login', {
+          username,
+          password
+        });
         // 登录成功
         if (loginRes.code === 200) {
           // 获取用户信息
@@ -127,8 +167,9 @@ export default {
 
           const testUser = {
             name: userInfo.username,
-            avatar: "https://img1.baidu.com/it/u=2526782352,137544254&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1690650000&t=53a347dfa7b7b0f10bac989e71dc852e"
-          }
+            avatar:
+              'https://img1.baidu.com/it/u=2526782352,137544254&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1690650000&t=53a347dfa7b7b0f10bac989e71dc852e'
+          };
           // 设置用户
           this.setUser(testUser);
           // 设置权限
@@ -138,24 +179,25 @@ export default {
           // 设置菜单列表
           this.setMenuTreeList(userInfo.menuTreeList);
           let routes = getRoutes(userInfo.menuTreeList);
-          routes = [{
-            router: "root",
-            children: routes
-          }]
+          routes = [
+            {
+              router: 'root',
+              children: routes
+            }
+          ];
 
-          // 获取路由信息 
+          // 获取路由信息
           loadRoutes(routes);
 
           this.$router.push('/auth/admin');
-          this.$message.success(loginRes.message)
+          this.$message.success(loginRes.message);
         }
-
       } catch (err) {
-        Promise.reject(err)
+        Promise.reject(err);
       }
 
       this.logging = false;
-    },
+    }
 
     // getRoutes(menuTreeList) {
     //   const routes = [];
@@ -189,7 +231,6 @@ export default {
     //         routesObj.routeComponent = routeComponent;
     //       }
     //       routesObj.menuType = type.value;
-
 
     //       if(openType && openType.value){
     //         routesObj.openType = openType.value;

@@ -1,66 +1,123 @@
 <template>
   <div>
-
-
     <a-drawer
       :title="props.title"
-      :width="props.width?props.width:750"
+      :width="props.width ? props.width : 750"
       :visible="props.show"
       :body-style="{ paddingBottom: '80px' }"
       @close="onClose"
     >
-
       <a-form :form="form" layout="vertical">
         <a-spin :spinning="props.loading">
-          <a-row :gutter="16" v-for="(im,ix) in uColumns" :key="ix">
-            <a-col :span="12" v-for="(im2,ix2) in im" :key="ix2">
+          <a-row :gutter="16" v-for="(im, ix) in uColumns" :key="ix">
+            <a-col :span="12" v-for="(im2, ix2) in im" :key="ix2">
               <a-form-item :label="im2.title">
-
-                <a-radio-group v-if="im2.formType==`radioGroup`"
-                               :disabled="im2.disabled?im2.disabled:false"
-                               :placeholder="`请选择${im2.placeholder? im2.placeholder:im2.title}`"
-                               v-decorator="[ im2.dataIndex,{ rules: [{ required: im2.rules, message: `请选择${im2.placeholder? im2.placeholder:im2.title}`}] },]">
-                  <a-radio-button v-for="( im3,ix3) in im2.props.options" :value="im3.value"
-                                  :key="ix3">
-                    {{im3.label}}
+                <a-radio-group
+                  v-if="im2.formType == `radioGroup`"
+                  :disabled="im2.disabled ? im2.disabled : false"
+                  :placeholder="`请选择${
+                    im2.placeholder ? im2.placeholder : im2.title
+                  }`"
+                  v-decorator="[
+                    im2.dataIndex,
+                    {
+                      rules: [
+                        {
+                          required: im2.rules,
+                          message: `请选择${
+                            im2.placeholder ? im2.placeholder : im2.title
+                          }`
+                        }
+                      ]
+                    }
+                  ]"
+                >
+                  <a-radio-button
+                    v-for="(im3, ix3) in im2.props.options"
+                    :value="im3.value"
+                    :key="ix3"
+                  >
+                    {{ im3.label }}
                   </a-radio-button>
-
-
                 </a-radio-group>
 
                 <a-select
-                  v-else-if="im2.formType==`Select`"
+                  v-else-if="im2.formType == `Select`"
                   allowClear
                   show-search
-                  :disabled="im2.disabled?im2.disabled:false"
-                  :placeholder="`请选择${im2.placeholder? im2.placeholder:im2.title}`"
+                  :disabled="im2.disabled ? im2.disabled : false"
+                  :placeholder="`请选择${
+                    im2.placeholder ? im2.placeholder : im2.title
+                  }`"
                   :default-active-first-option="false"
                   :filter-option="false"
-                  v-decorator="[ im2.dataIndex,{ rules: [{ required: im2.rules, message: `请选择${im2.placeholder? im2.placeholder:im2.title}`}] },]"
-                  @change="(val,option)=>handleChangeSelect(val,im2.dataIndex,im2,option)">
+                  v-decorator="[
+                    im2.dataIndex,
+                    {
+                      rules: [
+                        {
+                          required: im2.rules,
+                          message: `请选择${
+                            im2.placeholder ? im2.placeholder : im2.title
+                          }`
+                        }
+                      ]
+                    }
+                  ]"
+                  @change="
+                    (val, option) =>
+                      handleChangeSelect(val, im2.dataIndex, im2, option)
+                  "
+                >
                   <!-- 	<a-icon slot="suffixIcon" type="search" /> -->
-                  <a-select-option v-for="( im3,ix3) in im2.props.options" :value="im3.value"
-                                   :key="ix3">
-                    {{im3.label}}
-
+                  <a-select-option
+                    v-for="(im3, ix3) in im2.props.options"
+                    :value="im3.value"
+                    :key="ix3"
+                  >
+                    {{ im3.label }}
                   </a-select-option>
                 </a-select>
-                <a-date-picker v-else-if="im2.formType==`datePicker`"
-                               :style="im2.props.style"
-                               :show-time="im2.props.showTime"
-                               format="YYYY-MM-DD HH:mm:ss"
-                               v-decorator="[ im2.dataIndex,{ rules: [{ required: im2.rules, message: `请选择${im2.placeholder? im2.placeholder:im2.title}`}] },]"/>
+                <a-date-picker
+                  v-else-if="im2.formType == `datePicker`"
+                  :style="im2.props.style"
+                  :show-time="im2.props.showTime"
+                  format="YYYY-MM-DD HH:mm:ss"
+                  v-decorator="[
+                    im2.dataIndex,
+                    {
+                      rules: [
+                        {
+                          required: im2.rules,
+                          message: `请选择${
+                            im2.placeholder ? im2.placeholder : im2.title
+                          }`
+                        }
+                      ]
+                    }
+                  ]"
+                />
                 <a-input
                   v-else
                   v-decorator="[
-                  im2.dataIndex,
-                   { rules: [{ required: im2.rules, message: `请输入${im2.placeholder? im2.placeholder:im2.title}`}] },
-                ]"
-                  :placeholder="`请输入${im2.placeholder? im2.placeholder:im2.title}`"
+                    im2.dataIndex,
+                    {
+                      rules: [
+                        {
+                          required: im2.rules,
+                          message: `请输入${
+                            im2.placeholder ? im2.placeholder : im2.title
+                          }`
+                        }
+                      ]
+                    }
+                  ]"
+                  :placeholder="`请输入${
+                    im2.placeholder ? im2.placeholder : im2.title
+                  }`"
                 />
               </a-form-item>
             </a-col>
-
           </a-row>
         </a-spin>
       </a-form>
@@ -74,7 +131,7 @@
           padding: '10px 16px',
           background: '#fff',
           textAlign: 'right',
-          zIndex: 1,
+          zIndex: 1
         }"
       >
         <a-button :style="{ marginRight: '8px' }" @click="onClose">
@@ -84,100 +141,94 @@
           提交
         </a-button>
       </div>
-
     </a-drawer>
-
-
   </div>
 </template>
 <script>
-  import _ from 'lodash'
+import _ from 'lodash';
 
-  export default {
+export default {
+  props: {
     props: {
-      props: {
-        type: Object,
-        default: function () {
-          return {
-            title: null,
-            show: false,
-            loading: false,
-            columns: [],
-            record: {}
-          }
-        }
-      },
-    },
-    data() {
-      return {
-        form: this.$form.createForm(this),
-        visible: false,
-
-      };
-    },
-    computed: {
-      uColumns() {
-        let columns = _.cloneDeep(this.props.columns);
-        columns = columns?.filter((im) => {
-          return !im.noAdd || !im.noEdit
-        })
-        return this.convertTo2DArray(columns, 2)
+      type: Object,
+      default: function () {
+        return {
+          title: null,
+          show: false,
+          loading: false,
+          columns: [],
+          record: {}
+        };
       }
-
+    }
+  },
+  data() {
+    return {
+      form: this.$form.createForm(this),
+      visible: false
+    };
+  },
+  computed: {
+    uColumns() {
+      let columns = _.cloneDeep(this.props.columns);
+      columns = columns?.filter((im) => {
+        return !im.noAdd || !im.noEdit;
+      });
+      return this.convertTo2DArray(columns, 2);
+    }
+  },
+  methods: {
+    handleChangeSelect(val, dataIndex, im2, option) {
+      console.log('handleSearchSelect.val', val);
+      console.log('handleSearchSelect.dataIndex', dataIndex);
+      console.log('handleSearchSelect.im2', im2);
+      console.log('handleSearchSelect.option', option);
     },
-    methods: {
-
-      handleChangeSelect(val, dataIndex, im2, option) {
-        console.log("handleSearchSelect.val", val)
-        console.log("handleSearchSelect.dataIndex", dataIndex)
-        console.log("handleSearchSelect.im2", im2)
-        console.log("handleSearchSelect.option", option)
-      },
-      onSubmit() {
-        this.form.validateFields((err, values) => {
-          if (!err) {
-            console.log('Received values of form: ', values);
-            let propsTemp = _.cloneDeep(this.props)
-            propsTemp.loading = true;
-            this.$emit("propsChange", propsTemp)
-            this.$emit("propsSubmit", values)
-            propsTemp.loading = true;
-            this.$parent
-            // this.addFormProps.loading = false;
-          }
-        });
-      },
-      ok(msg) {
-        let propsTemp = _.cloneDeep(this.props)
-        propsTemp.loading = false;
-        propsTemp.show = false;
-        this.form.resetFields();
-        this.$emit("propsChange", propsTemp)
-        this.$message.success(msg);
-      },
-      no(msg) {
-        let propsTemp = _.cloneDeep(this.props)
-        propsTemp.loading = false;
-        propsTemp.show = true;
-        this.$emit("propsChange", propsTemp)
-        this.$message.error(msg);
-      },
-      showDrawer() {
-        this.visible = true;
-      },
-      onClose() {
-        let propsTemp = _.cloneDeep(this.props)
-        propsTemp.show = false;
-        this.$emit("propsChange", propsTemp)
-      },
-      //一维数组转成二维数组
-      convertTo2DArray(arr, groupSize) {
-        var result = [];
-        for (var i = 0; i < arr?.length; i += groupSize) {
-          result.push(arr.slice(i, i + groupSize));
+    onSubmit() {
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values);
+          let propsTemp = _.cloneDeep(this.props);
+          propsTemp.loading = true;
+          this.$emit('propsChange', propsTemp);
+          this.$emit('propsSubmit', values);
+          propsTemp.loading = true;
+          this.$parent;
+          // this.addFormProps.loading = false;
         }
-        return result;
-      }
+      });
     },
-  };
+    ok(msg) {
+      let propsTemp = _.cloneDeep(this.props);
+      propsTemp.loading = false;
+      propsTemp.show = false;
+      this.form.resetFields();
+      this.$emit('propsChange', propsTemp);
+      this.$message.success(msg);
+    },
+    no(msg) {
+      let propsTemp = _.cloneDeep(this.props);
+      propsTemp.loading = false;
+      propsTemp.show = true;
+      this.$emit('propsChange', propsTemp);
+      this.$message.error(msg);
+    },
+    showDrawer() {
+      this.visible = true;
+    },
+    onClose() {
+      let propsTemp = _.cloneDeep(this.props);
+      propsTemp.show = false;
+      this.$emit('propsChange', propsTemp);
+    },
+    //一维数组转成二维数组
+    convertTo2DArray(arr, groupSize) {
+      var result = [];
+      for (var i = 0; i < arr?.length; i += groupSize) {
+        result.push(arr.slice(i, i + groupSize));
+      }
+      return result;
+    }
+  }
+};
 </script>

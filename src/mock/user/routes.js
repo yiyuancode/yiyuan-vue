@@ -10,27 +10,32 @@ Mock.mock(`/routes`, 'get', () => {
         {
           router: 'dashboard',
           icon: 'dashboard',
-          children: [{
-            router: 'workplace',
-          }]
+          children: [
+            {
+              router: 'workplace'
+            }
+          ]
         },
         {
-          icon: "security-scan",
-          router: "sys",
-          children: [{
-            router: "tenantList",
-          },
-          {
-            router: "tenantPackage",
-          },
-          {
-            router: "user"
-          }, {
-            router: "role"
-          },
-          {
-            router: "menu"
-          }]
+          icon: 'security-scan',
+          router: 'sys',
+          children: [
+            {
+              router: 'tenantList'
+            },
+            {
+              router: 'tenantPackage'
+            },
+            {
+              router: 'user'
+            },
+            {
+              router: 'role'
+            },
+            {
+              router: 'menu'
+            }
+          ]
         }
       ]
     }
