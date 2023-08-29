@@ -82,8 +82,11 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:es"
+      "pre-commit": "npm run prettier && npm run lint:es"
     }
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix"
   },
   "browserslist": [
     "> 1%",

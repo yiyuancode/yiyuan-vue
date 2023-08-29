@@ -46,6 +46,7 @@ const routerMap = {
 const i18nMap = {
   sys: {
     name: '系统管理',
+
     tenant: {
       name: '租户管理'
     },
@@ -69,9 +70,11 @@ const i18nMap = {
     },
     log: {
       name: '日志管理'
+
     },
     table: {
       name: '数据库管理'
+
     }
   }
 };

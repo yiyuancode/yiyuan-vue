@@ -7,7 +7,7 @@ axios.defaults.timeout = 5000 * 50;
 axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = xsrfHeaderName;
 axios.defaults.xsrfCookieName = xsrfHeaderName;
-//axios.defaults.baseURL = process.env.NODE_ENV === "development" ? '/' : process.env.VUE_APP_API_BASE_URL + '/';
+// axios.defaults.baseURL = process.env.NODE_ENV === "development" ? '/' : process.env.VUE_APP_API_BASE_URL + '/';
 axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
 // 认证类型
 // const AUTH_TYPE = {
