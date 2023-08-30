@@ -55,7 +55,7 @@ import { geHostMonitorQueryCount } from '@/api/sys/hostMonitor';
 import TopMiddleCmp from './TopMiddleCmp';
 
 export default {
-  name: 'DataView',
+  name: 'redisMonitor',
   components: {
     // TopLeftCmp,
     TopMiddleCmp

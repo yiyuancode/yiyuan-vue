@@ -25,7 +25,7 @@ const routerMap = {
   },
   host: {
     name: '主机记录管理',
-    component: () => import('@/pages/system/host/index')
+    component: () => import('@/pages/sys/host/index')
   },
   dept: {
     name: '部门管理',
@@ -40,6 +40,10 @@ const routerMap = {
   table: {
     name: '数据库管理',
     component: () => import('@/pages/sys/table/index')
+  },
+  reidsMonitor: {
+    name: 'Redis监控面板',
+    component: () => import('@/pages/sys/redisMonitor/index')
   }
 };
 
@@ -70,12 +74,13 @@ const i18nMap = {
     },
     log: {
       name: '日志管理'
-
     },
     table: {
       name: '数据库管理'
-
-    }
+    },
+    reidsMonitor: {
+      name: 'Redis监控面板'
+    },
   }
 };
 export default {

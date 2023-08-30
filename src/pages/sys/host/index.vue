@@ -12,9 +12,8 @@
     @onSubmit="submitHandle"
   >
     <!-- 其他的操作插槽 -->
-    <template #otherOperationsContainer>
-      <!-- #otherOperationsContainer="scope" -->
-      <a-button type="primary">监控</a-button>
+    <template slot="otherOperationsContainer" slot-scope="record">
+      <a-button type="primary" @click="toHostMonitor(record)">监控</a-button>
     </template>
   </ManagePage>
 </template>
@@ -38,6 +37,15 @@ export default {
         wrapperCol: { span: 16 }
       }
     };
+  },
+  methods: {
+    toHostMonitor(record) {
+      console.log('toHostMonitor', record.data);
+      this.$router.push({
+        path: '/sys/hostMonitor',
+        query: { id: record.data.id }
+      });
+    }
   }
 };
 </script>

@@ -1,9 +1,49 @@
 <template>
-  <div>redis记录管理</div>
+  <ManagePage
+    :columns="columns"
+    :data="data"
+    :pagination="pagination"
+    :renderObj="renderObj"
+    @onSave="saveHandle"
+    @onSubmit="submitHandle"
+    @onDelete="deleteHandle"
+    @onSearch="searchHandle"
+    @onReset="resetHandle"
+  >
+    <!-- 其他的操作插槽 -->
+    <template slot="otherOperationsContainer" slot-scope="record">
+      <a-button type="primary" @click="toMonitor(record)">监控</a-button>
+    </template>
+  </ManagePage>
 </template>
 
 <script>
-export default {};
+  import ManagePage from '@/components/manage/ManagePage.vue';
+  import manage from '@/mixins/manage';
+  import {columns, moduleConfig} from './pageConfig';
+
+  export default {
+    components: {
+      ManagePage
+    },
+    mixins: [manage()],
+    data() {
+      return {
+        columns,
+        ...moduleConfig
+      };
+    },
+
+    methods: {
+      toMonitor(record) {
+        console.log('toHostMonitor', record.data);
+        this.$router.push({
+          path: '/sys/redisMonitor',
+          query: {id: record.data.id}
+        });
+      }
+    }
+  };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>

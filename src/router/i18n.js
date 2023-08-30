@@ -11,7 +11,7 @@ module.exports = {
           name: 'Redis记录管理'
         },
         hostMonitor: {
-          name: '服务器监控采集管理'
+          name: '服务器监控面板'
         },
         user: {
           name: '用户管理'
