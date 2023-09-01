@@ -7,16 +7,13 @@
 import * as tenantInfo from '@/api/sys/tenantInfo';
 
 const columns = [
+
   {
-    title: '租户信息ID',
-    dataIndex: 'id',
-    key: 'id',
-
-    rules: [{ required: true, message: '请输入租户信息ID', trigger: 'blur' }],
-    noEdit: true,
-    noAdd: true
+    title: '租户ID',
+    dataIndex: 'tenantId',
+    key: 'tenantId',
+    width: 160,
   },
-
   {
     title: '结算类型',
     dataIndex: 'settlementType',
@@ -60,80 +57,82 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{ required: true, message: '请选择结算类型', trigger: 'change' }],
+    rules: [{required: true, message: '请选择结算类型', trigger: 'change'}],
     defaultValue: 0,
-
-    formSort: 1
+    formSort: 1,
+    width: 160,
   },
 
   {
     title: '持卡人姓名',
     dataIndex: 'cardholderName',
     key: 'cardholderName',
-
-    rules: [{ required: true, message: '请输入持卡人姓名', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入持卡人姓名', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '银行名称',
     dataIndex: 'cardholderBank',
     key: 'cardholderBank',
-
-    rules: [{ required: true, message: '请输入银行名称', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入银行名称', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '银行卡号',
     dataIndex: 'cardholderNo',
     key: 'cardholderNo',
-
-    rules: [{ required: true, message: '请输入银行卡号', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入银行卡号', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '开户地址',
     dataIndex: 'bankAddress',
     key: 'bankAddress',
-
-    rules: [{ required: true, message: '请输入开户地址', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入开户地址', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '微信号',
     dataIndex: 'wechatCode',
     key: 'wechatCode',
-
-    rules: [{ required: true, message: '请输入微信号', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入微信号', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '微信收款二维码',
     dataIndex: 'wechatQrcodeUrl',
     key: 'wechatQrcodeUrl',
-
     rules: [
-      { required: true, message: '请输入微信收款二维码', trigger: 'blur' }
-    ]
+      {required: true, message: '请输入微信收款二维码', trigger: 'blur'}
+    ],
+    width: 160,
   },
 
   {
     title: '支付宝账号',
     dataIndex: 'alipayCode',
     key: 'alipayCode',
-
-    rules: [{ required: true, message: '请输入支付宝账号', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入支付宝账号', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '支付宝收款二维码',
     dataIndex: 'alipayQrcodeUrl',
-    key: 'alipayQrcodeUrl'
+    key: 'alipayQrcodeUrl',
+    width: 160,
   },
 
   {
     title: '警戒库存',
     dataIndex: 'alertStock',
-    key: 'alertStock'
+    key: 'alertStock',
+    width: 160,
   },
 
   {
@@ -171,33 +170,33 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{ required: true, message: '请选择客服类型', trigger: 'change' }],
-
-    formSort: 1
+    rules: [{required: true, message: '请选择客服类型', trigger: 'change'}],
+    formSort: 1,
+    width: 160,
   },
 
   {
     title: '客服H5链接',
     dataIndex: 'serviceLink',
     key: 'serviceLink',
-
-    rules: [{ required: true, message: '请输入客服H5链接', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入客服H5链接', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '客服电话',
     dataIndex: 'servicePhone',
     key: 'servicePhone',
-
-    rules: [{ required: true, message: '请输入客服电话', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入客服电话', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '真实姓名',
     dataIndex: 'realName',
     key: 'realName',
-
-    rules: [{ required: true, message: '请输入真实姓名', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入真实姓名', trigger: 'blur'}],
+    width: 160,
   },
 
   {
@@ -209,14 +208,15 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
+      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
     },
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    width: 160,
   },
 
   {
@@ -228,42 +228,18 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择更新时间', trigger: 'change' }];
+      return [{required: true, message: '请选择更新时间', trigger: 'change'}];
     },
     noEdit: true,
     noAdd: true,
     noSearch: true
   },
 
-  {
-    title: '创建人',
-    dataIndex: 'createUser',
-    key: 'createUser',
 
-    noEdit: true,
-    noAdd: true,
-    noSearch: true
-  },
-
-  {
-    title: '修改人',
-    dataIndex: 'updateUser',
-    key: 'updateUser',
-
-    noEdit: true,
-    noAdd: true,
-    noSearch: true
-  },
-
-  {
-    title: '租户ID',
-    dataIndex: 'tenantId',
-    key: 'tenantId'
-  }
 ];
 
 // 模块配置
@@ -277,4 +253,4 @@ const moduleConfig = {
   moduleName: '租户信息'
 };
 
-export { columns, moduleConfig };
+export {columns, moduleConfig};

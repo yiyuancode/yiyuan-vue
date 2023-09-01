@@ -7,82 +7,76 @@
 import * as tenant from '@/api/sys/tenant';
 
 const columns = [
-  {
-    title: '租户id',
-    dataIndex: 'id',
-    key: 'id',
-
-    rules: [{ required: true, message: '请输入租户id', trigger: 'blur' }],
-    noEdit: true,
-    noAdd: true
-  },
 
   {
     title: '租户店铺分类id',
     dataIndex: 'tenantCategoryId',
     key: 'tenantCategoryId',
-
     rules: [
-      { required: true, message: '请输入租户店铺分类id', trigger: 'blur' }
-    ]
+      {required: true, message: '请输入租户店铺分类id', trigger: 'blur'}
+    ],
+    width: 160,
   },
 
   {
     title: '租户分类id',
     dataIndex: 'tenantTypeId',
     key: 'tenantTypeId',
-
-    rules: [{ required: true, message: '请输入租户分类id', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入租户分类id', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '租户名称',
     dataIndex: 'name',
     key: 'name',
-
-    rules: [{ required: true, message: '请输入租户名称', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入租户名称', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '租户法人',
     dataIndex: 'loard',
     key: 'loard',
-
-    rules: [{ required: true, message: '请输入租户法人', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入租户法人', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '租户邮箱',
     dataIndex: 'email',
     key: 'email',
-
-    rules: [{ required: true, message: '请输入租户邮箱', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入租户邮箱', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '租户手机号',
     dataIndex: 'phone',
     key: 'phone',
-
-    rules: [{ required: true, message: '请输入租户手机号', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入租户手机号', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '平台手续费',
     dataIndex: 'transFee',
-    key: 'transFee'
+    key: 'transFee',
+    width: 110,
   },
 
   {
     title: '租户地址',
     dataIndex: 'address',
-    key: 'address'
+    key: 'address',
+    width: 110,
   },
 
   {
     title: '租户地理位置坐标',
     dataIndex: 'location',
-    key: 'location'
+    key: 'location',
+    width: 160,
   },
 
   {
@@ -120,10 +114,10 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{ required: true, message: '请选择是否自营', trigger: 'change' }],
+    rules: [{required: true, message: '请选择是否自营', trigger: 'change'}],
     defaultValue: 0,
-
-    formSort: 1
+    formSort: 1,
+    width: 160,
   },
 
   {
@@ -161,10 +155,10 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{ required: true, message: '请选择是否推荐', trigger: 'change' }],
+    rules: [{required: true, message: '请选择是否推荐', trigger: 'change'}],
     defaultValue: 0,
-
-    formSort: 1
+    formSort: 1,
+    width: 160,
   },
 
   {
@@ -202,10 +196,10 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{ required: true, message: '请选择商户开关', trigger: 'change' }],
+    rules: [{required: true, message: '请选择商户开关', trigger: 'change'}],
     defaultValue: 0,
-
-    formSort: 1
+    formSort: 1,
+    width: 160,
   },
 
   {
@@ -244,11 +238,11 @@ const columns = [
       }
     },
     rules: [
-      { required: true, message: '请选择商品是否审核', trigger: 'change' }
+      {required: true, message: '请选择商品是否审核', trigger: 'change'}
     ],
     defaultValue: 0,
-
-    formSort: 1
+    formSort: 1,
+    width: 160,
   },
 
   {
@@ -286,90 +280,102 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{ required: true, message: '请选择商品自提', trigger: 'change' }],
+    rules: [{required: true, message: '请选择商品自提', trigger: 'change'}],
     defaultValue: 0,
-
-    formSort: 1
+    formSort: 1,
+    width: 160,
   },
 
   {
-    title: '租户备注，管理端显示',
+    title: '租户备注',
     dataIndex: 'note',
-    key: 'note'
+    key: 'note',
+    width: 160,
   },
 
   {
     title: '租户资质图片',
     dataIndex: 'credential',
     key: 'credential',
-
-    rules: [{ required: true, message: '请输入租户资质图片', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入租户资质图片', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '租户背景图',
     dataIndex: 'background',
-    key: 'background'
+    key: 'background',
+    width: 160,
   },
 
   {
     title: '租户头像',
     dataIndex: 'avatar',
-    key: 'avatar'
+    key: 'avatar',
+    width: 160,
   },
 
   {
     title: '租户logo',
     dataIndex: 'rectangleLogo',
-    key: 'rectangleLogo'
+    key: 'rectangleLogo',
+    width: 160,
   },
 
   {
     title: '租户封面图',
     dataIndex: 'coverImage',
-    key: 'coverImage'
+    key: 'coverImage',
+    width: 160,
   },
 
   {
     title: '租户排行背景图',
     dataIndex: 'rankingBackground',
-    key: 'rankingBackground'
+    key: 'rankingBackground',
+    width: 160,
   },
 
   {
     title: '租户简介，商城显示',
     dataIndex: 'overview',
-    key: 'overview'
+    key: 'overview',
+    width: 160,
   },
 
   {
     title: '租户余额',
     dataIndex: 'balance',
-    key: 'balance'
+    key: 'balance',
+    width: 160,
   },
 
   {
     title: '租户星级',
     dataIndex: 'starLevel',
-    key: 'starLevel'
+    key: 'starLevel',
+    width: 160,
   },
 
   {
     title: 'pc商城banner',
     dataIndex: 'bannerPc',
-    key: 'bannerPc'
+    key: 'bannerPc',
+    width: 160,
   },
 
   {
     title: 'pc商城背景图',
     dataIndex: 'groundImagePc',
-    key: 'groundImagePc'
+    key: 'groundImagePc',
+    width: 160,
   },
 
   {
     title: '排序',
     dataIndex: 'sort',
-    key: 'sort'
+    key: 'sort',
+    width: 160,
   },
 
   {
@@ -407,13 +413,15 @@ const columns = [
         width: '100%'
       }
     },
-    formSort: 1
+    formSort: 1,
+    width: 160,
   },
 
   {
     title: '创建者id',
     dataIndex: 'createdId',
-    key: 'createdId'
+    key: 'createdId',
+    width: 160,
   },
 
   {
@@ -451,10 +459,10 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{ required: true, message: '请选择商城标记', trigger: 'change' }],
+    rules: [{required: true, message: '请选择商城标记', trigger: 'change'}],
     defaultValue: 0,
-
-    formSort: 1
+    formSort: 1,
+    width: 160,
   },
 
   {
@@ -466,14 +474,15 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
+      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
     },
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    width: 160,
   },
 
   {
@@ -485,36 +494,18 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择更新时间', trigger: 'change' }];
+      return [{required: true, message: '请选择更新时间', trigger: 'change'}];
     },
     noEdit: true,
     noAdd: true,
-    noSearch: true
+    noSearch: true,
   },
 
-  {
-    title: '创建人',
-    dataIndex: 'createUser',
-    key: 'createUser',
 
-    noEdit: true,
-    noAdd: true,
-    noSearch: true
-  },
-
-  {
-    title: '修改人',
-    dataIndex: 'updateUser',
-    key: 'updateUser',
-
-    noEdit: true,
-    noAdd: true,
-    noSearch: true
-  }
 ];
 
 // 模块配置
@@ -528,4 +519,4 @@ const moduleConfig = {
   moduleName: '租户'
 };
 
-export { columns, moduleConfig };
+export {columns, moduleConfig};

@@ -7,32 +7,27 @@
 import * as tenantType from '@/api/sys/tenantType';
 
 const columns = [
-  {
-    title: '租户分类id',
-    dataIndex: 'id',
-    key: 'id',
 
-    rules: [{ required: true, message: '请输入租户分类id', trigger: 'blur' }],
-    noEdit: true,
-    noAdd: true
-  },
 
   {
     title: '租户分类名称',
     dataIndex: 'name',
-    key: 'name'
+    key: 'name',
+    width: 160,
   },
 
   {
     title: '租户初始化手续费%',
     dataIndex: 'transFee',
-    key: 'transFee'
+    key: 'transFee',
+    width: 160,
   },
 
   {
     title: '租户分类删除标记',
     dataIndex: 'isDel',
-    key: 'isDel'
+    key: 'isDel',
+    width: 160,
   },
 
   {
@@ -44,14 +39,15 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
+      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
     },
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    width: 160,
   },
 
   {
@@ -63,36 +59,17 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择更新时间', trigger: 'change' }];
+      return [{required: true, message: '请选择更新时间', trigger: 'change'}];
     },
     noEdit: true,
     noAdd: true,
     noSearch: true
   },
 
-  {
-    title: '创建人',
-    dataIndex: 'createUser',
-    key: 'createUser',
-
-    noEdit: true,
-    noAdd: true,
-    noSearch: true
-  },
-
-  {
-    title: '修改人',
-    dataIndex: 'updateUser',
-    key: 'updateUser',
-
-    noEdit: true,
-    noAdd: true,
-    noSearch: true
-  }
 ];
 
 // 模块配置
@@ -106,4 +83,4 @@ const moduleConfig = {
   moduleName: '租户类型'
 };
 
-export { columns, moduleConfig };
+export {columns, moduleConfig};

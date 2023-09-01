@@ -18,25 +18,29 @@ const columns = [
     title: '主机名',
     dataIndex: 'hostName',
     key: 'hostName',
-    rules: [{ required: true, message: '请输入主机名', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入主机名', trigger: 'blur' }],
+    width: 160,
   },
   {
     title: 'IP地址',
     dataIndex: 'host',
     key: 'host',
-    rules: [{ required: true, message: '请输入IP地址', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入IP地址', trigger: 'blur' }],
+    width: 160,
   },
   {
     title: 'SSH端口',
     dataIndex: 'sshPort',
     key: 'sshPort',
-    rules: [{ required: true, message: '请输入SSH端口号', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入SSH端口号', trigger: 'blur' }],
+    width: 160,
   },
   {
     title: 'SSH登录用户名',
     dataIndex: 'sshUsername',
     key: 'sshUsername',
-    rules: [{ required: true, message: '请输入SSH登录用户名', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入SSH登录用户名', trigger: 'blur' }],
+    width: 160,
   },
   {
     title: 'SSH登录密码',
@@ -47,7 +51,8 @@ const columns = [
     props: {
       type: 'password'
     },
-    rules: [{ required: true, message: '请输入SSH登录密码', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入SSH登录密码', trigger: 'blur' }],
+    width: 160,
   },
   {
     title: '开启监控',
@@ -66,7 +71,8 @@ const columns = [
     rules: [
       { required: true, message: '请选择监控开启状态', trigger: 'change' }
     ],
-    defaultValue: 0
+    defaultValue: 0,
+    width: 100,
   },
   {
     title: '创建时间',
@@ -76,7 +82,8 @@ const columns = [
     noEdit: true,
     searchObj: {
       formType: 'rangePicker'
-    }
+    },
+    width: 160,
   },
   {
     title: '修改时间',
@@ -86,7 +93,8 @@ const columns = [
       formType: 'rangePicker'
     },
     noAdd: true,
-    noEdit: true
+    noEdit: true,
+    width: 160,
   }
 ];
 

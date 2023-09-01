@@ -7,52 +7,22 @@
 import * as table from '@/api/sys/table';
 
 const columns = [
-  {
-    title: '主键id',
-    dataIndex: 'id',
-    key: 'id',
-
-    rules: [{ required: true, message: '请输入主键id', trigger: 'blur' }],
-    noEdit: true,
-    noAdd: true
-  },
 
   {
     title: '表名',
     dataIndex: 'name',
     key: 'name',
-
-    rules: [{ required: true, message: '请输入表名', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入表名', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: '表注释',
     dataIndex: 'remark',
     key: 'remark',
-
-    rules: [{ required: true, message: '请输入表注释', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入表注释', trigger: 'blur'}],
+    width: 160,
   },
-
-  {
-    title: '修改时间',
-    dataIndex: 'updateTime',
-    key: 'updateTime',
-    searchObj: {
-      formType: 'rangePicker'
-    },
-    props: {
-      showTime: true,
-      style: { width: '100%' }
-    },
-    formType: 'datePicker',
-    rules: function () {
-      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
-    },
-    noEdit: true,
-    noAdd: true,
-    noSearch: true
-  },
-
   {
     title: '创建时间',
     dataIndex: 'createTime',
@@ -62,37 +32,38 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
+      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
     },
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+
   },
-
   {
-    title: '创建人',
-    dataIndex: 'createUser',
-    key: 'createUser',
-
+    title: '修改时间',
+    dataIndex: 'updateTime',
+    key: 'updateTime',
+    searchObj: {
+      formType: 'rangePicker'
+    },
+    props: {
+      showTime: true,
+      style: {width: '100%'}
+    },
+    formType: 'datePicker',
+    rules: function () {
+      return [{required: true, message: '请选择修改时间', trigger: 'change'}];
+    },
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    noShow: true
+
   },
 
-  {
-    title: '修改人',
-    dataIndex: 'updateUser',
-    key: 'updateUser',
 
-    noEdit: true,
-    noAdd: true,
-    noSearch: true,
-    noShow: true
-  }
 ];
 
 // 模块配置
@@ -106,4 +77,4 @@ const moduleConfig = {
   moduleName: '数据库'
 };
 
-export { columns, moduleConfig };
+export {columns, moduleConfig};

@@ -7,162 +7,63 @@
 import * as redis from '@/api/sys/redis';
 
 const columns = [
-  {
-    title: '主键ID',
-    dataIndex: 'id',
-    key: 'id',
-
-    rules: [{ required: true, message: '请输入主键ID', trigger: 'blur' }],
-    noEdit: true,
-    noAdd: true
-  },
 
   {
-    title: 'redis名称',
+    title: '名称',
     dataIndex: 'name',
     key: 'name',
-
-    rules: [{ required: true, message: '请输入redis名称', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入redis名称', trigger: 'blur'}],
+    width: 160,
   },
 
   {
     title: 'ip地址',
     dataIndex: 'host',
     key: 'host',
-
-    rules: [{ required: true, message: '请输入ip地址', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入ip地址', trigger: 'blur'}],
+    width: 160,
   },
 
   {
-    title: 'reids端口',
+    title: '端口',
     dataIndex: 'port',
-    key: 'port'
+    key: 'port',
+    width: 80,
   },
 
   {
     title: 'redis密码',
     dataIndex: 'password',
-    key: 'password'
+    key: 'password',
+    width: 160,
   },
 
   {
-    title: 'Redis 服务器版本号',
+    title: '版本号',
     dataIndex: 'redisVersion',
-    key: 'redisVersion'
+    key: 'redisVersion',
+    width: 160,
   },
 
   {
-    title: 'Redis 服务器运行模式',
+    title: '运行模式',
     dataIndex: 'redisMode',
-    key: 'redisMode'
+    key: 'redisMode',
+    width: 160,
   },
 
   {
-    title: 'Redis 服务器运行的操作系统',
+    title: '操作系统',
     dataIndex: 'os',
-    key: 'os'
+    key: 'os',
+    width: 160,
   },
 
   {
-    title: 'Redis 服务器当前已连接客户端数量',
+    title: '连接数',
     dataIndex: 'connectedClients',
-    key: 'connectedClients'
-  },
-
-  {
-    title: 'Redis 服务器集群模式下已连接的客户端数量',
-    dataIndex: 'clusterConnections',
-    key: 'clusterConnections'
-  },
-
-  {
-    title: 'Redis 服务器支持的最大客户端数量',
-    dataIndex: 'maxClients',
-    key: 'maxClients'
-  },
-
-  {
-    title: '正在等待阻塞命令执行的客户端数量',
-    dataIndex: 'blockedClients',
-    key: 'blockedClients'
-  },
-
-  {
-    title: '正在等待 TRACKING 命令执行的客户端数量',
-    dataIndex: 'trackingClients',
-    key: 'trackingClients'
-  },
-
-  {
-    title: '在客户端超时表中的客户端数量',
-    dataIndex: 'clientsInTimeoutTable',
-    key: 'clientsInTimeoutTable'
-  },
-
-  {
-    title: 'Redis 服务器接收的网络数据总字节数(KB)',
-    dataIndex: 'totalNetInputBytes',
-    key: 'totalNetInputBytes'
-  },
-
-  {
-    title: 'Redis 服务器发送的网络数据总字节数(KB)',
-    dataIndex: 'totalNetOutputBytes',
-    key: 'totalNetOutputBytes'
-  },
-
-  {
-    title: 'Redis 服务器历史已接受的连接请求数量',
-    dataIndex: 'totalConnectionsReceived',
-    key: 'totalConnectionsReceived'
-  },
-
-  {
-    title: 'Redis 服务器历史已执行的命令数量',
-    dataIndex: 'totalCommandsProcessed',
-    key: 'totalCommandsProcessed'
-  },
-
-  {
-    title: 'Redis 服务器瞬时执行的命令数量',
-    dataIndex: 'instantaneousOpsPerSec',
-    key: 'instantaneousOpsPerSec'
-  },
-
-  {
-    title: 'Redis 所有库的key总和',
-    dataIndex: 'totalKeyCount',
-    key: 'totalKeyCount'
-  },
-
-  {
-    title: 'Redis 所有库将要过期的key总和',
-    dataIndex: 'totalExpiredKeyCount',
-    key: 'totalExpiredKeyCount'
-  },
-
-  {
-    title: 'Redis 实例当前占用的内存大小(KB)',
-    dataIndex: 'usedMemory',
-    key: 'usedMemory'
-  },
-
-  {
-    title: 'Redis 实例所在系统总内存大小(KB)',
-    dataIndex: 'totalSystemMemory',
-    key: 'totalSystemMemory'
-  },
-
-  {
-    title: 'Redis 实例配置的最大内存限制(KB)',
-    dataIndex: 'maxmemory',
-    key: 'maxmemory'
-  },
-
-  {
-    title: 'Redis 实例占用的当前内存峰值大小(KB)',
-    dataIndex: 'usedMemoryPeak',
-    key: 'usedMemoryPeak'
+    key: 'connectedClients',
+    width: 160,
   },
 
   {
@@ -200,15 +101,16 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{ required: true, message: '请选择开启监控', trigger: 'change' }],
-
-    formSort: 1
+    rules: [{required: true, message: '请选择开启监控', trigger: 'change'}],
+    formSort: 1,
+    width: 160,
   },
 
   {
     title: '排序字段',
     dataIndex: 'sortBy',
-    key: 'sortBy'
+    key: 'sortBy',
+    width: 160,
   },
 
   {
@@ -220,14 +122,15 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
+      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
     },
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    width: 160,
   },
 
   {
@@ -239,38 +142,17 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
+      return [{required: true, message: '请选择修改时间', trigger: 'change'}];
     },
     noEdit: true,
     noAdd: true,
-    noSearch: true
-  },
-
-  {
-    title: '创建人',
-    dataIndex: 'createUser',
-    key: 'createUser',
-
-    noEdit: true,
-    noAdd: true,
     noSearch: true,
-    noShow: true
+    width: 160,
   },
-
-  {
-    title: '修改人',
-    dataIndex: 'updateUser',
-    key: 'updateUser',
-
-    noEdit: true,
-    noAdd: true,
-    noSearch: true,
-    noShow: true
-  }
 ];
 
 // 模块配置
@@ -284,4 +166,4 @@ const moduleConfig = {
   moduleName: 'Redis记录'
 };
 
-export { columns, moduleConfig };
+export {columns, moduleConfig};

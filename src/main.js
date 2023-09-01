@@ -16,11 +16,9 @@ import dataV from '@jiaminghi/data-view';
 import addFrom from '@/mixins/addFrom.js';
 //在main.js引入qs
 import qs from 'qs';
-import echarts from 'echarts';
 
-Vue.prototype.$echarts = function (el) {
-  return echarts.init(el, null, { renderer: 'svg' });
-};
+
+
 Vue.use(dataV);
 
 Vue.use(addFrom);
