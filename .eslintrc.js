@@ -17,7 +17,8 @@ module.exports = {
     // 自定义规则
     "vue/require-default-prop" : "off", //是否都要给默认值
     "vue/require-prop-types" : "off",
-    "vue/attribute-hyphenation" : "off"
+    "vue/attribute-hyphenation" : "off",
+    "vue/require-v-for-key" : "off"
   },
   env: {
     browser: true,

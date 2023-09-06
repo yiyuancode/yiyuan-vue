@@ -8,7 +8,7 @@
     :color="props.dvBox.color?props.dvBox.color:''"
     :title="option.title.text" style="height: 100%;width: 100%;"
   >
-    <div class="main" :id="props.ref">
+    <div :id="props.ref"  class="main" >
     </div>
   </component>
 
@@ -29,37 +29,8 @@
         }
       }
     },
-
-    created() {
-      let vm = this;
-      this.$nextTick(() => {
-
-        setTimeout(() => {
-          vm.resetCharts();
-        }, 100)
-        // 加载图表后进行监听重新加载图表
-        window.addEventListener("resize", () => {
-          setTimeout(() => {
-            vm.echarts.resize();
-          }, 100)
-        });
-      })
-
-    },
-    methods: {
-      getBoxType() {
-        return "dv-border-box-" + this.props.dvBox.type;
-      },
-      resetCharts() {
-        let chartDom = document.getElementById(this.props.ref);
-        // let myChart = echarts.init(chartDom, 'dark');
-        this.echarts = echarts.init(chartDom);
-        let optionTemp = _.merge(this.option, this.props)
-        console.log("optionTemp", optionTemp)
-        this.echarts.setOption(optionTemp);
-      }
-    },
     data() {
+      // console.log(this.props);
       return {
         echarts: null,
         option: {
@@ -77,7 +48,7 @@
             }
           },
           legend: {
-            data: ['Email'],
+            data: this.props.title.text,
             left: "center",
             // y: "-20px"
             bottom: 0,
@@ -119,7 +90,7 @@
           ],
           series: [
             {
-              name: 'Email',
+              name: this.props.title.text,
               type: 'line',
               stack: 'Total',
               smooth: true,
@@ -151,13 +122,43 @@
           ]
         }
       }
-    }
+    },
+    created() {
+      let vm = this;
+      this.$nextTick(() => {
+
+        setTimeout(() => {
+          vm.resetCharts();
+        }, 100)
+        // 加载图表后进行监听重新加载图表
+        window.addEventListener("resize", () => {
+          setTimeout(() => {
+            vm.echarts.resize();
+          }, 100)
+        });
+      })
+
+    },
+    methods: {
+      getBoxType() {
+        return "dv-border-box-" + this.props.dvBox.type;
+      },
+      resetCharts() {
+        let chartDom = document.getElementById(this.props.ref);
+        // let myChart = echarts.init(chartDom, 'dark');
+        this.echarts = echarts.init(chartDom);
+        let optionTemp = _.merge(this.option, this.props)
+        console.log("optionTemp", optionTemp)
+        this.echarts.setOption(optionTemp);
+      }
+    },
+  
   };
 </script>
 
 <style lang="less">
   .main {
-    width: 98%;
+    width: 98%; 
     height: 98%;
     padding: 10px;
   }

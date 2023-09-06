@@ -1,6 +1,6 @@
 <template>
   <exception-page
-    home-route="/dashboard/workplace"
+    home-route="/auth/admin"
     :style="`min-height: ${minHeight}`"
     type="403"
   />

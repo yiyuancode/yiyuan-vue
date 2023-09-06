@@ -75,7 +75,7 @@ export default {
       'cachePage',
       'animate',
       'layout',
-      'pageWidth'
+      'pageWidth',
     ]),
     menuItemList() {
       return [
@@ -133,13 +133,17 @@ export default {
     ) {
       this.pageList.push(this.createPage(route));
     }
+
     this.activePage = route.fullPath;
     if (this.multiPage) {
+      // 设置默认的
+
       this.$nextTick(() => {
         this.setCachedKey(route);
       });
       this.addListener();
     }
+    console.log(this.pageList);
   },
   mounted() {
     this.correctPageMinHeight(-this.tabsOffset);

@@ -180,6 +180,7 @@
           createTimeStart: '2023-07-05 09:00:00',
           createTimeEnd: '2023-08-20 16:00:00'
         });
+
         resp.forEach((item) => {
           //YYYY-MM-DD HH:mm:ss
           //vm.avgMemoryUsage.xAxis.push(moment(item.time).format('HH:mm'));

@@ -9,15 +9,12 @@
     >
       <a-form :form="form" layout="vertical">
         <a-spin :spinning="props.loading">
-          <a-row :gutter="16" v-for="(im, ix) in uColumns" :key="ix">
-            <a-col :span="12" v-for="(im2, ix2) in im" :key="ix2">
+          <a-row v-for="(im, ix) in uColumns" :key="ix"  :gutter="16">
+            <a-col v-for="(im2, ix2) in im" :key="ix2" :span="12" >
               <a-form-item :label="im2.title">
                 <a-radio-group
+                
                   v-if="im2.formType == `radioGroup`"
-                  :disabled="im2.disabled ? im2.disabled : false"
-                  :placeholder="`请选择${
-                    im2.placeholder ? im2.placeholder : im2.title
-                  }`"
                   v-decorator="[
                     im2.dataIndex,
                     {
@@ -31,11 +28,16 @@
                       ]
                     }
                   ]"
+                  :disabled="im2.disabled ? im2.disabled : false"
+                  :placeholder="`请选择${
+                    im2.placeholder ? im2.placeholder : im2.title
+                  }`"
+                  
                 >
                   <a-radio-button
                     v-for="(im3, ix3) in im2.props.options"
-                    :value="im3.value"
                     :key="ix3"
+                    :value="im3.value"
                   >
                     {{ im3.label }}
                   </a-radio-button>
@@ -43,6 +45,19 @@
 
                 <a-select
                   v-else-if="im2.formType == `Select`"
+                  v-decorator="[
+                    im2.dataIndex,
+                    {
+                      rules: [
+                        {
+                          required: im2.rules,
+                          message: `请选择${
+                            im2.placeholder ? im2.placeholder : im2.title
+                          }`
+                        }
+                      ]
+                    }
+                  ]"
                   allowClear
                   show-search
                   :disabled="im2.disabled ? im2.disabled : false"
@@ -51,19 +66,7 @@
                   }`"
                   :default-active-first-option="false"
                   :filter-option="false"
-                  v-decorator="[
-                    im2.dataIndex,
-                    {
-                      rules: [
-                        {
-                          required: im2.rules,
-                          message: `请选择${
-                            im2.placeholder ? im2.placeholder : im2.title
-                          }`
-                        }
-                      ]
-                    }
-                  ]"
+                 
                   @change="
                     (val, option) =>
                       handleChangeSelect(val, im2.dataIndex, im2, option)
@@ -72,17 +75,14 @@
                   <!-- 	<a-icon slot="suffixIcon" type="search" /> -->
                   <a-select-option
                     v-for="(im3, ix3) in im2.props.options"
-                    :value="im3.value"
                     :key="ix3"
+                    :value="im3.value"
                   >
                     {{ im3.label }}
                   </a-select-option>
                 </a-select>
                 <a-date-picker
                   v-else-if="im2.formType == `datePicker`"
-                  :style="im2.props.style"
-                  :show-time="im2.props.showTime"
-                  format="YYYY-MM-DD HH:mm:ss"
                   v-decorator="[
                     im2.dataIndex,
                     {
@@ -96,6 +96,9 @@
                       ]
                     }
                   ]"
+                  :style="im2.props.style"
+                  :show-time="im2.props.showTime"
+                  format="YYYY-MM-DD HH:mm:ss"
                 />
                 <a-input
                   v-else
@@ -137,7 +140,7 @@
         <a-button :style="{ marginRight: '8px' }" @click="onClose">
           取消
         </a-button>
-        <a-button type="primary" @click="onSubmit" :loading="props.loading">
+        <a-button type="primary"  :loading="props.loading" @click="onSubmit">
           提交
         </a-button>
       </div>

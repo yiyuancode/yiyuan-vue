@@ -108,8 +108,13 @@ export default {
 
     // 分配角色
     async assignRole(id) {
+      const adminInfo = await this.getDetail(id);
+      const roleIdArr = adminInfo.roleList.map(role=>{
+        return role.id;
+      });
       this.assignRoleVisible = true;
       this.resetAssignRoleHandle();
+      this.assignRoleModel.userRoles = roleIdArr;
       this.currentUserId = id; //当前点击分配角色的用户id
       // 获取角色列表
       const roleList = await getRoleList();

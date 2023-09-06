@@ -25,6 +25,16 @@ const view = {
 
 // 路由组件注册
 const routerMap = {
+  exp404: {
+    path: '*',
+    name: '404',
+    component: () => import('@/pages/exception/404')
+  },
+  exp403: {
+    path: '/403',
+    name: '403',
+    component: () => import('@/pages/exception/403')
+  },
   login: {
     authority: '*',
     path: '/login',
@@ -58,7 +68,10 @@ const routerMap = {
     name: '用户管理',
     component: () => import('@/pages/auth/admin/index')
   },
-
+  about: {
+    name: "关于",
+    component: () => import('@/pages/about/index.vue')
+  },
   ...modulesRouterMap
 };
 

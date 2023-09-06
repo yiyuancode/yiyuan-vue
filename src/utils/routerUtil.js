@@ -47,6 +47,7 @@ function parseRoutes(routesConfig, routerMap) {
       router = typeof item === 'string' ? { path: item, name: item } : item;
     }
 
+
     // 从 router 和 routeCfg 解析路由
     const meta = {
       authority: router.authority,
@@ -106,12 +107,13 @@ function parseRoutes(routesConfig, routerMap) {
  * 加载路由
  * @param routesConfig {RouteConfig[]} 路由配置
  */
-function loadRoutes(routesConfig) {
+function loadRoutes(routesConfig, type) {
   const isHaveRouterConfig = routesConfig ? true : false; //是否传递了routeConfig
   //兼容 0.6.1 以下版本
   /*************** 兼容 version < v0.6.1 *****************/
   if (arguments.length > 0) {
     const arg0 = arguments[0];
+    console.log(arguments[0]);
     if (arg0.router || arg0.i18n || arg0.store) {
       routesConfig = arguments[1];
       console.error(
@@ -122,10 +124,21 @@ function loadRoutes(routesConfig) {
       );
     }
   }
+  const { router, store, i18n } = appOptions;
+
+  if (type === 'menuTreeList') {
+    routesConfig = getRoutes(routesConfig);
+    routesConfig = [
+      {
+        router: 'root',
+        children: routesConfig
+      }
+    ];
+  }
+
   /*************** 兼容 version < v0.6.1 *****************/
 
   // 应用配置
-  const { router, store, i18n } = appOptions;
 
   // 如果 routesConfig 有值，则更新到本地，否则从本地获取
   if (routesConfig) {
@@ -133,6 +146,8 @@ function loadRoutes(routesConfig) {
   } else {
     routesConfig = store.getters['account/routesConfig'];
   }
+
+
 
   // 如果开启了异步路由，则加载异步路由配置
   const asyncRoutes = store.state.setting.asyncRoutes;
@@ -309,13 +324,36 @@ function getRoutes(menuTreeList) {
   const routes = [];
 
   menuTreeList.forEach((mt) => {
-    const { type, router, children, openType, routeComponent } = mt;
+    const {
+      type,
+      router,
+      children,
+      openType,
+      routeComponent,
+      status,
+      isAffix,
+      // permission,
+      id
+    } = mt;
 
     // 菜单或者目录
     if (type.value === 0 || type.value === 1) {
       const routesObj = {
-        router
+        router,
+        invisible: status.value === 1 ? false : true,
+        id
       };
+
+      // if (permission) {
+      //   routesObj.authority = {
+      //     permission
+      //   }
+      // }
+
+      if (isAffix.value === 1) {
+        !routesObj.page ? routesObj.page = {} : '';
+        routesObj.page.unclose = true;
+      }
 
       if (routeComponent) {
         let component;

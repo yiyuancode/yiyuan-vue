@@ -517,7 +517,6 @@
             return selRow[idProp];
           })
           .join(',');
-        console.log('getIds', ids);
         if (!ids) {
           return null;
         }
