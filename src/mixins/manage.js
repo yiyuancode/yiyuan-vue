@@ -1,4 +1,5 @@
 import eventBus from '@/eventBus';
+import store from "@/store";
 /**
  *
  * @param {*} opts
@@ -12,7 +13,7 @@ export default function (opts = {}) {
     pagination: {
       //默认分页
       current: 1,
-      pageSize: 10,
+      pageSize: 20,
       total: 0,
       showQuickJumper: true,
       showSizeChanger: true,
@@ -24,7 +25,31 @@ export default function (opts = {}) {
     data: [], //数据
     renderObj: {
       //渲染对象
-      isLoading: false
+      isLoading: false,
+      addBtn: {
+        // isOpen: false,
+        text: '添加'
+      },
+      editBtn: {
+        // isOpen: true,
+        text: '编辑'
+      },
+      deleteBtn: {
+        // isOpen: true,
+        text: '删除'
+      },
+      importBtn: {
+        isOpen: true,
+        text: '导入'
+      },
+      exportBtn: {
+        isOpen: true,
+        text: '导出'
+      },
+      batchDeleteBtn: {
+        isOpen: true,
+        text: '批量删除'
+      },
     },
     submitLoading: false, //提交的loading
     objColumnsArr: []
@@ -36,18 +61,61 @@ export default function (opts = {}) {
   };
 
   const defaultSearchObj = {
-    ...defaultOpts.searchObj
+    ...defaultOpts.searchObj,
   };
+
+  const newRenderObj = {
+    ...defaultOpts.renderObj,
+    ...opts.renderObj
+  }
 
   const newOpts = {
     ...defaultOpts,
-    ...opts
+    ...opts,
+    renderObj: newRenderObj
   };
+
+  const permissions = store.state.account.permissions;
+  // 按钮权限对象
+  if (opts.permissionObj) {
+    const {
+      id
+    } = opts.permissionObj;
+
+    const operationList = [];
+    if (Array.isArray(id)) {
+      for (let i = 0; i < id.length; i++) {
+        const permissionItem = permissions.find(p => {
+          return p.id === id[i];
+        });
+        const operation = permissionItem.operation;
+        operationList.push(...operation);
+      }
+    } else {
+      const permissionItem = permissions.find(p => {
+        return p.id === id;
+      });
+      const operation = permissionItem.operation;
+      operationList.push(...operation);
+    }
+
+    for (let prop in newOpts.permissionObj) {
+      const permission = opts.permissionObj[prop];
+      const operationItem = operationList.find(op => {
+        return op === permission;
+      });
+      if (operationItem) {
+        newOpts.renderObj[prop] = newOpts.renderObj[prop] || {};
+        newOpts.renderObj[prop].isOpen = true;
+      }
+    }
+  }
 
   return {
     data() {
       return newOpts;
     },
+
     // 组件生命周期
     async created() {
       this.getData();
@@ -57,6 +125,10 @@ export default function (opts = {}) {
       });
     },
     methods: {
+      // 其他事件变化的回调
+      otherEventChangeHandle(methodName, ...args) {
+        this[methodName](...args);
+      },
       // 提交的回调
       async submitHandle(opts = {}) {
         const { opType, id, model, done } = opts;
@@ -95,8 +167,7 @@ export default function (opts = {}) {
         // 重新获取数据
         await this.getData();
         this.$message.success(
-          `${opType === 'batchDelete' ? '批量' : ''}删除${
-            this.moduleName
+          `${opType === 'batchDelete' ? '批量' : ''}删除${this.moduleName
           }信息成功!!`
         );
       },

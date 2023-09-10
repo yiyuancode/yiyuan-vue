@@ -1,29 +1,31 @@
 <template>
-    <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" @onSave="saveHandle"
-                @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle">
 
-    </ManagePage>
+  <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj"
+              @onSave="saveHandle"
+              @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle"
+              @onReset="resetHandle"
+              @onOtherEventChange="otherEventChangeHandle">
+  </ManagePage>
 </template>
 
 <script>
-    import ManagePage from "@/components/manage/ManagePage.vue";
-    import manage from "@/mixins/manage";
-    import {columns, moduleConfig} from "./pageConfig";
+  import ManagePage from '@/components/manage/ManagePage.vue';
+  import manage from '@/mixins/manage';
+  import {columns, moduleConfig, permissionObj} from './pageConfig';
 
-    export default {
-        components: {
-            ManagePage,
-        },
-        mixins: [manage()],
-        data() {
-            return {
-                columns,
-                ...moduleConfig,
-            };
-        },
-
-        methods: {},
-    }
+  export default {
+    components: {
+      ManagePage
+    },
+    mixins: [manage({permissionObj})],
+    data() {
+      return {
+        columns,
+        ...moduleConfig
+      };
+    },
+    methods: {},
+  }
 </script>
 
 <style lang="less" scoped></style>

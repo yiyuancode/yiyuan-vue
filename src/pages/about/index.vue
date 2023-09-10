@@ -1,5 +1,5 @@
 <template>
-  <div class="about-container">
+  <div class="about-container beauty-scroll">
     <div class="about-header">
       <span class="about-title">关于我们</span>
       <span class="about-desc"
@@ -41,7 +41,7 @@
             <tr v-for="(depList, depIndex) in dependencies" :key="depIndex">
               <template v-for="(dep, index) in depList">
                 <td :key="index" class="about-label">{{ dep.prop }}</td>
-                <td>{{ dep.value }}</td>
+                <td :key="index">{{ dep.value }}</td>
               </template>
             </tr>
           </table>
@@ -57,7 +57,7 @@
             <tr v-for="(depList, depIndex) in devDependencies" :key="depIndex">
               <template v-for="(dep, index) in depList">
                 <td :key="index" class="about-label">{{ dep.prop }}</td>
-                <td>{{ dep.value }}</td>
+                <td :key="index">{{ dep.value }}</td>
               </template>
             </tr>
           </table>
@@ -92,18 +92,6 @@ export default {
       }
 
       return dependencies;
-      // for (let prop in this.packageJson.dependencies) {
-      //     index++;
-      //     tempArr.push({
-      //         prop,
-      //         value: this.packageJson.dependencies[prop],
-      //     })
-      //     if (index === 3) {
-      //         dependencies.push(tempArr);
-      //         index = 0;
-      //     }
-      // }
-      // return dependencies
     },
     devDependencies() {
       const dependencies = [];
@@ -126,6 +114,8 @@ export default {
 <style lang="less" scoped>
 .about-container {
   margin-top: 20px;
+  width: 100%;
+  height: 100%;
   overflow: auto;
 }
 

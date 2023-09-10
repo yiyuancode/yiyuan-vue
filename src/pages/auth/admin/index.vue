@@ -1,54 +1,20 @@
 <template>
-  <ManagePage
-    :columns="columns"
-    :data="data"
-    :pagination="pagination"
-    :renderObj="renderObj"
-    @onSave="saveHandle"
-    @onSubmit="submitHandle"
-    @onDelete="deleteHandle"
-    @onSearch="searchHandle"
-    @onReset="resetHandle"
-  >
+  <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" @onSave="saveHandle"
+    @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle"
+    @onOtherEventChange="otherEventChangeHandle">
     <span slot="table-userRoles" slot-scope="{ text, record }">
       <a-tag v-if="record.userRoles">{{ text }}</a-tag>
     </span>
 
-    <!-- 其他的操作插槽 -->
-    <template #otherOperationsContainer="scope">
-      <a-button type="primary" @click="assignRole(scope.data.id)"
-        >分配角色</a-button
-      >
-    </template>
 
     <!-- 分配角色模态框 -->
-    <Modal
-      modalTitle="分配角色"
-      :modalVisible="assignRoleVisible"
-      :submitLoading="assignRoleLoading"
-      @onCloseModal="assignRoleVisible = false"
-      @onSubmit="assignRoleHandle"
-      @onReset="resetAssignRoleHandle"
-    >
-      <a-form-model
-        ref="assignRoleModelRef"
-        :model="assignRoleModel"
-        :rules="assignRoleRules"
-        :label-col="labelCol"
-        :wrapper-col="wrapperCol"
-      >
+    <Modal modalTitle="分配角色" :modalVisible="assignRoleVisible" :submitLoading="assignRoleLoading"
+      @onCloseModal="assignRoleVisible = false" @onSubmit="assignRoleHandle" @onReset="resetAssignRoleHandle">
+      <a-form-model ref="assignRoleModelRef" :model="assignRoleModel" :rules="assignRoleRules" :label-col="labelCol"
+        :wrapper-col="wrapperCol">
         <a-form-model-item label="用户所属角色" prop="userRoles">
-          <a-select
-            v-model="assignRoleModel.userRoles"
-            mode="tags"
-            style="width: 100%"
-            placeholder="请至少选择一个角色"
-          >
-            <a-select-option
-              v-for="role in roleList"
-              :key="role.id"
-              :value="role.id"
-            >
+          <a-select v-model="assignRoleModel.userRoles" mode="tags" style="width: 100%" placeholder="请至少选择一个角色">
+            <a-select-option v-for="role in roleList" :key="role.id" :value="role.id">
               {{ role.name }}
             </a-select-option>
           </a-select>
@@ -64,14 +30,14 @@ import ManagePage from '@/components/manage/ManagePage.vue';
 import { getRoleList } from '@/api/auth/role';
 import manage from '@/mixins/manage';
 const { assignRole } = moduleConfig.module;
-import { columns, moduleConfig } from './pageConfig';
+import { columns, moduleConfig, permissionObj, renderObj } from './pageConfig';
 
 export default {
   components: {
     ManagePage,
     Modal
   },
-  mixins: [manage()],
+  mixins: [manage({ permissionObj, renderObj })],
   data() {
     return {
       columns,
@@ -107,9 +73,10 @@ export default {
     },
 
     // 分配角色
-    async assignRole(id) {
+    async assignRole(record) {
+      const id = record.id;
       const adminInfo = await this.getDetail(id);
-      const roleIdArr = adminInfo.roleList.map(role=>{
+      const roleIdArr = adminInfo.roleList.map((role) => {
         return role.id;
       });
       this.assignRoleVisible = true;

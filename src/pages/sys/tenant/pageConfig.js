@@ -15,7 +15,7 @@ const columns = [
                                                                 rules: [{required: true, message: '请输入商户id', trigger: 'blur'},],
                                                                                 noEdit: true,
                 noAdd: true,
-                            
+
         },
 
             {
@@ -24,7 +24,7 @@ const columns = [
             key: 'spmShopCityId',
             width: 160,
                                                                 rules: [{required: true, message: '请输入归属区域', trigger: 'blur'},],
-                                                                
+
         },
 
             {
@@ -33,7 +33,7 @@ const columns = [
             key: 'name',
             width: 160,
                                                                 rules: [{required: true, message: '请输入商户名称', trigger: 'blur'},],
-                                                                
+
         },
 
             {
@@ -42,7 +42,7 @@ const columns = [
             key: 'legalPersonName',
             width: 160,
                                                                 rules: [{required: true, message: '请输入法人名称', trigger: 'blur'},],
-                                                                
+
         },
 
             {
@@ -51,7 +51,7 @@ const columns = [
             key: 'email',
             width: 160,
                                                                 rules: [{required: true, message: '请输入联系邮箱', trigger: 'blur'},],
-                                                                
+
         },
 
             {
@@ -60,7 +60,7 @@ const columns = [
             key: 'phone',
             width: 160,
                                                                 rules: [{required: true, message: '请输入联系手机', trigger: 'blur'},],
-                                                                
+
         },
 
             {
@@ -69,7 +69,7 @@ const columns = [
             key: 'detailedAddress',
             width: 160,
                                                                 rules: [{required: true, message: '请输入详细地址', trigger: 'blur'},],
-                                                                
+
         },
 
             {
@@ -78,7 +78,7 @@ const columns = [
             key: 'socialCreditCode',
             width: 160,
                                                                 rules: [{required: true, message: '请输入统一社会信用代码', trigger: 'blur'},],
-                                                                
+
         },
 
             {
@@ -87,7 +87,7 @@ const columns = [
             key: 'businessLicenseImage',
             width: 160,
                                                                 rules: [{required: true, message: '请输入营业执照电子版', trigger: 'blur'},],
-                                                                
+
         },
 
             {
@@ -96,7 +96,7 @@ const columns = [
             key: 'legalPersonIdFrontImage',
             width: 160,
                                                                 rules: [{required: true, message: '请输入法人身份证正面', trigger: 'blur'},],
-                                                                
+
         },
 
             {
@@ -105,7 +105,7 @@ const columns = [
             key: 'legalPersonIdBackImage',
             width: 160,
                                                                 rules: [{required: true, message: '请输入法人身份证反面', trigger: 'blur'},],
-                                                                
+
         },
 
             {
@@ -114,7 +114,7 @@ const columns = [
             key: 'remark',
             width: 160,
                                                                 rules: [{required: true, message: '请输入申请备注', trigger: 'blur'},],
-                                                                
+
         },
 
             {
@@ -173,7 +173,7 @@ const columns = [
                     ],
                                             defaultValue: 0,
                                                     formSort: 1,
-                        
+
         },
 
             {
@@ -181,7 +181,7 @@ const columns = [
                         dataIndex: 'sort',
             key: 'sort',
             width: 160,
-                                                
+
         },
 
             {
@@ -230,7 +230,7 @@ const columns = [
                     ],
                                             defaultValue: 0,
                                                     formSort: 1,
-                        
+
         },
 
             {
@@ -253,7 +253,7 @@ const columns = [
                 },
                                                     noEdit: true,
                 noAdd: true,
-                            
+
         },
 
             {
@@ -277,7 +277,7 @@ const columns = [
                                                     noEdit: true,
                 noAdd: true,
                                     noSearch: true,
-                                                
+
         },
 
             {
@@ -289,7 +289,7 @@ const columns = [
                 noAdd: true,
                                     noSearch: true,
                                             noShow: true,
-                                                
+
         },
 
             {
@@ -301,10 +301,10 @@ const columns = [
                 noAdd: true,
                                     noSearch: true,
                                             noShow: true,
-                                                
+
         },
 
-    
+
 ]
 
 
@@ -319,7 +319,14 @@ const moduleConfig = {
     moduleName: "商户",
 }
 
-export {
-    columns,
-    moduleConfig,
-};
+// 权限对象
+const permissionObj = {
+  id: 'sys:tenant',
+  addBtn: 'sys:tenant:add',
+  editBtn: 'sys:tenant:edit',
+  deleteBtn: 'sys:tenant:delete',
+  // assignRoleBtn: 'sys:tenant:assignRole',
+}
+
+export {columns, moduleConfig,permissionObj};
+

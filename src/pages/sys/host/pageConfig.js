@@ -109,4 +109,25 @@ const moduleConfig = {
   moduleName: '用户'
 };
 
-export { columns, moduleConfig };
+
+// 权限对象
+const permissionObj = {
+  id: ['sys:host','sys:hostMonitor'],
+  addBtn: 'sys:host:add',
+  editBtn: 'sys:host:edit',
+  deleteBtn: 'sys:host:delete',
+  toHostMonitorBtn: 'sys:hostMonitor:queryCount'
+}
+
+// 渲染对象
+const renderObj = {
+  otherOperationList: [
+    {
+      name: "监控",
+      methodName: "toHostMonitor",
+      btnName: 'toHostMonitorBtn',
+    }
+  ]
+}
+
+export { columns, moduleConfig, permissionObj, renderObj };

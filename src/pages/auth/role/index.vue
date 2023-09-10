@@ -1,10 +1,7 @@
 <template>
   <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" @onSave="saveHandle"
-    @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle">
-    <!-- 其他的操作插槽 -->
-    <template #otherOperationsContainer="scope">
-      <a-button type="primary" @click="assignPermission(scope.data.id)">分配权限</a-button>
-    </template>
+    @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle"
+    @onOtherEventChange="otherEventChangeHandle">
 
     <!-- 分配角色权限模态框 -->
     <Modal modalTitle="分配角色权限" :modalVisible="assignPermissionVisible" :submitLoading="submitAssignPermissionLoading"
@@ -37,18 +34,17 @@
 <script>
 import Modal from '@/components/modal/Modal';
 import ManagePage from '@/components/manage/ManagePage.vue';
-
+import _ from 'lodash';
 import { mapGetters, mapState } from 'vuex';
 import manage from '@/mixins/manage';
-import { columns, moduleConfig } from './pageConfig';
+import { columns, moduleConfig, permissionObj, renderObj } from './pageConfig';
 const { assignMenu } = moduleConfig.module;
 export default {
   components: {
     ManagePage,
     Modal
   },
-  mixins: [manage()],
-
+  mixins: [manage({ permissionObj, renderObj })],
   data() {
     return {
       columns,
@@ -89,11 +85,17 @@ export default {
 
   methods: {
     // 分配权限点击
-    async assignPermission(id) {
+    async assignPermission(record) {
+      const id = record.id;
       const roleInfo = await this.getDetail(id);
-      const permissionIdList = roleInfo.sysMenuList.filter(menu => menu).map(menu => {
-        return menu.id;
+      roleInfo.sysMenuList.sort((m1, m2) => {
+        return m2.type.value - m1.type.value;
       });
+      const permissionIdList = roleInfo.sysMenuList
+        .filter((menu) => menu)
+        .map((menu) => {
+          return menu.id;
+        });
 
       const rolePermissionIds = this.filterRenderIds(permissionIdList);
 
@@ -204,7 +206,9 @@ export default {
           const getParentIds = (currentNode) => {
             if (currentNode.parentId !== null) {
               parentIds.unshift(currentNode.parentId);
-              const parent = tree.find((item) => item.id === currentNode.parentId);
+              const parent = tree.find(
+                (item) => item.id === currentNode.parentId
+              );
               if (parent) {
                 getParentIds(parent);
               }
@@ -221,7 +225,6 @@ export default {
 
           // 如果在子节点中找到了目标 ID，则将当前节点的 ID 添加到结果中并返回
           if (found.length > 0) {
-
             return [node.id, ...found];
           }
         }
@@ -233,24 +236,33 @@ export default {
     // 筛选渲染的ids
     filterRenderIds(ids) {
       // 这里需要去循环数组
-      const menuTreeList = this.menuTreeList;
+      const menuTreeList = _.cloneDeep(this.menuTreeList);
       const newIds = [];
       for (let i = 0; i < ids.length; i++) {
         const id = ids[i];
         // 判断这个id是否需要被移除
-        const menuTreeItem = this.getMenuTreeItemById(menuTreeList,id);
-        if(!menuTreeItem){
-          console.log(id,menuTreeList);
-        }
-        if (!menuTreeItem.children || menuTreeItem.children && menuTreeItem.children.length === 0) {
+        const menuTreeItem = this.getMenuTreeItemById(menuTreeList, id);
+        if (
+          !menuTreeItem.children ||
+          (menuTreeItem.children && menuTreeItem.children.length === 0)
+        ) {
           newIds.push(id);
           // 不会被移除
           continue;
         } else {
           // 检测后辈们是否都被选中
           const isSelected = this.checkedChildrenIsSelected(menuTreeItem, ids);
-          if(isSelected){
+          if (isSelected) {
             newIds.push(id);
+          } else {
+            const parentId = menuTreeItem.parentId;
+            if (parentId !== 0) {
+              const index = ids.findIndex((id) => parentId === id);
+              if (index > -1) {
+                ids.splice(index, 1);
+                i--;
+              }
+            }
           }
         }
       }
@@ -267,14 +279,12 @@ export default {
         }
         // 如果没有找到继续找孩子节点
         else {
-          const {
-            children
-          } = menuTreeItem;
+          const { children } = menuTreeItem;
 
           // console.log(i,children,menuTreeItem.name);
           if (children && children.length) {
             const childMenuTreeItem = this.getMenuTreeItemById(children, id);
-            if(childMenuTreeItem) return childMenuTreeItem;
+            if (childMenuTreeItem) return childMenuTreeItem;
           }
         }
       }

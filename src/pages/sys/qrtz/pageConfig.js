@@ -39,7 +39,7 @@ const columns = [
     title: '任务执行java类',
     dataIndex: 'jobClassName',
     key: 'jobClassName',
-    rules: [{required: true, message: '请输入任务执行类', trigger: 'blur'}],
+    rules: [{ required: true, message: '请输入任务执行类', trigger: 'blur' }],
     width: 160,
   },
 
@@ -48,7 +48,7 @@ const columns = [
     dataIndex: 'jobCronExpression',
     key: 'jobCronExpression',
     rules: [
-      {required: true, message: '请输入任务执行时间表达式', trigger: 'blur'}
+      { required: true, message: '请输入任务执行时间表达式', trigger: 'blur' }
     ],
     width: 160,
   },
@@ -57,7 +57,7 @@ const columns = [
     title: '任务描述备注',
     dataIndex: 'jobDesc',
     key: 'jobDesc',
-    rules: [{required: true, message: '请输入任务描述备注', trigger: 'blur'}],
+    rules: [{ required: true, message: '请输入任务描述备注', trigger: 'blur' }],
     width: 160,
   },
 
@@ -104,7 +104,7 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{required: true, message: '请选择任务状态', trigger: 'change'}],
+    rules: [{ required: true, message: '请选择任务状态', trigger: 'change' }],
     defaultValue: 1,
     formSort: 1,
     width: 100,
@@ -119,12 +119,12 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
       return [
-        {required: true, message: '请选择任务开始执行时间', trigger: 'change'}
+        { required: true, message: '请选择任务开始执行时间', trigger: 'change' }
       ];
     },
     width: 160,
@@ -139,12 +139,12 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
       return [
-        {required: true, message: '请选择任务结束执行时间', trigger: 'change'}
+        { required: true, message: '请选择任务结束执行时间', trigger: 'change' }
       ];
     },
     width: 160,
@@ -158,11 +158,11 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
@@ -177,11 +177,11 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择修改时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
@@ -203,4 +203,13 @@ const moduleConfig = {
   moduleName: '定时任务'
 };
 
-export {columns, moduleConfig};
+// 权限对象
+const permissionObj = {
+  id: 'sys:qrtz',
+  addBtn: 'sys:qrtz:add',
+  editBtn: 'sys:qrtz:edit',
+  deleteBtn: 'sys:qrtz:delete',
+}
+
+
+export { columns, moduleConfig, permissionObj };
