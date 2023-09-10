@@ -12,7 +12,7 @@ const columns = [
     title: '表名',
     dataIndex: 'name',
     key: 'name',
-    rules: [{required: true, message: '请输入表名', trigger: 'blur'}],
+    rules: [{ required: true, message: '请输入表名', trigger: 'blur' }],
     width: 160,
   },
 
@@ -20,7 +20,7 @@ const columns = [
     title: '表注释',
     dataIndex: 'remark',
     key: 'remark',
-    rules: [{required: true, message: '请输入表注释', trigger: 'blur'}],
+    rules: [{ required: true, message: '请输入表注释', trigger: 'blur' }],
     width: 160,
   },
   {
@@ -32,11 +32,11 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
@@ -51,11 +51,11 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择修改时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
@@ -77,4 +77,14 @@ const moduleConfig = {
   moduleName: '数据库'
 };
 
-export {columns, moduleConfig};
+// 权限对象
+const permissionObj = {
+  id: 'sys:table',
+  addBtn: 'sys:table:add',
+  editBtn: 'sys:table:edit',
+  deleteBtn: 'sys:table:delete',
+  // assignRoleBtn: 'sys:tenant:assignRole',
+}
+
+
+export { columns, moduleConfig, permissionObj };

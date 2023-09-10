@@ -253,4 +253,12 @@ const moduleConfig = {
   moduleName: '租户信息'
 };
 
-export {columns, moduleConfig};
+// 权限对象
+const permissionObj = {
+  id: 'sys:tenantInfo',
+  addBtn: 'sys:tenantInfo:add',
+  editBtn: 'sys:tenantInfo:edit',
+  deleteBtn: 'sys:tenantInfo:delete',
+}
+
+export {columns, moduleConfig,permissionObj};

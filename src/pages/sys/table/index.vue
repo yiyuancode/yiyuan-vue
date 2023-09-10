@@ -10,6 +10,7 @@
     @onDelete="deleteHandle"
     @onSearch="searchHandle"
     @onReset="resetHandle"
+    @onOtherEventChange="otherEventChangeHandle"
   >
     <template slot="otherOperationsGOContainer">
       <AddForm
@@ -28,14 +29,14 @@
 import AddForm from '@/components/addForm/AddForm.vue';
 import ManagePage from '@/components/manage/ManagePage.vue';
 import manage from '@/mixins/manage';
-import { columns, moduleConfig } from './pageConfig';
+import { columns, moduleConfig, permissionObj } from './pageConfig';
 
 export default {
   components: {
     ManagePage,
     AddForm
   },
-  mixins: [manage()],
+  mixins: [manage({ permissionObj })],
   data() {
     return {
       columns,

@@ -1,33 +1,24 @@
 <template>
-  <ManagePage
-    :columns="columns"
-    :data="data"
-    :pagination="pagination"
-    :renderObj="renderObj"
-    :submitModalObj="submitModalObj"
-    @onDelete="deleteHandle"
-    @onReset="resetHandle"
-    @onSave="saveHandle"
-    @onSearch="searchHandle"
-    @onSubmit="submitHandle"
-  >
+  <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj"
+    :submitModalObj="submitModalObj" @onDelete="deleteHandle" @onReset="resetHandle" @onSave="saveHandle"
+    @onSearch="searchHandle" @onSubmit="submitHandle" @onOtherEventChange="otherEventChangeHandle">
     <!-- 其他的操作插槽 -->
-    <template slot="otherOperationsContainer" slot-scope="record">
+    <!-- <template slot="otherOperationsContainer" slot-scope="{record}">
       <a-button type="primary" @click="toHostMonitor(record)">监控</a-button>
-    </template>
+    </template> -->
   </ManagePage>
 </template>
 
 <script>
 import ManagePage from '@/components/manage/ManagePage.vue';
 import manage from '@/mixins/manage';
-import { columns, moduleConfig } from './pageConfig';
+import { columns, moduleConfig, permissionObj, renderObj } from './pageConfig';
 
 export default {
   components: {
     ManagePage
   },
-  mixins: [manage()],
+  mixins: [manage({ permissionObj, renderObj })],
   data() {
     return {
       columns,
@@ -40,10 +31,9 @@ export default {
   },
   methods: {
     toHostMonitor(record) {
-      console.log('toHostMonitor', record.data);
       this.$router.push({
         path: '/sys/hostMonitor',
-        query: { id: record.data.id }
+        query: { id: record.id }
       });
     }
   }

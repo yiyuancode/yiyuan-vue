@@ -82,4 +82,13 @@ const moduleConfig = {
   moduleName: '租户店铺分类'
 };
 
-export {columns, moduleConfig};
+
+// 权限对象
+const permissionObj = {
+  id: 'sys:tenantCategory',
+  addBtn: 'sys:tenantCategory:add',
+  editBtn: 'sys:tenantCategory:edit',
+  deleteBtn: 'sys:tenantCategory:delete',
+}
+
+export {columns, moduleConfig,permissionObj};

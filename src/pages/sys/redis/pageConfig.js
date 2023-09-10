@@ -166,4 +166,24 @@ const moduleConfig = {
   moduleName: 'Redis记录'
 };
 
-export {columns, moduleConfig};
+// 权限对象
+const permissionObj = {
+  id: 'sys:redis',
+  addBtn: 'sys:redis:add',
+  editBtn: 'sys:redis:edit',
+  deleteBtn: 'sys:redis:delete',
+  // toMonitorBtn: 'sys:redis:assignRole',
+}
+
+// 渲染对象
+// const renderObj = {
+//   otherOperationList: [
+//     {
+//       name: "分配角色",
+//       methodName: "assignRole",
+//       btnName : 'assignRoleBtn',
+//     }
+//   ]
+// }
+
+export {columns, moduleConfig,permissionObj};
