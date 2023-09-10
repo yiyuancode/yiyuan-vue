@@ -37,35 +37,35 @@ export async function getAdminPageList(opts = {}) {
     }
   });
 
-  const record = [];
-  for (let i = 0; i < 20; i++) {
-    record.push({
-      "id": "1111" + i,
-      "username": "test11" + i,
-      "password": "111" + i,
-      "platform": "租户端" + i,
-      "tenantId": "f9924733c2451d1554b53d521cb37185" + i,
-      "createTime": "2023-08-18 13:55:22",
-      "updateTime": "2023-08-18 13:55:22",
-      "createUser": "fcd7fd521c18b0f181bfbd4c7a652269" + i,
-      "updateUser": "fcd7fd521c18b0f181bfbd4c7a652269" + i,
-      "roleList": [
-        {
-          "id": "64d73fb140219dff1cd3488926e59b64" + i,
-          "name": "租户管理A套餐角色",
-          "code": "ZUHU-A",
-          "roleDesc": "租户管理A套餐角色-99元包年",
-          "createTime": "2023-08-18 13:57:18",
-          "updateTime": "2023-08-18 13:57:18",
-          "createUser": "fcd7fd521c18b0f181bfbd4c7a652269" + i,
-          "updateUser": "fcd7fd521c18b0f181bfbd4c7a652269 + i"
-        }
-      ],
-      "userRoles": "租户管理A套餐角色"
-    });
-  }
+  // const record = [];
+  // for (let i = 0; i < 20; i++) {
+  //   record.push({
+  //     "id": "1111" + i,
+  //     "username": "test11" + i,
+  //     "password": "111" + i,
+  //     "platform": "租户端" + i,
+  //     "tenantId": "f9924733c2451d1554b53d521cb37185" + i,
+  //     "createTime": "2023-08-18 13:55:22",
+  //     "updateTime": "2023-08-18 13:55:22",
+  //     "createUser": "fcd7fd521c18b0f181bfbd4c7a652269" + i,
+  //     "updateUser": "fcd7fd521c18b0f181bfbd4c7a652269" + i,
+  //     "roleList": [
+  //       {
+  //         "id": "64d73fb140219dff1cd3488926e59b64" + i,
+  //         "name": "租户管理A套餐角色",
+  //         "code": "ZUHU-A",
+  //         "roleDesc": "租户管理A套餐角色-99元包年",
+  //         "createTime": "2023-08-18 13:57:18",
+  //         "updateTime": "2023-08-18 13:57:18",
+  //         "createUser": "fcd7fd521c18b0f181bfbd4c7a652269" + i,
+  //         "updateUser": "fcd7fd521c18b0f181bfbd4c7a652269 + i"
+  //       }
+  //     ],
+  //     "userRoles": "租户管理A套餐角色"
+  //   });
+  // }
 
-  resp.data.records.push(...record);
+  // resp.data.records.push(...record);
   return resp.data;
 }
 
