@@ -9,12 +9,12 @@ import {request} from '@/utils/request';
  * @date 2023-09-09
  */
 export async function getTenantPageList(data) {
-    const resp = await
+  const resp = await
     request({
-        url: "/sys/tenant/page",
-        params: data
+      url: "/sys/tenant/page",
+      params: data
     });
-    return resp.data;
+  return resp.data;
 }
 
 
@@ -27,11 +27,11 @@ export async function getTenantPageList(data) {
  * @date 2023-09-09
  */
 export async function getTenantDetail(id) {
-    const resp = await
+  const resp = await
     request({
-        url: `/sys/tenant/details/${id}`,
+      url: `/sys/tenant/details/${id}`,
     });
-    return resp.data;
+  return resp.data;
 }
 
 /**
@@ -44,13 +44,13 @@ export async function getTenantDetail(id) {
  */
 
 export async function addTenant(data) {
-    const resp = await
+  const resp = await
     request({
-        url: "/sys/tenant/add",
-        method: "post",
-        data
+      url: "/sys/tenant/add",
+      method: "post",
+      data
     });
-    return resp.data;
+  return resp.data;
 }
 
 /**
@@ -63,18 +63,19 @@ export async function addTenant(data) {
  * @date 2023-09-09
  */
 export async function editTenant(data, id) {
-    const resp = await
+  const resp = await
     request({
-        url: "/sys/tenant/edit",
-        method: "post",
-        data: {
-...
-    data, id
+      url: "/sys/tenant/edit",
+      method: "post",
+      data: {
+        ...
+          data, id
+      }
+    })
+  ;
+  return resp.data;
 }
-})
-    ;
-    return resp.data;
-}
+
 /**
  * 删除商户（可支持批量删除）
  *
@@ -84,14 +85,16 @@ export async function editTenant(data, id) {
  * @date 2023-09-09
  */
 export async function deleteTenant(ids) {
-    const resp = await
+  const resp = await
     request({
-        url: "/sys/tenant/delete",
-        method: "post",
-        params: {
-            ids
-        }
+      url: "/sys/tenant/delete",
+      method: "post",
+      params: {
+        ids
+      }
     });
-    return resp.data;
+  return resp.data;
 }
+
+
 
