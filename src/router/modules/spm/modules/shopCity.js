@@ -1,6 +1,6 @@
 const routerMap = {
   shopCity: {
-    name: "城市区域管理",
+    name: "shopCity",
     component: () => import( '@/pages/spm/shopCity/index'),
   },
 }
@@ -11,7 +11,13 @@ const i18nMap = {
     }
   ,
 }
+const i18nMapUS = {
+  shopCity: {
+    name: 'ShopCity Mange'
+  },
+}
 export default {
   i18nMap,
-  routerMap
+  routerMap,
+  i18nMapUS
 };

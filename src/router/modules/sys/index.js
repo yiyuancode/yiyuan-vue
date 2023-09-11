@@ -1,28 +1,29 @@
-import {console} from "vuedraggable/src/util/helper";
-
 const modulesFiles = require.context('./modules', true, /\.js$/);
-console.log("modulesFiles222", modulesFiles)
-
 
 const modulesI18nMap = modulesFiles.keys().reduce((modules, modulePath) => {
   const value = modulesFiles(modulePath);
-  console.log('modules2.value', value.default);
   modules = {...modules, ...value.default.i18nMap};
   return modules;
 }, {});
-console.log('modulesI18nMap222', modulesI18nMap);
+
+const modulesI18nMapUS = modulesFiles.keys().reduce((modules, modulePath) => {
+  const value = modulesFiles(modulePath);
+  //如果没配置英文,则用中文代替
+  value.default.i18nMapUS = value.default.i18nMapUS ? value.default.i18nMapUS : value.default.i18nMap
+  modules = {...modules, ...value.default.i18nMapUS};
+  return modules;
+}, {});
+
 
 const modulesRouterMap = modulesFiles.keys().reduce((modules, modulePath) => {
   const value = modulesFiles(modulePath);
-  console.log('modules2.value', value);
   modules = {...modules, ...value.default.routerMap};
   return modules;
 }, {});
-console.log('modulesRouterMap222', modulesRouterMap);
 
 const routerMap = {
   sys: {
-    name: '系统管理',
+    name: 'sys',
     component: () => import('@/layouts/BlankView')
   },
   ...modulesRouterMap
@@ -35,7 +36,16 @@ const i18nMap = {
     ...modulesI18nMap
   }
 }
+
+
+const i18nMapUS = {
+  sys: {
+    name: 'Sys Mange',
+    ...modulesI18nMapUS
+  }
+}
 export default {
   i18nMap,
-  routerMap
+  routerMap,
+  i18nMapUS
 };

@@ -1,6 +1,6 @@
 const routerMap = {
   hostMonitor: {
-    name: '服务器监控面板',
+    name: 'hostMonitor',
     component: () => import('@/pages/sys/hostMonitor/index'),
     invisible: true,
   },
@@ -10,7 +10,13 @@ const i18nMap = {
     name: '服务器监控面板'
   },
 }
+const i18nMapUS = {
+  hostMonitor: {
+    name: 'HostMonitor Mange'
+  },
+}
 export default {
   i18nMap,
-  routerMap
+  routerMap,
+  i18nMapUS
 };

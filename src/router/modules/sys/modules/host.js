@@ -1,6 +1,6 @@
 const routerMap = {
   host: {
-    name: '主机记录管理',
+    name: 'host',
     component: () => import('@/pages/sys/host/index')
   },
 }
@@ -9,7 +9,15 @@ const i18nMap = {
     name: '主机记录管理'
   },
 }
+
+const i18nMapUS = {
+  host: {
+    name: 'Host Mange'
+  },
+}
+
 export default {
   i18nMap,
-  routerMap
+  routerMap,
+  i18nMapUS
 };

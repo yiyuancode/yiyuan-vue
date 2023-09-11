@@ -1,6 +1,6 @@
 const routerMap = {
   tenantCategory: {
-    name: '租户店铺分类',
+    name: 'tenantCategory',
     component: () => import('@/pages/sys/tenantCategory/index')
   },
 }
@@ -9,7 +9,15 @@ const i18nMap = {
     name: '租户店铺分类'
   },
 }
+
+const i18nMapUS = {
+  tenantCategory: {
+    name: 'TenantCategory Mange'
+  },
+}
+
 export default {
   i18nMap,
-  routerMap
+  routerMap,
+  i18nMapUS
 };

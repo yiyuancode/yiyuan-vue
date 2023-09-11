@@ -1,15 +1,23 @@
 const routerMap = {
   tenant: {
-    name: '租户管理',
+    name: 'tenant',
     component: () => import('@/pages/sys/tenant/index')
   },
 }
 const i18nMap = {
   tenant: {
-    name: '租户管理'
+    name: '商户管理'
   },
 }
+
+const i18nMapUS = {
+  tenant: {
+    name: 'Tenant Mange'
+  },
+}
+
 export default {
   i18nMap,
-  routerMap
+  routerMap,
+  i18nMapUS
 };

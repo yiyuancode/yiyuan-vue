@@ -1,6 +1,6 @@
 const routerMap = {
   tenantType: {
-    name: '租户类型管理',
+    name: 'tenantType',
     component: () => import('@/pages/sys/tenantType/index')
   },
 }
@@ -9,7 +9,16 @@ const i18nMap = {
     name: '租户类型管理'
   },
 }
+
+const i18nMapUS = {
+  tenantType: {
+    name: 'TenantType Mange'
+  },
+}
+
+
 export default {
   i18nMap,
-  routerMap
+  routerMap,
+  i18nMapUS
 };

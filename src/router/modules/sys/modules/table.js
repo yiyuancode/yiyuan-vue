@@ -1,6 +1,6 @@
 const routerMap = {
   table: {
-    name: '数据库管理',
+    name: 'table',
     component: () => import('@/pages/sys/table/index')
   },
 }
@@ -9,7 +9,15 @@ const i18nMap = {
     name: '数据库管理'
   },
 }
+
+const i18nMapUS = {
+  table: {
+    name: 'Table Mange'
+  },
+}
+
 export default {
   i18nMap,
-  routerMap
+  routerMap,
+  i18nMapUS
 };
