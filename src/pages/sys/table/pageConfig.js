@@ -7,13 +7,12 @@
 import * as table from '@/api/sys/table';
 
 const columns = [
-
   {
     title: '表名',
     dataIndex: 'name',
     key: 'name',
     rules: [{ required: true, message: '请输入表名', trigger: 'blur' }],
-    width: 160,
+    width: 160
   },
 
   {
@@ -21,7 +20,7 @@ const columns = [
     dataIndex: 'remark',
     key: 'remark',
     rules: [{ required: true, message: '请输入表注释', trigger: 'blur' }],
-    width: 160,
+    width: 160
   },
   {
     title: '创建时间',
@@ -39,8 +38,7 @@ const columns = [
       return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
-    noAdd: true,
-
+    noAdd: true
   },
   {
     title: '修改时间',
@@ -59,11 +57,8 @@ const columns = [
     },
     noEdit: true,
     noAdd: true,
-    noSearch: true,
-
-  },
-
-
+    noSearch: true
+  }
 ];
 
 // 模块配置
@@ -82,9 +77,8 @@ const permissionObj = {
   id: 'sys:table',
   addBtn: 'sys:table:add',
   editBtn: 'sys:table:edit',
-  deleteBtn: 'sys:table:delete',
+  deleteBtn: 'sys:table:delete'
   // assignRoleBtn: 'sys:tenant:assignRole',
-}
-
+};
 
 export { columns, moduleConfig, permissionObj };

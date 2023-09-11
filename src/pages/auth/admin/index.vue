@@ -1,20 +1,48 @@
 <template>
-  <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" @onSave="saveHandle"
-    @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle"
-    @onOtherEventChange="otherEventChangeHandle">
+  <ManagePage
+    :columns="columns"
+    :data="data"
+    :pagination="pagination"
+    :renderObj="renderObj"
+    @onSave="saveHandle"
+    @onSubmit="submitHandle"
+    @onDelete="deleteHandle"
+    @onSearch="searchHandle"
+    @onReset="resetHandle"
+    @onOtherEventChange="otherEventChangeHandle"
+  >
     <span slot="table-userRoles" slot-scope="{ text, record }">
       <a-tag v-if="record.userRoles">{{ text }}</a-tag>
     </span>
 
-
     <!-- 分配角色模态框 -->
-    <Modal modalTitle="分配角色" :modalVisible="assignRoleVisible" :submitLoading="assignRoleLoading"
-      @onCloseModal="assignRoleVisible = false" @onSubmit="assignRoleHandle" @onReset="resetAssignRoleHandle">
-      <a-form-model ref="assignRoleModelRef" :model="assignRoleModel" :rules="assignRoleRules" :label-col="labelCol"
-        :wrapper-col="wrapperCol">
+    <Modal
+      modalTitle="分配角色"
+      :modalVisible="assignRoleVisible"
+      :submitLoading="assignRoleLoading"
+      @onCloseModal="assignRoleVisible = false"
+      @onSubmit="assignRoleHandle"
+      @onReset="resetAssignRoleHandle"
+    >
+      <a-form-model
+        ref="assignRoleModelRef"
+        :model="assignRoleModel"
+        :rules="assignRoleRules"
+        :label-col="labelCol"
+        :wrapper-col="wrapperCol"
+      >
         <a-form-model-item label="用户所属角色" prop="userRoles">
-          <a-select v-model="assignRoleModel.userRoles" mode="tags" style="width: 100%" placeholder="请至少选择一个角色">
-            <a-select-option v-for="role in roleList" :key="role.id" :value="role.id">
+          <a-select
+            v-model="assignRoleModel.userRoles"
+            mode="tags"
+            style="width: 100%"
+            placeholder="请至少选择一个角色"
+          >
+            <a-select-option
+              v-for="role in roleList"
+              :key="role.id"
+              :value="role.id"
+            >
               {{ role.name }}
             </a-select-option>
           </a-select>

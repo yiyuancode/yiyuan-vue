@@ -17,8 +17,6 @@ import addFrom from '@/mixins/addFrom.js';
 //在main.js引入qs
 import qs from 'qs';
 
-
-
 Vue.use(dataV);
 
 Vue.use(addFrom);

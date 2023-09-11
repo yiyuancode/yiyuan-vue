@@ -4,7 +4,7 @@
  * @author  一源团队-花和尚
  * @date 2023-09-10
  */
-import * as shopCity from "@/api/spm/shopCity";
+import * as shopCity from '@/api/spm/shopCity';
 
 const columns = [
   {
@@ -12,10 +12,9 @@ const columns = [
     dataIndex: 'id',
     key: 'id',
     width: 160,
-    rules: [{required: true, message: '请输入区域ID', trigger: 'blur'},],
+    rules: [{ required: true, message: '请输入区域ID', trigger: 'blur' }],
     noEdit: true,
-    noAdd: true,
-
+    noAdd: true
   },
 
   {
@@ -23,8 +22,7 @@ const columns = [
     dataIndex: 'pid',
     key: 'pid',
     width: 160,
-    rules: [{required: true, message: '请输入父级ID', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入父级ID', trigger: 'blur' }]
   },
 
   {
@@ -32,16 +30,14 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     width: 160,
-    rules: [{required: true, message: '请输入区域名称', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入区域名称', trigger: 'blur' }]
   },
 
   {
     title: '排序',
     dataIndex: 'sort',
     key: 'sort',
-    width: 160,
-
+    width: 160
   },
 
   {
@@ -50,47 +46,39 @@ const columns = [
     key: 'isShow',
     width: 160,
     //值类型
-    valType: "object",
+    valType: 'object',
     searchObj: {
-      formType: "select",
+      formType: 'select',
       options: [
         {
-
           label: '不显示',
-          value: 0,
-
+          value: 0
         },
         {
-
           label: '显示',
-          value: 1,
-
-        },
+          value: 1
+        }
       ]
     },
-    formType: "radioGroup",
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '不显示',
-          value: 0,
+          value: 0
         },
         {
           label: '显示',
-          value: 1,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: 1
         }
+      ],
+      style: {
+        width: '100%'
+      }
     },
-    rules: [
-      {required: true, message: '请选择显示状态', trigger: 'change'},
-    ],
+    rules: [{ required: true, message: '请选择显示状态', trigger: 'change' }],
     defaultValue: 1,
-    formSort: 1,
-
+    formSort: 1
   },
 
   {
@@ -99,47 +87,39 @@ const columns = [
     key: 'isDel',
     width: 160,
     //值类型
-    valType: "object",
+    valType: 'object',
     searchObj: {
-      formType: "select",
+      formType: 'select',
       options: [
         {
-
           label: '未删除',
-          value: 0,
-
+          value: 0
         },
         {
-
           label: '已删除',
-          value: 1,
-
-        },
+          value: 1
+        }
       ]
     },
-    formType: "radioGroup",
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '未删除',
-          value: 0,
+          value: 0
         },
         {
           label: '已删除',
-          value: 1,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: 1
         }
+      ],
+      style: {
+        width: '100%'
+      }
     },
-    rules: [
-      {required: true, message: '请选择是否删除', trigger: 'change'},
-    ],
+    rules: [{ required: true, message: '请选择是否删除', trigger: 'change' }],
     defaultValue: 0,
-    formSort: 1,
-
+    formSort: 1
   },
 
   {
@@ -148,73 +128,61 @@ const columns = [
     key: 'level',
     width: 160,
     //值类型
-    valType: "object",
+    valType: 'object',
     searchObj: {
-      formType: "select",
+      formType: 'select',
       options: [
         {
-
           label: '一级分类',
-          value: 1,
-
+          value: 1
         },
         {
-
           label: '二级分类',
-          value: 2,
-
+          value: 2
         },
         {
-
           label: '三级分类',
-          value: 3,
-
+          value: 3
         },
         {
-
           label: '四级分类',
-          value: 4,
-
+          value: 4
         },
         {
-
           label: '五级分类',
-          value: 5,
-
-        },
+          value: 5
+        }
       ]
     },
-    formType: "radioGroup",
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '一级分类',
-          value: 1,
+          value: 1
         },
         {
           label: '二级分类',
-          value: 2,
+          value: 2
         },
         {
           label: '三级分类',
-          value: 3,
+          value: 3
         },
         {
           label: '四级分类',
-          value: 4,
+          value: 4
         },
         {
           label: '五级分类',
-          value: 5,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: 5
         }
+      ],
+      style: {
+        width: '100%'
+      }
     },
-    formSort: 1,
-
+    formSort: 1
   },
 
   {
@@ -223,21 +191,18 @@ const columns = [
     key: 'createTime',
     width: 160,
     searchObj: {
-      formType: "rangePicker"
+      formType: 'rangePicker'
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择创建时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
-    noAdd: true,
-
+    noAdd: true
   },
 
   {
@@ -246,22 +211,19 @@ const columns = [
     key: 'updateTime',
     width: 160,
     searchObj: {
-      formType: "rangePicker"
+      formType: 'rangePicker'
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择修改时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
-    noSearch: true,
-
+    noSearch: true
   },
 
   {
@@ -272,8 +234,7 @@ const columns = [
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    noShow: true,
-
+    noShow: true
   },
 
   {
@@ -284,26 +245,19 @@ const columns = [
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    noShow: true,
-
-  },
-
-
-]
-
+    noShow: true
+  }
+];
 
 // 模块配置
 const moduleConfig = {
   module: shopCity,
-  moduleAdd: "addShopCity",
-  moduleEdit: "editShopCity",
-  moduleDelete: "deleteShopCity",
-  moduleGetList: "getShopCityPageList",
-  moduleGetDetail: "getShopCityDetail",
-  moduleName: "城市区域",
-}
-
-export {
-  columns,
-  moduleConfig,
+  moduleAdd: 'addShopCity',
+  moduleEdit: 'editShopCity',
+  moduleDelete: 'deleteShopCity',
+  moduleGetList: 'getShopCityPageList',
+  moduleGetDetail: 'getShopCityDetail',
+  moduleName: '城市区域'
 };
+
+export { columns, moduleConfig };

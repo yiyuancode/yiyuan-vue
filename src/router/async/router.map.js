@@ -1,7 +1,6 @@
-
-import {getRouterMapMerger} from '@/utils/routerAutoMerger.js'
+import { getRouterMapMerger } from '@/utils/routerAutoMerger.js';
 const modulesFiles = require.context('../modules', true, /\/index\.js$/);
-const {modulesRouterMap} = getRouterMapMerger(modulesFiles);
+const { modulesRouterMap } = getRouterMapMerger(modulesFiles);
 
 // 视图组件
 const view = {
@@ -43,7 +42,7 @@ const routerMap = {
   },
 
   about: {
-    name: "关于",
+    name: '关于',
     component: () => import('@/pages/about/index.vue')
   },
   ...modulesRouterMap

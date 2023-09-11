@@ -1,7 +1,16 @@
 <template>
-  <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" @onSave="saveHandle"
-    @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle"
-    @onOtherEventChange="otherEventChangeHandle">
+  <ManagePage
+    :columns="columns"
+    :data="data"
+    :pagination="pagination"
+    :renderObj="renderObj"
+    @onSave="saveHandle"
+    @onSubmit="submitHandle"
+    @onDelete="deleteHandle"
+    @onSearch="searchHandle"
+    @onReset="resetHandle"
+    @onOtherEventChange="otherEventChangeHandle"
+  >
   </ManagePage>
 </template>
 

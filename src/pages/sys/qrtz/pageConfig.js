@@ -18,7 +18,7 @@ const columns = [
         trigger: 'blur'
       }
     ],
-    width: 120,
+    width: 120
   },
 
   {
@@ -32,7 +32,7 @@ const columns = [
         trigger: 'blur'
       }
     ],
-    width: 120,
+    width: 120
   },
 
   {
@@ -40,7 +40,7 @@ const columns = [
     dataIndex: 'jobClassName',
     key: 'jobClassName',
     rules: [{ required: true, message: '请输入任务执行类', trigger: 'blur' }],
-    width: 160,
+    width: 160
   },
 
   {
@@ -50,7 +50,7 @@ const columns = [
     rules: [
       { required: true, message: '请输入任务执行时间表达式', trigger: 'blur' }
     ],
-    width: 160,
+    width: 160
   },
 
   {
@@ -58,7 +58,7 @@ const columns = [
     dataIndex: 'jobDesc',
     key: 'jobDesc',
     rules: [{ required: true, message: '请输入任务描述备注', trigger: 'blur' }],
-    width: 160,
+    width: 160
   },
 
   {
@@ -107,7 +107,7 @@ const columns = [
     rules: [{ required: true, message: '请选择任务状态', trigger: 'change' }],
     defaultValue: 1,
     formSort: 1,
-    width: 100,
+    width: 100
   },
 
   {
@@ -127,7 +127,7 @@ const columns = [
         { required: true, message: '请选择任务开始执行时间', trigger: 'change' }
       ];
     },
-    width: 160,
+    width: 160
   },
 
   {
@@ -147,7 +147,7 @@ const columns = [
         { required: true, message: '请选择任务结束执行时间', trigger: 'change' }
       ];
     },
-    width: 160,
+    width: 160
   },
   {
     title: '创建时间',
@@ -166,7 +166,7 @@ const columns = [
     },
     noEdit: true,
     noAdd: true,
-    width: 160,
+    width: 160
   },
   {
     title: '修改时间',
@@ -186,10 +186,8 @@ const columns = [
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    width: 160,
-  },
-
-
+    width: 160
+  }
 ];
 
 // 模块配置
@@ -208,8 +206,7 @@ const permissionObj = {
   id: 'sys:qrtz',
   addBtn: 'sys:qrtz:add',
   editBtn: 'sys:qrtz:edit',
-  deleteBtn: 'sys:qrtz:delete',
-}
-
+  deleteBtn: 'sys:qrtz:delete'
+};
 
 export { columns, moduleConfig, permissionObj };

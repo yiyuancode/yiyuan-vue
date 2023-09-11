@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的城市区域信息(分页)
@@ -9,14 +9,12 @@ import {request} from '@/utils/request';
  * @date 2023-09-10
  */
 export async function getShopCityPageList(data) {
-  const resp = await
-    request({
-      url: "/spm/shopCity/page",
-      params: data
-    });
+  const resp = await request({
+    url: '/spm/shopCity/page',
+    params: data
+  });
   return resp.data;
 }
-
 
 /**
  * 获取城市区域详情
@@ -27,10 +25,9 @@ export async function getShopCityPageList(data) {
  * @date 2023-09-10
  */
 export async function getShopCityDetail(id) {
-  const resp = await
-    request({
-      url: `/spm/shopCity/details/${id}`,
-    });
+  const resp = await request({
+    url: `/spm/shopCity/details/${id}`
+  });
   return resp.data;
 }
 
@@ -44,12 +41,11 @@ export async function getShopCityDetail(id) {
  */
 
 export async function addShopCity(data) {
-  const resp = await
-    request({
-      url: "/spm/shopCity/add",
-      method: "post",
-      data
-    });
+  const resp = await request({
+    url: '/spm/shopCity/add',
+    method: 'post',
+    data
+  });
   return resp.data;
 }
 
@@ -63,16 +59,14 @@ export async function addShopCity(data) {
  * @date 2023-09-10
  */
 export async function editShopCity(data, id) {
-  const resp = await
-    request({
-      url: "/spm/shopCity/edit",
-      method: "post",
-      data: {
-        ...
-          data, id
-      }
-    })
-  ;
+  const resp = await request({
+    url: '/spm/shopCity/edit',
+    method: 'post',
+    data: {
+      ...data,
+      id
+    }
+  });
   return resp.data;
 }
 
@@ -85,14 +79,13 @@ export async function editShopCity(data, id) {
  * @date 2023-09-10
  */
 export async function deleteShopCity(ids) {
-  const resp = await
-    request({
-      url: "/spm/shopCity/delete",
-      method: "post",
-      params: {
-        ids
-      }
-    });
+  const resp = await request({
+    url: '/spm/shopCity/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
   return resp.data;
 }
 
@@ -105,14 +98,12 @@ export async function deleteShopCity(ids) {
  * @date 2023-09-10
  */
 export async function getCityTreeById(data) {
-  const resp = await
-    request({
-      url: "/spm/shopCity/getCityTreeById",
-      params: data
-    });
+  const resp = await request({
+    url: '/spm/shopCity/getCityTreeById',
+    params: data
+  });
   return resp.data;
 }
-
 
 /**
  * 查询城市区域树结构
@@ -123,10 +114,9 @@ export async function getCityTreeById(data) {
  * @date 2023-09-10
  */
 export async function getCityTree(data) {
-  const resp = await
-    request({
-      url: "/spm/shopCity/getCityTree",
-      params: data
-    });
+  const resp = await request({
+    url: '/spm/shopCity/getCityTree',
+    params: data
+  });
   return resp.data;
 }

@@ -1,14 +1,31 @@
 <template>
-  <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" @onSave="saveHandle"
-    @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle"
-    @onOtherEventChange="otherEventChangeHandle">
-
+  <ManagePage
+    :columns="columns"
+    :data="data"
+    :pagination="pagination"
+    :renderObj="renderObj"
+    @onSave="saveHandle"
+    @onSubmit="submitHandle"
+    @onDelete="deleteHandle"
+    @onSearch="searchHandle"
+    @onReset="resetHandle"
+    @onOtherEventChange="otherEventChangeHandle"
+  >
     <!-- 分配角色权限模态框 -->
-    <Modal modalTitle="分配角色权限" :modalVisible="assignPermissionVisible" :submitLoading="submitAssignPermissionLoading"
-      @onCloseModal="assignPermissionVisible = false" @onReset="resetAssignPermissionHandle"
-      @onSubmit="assignPermissionHandle">
-      <a-form-model :model="assignPermissionModel" :roles="assignPermissionRules" :label-col="labelCol"
-        :wrapper-col="wrapperCol">
+    <Modal
+      modalTitle="分配角色权限"
+      :modalVisible="assignPermissionVisible"
+      :submitLoading="submitAssignPermissionLoading"
+      @onCloseModal="assignPermissionVisible = false"
+      @onReset="resetAssignPermissionHandle"
+      @onSubmit="assignPermissionHandle"
+    >
+      <a-form-model
+        :model="assignPermissionModel"
+        :roles="assignPermissionRules"
+        :label-col="labelCol"
+        :wrapper-col="wrapperCol"
+      >
         <a-form-model-item label="角色权限">
           <div class="role-permission-container">
             <div>
@@ -16,14 +33,26 @@
                 展开/收起
               </a-checkbox>
 
-              <a-checkbox v-model="isSelectAllCheckbox" @change="toggleSelectMenuList">
+              <a-checkbox
+                v-model="isSelectAllCheckbox"
+                @change="toggleSelectMenuList"
+              >
                 全选/全不选
               </a-checkbox>
             </div>
             <a-divider style="margin: 12px 0" />
-            <a-tree v-model="assignPermissionModel.rolePermissions" checkable :expanded-keys="expandedKeys"
-              :auto-expand-parent="autoExpandParent" :selected-keys="selectedKeys" :tree-data="treeData"
-              :defaultExpandAll="true" :defaultCheckedKeys="selectedKeys" @expand="onExpand" @select="onSelect" />
+            <a-tree
+              v-model="assignPermissionModel.rolePermissions"
+              checkable
+              :expanded-keys="expandedKeys"
+              :auto-expand-parent="autoExpandParent"
+              :selected-keys="selectedKeys"
+              :tree-data="treeData"
+              :defaultExpandAll="true"
+              :defaultCheckedKeys="selectedKeys"
+              @expand="onExpand"
+              @select="onSelect"
+            />
           </div>
         </a-form-model-item>
       </a-form-model>

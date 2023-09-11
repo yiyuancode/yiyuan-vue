@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的商户信息(分页)
@@ -9,14 +9,12 @@ import {request} from '@/utils/request';
  * @date 2023-09-09
  */
 export async function getTenantPageList(data) {
-  const resp = await
-    request({
-      url: "/sys/tenant/page",
-      params: data
-    });
+  const resp = await request({
+    url: '/sys/tenant/page',
+    params: data
+  });
   return resp.data;
 }
-
 
 /**
  * 获取商户详情
@@ -27,10 +25,9 @@ export async function getTenantPageList(data) {
  * @date 2023-09-09
  */
 export async function getTenantDetail(id) {
-  const resp = await
-    request({
-      url: `/sys/tenant/details/${id}`,
-    });
+  const resp = await request({
+    url: `/sys/tenant/details/${id}`
+  });
   return resp.data;
 }
 
@@ -44,12 +41,11 @@ export async function getTenantDetail(id) {
  */
 
 export async function addTenant(data) {
-  const resp = await
-    request({
-      url: "/sys/tenant/add",
-      method: "post",
-      data
-    });
+  const resp = await request({
+    url: '/sys/tenant/add',
+    method: 'post',
+    data
+  });
   return resp.data;
 }
 
@@ -63,16 +59,14 @@ export async function addTenant(data) {
  * @date 2023-09-09
  */
 export async function editTenant(data, id) {
-  const resp = await
-    request({
-      url: "/sys/tenant/edit",
-      method: "post",
-      data: {
-        ...
-          data, id
-      }
-    })
-  ;
+  const resp = await request({
+    url: '/sys/tenant/edit',
+    method: 'post',
+    data: {
+      ...data,
+      id
+    }
+  });
   return resp.data;
 }
 
@@ -85,16 +79,12 @@ export async function editTenant(data, id) {
  * @date 2023-09-09
  */
 export async function deleteTenant(ids) {
-  const resp = await
-    request({
-      url: "/sys/tenant/delete",
-      method: "post",
-      params: {
-        ids
-      }
-    });
+  const resp = await request({
+    url: '/sys/tenant/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
   return resp.data;
 }
-
-
-

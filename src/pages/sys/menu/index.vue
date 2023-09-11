@@ -15,7 +15,12 @@
               {{ isExpandAll ? '全部收起' : '全部展开' }}
             </a-button>
 
-            <a-popconfirm title="是否要删除这条信息?" ok-text="确认" cancel-text="取消" @confirm="deleteMenuHandle">
+            <a-popconfirm
+              title="是否要删除这条信息?"
+              ok-text="确认"
+              cancel-text="取消"
+              @confirm="deleteMenuHandle"
+            >
               <a-button type="primary">删除</a-button>
             </a-popconfirm>
           </div>
@@ -26,7 +31,12 @@
             <a-input-search placeholder="输入菜单名称进行搜索" />
 
             <div class="tree-container beauty-scroll">
-              <a-tree :tree-data="treeData" :expanded-keys="expandedKeys" @select="selectMenuHandle" @expand="onExpand" />
+              <a-tree
+                :tree-data="treeData"
+                :expanded-keys="expandedKeys"
+                @select="selectMenuHandle"
+                @expand="onExpand"
+              />
             </div>
           </div>
         </div>
@@ -45,18 +55,37 @@
 
           <a-row>
             <a-col :xl="{ span: 20 }" :lg="{ span: 16 }">
-              <menuForm ref="saveMenuFormCon" formRef="saveMenuForm" :model="menuModel" :rules="menuRules"
-                :treeData="treeData" @onSave="saveMenuHandle('edit')"></menuForm>
+              <menuForm
+                ref="saveMenuFormCon"
+                formRef="saveMenuForm"
+                :model="menuModel"
+                :rules="menuRules"
+                :treeData="treeData"
+                @onSave="saveMenuHandle('edit')"
+              ></menuForm>
             </a-col>
           </a-row>
         </div>
       </a-col>
     </a-row>
 
-    <Modal modalTitle="添加菜单" :modalWidth="600" :modalVisible="addMenuVisible" :submitLoading="addMenuLoading"
-      @onCloseModal="addMenuVisible = false" @onReset="resetHandle" @onSubmit="saveMenuHandle('add')">
-      <menuForm ref="addMenuFormCon" formRef="addMenuForm" :model="addMenuModel" :rules="addMenuRules"
-        :treeData="treeData" mode="add"></menuForm>
+    <Modal
+      modalTitle="添加菜单"
+      :modalWidth="600"
+      :modalVisible="addMenuVisible"
+      :submitLoading="addMenuLoading"
+      @onCloseModal="addMenuVisible = false"
+      @onReset="resetHandle"
+      @onSubmit="saveMenuHandle('add')"
+    >
+      <menuForm
+        ref="addMenuFormCon"
+        formRef="addMenuForm"
+        :model="addMenuModel"
+        :rules="addMenuRules"
+        :treeData="treeData"
+        mode="add"
+      ></menuForm>
     </Modal>
   </div>
 </template>
@@ -256,10 +285,10 @@ export default {
         }
 
         const userInfo = await getUserInfo();
-        this.$store.commit('setting/setMenuData', userInfo.menuTreeList)
+        this.$store.commit('setting/setMenuData', userInfo.menuTreeList);
         // 获取路由信息
         loadRoutes(userInfo.menuTreeList, 'menuTreeList');
-        this.$refreshPage(this.$route)
+        this.$refreshPage(this.$route);
       } catch (e) {
         Promise.reject(e);
       }
@@ -300,8 +329,7 @@ export default {
 
       this.$message.success('删除菜单信息成功!!');
     },
-    async batchdeleteMenuHandle() {
-    },
+    async batchdeleteMenuHandle() {}
   }
 };
 </script>
@@ -350,17 +378,17 @@ export default {
         background-color: transparent;
       }
 
-      >.ant-tree-checkbox {
+      > .ant-tree-checkbox {
         position: relative;
         z-index: 1;
       }
 
-      >.ant-tree-node-content-wrapper {
+      > .ant-tree-node-content-wrapper {
         &::before {
           background-color: @primary-color;
         }
 
-        >.ant-tree-title {
+        > .ant-tree-title {
           color: white;
         }
       }

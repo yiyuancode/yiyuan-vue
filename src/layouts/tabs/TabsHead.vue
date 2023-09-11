@@ -202,7 +202,7 @@ export default {
     &.mix {
       right: 0;
       left: 256px;
-      z-index : 99;
+      z-index: 99;
       &.collapsed {
         left: 80px;
       }

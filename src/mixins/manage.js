@@ -1,5 +1,5 @@
 import eventBus from '@/eventBus';
-import store from "@/store";
+import store from '@/store';
 /**
  *
  * @param {*} opts
@@ -49,7 +49,7 @@ export default function (opts = {}) {
       batchDeleteBtn: {
         isOpen: true,
         text: '批量删除'
-      },
+      }
     },
     submitLoading: false, //提交的loading
     objColumnsArr: []
@@ -61,13 +61,13 @@ export default function (opts = {}) {
   };
 
   const defaultSearchObj = {
-    ...defaultOpts.searchObj,
+    ...defaultOpts.searchObj
   };
 
   const newRenderObj = {
     ...defaultOpts.renderObj,
     ...opts.renderObj
-  }
+  };
 
   const newOpts = {
     ...defaultOpts,
@@ -78,21 +78,19 @@ export default function (opts = {}) {
   const permissions = store.state.account.permissions;
   // 按钮权限对象
   if (opts.permissionObj) {
-    const {
-      id
-    } = opts.permissionObj;
+    const { id } = opts.permissionObj;
 
     const operationList = [];
     if (Array.isArray(id)) {
       for (let i = 0; i < id.length; i++) {
-        const permissionItem = permissions.find(p => {
+        const permissionItem = permissions.find((p) => {
           return p.id === id[i];
         });
         const operation = permissionItem.operation;
         operationList.push(...operation);
       }
     } else {
-      const permissionItem = permissions.find(p => {
+      const permissionItem = permissions.find((p) => {
         return p.id === id;
       });
       const operation = permissionItem.operation;
@@ -101,7 +99,7 @@ export default function (opts = {}) {
 
     for (let prop in newOpts.permissionObj) {
       const permission = opts.permissionObj[prop];
-      const operationItem = operationList.find(op => {
+      const operationItem = operationList.find((op) => {
         return op === permission;
       });
       if (operationItem) {
@@ -167,7 +165,8 @@ export default function (opts = {}) {
         // 重新获取数据
         await this.getData();
         this.$message.success(
-          `${opType === 'batchDelete' ? '批量' : ''}删除${this.moduleName
+          `${opType === 'batchDelete' ? '批量' : ''}删除${
+            this.moduleName
           }信息成功!!`
         );
       },

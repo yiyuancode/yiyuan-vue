@@ -9,7 +9,7 @@ export default {
     roles: null,
     routesConfig: null,
     isLogin: false,
-    menuTreeList: [],
+    menuTreeList: []
   },
   getters: {
     user: (state) => {

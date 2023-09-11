@@ -47,7 +47,6 @@ function parseRoutes(routesConfig, routerMap) {
       router = typeof item === 'string' ? { path: item, name: item } : item;
     }
 
-
     // 从 router 和 routeCfg 解析路由
     const meta = {
       authority: router.authority,
@@ -146,8 +145,6 @@ function loadRoutes(routesConfig, type) {
   } else {
     routesConfig = store.getters['account/routesConfig'];
   }
-
-
 
   // 如果开启了异步路由，则加载异步路由配置
   const asyncRoutes = store.state.setting.asyncRoutes;
@@ -351,7 +348,7 @@ function getRoutes(menuTreeList) {
       // }
 
       if (isAffix.value === 1) {
-        !routesObj.page ? routesObj.page = {} : '';
+        !routesObj.page ? (routesObj.page = {}) : '';
         routesObj.page.unclose = true;
       }
 

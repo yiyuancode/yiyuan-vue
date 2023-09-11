@@ -11,21 +11,38 @@
     <div class="content-container">
       <div class="operate-btn-container">
         <!-- 添加 -->
-        <a-button v-if="uRenderObj.addBtn.isOpen" type="primary" @click="addHandle">
+        <a-button
+          v-if="uRenderObj.addBtn.isOpen"
+          type="primary"
+          @click="addHandle"
+        >
           {{ uRenderObj.addBtn.text }}
         </a-button>
 
         <!-- 导入 -->
-        <a-button v-if="uRenderObj.importBtn.isOpen" type="primary" @click="importHandle">
+        <a-button
+          v-if="uRenderObj.importBtn.isOpen"
+          type="primary"
+          @click="importHandle"
+        >
           {{ uRenderObj.importBtn.text }}
         </a-button>
 
         <!-- 导出 -->
-        <a-button v-if="uRenderObj.exportBtn.isOpen" type="primary" @click="exportHandle">
+        <a-button
+          v-if="uRenderObj.exportBtn.isOpen"
+          type="primary"
+          @click="exportHandle"
+        >
           {{ uRenderObj.exportBtn.text }}
         </a-button>
 
-        <a-popconfirm title="是否要批量删除这些信息?" ok-text="确认" cancel-text="取消" @confirm="batchDeleteHandle">
+        <a-popconfirm
+          title="是否要批量删除这些信息?"
+          ok-text="确认"
+          cancel-text="取消"
+          @confirm="batchDeleteHandle"
+        >
           <a-button v-if="uRenderObj.batchDeleteBtn.isOpen" type="primary">
             {{ uRenderObj.batchDeleteBtn.text }}
           </a-button>
@@ -37,34 +54,69 @@
       </div>
 
       <!-- 列表容器 -->
-      <div class="list-container  beauty-scroll">
-        <a-table style="margin-bottom: 10px" :columns="columnsObj.uTheadData" :data-source="data" :pagination="pagination"
-          :loading="uRenderObj.isLoading" :rowKey="(record, index) => {
-            return index;
-          }
-            " :row-selection="rowSelection" :scroll="{ x: 1300}">
+      <div class="list-container beauty-scroll">
+        <a-table
+          style="margin-bottom: 10px"
+          :columns="columnsObj.uTheadData"
+          :data-source="data"
+          :pagination="pagination"
+          :loading="uRenderObj.isLoading"
+          :rowKey="
+            (record, index) => {
+              return index;
+            }
+          "
+          :row-selection="rowSelection"
+          :scroll="{ x: 1300 }"
+        >
           <!-- 进行一个自定义插槽的遍历 -->
 
-          <template v-for="(item) in columnsObj.tdColumnData" :slot="item.scopedSlots?.customRender"
-            slot-scope="text, record">
+          <template
+            v-for="item in columnsObj.tdColumnData"
+            :slot="item.scopedSlots?.customRender"
+            slot-scope="text, record"
+          >
             <!-- {{ record }} -->
-            <slot :name="'table-' + item.scopedSlots?.customRender" v-bind="{ text, record }"></slot>
+            <slot
+              :name="'table-' + item.scopedSlots?.customRender"
+              v-bind="{ text, record }"
+            ></slot>
           </template>
 
           <span slot="action" slot-scope="text, record">
-            <div v-if="uRenderObj.operateMode === 1" class="operate-btn-container">
-              <a-button v-if="uRenderObj.editBtn.isOpen" type="primary" @click="editHandle(record.id)">{{
-                uRenderObj.editBtn.text }}</a-button>
+            <div
+              v-if="uRenderObj.operateMode === 1"
+              class="operate-btn-container"
+            >
+              <a-button
+                v-if="uRenderObj.editBtn.isOpen"
+                type="primary"
+                @click="editHandle(record.id)"
+                >{{ uRenderObj.editBtn.text }}</a-button
+              >
 
               <!-- 删除 -->
-              <a-popconfirm title="是否要删除这条信息?" ok-text="确认" cancel-text="取消" @confirm="confirmDeleteHandle(record.id)">
-                <a-button v-if="uRenderObj.deleteBtn.isOpen" type="primary">删除</a-button>
+              <a-popconfirm
+                title="是否要删除这条信息?"
+                ok-text="确认"
+                cancel-text="取消"
+                @confirm="confirmDeleteHandle(record.id)"
+              >
+                <a-button v-if="uRenderObj.deleteBtn.isOpen" type="primary"
+                  >删除</a-button
+                >
               </a-popconfirm>
 
               <!-- 针对单个其他操作容器的添加 -->
-              <template v-for="(otherOp, index) in uRenderObj.otherOperationList">
-                <a-button v-if="!otherOp.isPop && uRenderObj?.[otherOp.btnName]?.isOpen" :key="index" type="primary"
-                  @click="callMethod(otherOp.methodName, record)">
+              <template
+                v-for="(otherOp, index) in uRenderObj.otherOperationList"
+              >
+                <a-button
+                  v-if="!otherOp.isPop && uRenderObj?.[otherOp.btnName]?.isOpen"
+                  :key="index"
+                  type="primary"
+                  @click="callMethod(otherOp.methodName, record)"
+                >
                   {{ otherOp.name }}
                 </a-button>
               </template>
@@ -76,10 +128,24 @@
 
     <slot></slot>
 
-    <Modal :modalWidth="submitModalObj.modalWidth" :modalTitle="submitModalTitle" :modalVisible="modalVisble"
-      :submitLoading="submitLoading" @onSubmit="submitHandle" @onCloseModal="modalVisble = false" @onReset="resetHandle">
-      <submitModalForm ref="submitModalForm" :formRef="formRef" :model="model" :rules="rules"
-        :submitFormList="submitFormList" :labelCol="submitModalObj.labelCol" :wrapperCol="submitModalObj.wrapperCol" />
+    <Modal
+      :modalWidth="submitModalObj.modalWidth"
+      :modalTitle="submitModalTitle"
+      :modalVisible="modalVisble"
+      :submitLoading="submitLoading"
+      @onSubmit="submitHandle"
+      @onCloseModal="modalVisble = false"
+      @onReset="resetHandle"
+    >
+      <submitModalForm
+        ref="submitModalForm"
+        :formRef="formRef"
+        :model="model"
+        :rules="rules"
+        :submitFormList="submitFormList"
+        :labelCol="submitModalObj.labelCol"
+        :wrapperCol="submitModalObj.wrapperCol"
+      />
     </Modal>
   </div>
 </template>
@@ -292,7 +358,11 @@ export default {
 
       const otherOperationList = this.uRenderObj.otherOperationList || [];
       let isHaveOperation = false; //是否需要操作,默认否
-      const defaultRowPropArr = ['editBtn', 'deleteBtn', ...otherOperationList.map(op => op.btnName)];
+      const defaultRowPropArr = [
+        'editBtn',
+        'deleteBtn',
+        ...otherOperationList.map((op) => op.btnName)
+      ];
       for (let prop in this.uRenderObj) {
         // 代表是按钮
         if (defaultRowPropArr.includes(prop) && this.uRenderObj[prop].isOpen) {
@@ -351,7 +421,7 @@ export default {
   methods: {
     // 调用方法
     callMethod(methodName, ...args) {
-      this.$emit('onOtherEventChange', methodName, ...args)
+      this.$emit('onOtherEventChange', methodName, ...args);
     },
     // 显示添加模态框的处理
     async addHandle() {
@@ -502,7 +572,7 @@ export default {
   background-color: #fff;
 }
 
-.content-container{
+.content-container {
   flex: 1 1 auto;
   overflow: hidden;
   display: flex;
@@ -516,7 +586,6 @@ export default {
 
   /deep/ .ant-table {
     tr {
-
       td,
       th {
         min-width: 60px;

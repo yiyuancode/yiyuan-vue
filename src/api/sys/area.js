@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的区域信息(分页)
@@ -9,14 +9,12 @@ import {request} from '@/utils/request';
  * @date 2023-09-11
  */
 export async function getAreaPageList(data) {
-    const resp = await
-    request({
-        url: "/sys/area/page",
-        params: data
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/area/page',
+    params: data
+  });
+  return resp.data;
 }
-
 
 /**
  * 获取区域详情
@@ -27,11 +25,10 @@ export async function getAreaPageList(data) {
  * @date 2023-09-11
  */
 export async function getAreaDetail(id) {
-    const resp = await
-    request({
-        url: `/sys/area/details/${id}`,
-    });
-    return resp.data;
+  const resp = await request({
+    url: `/sys/area/details/${id}`
+  });
+  return resp.data;
 }
 
 /**
@@ -44,13 +41,12 @@ export async function getAreaDetail(id) {
  */
 
 export async function addArea(data) {
-    const resp = await
-    request({
-        url: "/sys/area/add",
-        method: "post",
-        data
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/area/add',
+    method: 'post',
+    data
+  });
+  return resp.data;
 }
 
 /**
@@ -63,17 +59,15 @@ export async function addArea(data) {
  * @date 2023-09-11
  */
 export async function editArea(data, id) {
-    const resp = await
-    request({
-        url: "/sys/area/edit",
-        method: "post",
-        data: {
-...
-    data, id
-}
-})
-    ;
-    return resp.data;
+  const resp = await request({
+    url: '/sys/area/edit',
+    method: 'post',
+    data: {
+      ...data,
+      id
+    }
+  });
+  return resp.data;
 }
 /**
  * 删除区域（可支持批量删除）
@@ -84,17 +78,15 @@ export async function editArea(data, id) {
  * @date 2023-09-11
  */
 export async function deleteArea(ids) {
-    const resp = await
-    request({
-        url: "/sys/area/delete",
-        method: "post",
-        params: {
-            ids
-        }
-    });
-    return resp.data;
+  const resp = await request({
+    url: '/sys/area/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
+  return resp.data;
 }
-
 
 /**
  * 根据id查询城市区域树结构
@@ -105,14 +97,12 @@ export async function deleteArea(ids) {
  * @date 2023-09-10
  */
 export async function getCityTreeById(data) {
-  const resp = await
-    request({
-      url: "/sys/area/getAreaTreeById",
-      params: data
-    });
+  const resp = await request({
+    url: '/sys/area/getAreaTreeById',
+    params: data
+  });
   return resp.data;
 }
-
 
 /**
  * 查询城市区域树结构
@@ -123,10 +113,9 @@ export async function getCityTreeById(data) {
  * @date 2023-09-10
  */
 export async function getCityTree(data) {
-  const resp = await
-    request({
-      url: "/sys/area/getAreaTree",
-      params: data
-    });
+  const resp = await request({
+    url: '/sys/area/getAreaTree',
+    params: data
+  });
   return resp.data;
 }

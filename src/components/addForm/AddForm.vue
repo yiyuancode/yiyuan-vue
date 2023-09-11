@@ -10,10 +10,13 @@
       <a-form :form="form" layout="vertical">
         <a-spin :spinning="props.loading">
           <a-row v-for="(im, ix) in props.columns" :key="ix" :gutter="16">
-            <a-col v-for="(im2, ix2) in im" :key="ix2" :span="24/props.groupSize">
+            <a-col
+              v-for="(im2, ix2) in im"
+              :key="ix2"
+              :span="24 / props.groupSize"
+            >
               <a-form-item :label="im2.title">
                 <a-radio-group
-
                   v-if="im2.formType == `radioGroup`"
                   v-decorator="[
                     im2.dataIndex,
@@ -32,7 +35,6 @@
                   :placeholder="`请选择${
                     im2.placeholder ? im2.placeholder : im2.title
                   }`"
-
                 >
                   <a-radio-button
                     v-for="(im3, ix3) in im2.props.options"
@@ -65,7 +67,6 @@
                   }`"
                   :default-active-first-option="false"
                   :filter-option="false"
-
                   @change="
                     (val, option) =>
                       handleChangeSelect(val, im2.dataIndex, im2, option)
@@ -100,7 +101,6 @@
                   format="YYYY-MM-DD HH:mm:ss"
                 />
 
-
                 <a-cascader
                   v-else-if="im2.formType == `cascader`"
                   v-decorator="[
@@ -122,10 +122,11 @@
                   }`"
                   :fieldNames="im2.fieldNames"
                   :options="im2.props.options"
-                  :show-search="{  filter:(inputValue, path)=>{
-
-                   return  filter(inputValue, path,im2.fieldNames) }}"
-
+                  :show-search="{
+                    filter: (inputValue, path) => {
+                      return filter(inputValue, path, im2.fieldNames);
+                    }
+                  }"
                 />
                 <a-input
                   v-else
@@ -175,112 +176,119 @@
   </div>
 </template>
 <script>
-  import _ from 'lodash';
+import _ from 'lodash';
 
-  export default {
+export default {
+  props: {
     props: {
-      props: {
-        type: Object,
-        default: function () {
-          return {
-            search: () => {
-            },
-            groupSize: 1,
-            title: null,
-            show: false,
-            loading: false,
-            columns: [],
-            record: {}
-          };
-        }
-      }
-    },
-    data() {
-      return {
-        form: this.$form.createForm(this),
-        visible: false
-      };
-    },
-    created() {
-    },
-    methods: {
-
-      filter(inputValue, path, fieldNames) {
-        console.log("filter.inputValue", inputValue)
-        console.log("filter.path", path)
-        return path.some(option => option[fieldNames.label].toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
-      },
-      handleChangeSelect(val, dataIndex, im2, option) {
-        console.log('handleSearchSelect.val', val);
-        console.log('handleSearchSelect.dataIndex', dataIndex);
-        console.log('handleSearchSelect.im2', im2);
-        console.log('handleSearchSelect.option', option);
-      },
-      onSubmit() {
-        this.form.validateFields((err, values) => {
-          if (!err) {
-            console.log('Received values of form: ', values);
-            let propsTemp = _.cloneDeep(this.props);
-            propsTemp.loading = true;
-            this.$emit('propsChange', propsTemp);
-            this.$emit('propsSubmit', values);
-            propsTemp.loading = true;
-            this.$parent;
-            // this.addFormProps.loading = false;
-          }
-        });
-      },
-      ok(msg) {
-        let propsTemp = _.cloneDeep(this.props);
-        propsTemp.loading = false;
-        propsTemp.show = false;
-        this.form.resetFields();
-        this.$emit('propsChange', propsTemp);
-        this.$message.success(msg);
-      },
-      no(msg) {
-        let propsTemp = _.cloneDeep(this.props);
-        propsTemp.loading = false;
-        propsTemp.show = true;
-        this.$emit('propsChange', propsTemp);
-        this.$message.error(msg);
-      },
-      showDrawer() {
-        this.visible = true;
-      },
-      onClose() {
-        let propsTemp = _.cloneDeep(this.props);
-        propsTemp.show = false;
-        this.$emit('propsChange', propsTemp);
-      },
-      async onOpen(data) {
-        let propsTemp = _.cloneDeep(this.props);
-        propsTemp = {...propsTemp, ...data};
-        propsTemp.show = true;
-
-
-        propsTemp.columns = propsTemp.columns?.filter((im) => {
-          return !im.noAdd || !im.noEdit;
-        });
-        for (let i = 0; i < propsTemp.columns.length; i++) {
-          let im = propsTemp.columns[i];
-          if ("cascader,select,radio".indexOf(im.formType) != -1 && im.props.url) {
-            let ops = await im.props.url({})
-            console.log("im.props.url({})", ops)
-            im.props.options = ops;
-          }
-        }
-        propsTemp.columns = this.convertTo2DArray(propsTemp.columns, this.props.groupSize ? this.props.groupSize : 1);
-        this.$emit('propsChange', propsTemp);
-      },
-      //一维数组转成二维数组
-      convertTo2DArray(arr, groupSize) {
-        var result = [];
-        for (var i = 0; i < arr?.length; i += groupSize) {
-          result.push(arr.slice(i, i + groupSize));
-        }
-        return result;
+      type: Object,
+      default: function () {
+        return {
+          search: () => {},
+          groupSize: 1,
+          title: null,
+          show: false,
+          loading: false,
+          columns: [],
+          record: {}
+        };
       }
     }
-  };
+  },
+  data() {
+    return {
+      form: this.$form.createForm(this),
+      visible: false
+    };
+  },
+  created() {},
+  methods: {
+    filter(inputValue, path, fieldNames) {
+      console.log('filter.inputValue', inputValue);
+      console.log('filter.path', path);
+      return path.some(
+        (option) =>
+          option[fieldNames.label]
+            .toLowerCase()
+            .indexOf(inputValue.toLowerCase()) > -1
+      );
+    },
+    handleChangeSelect(val, dataIndex, im2, option) {
+      console.log('handleSearchSelect.val', val);
+      console.log('handleSearchSelect.dataIndex', dataIndex);
+      console.log('handleSearchSelect.im2', im2);
+      console.log('handleSearchSelect.option', option);
+    },
+    onSubmit() {
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values);
+          let propsTemp = _.cloneDeep(this.props);
+          propsTemp.loading = true;
+          this.$emit('propsChange', propsTemp);
+          this.$emit('propsSubmit', values);
+          propsTemp.loading = true;
+          this.$parent;
+          // this.addFormProps.loading = false;
+        }
+      });
+    },
+    ok(msg) {
+      let propsTemp = _.cloneDeep(this.props);
+      propsTemp.loading = false;
+      propsTemp.show = false;
+      this.form.resetFields();
+      this.$emit('propsChange', propsTemp);
+      this.$message.success(msg);
+    },
+    no(msg) {
+      let propsTemp = _.cloneDeep(this.props);
+      propsTemp.loading = false;
+      propsTemp.show = true;
+      this.$emit('propsChange', propsTemp);
+      this.$message.error(msg);
+    },
+    showDrawer() {
+      this.visible = true;
+    },
+    onClose() {
+      let propsTemp = _.cloneDeep(this.props);
+      propsTemp.show = false;
+      this.$emit('propsChange', propsTemp);
+    },
+    async onOpen(data) {
+      let propsTemp = _.cloneDeep(this.props);
+      propsTemp = { ...propsTemp, ...data };
+      propsTemp.show = true;
+
+      propsTemp.columns = propsTemp.columns?.filter((im) => {
+        return !im.noAdd || !im.noEdit;
+      });
+      for (let i = 0; i < propsTemp.columns.length; i++) {
+        let im = propsTemp.columns[i];
+        if (
+          'cascader,select,radio'.indexOf(im.formType) != -1 &&
+          im.props.url
+        ) {
+          let ops = await im.props.url({});
+          console.log('im.props.url({})', ops);
+          im.props.options = ops;
+        }
+      }
+      propsTemp.columns = this.convertTo2DArray(
+        propsTemp.columns,
+        this.props.groupSize ? this.props.groupSize : 1
+      );
+      this.$emit('propsChange', propsTemp);
+    },
+    //一维数组转成二维数组
+    convertTo2DArray(arr, groupSize) {
+      var result = [];
+      for (var i = 0; i < arr?.length; i += groupSize) {
+        result.push(arr.slice(i, i + groupSize));
+      }
+      return result;
+    }
+  }
+};
 </script>

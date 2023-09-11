@@ -9,38 +9,60 @@
     </div>
     <div class="login">
       <a-form :form="form" @submit="loginHandle">
-        <a-tabs size="large" :tabBarStyle="{ textAlign: 'center' }" style="padding: 0 2px">
+        <a-tabs
+          size="large"
+          :tabBarStyle="{ textAlign: 'center' }"
+          style="padding: 0 2px"
+        >
           <a-tab-pane key="1" tab="账户密码登录">
-            <a-alert v-show="error" type="error" :closable="true" :message="error" showIcon style="margin-bottom: 24px" />
+            <a-alert
+              v-show="error"
+              type="error"
+              :closable="true"
+              :message="error"
+              showIcon
+              style="margin-bottom: 24px"
+            />
             <a-form-item>
-              <a-input v-decorator="[
-                'username',
-                {
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入账户名',
-                      whitespace: true
-                    }
-                  ]
-                }
-              ]" autocomplete="autocomplete" size="large" placeholder="admin">
+              <a-input
+                v-decorator="[
+                  'username',
+                  {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输入账户名',
+                        whitespace: true
+                      }
+                    ]
+                  }
+                ]"
+                autocomplete="autocomplete"
+                size="large"
+                placeholder="admin"
+              >
                 <a-icon slot="prefix" type="user" />
               </a-input>
             </a-form-item>
             <a-form-item>
-              <a-input v-decorator="[
-                'password',
-                {
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入密码',
-                      whitespace: true
-                    }
-                  ]
-                }
-              ]" size="large" placeholder="888888" autocomplete="autocomplete" type="password">
+              <a-input
+                v-decorator="[
+                  'password',
+                  {
+                    rules: [
+                      {
+                        required: true,
+                        message: '请输入密码',
+                        whitespace: true
+                      }
+                    ]
+                  }
+                ]"
+                size="large"
+                placeholder="888888"
+                autocomplete="autocomplete"
+                type="password"
+              >
                 <a-icon slot="prefix" type="lock" />
               </a-input>
             </a-form-item>
@@ -59,7 +81,11 @@
                   </a-input>
                 </a-col>
                 <a-col :span="8" style="padding-left: 4px">
-                  <a-button style="width: 100%" class="captcha-button" size="large">获取验证码
+                  <a-button
+                    style="width: 100%"
+                    class="captcha-button"
+                    size="large"
+                    >获取验证码
                   </a-button>
                 </a-col>
               </a-row>
@@ -71,8 +97,13 @@
           <a style="float: right">忘记密码</a>
         </div>
         <a-form-item>
-          <a-button :loading="logging" style="width: 100%; margin-top: 24px" size="large" htmlType="submit"
-            type="primary">登录
+          <a-button
+            :loading="logging"
+            style="width: 100%; margin-top: 24px"
+            size="large"
+            htmlType="submit"
+            type="primary"
+            >登录
           </a-button>
         </a-form-item>
         <!-- <div>
@@ -150,7 +181,7 @@ export default {
           // 设置菜单列表
           this.setMenuTreeList(userInfo.menuTreeList);
 
-          // 获取路由信息 
+          // 获取路由信息
           loadRoutes(userInfo.menuTreeList, 'menuTreeList');
 
           this.$router.push('/auth/admin');

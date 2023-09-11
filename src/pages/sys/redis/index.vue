@@ -1,6 +1,15 @@
 <template>
-  <ManagePage :columns="columns" :data="data" :pagination="pagination" :renderObj="renderObj" @onSave="saveHandle"
-    @onSubmit="submitHandle" @onDelete="deleteHandle" @onSearch="searchHandle" @onReset="resetHandle">
+  <ManagePage
+    :columns="columns"
+    :data="data"
+    :pagination="pagination"
+    :renderObj="renderObj"
+    @onSave="saveHandle"
+    @onSubmit="submitHandle"
+    @onDelete="deleteHandle"
+    @onSearch="searchHandle"
+    @onReset="resetHandle"
+  >
     <!-- 其他的操作插槽 -->
     <!-- <template slot="otherOperationsContainer" slot-scope="{record}">
       <a-button type="primary" @click="toMonitor(record)">监控</a-button>

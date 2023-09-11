@@ -7,63 +7,62 @@
 import * as redis from '@/api/sys/redis';
 
 const columns = [
-
   {
     title: '名称',
     dataIndex: 'name',
     key: 'name',
-    rules: [{required: true, message: '请输入redis名称', trigger: 'blur'}],
-    width: 160,
+    rules: [{ required: true, message: '请输入redis名称', trigger: 'blur' }],
+    width: 160
   },
 
   {
     title: 'ip地址',
     dataIndex: 'host',
     key: 'host',
-    rules: [{required: true, message: '请输入ip地址', trigger: 'blur'}],
-    width: 160,
+    rules: [{ required: true, message: '请输入ip地址', trigger: 'blur' }],
+    width: 160
   },
 
   {
     title: '端口',
     dataIndex: 'port',
     key: 'port',
-    width: 80,
+    width: 80
   },
 
   {
     title: 'redis密码',
     dataIndex: 'password',
     key: 'password',
-    width: 160,
+    width: 160
   },
 
   {
     title: '版本号',
     dataIndex: 'redisVersion',
     key: 'redisVersion',
-    width: 160,
+    width: 160
   },
 
   {
     title: '运行模式',
     dataIndex: 'redisMode',
     key: 'redisMode',
-    width: 160,
+    width: 160
   },
 
   {
     title: '操作系统',
     dataIndex: 'os',
     key: 'os',
-    width: 160,
+    width: 160
   },
 
   {
     title: '连接数',
     dataIndex: 'connectedClients',
     key: 'connectedClients',
-    width: 160,
+    width: 160
   },
 
   {
@@ -101,16 +100,16 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{required: true, message: '请选择开启监控', trigger: 'change'}],
+    rules: [{ required: true, message: '请选择开启监控', trigger: 'change' }],
     formSort: 1,
-    width: 160,
+    width: 160
   },
 
   {
     title: '排序字段',
     dataIndex: 'sortBy',
     key: 'sortBy',
-    width: 160,
+    width: 160
   },
 
   {
@@ -122,15 +121,15 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
-    width: 160,
+    width: 160
   },
 
   {
@@ -142,17 +141,17 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择修改时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    width: 160,
-  },
+    width: 160
+  }
 ];
 
 // 模块配置
@@ -171,9 +170,9 @@ const permissionObj = {
   id: 'sys:redis',
   addBtn: 'sys:redis:add',
   editBtn: 'sys:redis:edit',
-  deleteBtn: 'sys:redis:delete',
+  deleteBtn: 'sys:redis:delete'
   // toMonitorBtn: 'sys:redis:assignRole',
-}
+};
 
 // 渲染对象
 // const renderObj = {
@@ -186,4 +185,4 @@ const permissionObj = {
 //   ]
 // }
 
-export {columns, moduleConfig,permissionObj};
+export { columns, moduleConfig, permissionObj };

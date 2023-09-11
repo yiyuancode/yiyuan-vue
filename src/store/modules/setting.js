@@ -50,7 +50,7 @@ export default {
       }
       const current = menuData.find((menu) => menu.fullPath === activatedFirst);
       return (current && current.children) || [];
-    },
+    }
   },
   mutations: {
     setDevice(state, isMobile) {

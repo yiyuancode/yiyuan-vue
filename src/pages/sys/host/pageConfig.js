@@ -19,28 +19,30 @@ const columns = [
     dataIndex: 'hostName',
     key: 'hostName',
     rules: [{ required: true, message: '请输入主机名', trigger: 'blur' }],
-    width: 160,
+    width: 160
   },
   {
     title: 'IP地址',
     dataIndex: 'host',
     key: 'host',
     rules: [{ required: true, message: '请输入IP地址', trigger: 'blur' }],
-    width: 160,
+    width: 160
   },
   {
     title: 'SSH端口',
     dataIndex: 'sshPort',
     key: 'sshPort',
     rules: [{ required: true, message: '请输入SSH端口号', trigger: 'blur' }],
-    width: 160,
+    width: 160
   },
   {
     title: 'SSH登录用户名',
     dataIndex: 'sshUsername',
     key: 'sshUsername',
-    rules: [{ required: true, message: '请输入SSH登录用户名', trigger: 'blur' }],
-    width: 160,
+    rules: [
+      { required: true, message: '请输入SSH登录用户名', trigger: 'blur' }
+    ],
+    width: 160
   },
   {
     title: 'SSH登录密码',
@@ -52,7 +54,7 @@ const columns = [
       type: 'password'
     },
     rules: [{ required: true, message: '请输入SSH登录密码', trigger: 'blur' }],
-    width: 160,
+    width: 160
   },
   {
     title: '开启监控',
@@ -72,7 +74,7 @@ const columns = [
       { required: true, message: '请选择监控开启状态', trigger: 'change' }
     ],
     defaultValue: 0,
-    width: 100,
+    width: 100
   },
   {
     title: '创建时间',
@@ -83,7 +85,7 @@ const columns = [
     searchObj: {
       formType: 'rangePicker'
     },
-    width: 160,
+    width: 160
   },
   {
     title: '修改时间',
@@ -94,7 +96,7 @@ const columns = [
     },
     noAdd: true,
     noEdit: true,
-    width: 160,
+    width: 160
   }
 ];
 
@@ -109,25 +111,24 @@ const moduleConfig = {
   moduleName: '用户'
 };
 
-
 // 权限对象
 const permissionObj = {
-  id: ['sys:host','sys:hostMonitor'],
+  id: ['sys:host', 'sys:hostMonitor'],
   addBtn: 'sys:host:add',
   editBtn: 'sys:host:edit',
   deleteBtn: 'sys:host:delete',
   toHostMonitorBtn: 'sys:hostMonitor:queryCount'
-}
+};
 
 // 渲染对象
 const renderObj = {
   otherOperationList: [
     {
-      name: "监控",
-      methodName: "toHostMonitor",
-      btnName: 'toHostMonitorBtn',
+      name: '监控',
+      methodName: 'toHostMonitor',
+      btnName: 'toHostMonitorBtn'
     }
   ]
-}
+};
 
 export { columns, moduleConfig, permissionObj, renderObj };

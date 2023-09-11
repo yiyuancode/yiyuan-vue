@@ -7,26 +7,25 @@
 import * as tenantCategory from '@/api/sys/tenantCategory';
 
 const columns = [
-
   {
     title: '店铺分类名称',
     dataIndex: 'name',
     key: 'name',
-    width: 160,
+    width: 160
   },
 
   {
     title: '店铺分类描述',
     dataIndex: 'desc',
     key: 'desc',
-    width: 160,
+    width: 160
   },
 
   {
     title: '删除标记',
     dataIndex: 'idDel',
     key: 'idDel',
-    width: 160,
+    width: 160
   },
 
   {
@@ -38,15 +37,15 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
-    width: 160,
+    width: 160
   },
 
   {
@@ -58,17 +57,16 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择更新时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择更新时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
-    noSearch: true,
-  },
-
+    noSearch: true
+  }
 ];
 
 // 模块配置
@@ -82,13 +80,12 @@ const moduleConfig = {
   moduleName: '租户店铺分类'
 };
 
-
 // 权限对象
 const permissionObj = {
   id: 'sys:tenantCategory',
   addBtn: 'sys:tenantCategory:add',
   editBtn: 'sys:tenantCategory:edit',
-  deleteBtn: 'sys:tenantCategory:delete',
-}
+  deleteBtn: 'sys:tenantCategory:delete'
+};
 
-export {columns, moduleConfig,permissionObj};
+export { columns, moduleConfig, permissionObj };

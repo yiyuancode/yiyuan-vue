@@ -75,7 +75,7 @@ export default {
       'cachePage',
       'animate',
       'layout',
-      'pageWidth',
+      'pageWidth'
     ]),
     menuItemList() {
       return [

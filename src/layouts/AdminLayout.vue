@@ -1,5 +1,5 @@
 <template>
-  <a-layout :class="['admin-layout','beauty-scroll']"> 
+  <a-layout :class="['admin-layout', 'beauty-scroll']">
     <!-- 'beauty-scroll' -->
     <drawer v-if="isMobile" v-model="drawerOpen">
       <side-menu
@@ -58,8 +58,8 @@
         class="admin-layout-content"
         :style="`min-height: ${minHeight}px;`"
       >
-      <!-- class="beauty-scroll" -->
-        <div style="position: relative; width: 100%; height: 100%" >
+        <!-- class="beauty-scroll" -->
+        <div style="position: relative; width: 100%; height: 100%">
           <slot></slot>
         </div>
       </a-layout-content>

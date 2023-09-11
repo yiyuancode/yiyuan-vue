@@ -119,19 +119,18 @@ const permissionObj = {
   addBtn: 'auth:admin:add',
   editBtn: 'auth:admin:edit',
   deleteBtn: 'auth:admin:delete',
-  assignRoleBtn: 'auth:admin:assignRole',
-}
+  assignRoleBtn: 'auth:admin:assignRole'
+};
 
 // 渲染对象
 const renderObj = {
   otherOperationList: [
     {
-      name: "分配角色",
-      methodName: "assignRole",
-      btnName : 'assignRoleBtn',
+      name: '分配角色',
+      methodName: 'assignRole',
+      btnName: 'assignRoleBtn'
     }
   ]
-}
-
+};
 
 export { columns, moduleConfig, permissionObj, renderObj };

@@ -4,9 +4,8 @@
  * @author  一源团队-花和尚
  * @date 2023-09-09
  */
-import * as tenant from "@/api/sys/tenant";
-import * as area from "@/api/sys/area";
-
+import * as tenant from '@/api/sys/tenant';
+import * as area from '@/api/sys/area';
 
 const columns = [
   {
@@ -14,10 +13,9 @@ const columns = [
     dataIndex: 'id',
     key: 'id',
     width: 160,
-    rules: [{required: true, message: '请输入商户id', trigger: 'blur'},],
+    rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }],
     noEdit: true,
-    noAdd: true,
-
+    noAdd: true
   },
 
   {
@@ -25,15 +23,15 @@ const columns = [
     dataIndex: 'spmShopCityId',
     key: 'spmShopCityId',
     width: 160,
-    rules: [{required: true, message: '请输入归属区域', trigger: 'blur'},],
+    rules: [{ required: true, message: '请输入归属区域', trigger: 'blur' }],
     //值类型
-    valType: "object",
-    formType: "cascader",
+    valType: 'object',
+    formType: 'cascader',
     props: {
       options: [],
-      url: area.getCityTree,
+      url: area.getCityTree
     },
-    fieldNames: {label: 'name', value: 'id', children: 'child'}
+    fieldNames: { label: 'name', value: 'id', children: 'child' }
   },
 
   {
@@ -41,8 +39,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     width: 160,
-    rules: [{required: true, message: '请输入商户名称', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入商户名称', trigger: 'blur' }]
   },
 
   {
@@ -50,8 +47,7 @@ const columns = [
     dataIndex: 'legalPersonName',
     key: 'legalPersonName',
     width: 160,
-    rules: [{required: true, message: '请输入法人名称', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入法人名称', trigger: 'blur' }]
   },
 
   {
@@ -59,8 +55,7 @@ const columns = [
     dataIndex: 'email',
     key: 'email',
     width: 160,
-    rules: [{required: true, message: '请输入联系邮箱', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入联系邮箱', trigger: 'blur' }]
   },
 
   {
@@ -68,8 +63,7 @@ const columns = [
     dataIndex: 'phone',
     key: 'phone',
     width: 160,
-    rules: [{required: true, message: '请输入联系手机', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入联系手机', trigger: 'blur' }]
   },
 
   {
@@ -77,8 +71,7 @@ const columns = [
     dataIndex: 'detailedAddress',
     key: 'detailedAddress',
     width: 160,
-    rules: [{required: true, message: '请输入详细地址', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }]
   },
 
   {
@@ -86,8 +79,9 @@ const columns = [
     dataIndex: 'socialCreditCode',
     key: 'socialCreditCode',
     width: 160,
-    rules: [{required: true, message: '请输入统一社会信用代码', trigger: 'blur'},],
-
+    rules: [
+      { required: true, message: '请输入统一社会信用代码', trigger: 'blur' }
+    ]
   },
 
   {
@@ -95,8 +89,9 @@ const columns = [
     dataIndex: 'businessLicenseImage',
     key: 'businessLicenseImage',
     width: 160,
-    rules: [{required: true, message: '请输入营业执照电子版', trigger: 'blur'},],
-
+    rules: [
+      { required: true, message: '请输入营业执照电子版', trigger: 'blur' }
+    ]
   },
 
   {
@@ -104,8 +99,9 @@ const columns = [
     dataIndex: 'legalPersonIdFrontImage',
     key: 'legalPersonIdFrontImage',
     width: 160,
-    rules: [{required: true, message: '请输入法人身份证正面', trigger: 'blur'},],
-
+    rules: [
+      { required: true, message: '请输入法人身份证正面', trigger: 'blur' }
+    ]
   },
 
   {
@@ -113,8 +109,9 @@ const columns = [
     dataIndex: 'legalPersonIdBackImage',
     key: 'legalPersonIdBackImage',
     width: 160,
-    rules: [{required: true, message: '请输入法人身份证反面', trigger: 'blur'},],
-
+    rules: [
+      { required: true, message: '请输入法人身份证反面', trigger: 'blur' }
+    ]
   },
 
   {
@@ -122,8 +119,7 @@ const columns = [
     dataIndex: 'remark',
     key: 'remark',
     width: 160,
-    rules: [{required: true, message: '请输入申请备注', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入申请备注', trigger: 'blur' }]
   },
 
   {
@@ -132,65 +128,54 @@ const columns = [
     key: 'status',
     width: 160,
     //值类型
-    valType: "object",
+    valType: 'object',
     searchObj: {
-      formType: "select",
+      formType: 'select',
       options: [
         {
-
           label: '待审核',
-          value: 0,
-
+          value: 0
         },
         {
-
           label: '通过',
-          value: 1,
-
+          value: 1
         },
         {
-
           label: '被驳回',
-          value: 2,
-
-        },
+          value: 2
+        }
       ]
     },
-    formType: "radioGroup",
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '待审核',
-          value: 0,
+          value: 0
         },
         {
           label: '通过',
-          value: 1,
+          value: 1
         },
         {
           label: '被驳回',
-          value: 2,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: 2
         }
+      ],
+      style: {
+        width: '100%'
+      }
     },
-    rules: [
-      {required: true, message: '请选择入驻状态', trigger: 'change'},
-    ],
+    rules: [{ required: true, message: '请选择入驻状态', trigger: 'change' }],
     defaultValue: 0,
-    formSort: 1,
-
+    formSort: 1
   },
 
   {
     title: '排序',
     dataIndex: 'sort',
     key: 'sort',
-    width: 160,
-
+    width: 160
   },
 
   {
@@ -199,47 +184,41 @@ const columns = [
     key: 'isDel',
     width: 160,
     //值类型
-    valType: "object",
+    valType: 'object',
     searchObj: {
-      formType: "select",
+      formType: 'select',
       options: [
         {
-
           label: '未删除',
-          value: 0,
-
+          value: 0
         },
         {
-
           label: '已删除',
-          value: 1,
-
-        },
+          value: 1
+        }
       ]
     },
-    formType: "radioGroup",
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '未删除',
-          value: 0,
+          value: 0
         },
         {
           label: '已删除',
-          value: 1,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: 1
         }
+      ],
+      style: {
+        width: '100%'
+      }
     },
     rules: [
-      {required: true, message: '请选择逻辑删除标记', trigger: 'change'},
+      { required: true, message: '请选择逻辑删除标记', trigger: 'change' }
     ],
     defaultValue: 0,
-    formSort: 1,
-
+    formSort: 1
   },
 
   {
@@ -248,21 +227,18 @@ const columns = [
     key: 'createTime',
     width: 160,
     searchObj: {
-      formType: "rangePicker"
+      formType: 'rangePicker'
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择创建时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
-    noAdd: true,
-
+    noAdd: true
   },
 
   {
@@ -271,22 +247,19 @@ const columns = [
     key: 'updateTime',
     width: 160,
     searchObj: {
-      formType: "rangePicker"
+      formType: 'rangePicker'
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择更新时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择更新时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
-    noSearch: true,
-
+    noSearch: true
   },
 
   {
@@ -297,8 +270,7 @@ const columns = [
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    noShow: true,
-
+    noShow: true
   },
 
   {
@@ -309,34 +281,29 @@ const columns = [
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    noShow: true,
-
-  },
-
-
-]
-
+    noShow: true
+  }
+];
 
 // 模块配置
 const moduleConfig = {
   module: tenant,
-  moduleAdd: "addTenant",
-  moduleEdit: "editTenant",
-  moduleDelete: "deleteTenant",
-  moduleGetList: "getTenantPageList",
-  moduleGetDetail: "getTenantDetail",
-  getCityTree: "getCityTree",
-  moduleName: "商户",
-}
+  moduleAdd: 'addTenant',
+  moduleEdit: 'editTenant',
+  moduleDelete: 'deleteTenant',
+  moduleGetList: 'getTenantPageList',
+  moduleGetDetail: 'getTenantDetail',
+  getCityTree: 'getCityTree',
+  moduleName: '商户'
+};
 
 // 权限对象
 const permissionObj = {
   id: 'sys:tenant',
   addBtn: 'sys:tenant:add',
   editBtn: 'sys:tenant:edit',
-  deleteBtn: 'sys:tenant:delete',
+  deleteBtn: 'sys:tenant:delete'
   // assignRoleBtn: 'sys:tenant:assignRole',
-}
+};
 
-export {columns, moduleConfig, permissionObj};
-
+export { columns, moduleConfig, permissionObj };
