@@ -16,6 +16,7 @@ import dataV from '@jiaminghi/data-view';
 import addFrom from '@/mixins/addFrom.js';
 //在main.js引入qs
 import qs from 'qs';
+// import '@/utils/rem.js'
 
 Vue.use(dataV);
 

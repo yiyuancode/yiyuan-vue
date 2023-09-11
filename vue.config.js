@@ -1,13 +1,21 @@
 let path = require('path');
 const webpack = require('webpack');
 const ThemeColorReplacer = require('webpack-theme-color-replacer');
-const { getThemeColors, modifyVars } = require('./src/utils/themeUtil');
-const { resolveCss } = require('./src/utils/theme-color-replacer-extend');
+const {getThemeColors, modifyVars} = require('./src/utils/themeUtil');
+const {resolveCss} = require('./src/utils/theme-color-replacer-extend');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
 const productionGzipExtensions = ['js', 'css'];
 const isProd = process.env.NODE_ENV === 'production';
 
+// // 引入等比适配插件
+// const px2rem = require('postcss-px2rem')
+//
+// // 配置基本大小
+// const postcss = px2rem({
+//   // 基准大小 baseSize，需要和rem.js中相同
+//   remUnit: 16
+// })
 const assetsCDN = {
   // webpack build externals
   externals: {
@@ -100,6 +108,11 @@ module.exports = {
   },
   css: {
     loaderOptions: {
+      // postcss: {
+      //   plugins: [
+      //     postcss
+      //   ]
+      // },
       less: {
         lessOptions: {
           modifyVars: modifyVars(),

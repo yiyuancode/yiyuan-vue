@@ -24,39 +24,39 @@
 </template>
 
 <script>
-import ManagePage from '@/components/manage/ManagePage.vue';
-import manage from '@/mixins/manage';
-import { columns, moduleConfig, permissionObj } from './pageConfig';
-import AddForm from '@/components/addForm/AddForm.vue';
+  import ManagePage from '@/components/manage/ManagePage.vue';
+  import manage from '@/mixins/manage';
+  import {columns, moduleConfig, permissionObj} from './pageConfig';
+  import AddForm from '@/components/addForm/AddForm.vue';
 
-export default {
-  components: {
-    ManagePage,
-    AddForm
-  },
-  mixins: [manage({ permissionObj })],
-  data() {
-    return {
-      columns,
-      ...moduleConfig
-    };
-  },
-  methods: {
-    generateCodeClick() {
-      let data = {
-        title: '商户入驻申请',
-        show: true,
-        loading: false,
-        columns: columns,
-        width: 450
-      };
-      this.$refs.addForm.onOpen(data);
+  export default {
+    components: {
+      ManagePage,
+      AddForm
     },
-    addFormPropsSubmit(data) {
-      console.log('addFormPropsSubmit', data);
+    mixins: [manage({permissionObj})],
+    data() {
+      return {
+        columns,
+        ...moduleConfig
+      };
+    },
+    methods: {
+      generateCodeClick() {
+        let data = {
+          title: '商户入驻申请',
+          show: true,
+          loading: false,
+          columns: columns,
+          groupSize: 2
+        };
+        this.$refs.addForm.onOpen(data);
+      },
+      addFormPropsSubmit(data) {
+        console.log('addFormPropsSubmit', data);
+      }
     }
-  }
-};
+  };
 </script>
 
 <style lang="less" scoped></style>
