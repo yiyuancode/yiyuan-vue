@@ -5,19 +5,19 @@ const routerMap = {
   },
 }
 const i18nMap = {
-  host: {
-    name: '主机记录管理'
+  CN: {
+    host: {name: '主机管理'},
   },
+  US: {
+    host: {name: 'Host Management'},
+  },
+  HK: {
+    host: {name: '主機管理'},
+  }
 }
 
-const i18nMapUS = {
-  host: {
-    name: 'Host Mange'
-  },
-}
 
 export default {
   i18nMap,
   routerMap,
-  i18nMapUS
 };

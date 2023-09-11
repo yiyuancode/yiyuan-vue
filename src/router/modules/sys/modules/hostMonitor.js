@@ -5,18 +5,19 @@ const routerMap = {
     invisible: true,
   },
 }
+
 const i18nMap = {
-  hostMonitor: {
-    name: '服务器监控面板'
+  CN: {
+    hostMonitor: {name: '服务器监控面板'},
   },
-}
-const i18nMapUS = {
-  hostMonitor: {
-    name: 'HostMonitor Mange'
+  US: {
+    hostMonitor: {name: 'Server Monitoring Panel'},
   },
+  HK: {
+    hostMonitor: {name: '伺服器監控面板'},
+  }
 }
 export default {
   i18nMap,
   routerMap,
-  i18nMapUS
 };

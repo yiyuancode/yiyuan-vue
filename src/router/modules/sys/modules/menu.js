@@ -4,20 +4,20 @@ const routerMap = {
     component: () => import('@/pages/sys/menu/index')
   },
 }
+
+
 const i18nMap = {
-  menu: {
-    name: '菜单管理'
+  CN: {
+    menu: {name: '菜单管理'},
   },
-}
-
-
-const i18nMapUS = {
-  menu: {
-    name: 'Menu Mange'
+  US: {
+    menu: {name: 'Menu Management'},
   },
+  HK: {
+    menu: {name: '選單管理'},
+  }
 }
 export default {
   i18nMap,
-  routerMap,
-  i18nMapUS
+  routerMap
 };

@@ -5,20 +5,20 @@ const routerMap = {
     invisible: true,
   },
 }
+
+
 const i18nMap = {
-  redisMonitor: {
-    name: 'Redis监控面板'
+  CN: {
+    redisMonitor: {name: 'Redis监控面板'},
   },
-}
-
-const i18nMapUS = {
-  redisMonitor: {
-    name: 'RedisMonitor Mange'
+  US: {
+    redisMonitor: {name: 'Redis Monitoring Panel'},
   },
+  HK: {
+    redisMonitor: {name: 'Redis監控面板'},
+  }
 }
-
 export default {
   i18nMap,
   routerMap,
-  i18nMapUS
 };

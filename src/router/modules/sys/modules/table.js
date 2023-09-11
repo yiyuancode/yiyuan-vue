@@ -5,19 +5,17 @@ const routerMap = {
   },
 }
 const i18nMap = {
-  table: {
-    name: '数据库管理'
+  CN: {
+    table: {name: '数据库管理'},
   },
-}
-
-const i18nMapUS = {
-  table: {
-    name: 'Table Mange'
+  US: {
+    table: {name: 'Database Management'},
   },
+  HK: {
+    table: {name: '資料庫管理'},
+  }
 }
-
 export default {
   i18nMap,
   routerMap,
-  i18nMapUS
 };

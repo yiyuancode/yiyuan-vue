@@ -2,13 +2,6 @@ import {console} from 'vuedraggable/src/util/helper';
 
 const modulesFiles = require.context('../modules', true, /\/index\.js$/);
 console.log('modulesFiles', modulesFiles);
-const modulesI18nMap = modulesFiles.keys().reduce((modules, modulePath) => {
-  const value = modulesFiles(modulePath);
-  modules = {...modules, ...value.default.i18nMap};
-  return modules;
-}, {});
-console.log('modulesI18nMap', modulesI18nMap);
-
 
 const modulesRouterMap = modulesFiles.keys().reduce((modules, modulePath) => {
   const value = modulesFiles(modulePath);

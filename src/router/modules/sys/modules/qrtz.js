@@ -4,20 +4,20 @@ const routerMap = {
     component: () => import('@/pages/sys/qrtz/index')
   },
 }
+
+
 const i18nMap = {
-  qrtz: {
-    name: '定时任务管理'
+  CN: {
+    qrtz: {name: '定时任务管理'},
   },
-}
-
-const i18nMapUS = {
-  qrtz: {
-    name: 'Menu Mange'
+  US: {
+    qrtz: {name: 'Scheduled Tsk Mnagement'},
   },
+  HK: {
+    qrtz: {name: '定時任務管理'},
+  }
 }
-
 export default {
   i18nMap,
   routerMap,
-  i18nMapUS
 };

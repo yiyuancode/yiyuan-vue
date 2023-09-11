@@ -7,19 +7,20 @@ const routerMap = {
     }
   },
 }
-const i18nMap = {
-  log: {
-    name: '日志管理'
-  },
-}
 
-const i18nMapUS = {
-  log: {
-    name: 'Log Mange'
+
+const i18nMap = {
+  CN: {
+    log: {name: '日志管理'},
   },
+  US: {
+    log: {name: 'Log Management'},
+  },
+  HK: {
+    log: {name: '日誌管理'},
+  }
 }
 export default {
   i18nMap,
   routerMap,
-  i18nMapUS
 };

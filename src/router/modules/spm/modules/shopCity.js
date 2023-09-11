@@ -5,19 +5,17 @@ const routerMap = {
   },
 }
 const i18nMap = {
-  shopCity:
-    {
-      name: "城市区域管理"
-    }
-  ,
-}
-const i18nMapUS = {
-  shopCity: {
-    name: 'ShopCity Mange'
+  CN: {
+    shopCity: {name: '店铺区域管理'},
   },
+  US: {
+    shopCity: {name: 'Store Area Management'},
+  },
+  HK: {
+    shopCity: {name: '店鋪區域管理'},
+  }
 }
 export default {
   i18nMap,
-  routerMap,
-  i18nMapUS
+  routerMap
 };

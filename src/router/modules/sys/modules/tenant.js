@@ -5,19 +5,17 @@ const routerMap = {
   },
 }
 const i18nMap = {
-  tenant: {
-    name: '商户管理'
+  CN: {
+    tenant: {name: '商户管理'},
   },
-}
-
-const i18nMapUS = {
-  tenant: {
-    name: 'Tenant Mange'
+  US: {
+    tenant: {name: 'Merchant Management'},
   },
+  HK: {
+    tenant: {name: '商戶管理'},
+  }
 }
-
 export default {
   i18nMap,
-  routerMap,
-  i18nMapUS
+  routerMap
 };

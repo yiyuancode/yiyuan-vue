@@ -5,19 +5,18 @@ const routerMap = {
   },
 }
 const i18nMap = {
-  redis: {
-    name: 'Redis管理'
+  CN: {
+    redis: {name: 'Redis管理'},
   },
-}
-
-const i18nMapUS = {
-  redis: {
-    name: 'Redis Mange'
+  US: {
+    redis: {name: 'Redis Management'},
   },
+  HK: {
+    redis: {name: 'Redis管理'},
+  }
 }
 
 export default {
   i18nMap,
-  routerMap,
-  i18nMapUS
+  routerMap
 };
