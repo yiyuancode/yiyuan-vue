@@ -1,28 +1,38 @@
 import {console} from "vuedraggable/src/util/helper";
 
-const modulesFiles2 = require.context('./modules', true, /\.js$/);
-console.log("modulesFiles2", modulesFiles2)
+const modulesFiles = require.context('./modules', true, /\.js$/);
+console.log("modulesFiles222", modulesFiles)
 
 
-const modulesI18nMap = modulesFiles2.keys().reduce((modules, modulePath) => {
-  const value = modulesFiles2(modulePath);
+const modulesI18nMap = modulesFiles.keys().reduce((modules, modulePath) => {
+  const value = modulesFiles(modulePath);
   console.log('modules2.value', value.default);
   modules = {...modules, ...value.default.i18nMap};
   return modules;
 }, {});
 console.log('modulesI18nMap222', modulesI18nMap);
 
+const modulesRouterMap = modulesFiles.keys().reduce((modules, modulePath) => {
+  const value = modulesFiles(modulePath);
+  console.log('modules2.value', value);
+  modules = {...modules, ...value.default.routerMap};
+  return modules;
+}, {});
+console.log('modulesRouterMap222', modulesRouterMap);
+
 const routerMap = {
   sys: {
     name: '系统管理',
     component: () => import('@/layouts/BlankView')
   },
+  ...modulesRouterMap
 }
 
 
 const i18nMap = {
   sys: {
     name: '系统管理',
+    ...modulesI18nMap
   }
 }
 export default {
