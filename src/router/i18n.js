@@ -13,6 +13,7 @@ const modulesI18nMap = modulesFiles.keys().reduce((modules, modulePath) => {
   return modules;
 }, {});
 
+
 module.exports = {
   messages: {
     CN: {

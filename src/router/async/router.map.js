@@ -1,15 +1,8 @@
-import {console} from 'vuedraggable/src/util/helper';
 
+import {getRouterMapMerger} from '@/utils/routerAutoMerger.js'
 const modulesFiles = require.context('../modules', true, /\/index\.js$/);
-console.log('modulesFiles', modulesFiles);
+const {modulesRouterMap} = getRouterMapMerger(modulesFiles);
 
-const modulesRouterMap = modulesFiles.keys().reduce((modules, modulePath) => {
-  const value = modulesFiles(modulePath);
-  console.log('modules2.value', value);
-  modules = {...modules, ...value.default.routerMap};
-  return modules;
-}, {});
-console.log('modulesRouterMap', modulesRouterMap);
 // 视图组件
 const view = {
   tabs: () => import('@/layouts/tabs'),
