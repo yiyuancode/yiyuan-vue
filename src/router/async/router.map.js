@@ -49,19 +49,6 @@ const routerMap = {
     component: () => import('@/pages/dashboard/workplace/index')
   },
 
-  role: {
-    name: '角色管理',
-    component: () => import('@/pages/auth/role/index')
-  },
-  auth: {
-    name: '权限管理',
-    component: view.blank,
-    icon: 'security-scan'
-  },
-  admin: {
-    name: '用户管理',
-    component: () => import('@/pages/auth/admin/index')
-  },
   about: {
     name: "关于",
     component: () => import('@/pages/about/index.vue')
