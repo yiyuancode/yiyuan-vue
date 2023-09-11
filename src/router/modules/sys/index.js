@@ -4,35 +4,42 @@ const {modulesI18nMap, modulesRouterMap} = getRouterMerger(modulesFiles);
 
 
 const routerMap = {
-  sys: {
-    name: 'sys',
-    component: () => import('@/layouts/BlankView')
-  },
-  ...modulesRouterMap
+
+sys: {
+    name: "sys",
+  component: () => import( '@/layouts/BlankView'),
+},
+    ...modulesRouterMap
+
 }
-
 const i18nMap = {
-  CN: {
-    sys: {
-      name: '系统管理',
-      ...modulesI18nMap.CN
-
-    },
-  },
-  US: {
-    sys: {
-      name: 'System Management',
-      ...modulesI18nMap.US
-    },
-  },
-  HK: {
-    sys: {
-      name: '系統管理',
-      ...modulesI18nMap.HK
-    },
-  }
+    CN: {
+sys: {
+    name: '系统管理'
+        ,
+                ...modulesI18nMap.CN
+},
+},
+US: {
+    sys:
+    {
+        name: 'Sys Management',
+                    ...modulesI18nMap.US
+    }
+,
+},
+HK: {
+    sys:
+    {
+        name: '系统管理',
+                    ...modulesI18nMap.HK
+    }
+,
+}
 }
 export default {
-  i18nMap,
-  routerMap
+    i18nMap,
+    routerMap
 };
+
+

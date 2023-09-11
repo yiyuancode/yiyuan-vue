@@ -5,7 +5,7 @@
  * @date 2023-09-09
  */
 import * as tenant from "@/api/sys/tenant";
-import * as shopCity from "@/api/spm/shopCity";
+import * as area from "@/api/sys/area";
 
 
 const columns = [
@@ -31,7 +31,7 @@ const columns = [
     formType: "cascader",
     props: {
       options: [],
-      url: shopCity.getCityTree,
+      url: area.getCityTree,
     },
     fieldNames: {label: 'name', value: 'id', children: 'child'}
   },

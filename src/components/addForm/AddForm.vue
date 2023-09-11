@@ -270,7 +270,6 @@
             im.props.options = ops;
           }
         }
-
         propsTemp.columns = this.convertTo2DArray(propsTemp.columns, this.props.groupSize ? this.props.groupSize : 1);
         this.$emit('propsChange', propsTemp);
       },
