@@ -114,6 +114,7 @@ export async function getCityTreeById(data) {
  * @date 2023-09-10
  */
 export async function getCityTree(data) {
+  console.log(data);
   const resp = await request({
     url: '/spm/shopCity/getCityTree',
     params: data

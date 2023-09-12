@@ -72,30 +72,20 @@ const columns = [
     //值类型
     valType: 'object',
     searchObj: {
-      formType: 'select',
-      options: [
-        {
-          label: '开启',
-          value: 0
-        },
-        {
-          label: '关闭',
-          value: 1
-        }
-      ]
+      formType: 'select'
     },
+    options: [
+      {
+        label: '开启',
+        value: 0
+      },
+      {
+        label: '关闭',
+        value: 1
+      }
+    ],
     formType: 'radioGroup',
     props: {
-      options: [
-        {
-          label: '开启',
-          value: 0
-        },
-        {
-          label: '关闭',
-          value: 1
-        }
-      ],
       style: {
         width: '100%'
       }
@@ -171,18 +161,6 @@ const permissionObj = {
   addBtn: 'sys:redis:add',
   editBtn: 'sys:redis:edit',
   deleteBtn: 'sys:redis:delete'
-  // toMonitorBtn: 'sys:redis:assignRole',
 };
-
-// 渲染对象
-// const renderObj = {
-//   otherOperationList: [
-//     {
-//       name: "分配角色",
-//       methodName: "assignRole",
-//       btnName : 'assignRoleBtn',
-//     }
-//   ]
-// }
 
 export { columns, moduleConfig, permissionObj };

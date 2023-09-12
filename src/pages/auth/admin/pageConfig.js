@@ -52,22 +52,22 @@ const columns = [
     key: 'platform',
     valType: 'object',
     searchObj: {
-      formType: 'select',
-      options: [
-        {
-          label: '平台端',
-          value: 0
-        },
-        {
-          label: '租户端',
-          value: 1
-        },
-        {
-          label: '移动端',
-          value: 2
-        }
-      ]
+      formType: 'select'
     },
+    options: [
+      {
+        label: '平台端',
+        value: 0
+      },
+      {
+        label: '租户端',
+        value: 1
+      },
+      {
+        label: '移动端',
+        value: 2
+      }
+    ],
     noAdd: true,
     noEdit: true
   },

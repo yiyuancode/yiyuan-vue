@@ -11,6 +11,7 @@
     @onSearch="searchHandle"
     @onSubmit="submitHandle"
     @onOtherEventChange="otherEventChangeHandle"
+    @onChange="tableChangeHandle"
   >
     <!-- 其他的操作插槽 -->
     <!-- <template slot="otherOperationsContainer" slot-scope="{record}">

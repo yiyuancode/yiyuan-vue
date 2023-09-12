@@ -26,12 +26,11 @@ const columns = [
     width: 160,
     rules: [{ required: true, message: '请输入归属区域', trigger: 'blur' }],
     //值类型
-    valType: 'object',
     formType: 'cascader',
     props: {
-      options: [],
       url: area.getCityTree
     },
+    options: [],
     fieldNames: { label: 'name', value: 'id', children: 'child' }
   },
 

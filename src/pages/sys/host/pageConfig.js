@@ -1,16 +1,4 @@
 import * as admin from '@/api/sys/host';
-import _ from 'lodash';
-
-const monitorStatsList = [
-  {
-    label: '开启',
-    value: 0
-  },
-  {
-    label: '关闭',
-    value: 1
-  }
-];
 
 // 表格的table配置项
 const columns = [
@@ -62,13 +50,21 @@ const columns = [
     key: 'isMonitorEnabled',
     valType: 'object',
     formType: 'radioGroup',
+    options: [
+      {
+        label: '开启',
+        value: 0
+      },
+      {
+        label: '关闭',
+        value: 1
+      }
+    ],
     props: {
-      options: _.cloneDeep(monitorStatsList),
       style: { width: '100%' }
     },
     searchObj: {
-      formType: 'select',
-      options: monitorStatsList
+      formType: 'select'
     },
     rules: [
       { required: true, message: '请选择监控开启状态', trigger: 'change' }

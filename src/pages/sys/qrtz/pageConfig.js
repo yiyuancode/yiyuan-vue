@@ -68,38 +68,24 @@ const columns = [
     //值类型
     valType: 'object',
     searchObj: {
-      formType: 'select',
-      options: [
-        {
-          label: '暂停',
-          value: 0
-        },
-        {
-          label: '执行中',
-          value: 1
-        },
-        {
-          label: '已结束',
-          value: 2
-        }
-      ]
+      formType: 'select'
     },
+    options: [
+      {
+        label: '暂停',
+        value: 0
+      },
+      {
+        label: '执行中',
+        value: 1
+      },
+      {
+        label: '已结束',
+        value: 2
+      }
+    ],
     formType: 'radioGroup',
     props: {
-      options: [
-        {
-          label: '暂停',
-          value: 0
-        },
-        {
-          label: '执行中',
-          value: 1
-        },
-        {
-          label: '已结束',
-          value: 2
-        }
-      ],
       style: {
         width: '100%'
       }

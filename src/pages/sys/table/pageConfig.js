@@ -78,7 +78,6 @@ const permissionObj = {
   addBtn: 'sys:table:add',
   editBtn: 'sys:table:edit',
   deleteBtn: 'sys:table:delete'
-  // assignRoleBtn: 'sys:tenant:assignRole',
 };
 
 export { columns, moduleConfig, permissionObj };

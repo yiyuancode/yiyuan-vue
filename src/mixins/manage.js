@@ -79,7 +79,7 @@ export default function (opts = {}) {
   const permissions = store.state.account.permissions;
   // 按钮权限对象
   if (opts.permissionObj) {
-    const {id} = opts.permissionObj;
+    const { id } = opts.permissionObj;
 
     const operationList = [];
     if (Array.isArray(id)) {
@@ -137,7 +137,7 @@ export default function (opts = {}) {
       },
       // 提交的回调
       async submitHandle(opts = {}) {
-        const {opType, id, model, done} = opts;
+        const { opType, id, model, done } = opts;
 
         // 如果处理数据方法存在
         if (this.handleSubmitData) {
@@ -185,7 +185,7 @@ export default function (opts = {}) {
             this.searchObj
           );
           if (dataResult) {
-            const {total, records} = dataResult;
+            const { total, records } = dataResult;
 
             // 处理返回的一个记录数据
             if (this.objColumnsArr.length || this.handleRecord) {
@@ -209,12 +209,12 @@ export default function (opts = {}) {
       },
       // 点击添加和编辑
       async saveHandle(opts = {}) {
-        const {id, done} = opts;
+        const { id, done } = opts;
 
         if (id) {
           const detailInfo = await this.getDetail(id);
 
-          const newModel = {...detailInfo};
+          const newModel = { ...detailInfo };
           for (let prop in detailInfo) {
             if (this.objColumnsArr.includes(prop)) {
               newModel[prop] = newModel[prop].value;
@@ -244,6 +244,13 @@ export default function (opts = {}) {
           ...defaultSearchObj
         };
 
+        this.getData();
+      },
+      // 表格变化处理回调函数
+      tableChangeHandle(pagination) {
+        this.pagination.pageSize = this.searchObj.pageSize =
+          pagination.pageSize;
+        this.pagination.current = this.searchObj.pageNum = pagination.current;
         this.getData();
       }
     }

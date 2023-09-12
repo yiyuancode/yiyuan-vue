@@ -54,9 +54,10 @@
       </div>
 
       <!-- 列表容器 -->
-      <div class="list-container beauty-scroll">
+      <div ref="listContainer" class="list-container">
         <a-table
           style="margin-bottom: 10px"
+          class="manage-table"
           :columns="columnsObj.uTheadData"
           :data-source="data"
           :pagination="pagination"
@@ -67,7 +68,8 @@
             }
           "
           :row-selection="rowSelection"
-          :scroll="{ x: 1300 }"
+          :scroll="{ x: scrollX, y: scrollY }"
+          @change="tableChangeHandle"
         >
           <!-- 进行一个自定义插槽的遍历 -->
 
@@ -91,8 +93,8 @@
               <a-button
                 v-if="uRenderObj.editBtn.isOpen"
                 type="primary"
-                @click="editHandle(record.id)"
                 style="margin-right: 5px"
+                @click="editHandle(record.id)"
                 >{{ uRenderObj.editBtn.text }}</a-button
               >
 
@@ -125,10 +127,10 @@
                 </a-button>
               </template>
 
-              <slot
+              <!-- <slot
                 name="otherOperationsContainer"
                 v-bind="{ text, record }"
-              ></slot>
+              ></slot> -->
             </div>
           </span>
         </a-table>
@@ -260,7 +262,9 @@ export default {
       formRef: 'submitForm',
       rules: {},
       model: {},
-      submitFormList: []
+      submitFormList: [],
+      scrollX: 0,
+      scrollY: 0
     };
   },
 
@@ -301,8 +305,35 @@ export default {
           defaultValue,
           valType,
           scopedSlots,
-          searchObj
+          options
         } = column;
+
+        let searchObj = column.searchObj;
+
+        if (options) {
+          if (props && !props.options) {
+            props.options = options;
+          }
+
+          const formTypeArr = ['select', 'cascader'];
+          if (
+            !searchObj ||
+            (typeof searchObj === 'object' && !searchObj.formType)
+          ) {
+            if (!searchObj) {
+              searchObj = {};
+            }
+            searchObj.formType = formType;
+          }
+
+          if (
+            typeof searchObj === 'object' &&
+            formTypeArr.includes(searchObj.formType) &&
+            !searchObj.options
+          ) {
+            searchObj.options = options;
+          }
+        }
 
         let rules = column.rules;
         if (typeof rules === 'function') {
@@ -423,14 +454,30 @@ export default {
       }
     }
   },
+
   created() {
     // 将columns里面带isSearch进行一个处理，处理成searchForm需要的数据
     eventBus.$emit('getObjColumn', this.columnsObj.objColumnsArr);
+    window.addEventListener('resize', () => {
+      this.setScrollPosition();
+    });
+  },
+  mounted() {
+    this.setScrollPosition();
   },
   methods: {
     // 调用方法
     callMethod(methodName, ...args) {
       this.$emit('onOtherEventChange', methodName, ...args);
+    },
+    // 设置
+    setScrollPosition() {
+      this.scrollX = this.$refs.listContainer.clientWidth;
+      this.scrollY = this.$refs.listContainer.clientHeight - 120;
+    },
+    // table的change变化
+    tableChangeHandle(pagination) {
+      this.$emit('onChange', pagination);
     },
     // 显示添加模态框的处理
     async addHandle() {
@@ -591,13 +638,37 @@ export default {
 .list-container {
   margin-top: 10px;
   flex: 1 1 auto;
-  overflow: auto;
+  overflow: hidden;
 
   /deep/ .ant-table {
     tr {
       td,
       th {
         min-width: 60px;
+      }
+    }
+  }
+
+  .manage-table {
+    /deep/ .ant-table-body-inner,
+    /deep/ .ant-table-body {
+      overflow-y: auto !important;
+      scrollbar-color: @primary-color @primary-2;
+      scrollbar-width: thin;
+      -ms-overflow-style: none;
+      position: relative;
+      &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background: @primary-color;
+      }
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0);
+        border-radius: 3px;
+        background: @primary-3;
       }
     }
   }

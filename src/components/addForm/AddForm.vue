@@ -182,181 +182,177 @@
   </div>
 </template>
 <script>
-  import _ from 'lodash';
+import _ from 'lodash';
 
-  import UploadSngle from '@/components/uploadSngle';
+import UploadSngle from '@/components/uploadSngle';
 
-  export default {
-    components: {UploadSngle},
+export default {
+  components: { UploadSngle },
+  props: {
     props: {
-      props: {
-        type: Object,
-        default: function () {
-          return {
-            search: () => {
-            },
-            groupSize: 1,
-            title: null,
-            show: false,
-            loading: false,
-            columns: [],
-            record: {}
-          };
-        }
-      }
-    },
-    data() {
-      return {
-        form: this.$form.createForm(this),
-        visible: false
-      };
-    },
-    created() {
-    },
-    methods: {
-      UploadSngle(fileUrl, item) {
-        console.log('UploadSngle.fileUrl', fileUrl);
-        console.log('UploadSngle.dataIndex', item);
-        item.fileUrl = fileUrl;
-      },
-      filter(inputValue, path, fieldNames) {
-        console.log('filter.inputValue', inputValue);
-        console.log('filter.path', path);
-        return path.some(
-          (option) =>
-            option[fieldNames.label]
-              .toLowerCase()
-              .indexOf(inputValue.toLowerCase()) > -1
-        );
-      },
-      handleChangeSelect(val, dataIndex, im2, option) {
-        console.log('handleSearchSelect.val', val);
-        console.log('handleSearchSelect.dataIndex', dataIndex);
-        console.log('handleSearchSelect.im2', im2);
-        console.log('handleSearchSelect.option', option);
-      },
-      onSubmit() {
-        this.form.validateFields((err, values) => {
-          if (!err) {
-            console.log('Received values of form: ', values);
-            let propsTemp = _.cloneDeep(this.props);
-            propsTemp.loading = true;
-            console.log('Received values of propsTemp: ', propsTemp);
-            propsTemp.columns.forEach((im) => {
-              im.forEach((im2) => {
-                if (im2.formType == `upload`) {
-                  console.log('im.formType == `upload`', im2.fileUrl);
-                  values[im2.dataIndex] = im2.fileUrl;
-                }
-              });
-            });
-            this.$emit('propsChange', propsTemp);
-            this.$emit('propsSubmit', values);
-            propsTemp.loading = true;
-
-            // this.addFormProps.loading = false;
-          }
-        });
-      },
-      ok(msg) {
-        let propsTemp = _.cloneDeep(this.props);
-        propsTemp.loading = false;
-        propsTemp.show = false;
-        this.form.resetFields();
-        propsTemp.columns.forEach((im) => {
-          im.forEach((im2) => {
-            if (im2.formType == `upload`) {
-              im2.fileUrl = '';
-            }
-          });
-        });
-
-        this.$emit('propsChange', propsTemp);
-        this.$message.success(msg);
-      },
-      no(msg) {
-        let propsTemp = _.cloneDeep(this.props);
-        propsTemp.loading = false;
-        propsTemp.show = true;
-        this.$emit('propsChange', propsTemp);
-        if (msg) {
-          this.$message.error(msg);
-        }
-      },
-      showDrawer() {
-        this.visible = true;
-      },
-      onClose() {
-        let propsTemp = _.cloneDeep(this.props);
-        propsTemp.show = false;
-        this.$emit('propsChange', propsTemp);
-      },
-      async onOpen(data) {
-        let propsTemp = _.cloneDeep(this.props);
-        propsTemp = {...propsTemp, ...data};
-        propsTemp.groupSize = propsTemp.groupSize ? propsTemp.groupSize : 1;
-        propsTemp.show = true;
-
-        propsTemp.columns.sort((a, b) => {
-          if (a.formType === 'upload' && b.formType !== 'upload') {
-            return 1; // a排在b后面
-          } else if (a.formType !== 'upload' && b.formType === 'upload') {
-            return -1; // a排在b前面
-          } else {
-            return 0; // 保持原有顺序
-          }
-        });
-
-        propsTemp.columns = propsTemp.columns?.filter((im) => {
-          return !im.noAdd || !im.noEdit;
-        });
-        for (let i = 0; i < propsTemp.columns.length; i++) {
-          let im = propsTemp.columns[i];
-          if (
-            'cascader,select,radio'.indexOf(im.formType) != -1 &&
-            im.props.url
-          ) {
-            let ops = await im.props.url({});
-            console.log('im.props.url({})', ops);
-            im.props.options = ops;
-          }
-        }
-        propsTemp.columns = this.convertTo2DArray(
-          propsTemp.columns,
-          propsTemp.groupSize
-        );
-        this.$emit('propsChange', propsTemp);
-      },
-      setFormData(data) {
-        let propsTemp = _.cloneDeep(this.props);
-        console.log("setData.propsTemp", propsTemp)
-        console.log("setData.data", data)
-        propsTemp.columns.forEach((im) => {
-          im.forEach((im2) => {
-            if (`upload`.indexOf(im.formType) == -1) {
-              let formItemData = {};
-              if (`cascader`.indexOf(im.formType) != -1) {
-                formItemData[im2.dataIndex] = data[im2.dataIndex]?.split(",");
-              } else {
-                formItemData[im2.dataIndex] = data[im2.dataIndex];
-              }
-
-              this.form.setFieldsValue(formItemData);
-            }
-          });
-        });
-      },
-      filterFormData() {
-
-      },
-      //一维数组转成二维数组
-      convertTo2DArray(arr, groupSize) {
-        var result = [];
-        for (var i = 0; i < arr?.length; i += groupSize) {
-          result.push(arr.slice(i, i + groupSize));
-        }
-        return result;
+      type: Object,
+      default: function () {
+        return {
+          search: () => {},
+          groupSize: 1,
+          title: null,
+          show: false,
+          loading: false,
+          columns: [],
+          record: {}
+        };
       }
     }
-  };
+  },
+  data() {
+    return {
+      form: this.$form.createForm(this),
+      visible: false
+    };
+  },
+  created() {},
+  methods: {
+    UploadSngle(fileUrl, item) {
+      console.log('UploadSngle.fileUrl', fileUrl);
+      console.log('UploadSngle.dataIndex', item);
+      item.fileUrl = fileUrl;
+    },
+    filter(inputValue, path, fieldNames) {
+      console.log('filter.inputValue', inputValue);
+      console.log('filter.path', path);
+      return path.some(
+        (option) =>
+          option[fieldNames.label]
+            .toLowerCase()
+            .indexOf(inputValue.toLowerCase()) > -1
+      );
+    },
+    handleChangeSelect(val, dataIndex, im2, option) {
+      console.log('handleSearchSelect.val', val);
+      console.log('handleSearchSelect.dataIndex', dataIndex);
+      console.log('handleSearchSelect.im2', im2);
+      console.log('handleSearchSelect.option', option);
+    },
+    onSubmit() {
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values);
+          let propsTemp = _.cloneDeep(this.props);
+          propsTemp.loading = true;
+          console.log('Received values of propsTemp: ', propsTemp);
+          propsTemp.columns.forEach((im) => {
+            im.forEach((im2) => {
+              if (im2.formType == `upload`) {
+                console.log('im.formType == `upload`', im2.fileUrl);
+                values[im2.dataIndex] = im2.fileUrl;
+              }
+            });
+          });
+          this.$emit('propsChange', propsTemp);
+          this.$emit('propsSubmit', values);
+          propsTemp.loading = true;
+
+          // this.addFormProps.loading = false;
+        }
+      });
+    },
+    ok(msg) {
+      let propsTemp = _.cloneDeep(this.props);
+      propsTemp.loading = false;
+      propsTemp.show = false;
+      this.form.resetFields();
+      propsTemp.columns.forEach((im) => {
+        im.forEach((im2) => {
+          if (im2.formType == `upload`) {
+            im2.fileUrl = '';
+          }
+        });
+      });
+
+      this.$emit('propsChange', propsTemp);
+      this.$message.success(msg);
+    },
+    no(msg) {
+      let propsTemp = _.cloneDeep(this.props);
+      propsTemp.loading = false;
+      propsTemp.show = true;
+      this.$emit('propsChange', propsTemp);
+      if (msg) {
+        this.$message.error(msg);
+      }
+    },
+    showDrawer() {
+      this.visible = true;
+    },
+    onClose() {
+      let propsTemp = _.cloneDeep(this.props);
+      propsTemp.show = false;
+      this.$emit('propsChange', propsTemp);
+    },
+    async onOpen(data) {
+      let propsTemp = _.cloneDeep(this.props);
+      propsTemp = { ...propsTemp, ...data };
+      propsTemp.groupSize = propsTemp.groupSize ? propsTemp.groupSize : 1;
+      propsTemp.show = true;
+
+      propsTemp.columns.sort((a, b) => {
+        if (a.formType === 'upload' && b.formType !== 'upload') {
+          return 1; // a排在b后面
+        } else if (a.formType !== 'upload' && b.formType === 'upload') {
+          return -1; // a排在b前面
+        } else {
+          return 0; // 保持原有顺序
+        }
+      });
+
+      propsTemp.columns = propsTemp.columns?.filter((im) => {
+        return !im.noAdd || !im.noEdit;
+      });
+      for (let i = 0; i < propsTemp.columns.length; i++) {
+        let im = propsTemp.columns[i];
+        if (
+          'cascader,select,radio'.indexOf(im.formType) != -1 &&
+          im.props.url
+        ) {
+          let ops = await im.props.url({});
+          console.log('im.props.url({})', ops);
+          im.props.options = ops;
+        }
+      }
+      propsTemp.columns = this.convertTo2DArray(
+        propsTemp.columns,
+        propsTemp.groupSize
+      );
+      this.$emit('propsChange', propsTemp);
+    },
+    setFormData(data) {
+      let propsTemp = _.cloneDeep(this.props);
+      console.log('setData.propsTemp', propsTemp);
+      console.log('setData.data', data);
+      propsTemp.columns.forEach((im) => {
+        im.forEach((im2) => {
+          if (`upload`.indexOf(im.formType) == -1) {
+            let formItemData = {};
+            if (`cascader`.indexOf(im.formType) != -1) {
+              formItemData[im2.dataIndex] = data[im2.dataIndex]?.split(',');
+            } else {
+              formItemData[im2.dataIndex] = data[im2.dataIndex];
+            }
+
+            this.form.setFieldsValue(formItemData);
+          }
+        });
+      });
+    },
+    filterFormData() {},
+    //一维数组转成二维数组
+    convertTo2DArray(arr, groupSize) {
+      var result = [];
+      for (var i = 0; i < arr?.length; i += groupSize) {
+        result.push(arr.slice(i, i + groupSize));
+      }
+      return result;
+    }
+  }
+};
 </script>

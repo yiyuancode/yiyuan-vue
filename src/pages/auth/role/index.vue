@@ -10,6 +10,7 @@
     @onSearch="searchHandle"
     @onReset="resetHandle"
     @onOtherEventChange="otherEventChangeHandle"
+    @onChange="tableChangeHandle"
   >
     <!-- 分配角色权限模态框 -->
     <Modal

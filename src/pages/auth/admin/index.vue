@@ -10,6 +10,7 @@
     @onSearch="searchHandle"
     @onReset="resetHandle"
     @onOtherEventChange="otherEventChangeHandle"
+    @onChange="tableChangeHandle"
   >
     <span slot="table-userRoles" slot-scope="{ text, record }">
       <a-tag v-if="record.userRoles">{{ text }}</a-tag>

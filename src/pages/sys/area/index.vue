@@ -9,6 +9,8 @@
     @onDelete="deleteHandle"
     @onSearch="searchHandle"
     @onReset="resetHandle"
+    @onOtherEventChange="otherEventChangeHandle"
+    @onChange="tableChangeHandle"
   >
   </ManagePage>
 </template>
@@ -16,13 +18,13 @@
 <script>
 import ManagePage from '@/components/manage/ManagePage.vue';
 import manage from '@/mixins/manage';
-import { columns, moduleConfig } from './pageConfig';
+import { columns, moduleConfig, permissionObj } from './pageConfig';
 
 export default {
   components: {
     ManagePage
   },
-  mixins: [manage()],
+  mixins: [manage({ permissionObj })],
   data() {
     return {
       columns,

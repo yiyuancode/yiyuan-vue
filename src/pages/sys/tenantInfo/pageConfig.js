@@ -20,38 +20,24 @@ const columns = [
     //值类型
     valType: 'object',
     searchObj: {
-      formType: 'select',
-      options: [
-        {
-          label: '银行卡',
-          value: 0
-        },
-        {
-          label: '微信',
-          value: 1
-        },
-        {
-          label: '支付宝',
-          value: 2
-        }
-      ]
+      formType: 'select'
     },
+    options: [
+      {
+        label: '银行卡',
+        value: 0
+      },
+      {
+        label: '微信',
+        value: 1
+      },
+      {
+        label: '支付宝',
+        value: 2
+      }
+    ],
     formType: 'radioGroup',
     props: {
-      options: [
-        {
-          label: '银行卡',
-          value: 0
-        },
-        {
-          label: '微信',
-          value: 1
-        },
-        {
-          label: '支付宝',
-          value: 2
-        }
-      ],
       style: {
         width: '100%'
       }

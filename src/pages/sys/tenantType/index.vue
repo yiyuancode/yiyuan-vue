@@ -10,6 +10,7 @@
     @onSearch="searchHandle"
     @onReset="resetHandle"
     @onOtherEventChange="otherEventChangeHandle"
+    @onChange="tableChangeHandle"
   >
   </ManagePage>
 </template>

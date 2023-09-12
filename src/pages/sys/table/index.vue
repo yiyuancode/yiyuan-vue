@@ -11,6 +11,7 @@
     @onSearch="searchHandle"
     @onReset="resetHandle"
     @onOtherEventChange="otherEventChangeHandle"
+    @onChange="tableChangeHandle"
   >
     <template slot="otherOperationsGOContainer">
       <AddForm

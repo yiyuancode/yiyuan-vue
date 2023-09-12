@@ -48,30 +48,20 @@ const columns = [
     //值类型
     valType: 'object',
     searchObj: {
-      formType: 'select',
-      options: [
-        {
-          label: '不显示',
-          value: 0
-        },
-        {
-          label: '显示',
-          value: 1
-        }
-      ]
+      formType: 'select'
     },
+    options: [
+      {
+        label: '不显示',
+        value: 0
+      },
+      {
+        label: '显示',
+        value: 1
+      }
+    ],
     formType: 'radioGroup',
     props: {
-      options: [
-        {
-          label: '不显示',
-          value: 0
-        },
-        {
-          label: '显示',
-          value: 1
-        }
-      ],
       style: {
         width: '100%'
       }
@@ -89,30 +79,20 @@ const columns = [
     //值类型
     valType: 'object',
     searchObj: {
-      formType: 'select',
-      options: [
-        {
-          label: '未删除',
-          value: 0
-        },
-        {
-          label: '已删除',
-          value: 1
-        }
-      ]
+      formType: 'select'
     },
     formType: 'radioGroup',
+    options: [
+      {
+        label: '未删除',
+        value: 0
+      },
+      {
+        label: '已删除',
+        value: 1
+      }
+    ],
     props: {
-      options: [
-        {
-          label: '未删除',
-          value: 0
-        },
-        {
-          label: '已删除',
-          value: 1
-        }
-      ],
       style: {
         width: '100%'
       }
@@ -130,54 +110,32 @@ const columns = [
     //值类型
     valType: 'object',
     searchObj: {
-      formType: 'select',
-      options: [
-        {
-          label: '一级分类',
-          value: 1
-        },
-        {
-          label: '二级分类',
-          value: 2
-        },
-        {
-          label: '三级分类',
-          value: 3
-        },
-        {
-          label: '四级分类',
-          value: 4
-        },
-        {
-          label: '五级分类',
-          value: 5
-        }
-      ]
+      formType: 'select'
     },
     formType: 'radioGroup',
+    options: [
+      {
+        label: '一级分类',
+        value: 1
+      },
+      {
+        label: '二级分类',
+        value: 2
+      },
+      {
+        label: '三级分类',
+        value: 3
+      },
+      {
+        label: '四级分类',
+        value: 4
+      },
+      {
+        label: '五级分类',
+        value: 5
+      }
+    ],
     props: {
-      options: [
-        {
-          label: '一级分类',
-          value: 1
-        },
-        {
-          label: '二级分类',
-          value: 2
-        },
-        {
-          label: '三级分类',
-          value: 3
-        },
-        {
-          label: '四级分类',
-          value: 4
-        },
-        {
-          label: '五级分类',
-          value: 5
-        }
-      ],
       style: {
         width: '100%'
       }
@@ -260,4 +218,11 @@ const moduleConfig = {
   moduleName: '区域'
 };
 
-export { columns, moduleConfig };
+const permissionObj = {
+  id: 'sys:area',
+  addBtn: 'sys:area:add',
+  editBtn: 'sys:area:edit',
+  deleteBtn: 'sys:area:delete'
+};
+
+export { columns, moduleConfig, permissionObj };

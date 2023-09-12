@@ -9,6 +9,7 @@
     @onDelete="deleteHandle"
     @onSearch="searchHandle"
     @onReset="resetHandle"
+    @onChange="tableChangeHandle"
   >
     <!-- 其他的操作插槽 -->
     <!-- <template slot="otherOperationsContainer" slot-scope="{record}">
