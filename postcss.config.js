@@ -18,4 +18,4 @@ module.exports = {
       landscapeWidth: 1920 // 横屏时使用的视口宽度
     }
   }
-}
+};

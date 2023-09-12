@@ -92,6 +92,7 @@
                 v-if="uRenderObj.editBtn.isOpen"
                 type="primary"
                 @click="editHandle(record.id)"
+                style="margin-right: 5px"
                 >{{ uRenderObj.editBtn.text }}</a-button
               >
 
@@ -102,7 +103,10 @@
                 cancel-text="取消"
                 @confirm="confirmDeleteHandle(record.id)"
               >
-                <a-button v-if="uRenderObj.deleteBtn.isOpen" type="primary"
+                <a-button
+                  v-if="uRenderObj.deleteBtn.isOpen"
+                  type="primary"
+                  style="margin-right: 5px"
                   >删除</a-button
                 >
               </a-popconfirm>
@@ -120,6 +124,11 @@
                   {{ otherOp.name }}
                 </a-button>
               </template>
+
+              <slot
+                name="otherOperationsContainer"
+                v-bind="{ text, record }"
+              ></slot>
             </div>
           </span>
         </a-table>

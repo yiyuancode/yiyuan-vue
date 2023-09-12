@@ -2,7 +2,7 @@
   <div>
     <a-drawer
       :title="props.title"
-      :width="props.groupSize*350"
+      :width="props.groupSize * 350"
       :visible="props.show"
       :body-style="{ paddingBottom: '80px' }"
       @close="onClose"
@@ -129,9 +129,11 @@
                   }"
                 />
 
-                <UploadSngle v-else-if="im2.formType == `upload`"
-                             v-model="im2.fileUrl"
-                             @UploadSngle="(fileUrl)=>UploadSngle(fileUrl,im2)"></UploadSngle>
+                <UploadSngle
+                  v-else-if="im2.formType == `upload`"
+                  v-model="im2.fileUrl"
+                  @UploadSngle="(fileUrl) => UploadSngle(fileUrl, im2)"
+                ></UploadSngle>
                 <a-input
                   v-else
                   v-decorator="[
@@ -213,8 +215,8 @@
     },
     methods: {
       UploadSngle(fileUrl, item) {
-        console.log("UploadSngle.fileUrl", fileUrl)
-        console.log("UploadSngle.dataIndex", item)
+        console.log('UploadSngle.fileUrl', fileUrl);
+        console.log('UploadSngle.dataIndex', item);
         item.fileUrl = fileUrl;
       },
       filter(inputValue, path, fieldNames) {
@@ -243,12 +245,11 @@
             propsTemp.columns.forEach((im) => {
               im.forEach((im2) => {
                 if (im2.formType == `upload`) {
-                  console.log("im.formType == `upload`", im2.fileUrl)
+                  console.log('im.formType == `upload`', im2.fileUrl);
                   values[im2.dataIndex] = im2.fileUrl;
                 }
-              })
-
-            })
+              });
+            });
             this.$emit('propsChange', propsTemp);
             this.$emit('propsSubmit', values);
             propsTemp.loading = true;
@@ -262,6 +263,14 @@
         propsTemp.loading = false;
         propsTemp.show = false;
         this.form.resetFields();
+        propsTemp.columns.forEach((im) => {
+          im.forEach((im2) => {
+            if (im2.formType == `upload`) {
+              im2.fileUrl = '';
+            }
+          });
+        });
+
         this.$emit('propsChange', propsTemp);
         this.$message.success(msg);
       },
@@ -270,7 +279,9 @@
         propsTemp.loading = false;
         propsTemp.show = true;
         this.$emit('propsChange', propsTemp);
-        this.$message.error(msg);
+        if (msg) {
+          this.$message.error(msg);
+        }
       },
       showDrawer() {
         this.visible = true;
@@ -283,7 +294,7 @@
       async onOpen(data) {
         let propsTemp = _.cloneDeep(this.props);
         propsTemp = {...propsTemp, ...data};
-        propsTemp.groupSize = propsTemp.groupSize ? propsTemp.groupSize : 1
+        propsTemp.groupSize = propsTemp.groupSize ? propsTemp.groupSize : 1;
         propsTemp.show = true;
 
         propsTemp.columns.sort((a, b) => {
@@ -295,7 +306,6 @@
             return 0; // 保持原有顺序
           }
         });
-
 
         propsTemp.columns = propsTemp.columns?.filter((im) => {
           return !im.noAdd || !im.noEdit;
@@ -316,6 +326,28 @@
           propsTemp.groupSize
         );
         this.$emit('propsChange', propsTemp);
+      },
+      setFormData(data) {
+        let propsTemp = _.cloneDeep(this.props);
+        console.log("setData.propsTemp", propsTemp)
+        console.log("setData.data", data)
+        propsTemp.columns.forEach((im) => {
+          im.forEach((im2) => {
+            if (`upload`.indexOf(im.formType) == -1) {
+              let formItemData = {};
+              if (`cascader`.indexOf(im.formType) != -1) {
+                formItemData[im2.dataIndex] = data[im2.dataIndex]?.split(",");
+              } else {
+                formItemData[im2.dataIndex] = data[im2.dataIndex];
+              }
+
+              this.form.setFieldsValue(formItemData);
+            }
+          });
+        });
+      },
+      filterFormData() {
+
       },
       //一维数组转成二维数组
       convertTo2DArray(arr, groupSize) {

@@ -18,7 +18,15 @@
         @propsChange="addFormPropsChange"
         @propsSubmit="addFormPropsSubmit"
       ></AddForm>
-      <a-button type="primary" @click="generateCodeClick"> 商户入驻</a-button>
+
+      <a-button type="primary" @click="applyClick"> 商户入驻</a-button>
+    </template>
+
+    <template slot="otherOperationsContainer" slot-scope="{ record,text }">
+      <a-button type="primary" @click="processClick(record,text)">
+        入驻审核
+      </a-button
+      >
     </template>
   </ManagePage>
 </template>
@@ -42,19 +50,49 @@
       };
     },
     methods: {
-      generateCodeClick() {
+      applyClick() {
         let data = {
           title: '商户入驻申请',
           show: true,
           loading: false,
-          columns: columns,
+          columns: this.filterColumns(columns, [
+            'spmShopCityId',
+            'name',
+            'legalPersonName',
+            'email',
+            'phone',
+            'detailedAddress',
+            'socialCreditCode',
+            'businessLicenseImage',
+            'legalPersonIdFrontImage',
+            'legalPersonIdBackImage',
+            'remark'
+          ]),
           groupSize: 2
         };
         this.$refs.addForm.onOpen(data);
       },
-      addFormPropsSubmit(data) {
-        console.log('addFormPropsSubmit', data);
-      }
+      async addFormPropsSubmit(data) {
+        try {
+          data.spmShopCityId = data.spmShopCityId.join(',');
+          await this.module['applyTenant'](data);
+          this.$refs.addForm.ok('申请提交成功');
+          this.getData();
+        } catch (e) {
+          console.error(e);
+          this.$refs.addForm.no();
+        }
+      },
+      async processClick(record) {
+        try {
+          console.log('applyClick', record);
+          this.applyClick();
+          this.$refs.addForm.setFormData(record);
+        } catch (e) {
+          console.error(e);
+        }
+      },
+
     }
   };
 </script>

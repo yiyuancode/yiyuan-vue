@@ -1,5 +1,6 @@
 import eventBus from '@/eventBus';
 import store from '@/store';
+
 /**
  *
  * @param {*} opts
@@ -78,7 +79,7 @@ export default function (opts = {}) {
   const permissions = store.state.account.permissions;
   // 按钮权限对象
   if (opts.permissionObj) {
-    const { id } = opts.permissionObj;
+    const {id} = opts.permissionObj;
 
     const operationList = [];
     if (Array.isArray(id)) {
@@ -123,13 +124,20 @@ export default function (opts = {}) {
       });
     },
     methods: {
+      // 过滤列
+      filterColumns(columns, fildsArr) {
+        let newColumns = columns.filter((im) => {
+          return fildsArr.includes(im.dataIndex);
+        });
+        return newColumns;
+      },
       // 其他事件变化的回调
       otherEventChangeHandle(methodName, ...args) {
         this[methodName](...args);
       },
       // 提交的回调
       async submitHandle(opts = {}) {
-        const { opType, id, model, done } = opts;
+        const {opType, id, model, done} = opts;
 
         // 如果处理数据方法存在
         if (this.handleSubmitData) {
@@ -177,7 +185,7 @@ export default function (opts = {}) {
             this.searchObj
           );
           if (dataResult) {
-            const { total, records } = dataResult;
+            const {total, records} = dataResult;
 
             // 处理返回的一个记录数据
             if (this.objColumnsArr.length || this.handleRecord) {
@@ -201,12 +209,12 @@ export default function (opts = {}) {
       },
       // 点击添加和编辑
       async saveHandle(opts = {}) {
-        const { id, done } = opts;
+        const {id, done} = opts;
 
         if (id) {
           const detailInfo = await this.getDetail(id);
 
-          const newModel = { ...detailInfo };
+          const newModel = {...detailInfo};
           for (let prop in detailInfo) {
             if (this.objColumnsArr.includes(prop)) {
               newModel[prop] = newModel[prop].value;

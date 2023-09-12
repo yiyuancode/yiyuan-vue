@@ -16,12 +16,12 @@
       :hide-add="true"
     >
       <a-tooltip slot="tabBarExtraContent" placement="left" :title="lockTitle">
-        <a-icon
-          :type="fixedTabs ? 'lock' : 'unlock'"
-          class="header-lock"
-          theme="filled"
-          @click="onLockClick"
-        />
+<!--        <a-icon-->
+<!--          :type="fixedTabs ? 'lock' : 'unlock'"-->
+<!--          class="header-lock"-->
+<!--          theme="filled"-->
+<!--          @click="onLockClick"-->
+<!--        />-->
       </a-tooltip>
       <a-tab-pane v-for="page in pageList" :key="page.path">
         <div
@@ -186,6 +186,7 @@ export default {
     font-size: 18px;
     cursor: pointer;
     color: @primary-3;
+
     &:hover {
       color: @primary-color;
     }
@@ -200,8 +201,9 @@ export default {
     background-color: @layout-body-background;
     &.side,
     &.mix {
-      right: 0;
-      left: 256px;
+      /*right: 0;*/
+      /*left: 256px;*/
+
       z-index: 99;
       &.collapsed {
         left: 80px;

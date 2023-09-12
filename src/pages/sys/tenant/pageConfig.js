@@ -13,9 +13,10 @@ const columns = [
     dataIndex: 'id',
     key: 'id',
     width: 160,
-    rules: [{required: true, message: '请输入商户id', trigger: 'blur'}],
+    rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }],
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    noShow: true
   },
 
   {
@@ -23,7 +24,7 @@ const columns = [
     dataIndex: 'spmShopCityId',
     key: 'spmShopCityId',
     width: 160,
-    rules: [{required: true, message: '请输入归属区域', trigger: 'blur'}],
+    rules: [{ required: true, message: '请输入归属区域', trigger: 'blur' }],
     //值类型
     valType: 'object',
     formType: 'cascader',
@@ -31,7 +32,7 @@ const columns = [
       options: [],
       url: area.getCityTree
     },
-    fieldNames: {label: 'name', value: 'id', children: 'child'}
+    fieldNames: { label: 'name', value: 'id', children: 'child' }
   },
 
   {
@@ -39,7 +40,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     width: 160,
-    rules: [{required: true, message: '请输入商户名称', trigger: 'blur'}]
+    rules: [{ required: true, message: '请输入商户名称', trigger: 'blur' }]
   },
 
   {
@@ -47,7 +48,7 @@ const columns = [
     dataIndex: 'legalPersonName',
     key: 'legalPersonName',
     width: 160,
-    rules: [{required: true, message: '请输入法人名称', trigger: 'blur'}]
+    rules: [{ required: true, message: '请输入法人名称', trigger: 'blur' }]
   },
 
   {
@@ -55,7 +56,7 @@ const columns = [
     dataIndex: 'email',
     key: 'email',
     width: 160,
-    rules: [{required: true, message: '请输入联系邮箱', trigger: 'blur'}]
+    rules: [{ required: true, message: '请输入联系邮箱', trigger: 'blur' }]
   },
 
   {
@@ -63,7 +64,7 @@ const columns = [
     dataIndex: 'phone',
     key: 'phone',
     width: 160,
-    rules: [{required: true, message: '请输入联系手机', trigger: 'blur'}]
+    rules: [{ required: true, message: '请输入联系手机', trigger: 'blur' }]
   },
 
   {
@@ -71,7 +72,7 @@ const columns = [
     dataIndex: 'detailedAddress',
     key: 'detailedAddress',
     width: 160,
-    rules: [{required: true, message: '请输入详细地址', trigger: 'blur'}]
+    rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }]
   },
 
   {
@@ -80,7 +81,7 @@ const columns = [
     key: 'socialCreditCode',
     width: 160,
     rules: [
-      {required: true, message: '请输入统一社会信用代码', trigger: 'blur'}
+      { required: true, message: '请输入统一社会信用代码', trigger: 'blur' }
     ]
   },
 
@@ -90,10 +91,10 @@ const columns = [
     key: 'businessLicenseImage',
     width: 160,
     rules: [
-      {required: true, message: '请输入营业执照电子版', trigger: 'blur'}
+      { required: true, message: '请输入营业执照电子版', trigger: 'blur' }
     ],
     formType: 'upload',
-    fileUrl: null,
+    fileUrl: null
   },
 
   {
@@ -102,10 +103,10 @@ const columns = [
     key: 'legalPersonIdFrontImage',
     width: 160,
     rules: [
-      {required: true, message: '请输入法人身份证正面', trigger: 'blur'}
+      { required: true, message: '请输入法人身份证正面', trigger: 'blur' }
     ],
     formType: 'upload',
-    fileUrl: null,
+    fileUrl: null
   },
 
   {
@@ -114,10 +115,10 @@ const columns = [
     key: 'legalPersonIdBackImage',
     width: 160,
     rules: [
-      {required: true, message: '请输入法人身份证反面', trigger: 'blur'}
+      { required: true, message: '请输入法人身份证反面', trigger: 'blur' }
     ],
     formType: 'upload',
-    fileUrl: null,
+    fileUrl: null
   },
 
   {
@@ -125,7 +126,7 @@ const columns = [
     dataIndex: 'remark',
     key: 'remark',
     width: 160,
-    rules: [{required: true, message: '请输入申请备注', trigger: 'blur'}]
+    rules: [{ required: true, message: '请输入申请备注', trigger: 'blur' }]
   },
 
   {
@@ -172,7 +173,7 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{required: true, message: '请选择入驻状态', trigger: 'change'}],
+    rules: [{ required: true, message: '请选择入驻状态', trigger: 'change' }],
     defaultValue: 0,
     formSort: 1
   },
@@ -194,11 +195,11 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true
@@ -214,11 +215,11 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择更新时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择更新时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
@@ -248,6 +249,118 @@ const columns = [
   }
 ];
 
+// const applyColumns = [
+//   {
+//     title: '所属区域',
+//     dataIndex: 'spmShopCityId',
+//     key: 'spmShopCityId',
+//     width: 160,
+//     rules: [{required: true, message: '请输入归属区域', trigger: 'blur'}],
+//     //值类型
+//     valType: 'object',
+//     formType: 'cascader',
+//     props: {
+//       options: [],
+//       url: area.getCityTree
+//     },
+//     fieldNames: {label: 'name', value: 'id', children: 'child'}
+//   },
+//
+//   {
+//     title: '商户名称',
+//     dataIndex: 'name',
+//     key: 'name',
+//     width: 160,
+//     rules: [{required: true, message: '请输入商户名称', trigger: 'blur'}]
+//   },
+//
+//   {
+//     title: '法人名称',
+//     dataIndex: 'legalPersonName',
+//     key: 'legalPersonName',
+//     width: 160,
+//     rules: [{required: true, message: '请输入法人名称', trigger: 'blur'}]
+//   },
+//
+//   {
+//     title: '联系邮箱',
+//     dataIndex: 'email',
+//     key: 'email',
+//     width: 160,
+//     rules: [{required: true, message: '请输入联系邮箱', trigger: 'blur'}]
+//   },
+//
+//   {
+//     title: '联系手机',
+//     dataIndex: 'phone',
+//     key: 'phone',
+//     width: 160,
+//     rules: [{required: true, message: '请输入联系手机', trigger: 'blur'}]
+//   },
+//
+//   {
+//     title: '详细地址',
+//     dataIndex: 'detailedAddress',
+//     key: 'detailedAddress',
+//     width: 160,
+//     rules: [{required: true, message: '请输入详细地址', trigger: 'blur'}]
+//   },
+//
+//   {
+//     title: '统一社会信用代码',
+//     dataIndex: 'socialCreditCode',
+//     key: 'socialCreditCode',
+//     width: 160,
+//     rules: [
+//       {required: true, message: '请输入统一社会信用代码', trigger: 'blur'}
+//     ]
+//   },
+//
+//   {
+//     title: '营业执照电子版',
+//     dataIndex: 'businessLicenseImage',
+//     key: 'businessLicenseImage',
+//     width: 160,
+//     rules: [
+//       {required: true, message: '请输入营业执照电子版', trigger: 'blur'}
+//     ],
+//     formType: 'upload',
+//     fileUrl: null,
+//   },
+//
+//   {
+//     title: '法人身份证正面',
+//     dataIndex: 'legalPersonIdFrontImage',
+//     key: 'legalPersonIdFrontImage',
+//     width: 160,
+//     rules: [
+//       {required: true, message: '请输入法人身份证正面', trigger: 'blur'}
+//     ],
+//     formType: 'upload',
+//     fileUrl: null,
+//   },
+//
+//   {
+//     title: '法人身份证反面',
+//     dataIndex: 'legalPersonIdBackImage',
+//     key: 'legalPersonIdBackImage',
+//     width: 160,
+//     rules: [
+//       {required: true, message: '请输入法人身份证反面', trigger: 'blur'}
+//     ],
+//     formType: 'upload',
+//     fileUrl: null,
+//   },
+//
+//   {
+//     title: '申请备注',
+//     dataIndex: 'remark',
+//     key: 'remark',
+//     width: 160,
+//     rules: [{required: true, message: '请输入申请备注', trigger: 'blur'}]
+//   },
+// ];
+
 // 模块配置
 const moduleConfig = {
   module: tenant,
@@ -269,4 +382,4 @@ const permissionObj = {
   // assignRoleBtn: 'sys:tenant:assignRole',
 };
 
-export {columns, moduleConfig, permissionObj};
+export { columns, moduleConfig, permissionObj };
