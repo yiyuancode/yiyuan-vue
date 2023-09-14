@@ -12,6 +12,11 @@
     @onOtherEventChange="otherEventChangeHandle"
     @onChange="tableChangeHandle"
   >
+
+
+    <template slot="table-spmShopCityIdZh" slot-scope="{ record }">
+      {{record.spmShopCityIdZh}}
+    </template>
     <template slot="otherOperationsGOContainer">
       <AddForm
         ref="addForm"
@@ -46,7 +51,21 @@
     data() {
       return {
         columns,
-        ...moduleConfig
+        ...moduleConfig,
+        //入驻申请表单字段
+        applyFileds: [
+          'spmShopCityId',
+          'name',
+          'legalPersonName',
+          'email',
+          'phone',
+          'detailedAddress',
+          'socialCreditCode',
+          'businessLicenseImage',
+          'legalPersonIdFrontImage',
+          'legalPersonIdBackImage',
+          'remark'
+        ]
       };
     },
     methods: {
@@ -55,19 +74,7 @@
           title: '商户入驻申请',
           show: true,
           loading: false,
-          columns: this.filterColumns(columns, [
-            'spmShopCityId',
-            'name',
-            'legalPersonName',
-            'email',
-            'phone',
-            'detailedAddress',
-            'socialCreditCode',
-            'businessLicenseImage',
-            'legalPersonIdFrontImage',
-            'legalPersonIdBackImage',
-            'remark'
-          ]),
+          columns: this.filterColumns(columns, this.applyFileds),
           groupSize: 2
         };
         this.$refs.addForm.onOpen(data);
