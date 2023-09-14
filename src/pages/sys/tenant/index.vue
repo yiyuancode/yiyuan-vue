@@ -75,14 +75,35 @@
           show: true,
           loading: false,
           columns: this.filterColumns(columns, this.applyFileds),
-          groupSize: 2
+          groupSize: 2,
+          subMitMethod: "applyTenant",
         };
         this.$refs.addForm.onOpen(data);
       },
-      async addFormPropsSubmit(data) {
+      async processClick(record) {
+        try {
+          console.log('applyClick', record);
+          let data = {
+            title: '商户入驻审核',
+            show: true,
+            loading: false,
+            columns: this.filterColumns(columns, this.applyFileds),
+            groupSize: 2,
+            subMitMethod: "processTenant",
+          };
+          this.$refs.addForm.onOpen(data);
+          setTimeout(() => {
+            this.$refs.addForm.setFormData(record);
+          }, 150)
+
+        } catch (e) {
+          console.error(e);
+        }
+      },
+      async addFormPropsSubmit({propsTemp, data}) {
         try {
           data.spmShopCityId = data.spmShopCityId.join(',');
-          await this.module['applyTenant'](data);
+          await this.module[propsTemp.subMitMethod](data);
           this.$refs.addForm.ok('申请提交成功');
           this.getData();
         } catch (e) {
@@ -90,19 +111,7 @@
           this.$refs.addForm.no();
         }
       },
-      async processClick(record) {
-        try {
-          console.log('applyClick', record);
-          this.applyClick();
-          setTimeout(() => {
-            this.$refs.addForm.setFormData(record);
-          }, 300)
 
-
-        } catch (e) {
-          console.error(e);
-        }
-      },
       handleDetailModel(newModel) {
         newModel.spmShopCityId = newModel.spmShopCityId.split(',');
       }

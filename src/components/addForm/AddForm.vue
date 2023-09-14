@@ -211,7 +211,8 @@
     data() {
       return {
         form: this.$form.createForm(this),
-        visible: false
+        visible: false,
+        record: {},
       };
     },
     created() {
@@ -304,11 +305,14 @@
                 if (im2.formType == `upload`) {
                   console.log('im.formType == `upload`', im2.fileUrl);
                   values[im2.dataIndex] = im2.fileUrl;
+                } else if (`Select`.indexOf(im2.formType) != -1) {
+                  values[im2.dataIndex] = this.record[im2.dataIndex].value;
                 }
               });
             });
             this.$emit('propsChange', propsTemp);
-            this.$emit('propsSubmit', values);
+            console.log("onSubmit", this.record)
+            this.$emit('propsSubmit', {propsTemp, data: {...this.record, ...values}});
             propsTemp.loading = true;
 
             // this.addFormProps.loading = false;
@@ -388,8 +392,7 @@
       },
       setFormData(data) {
         let propsTemp = _.cloneDeep(this.props);
-        console.log('setData.propsTemp', propsTemp);
-        console.log('setData.data', data);
+
         propsTemp.columns.forEach((im) => {
           im.forEach(async (im2) => {
             if (`upload`.indexOf(im2.formType) == -1) {
@@ -418,14 +421,21 @@
                   im2.props.options = JSON.parse(all);
                   this.$emit('propsChange', propsTemp);
                 }
+              } else if (`Select`.indexOf(im2.formType) != -1) {
+                formItemData[im2.dataIndex] = data[im2.dataIndex].value;
               } else {
                 formItemData[im2.dataIndex] = data[im2.dataIndex];
               }
               this.form.setFieldsValue(formItemData);
 
+            } else {
+              im2.fileUrl = data[im2.dataIndex];
             }
           });
         });
+        this.record = data;
+        console.log("setFormData", this.record)
+        this.$emit('propsChange', propsTemp);
       },
       filterFormData() {
       },

@@ -10,7 +10,7 @@
   >
     <img
       v-if="value"
-      :src="imageUrl"
+      :src="imgBaseUrl+value"
       alt="avatar"
       style="width: 120px; height: 120px; object-fit: cover"
     />
@@ -23,11 +23,11 @@
 <script>
   import {mapGetters} from 'vuex';
 
-  function getBase64(img, callback) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-  }
+  // function getBase64(img, callback) {
+  //   const reader = new FileReader();
+  //   reader.addEventListener('load', () => callback(reader.result));
+  //   reader.readAsDataURL(img);
+  // }
 
   export default {
     computed: {
@@ -47,6 +47,7 @@
       return {
         loading: false,
         imageUrl: '',
+        imgBaseUrl: 'http://106.54.87.159:50008/default-bucket/',
         uploadUrl: process.env.VUE_APP_API_BASE_URL + '/file/upload'
       };
     },
@@ -59,12 +60,15 @@
           return;
         }
         if (info.file.status === 'done') {
-          getBase64(info.file.originFileObj, (imageUrl) => {
-            vm.imageUrl = imageUrl;
-            vm.loading = false;
-            vm.$emit('input', info.file.response.message);
-            vm.$emit('UploadSngle', info.file.response.message);
-          });
+          // getBase64(info.file.originFileObj, (imageUrl) => {
+          //   vm.imageUrl = imageUrl;
+          //   vm.loading = false;
+          //   vm.$emit('input', info.file.response.message);
+          //   vm.$emit('UploadSngle', info.file.response.message);
+          // });
+          vm.loading = false;
+          vm.$emit('input', info.file.response.message);
+          vm.$emit('UploadSngle', info.file.response.message);
         }
       }
     }

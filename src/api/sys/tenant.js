@@ -1,4 +1,4 @@
-import { request } from '@/utils/request';
+import {request} from '@/utils/request';
 
 /**
  * 获取所有的商户信息(分页)
@@ -100,6 +100,23 @@ export async function deleteTenant(ids) {
 export async function applyTenant(data) {
   const resp = await request({
     url: '/sys/tenant/apply',
+    method: 'post',
+    data
+  });
+  return resp.data;
+}
+
+/**
+ * 商户入驻申请
+ *
+ * @param {*} data 商户信息
+ * @return
+ * @author  一源团队-花和尚
+ * @date 2023-09-09
+ */
+export async function processTenant(data) {
+  const resp = await request({
+    url: '/sys/tenant/process',
     method: 'post',
     data
   });

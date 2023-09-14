@@ -16,7 +16,8 @@ const columns = [
     rules: [{required: true, message: '请输入商户id', trigger: 'blur'}],
     noEdit: true,
     noAdd: true,
-    noShow: true
+    noShow: true,
+    ellipsis: true,
   },
 
   {
@@ -34,7 +35,8 @@ const columns = [
     fieldNames: {label: 'name', value: 'id', children: 'child'},
     scopedSlots: {
       customRender: "spmShopCityIdZh"
-    }
+    },
+    ellipsis: true,
   },
 
   {
@@ -42,7 +44,8 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     width: 160,
-    rules: [{required: true, message: '请输入商户名称', trigger: 'blur'}]
+    rules: [{required: true, message: '请输入商户名称', trigger: 'blur'}],
+    ellipsis: true,
   },
 
   {
@@ -50,7 +53,8 @@ const columns = [
     dataIndex: 'legalPersonName',
     key: 'legalPersonName',
     width: 160,
-    rules: [{required: true, message: '请输入法人名称', trigger: 'blur'}]
+    rules: [{required: true, message: '请输入法人名称', trigger: 'blur'}],
+    ellipsis: true,
   },
 
   {
@@ -58,7 +62,8 @@ const columns = [
     dataIndex: 'email',
     key: 'email',
     width: 160,
-    rules: [{required: true, message: '请输入联系邮箱', trigger: 'blur'}]
+    rules: [{required: true, message: '请输入联系邮箱', trigger: 'blur'}],
+    ellipsis: true,
   },
 
   {
@@ -66,7 +71,8 @@ const columns = [
     dataIndex: 'phone',
     key: 'phone',
     width: 160,
-    rules: [{required: true, message: '请输入联系手机', trigger: 'blur'}]
+    rules: [{required: true, message: '请输入联系手机', trigger: 'blur'}],
+    ellipsis: true,
   },
 
   {
@@ -74,7 +80,8 @@ const columns = [
     dataIndex: 'detailedAddress',
     key: 'detailedAddress',
     width: 160,
-    rules: [{required: true, message: '请输入详细地址', trigger: 'blur'}]
+    rules: [{required: true, message: '请输入详细地址', trigger: 'blur'}],
+    ellipsis: true,
   },
 
   {
@@ -84,7 +91,8 @@ const columns = [
     width: 160,
     rules: [
       {required: true, message: '请输入统一社会信用代码', trigger: 'blur'}
-    ]
+    ],
+    ellipsis: true,
   },
 
   {
@@ -96,7 +104,8 @@ const columns = [
       {required: true, message: '请输入营业执照电子版', trigger: 'blur'}
     ],
     formType: 'upload',
-    fileUrl: null
+    fileUrl: null,
+    ellipsis: true,
   },
 
   {
@@ -108,7 +117,8 @@ const columns = [
       {required: true, message: '请输入法人身份证正面', trigger: 'blur'}
     ],
     formType: 'upload',
-    fileUrl: null
+    fileUrl: null,
+    ellipsis: true,
   },
 
   {
@@ -120,7 +130,8 @@ const columns = [
       {required: true, message: '请输入法人身份证反面', trigger: 'blur'}
     ],
     formType: 'upload',
-    fileUrl: null
+    fileUrl: null,
+    ellipsis: true,
   },
 
   {
@@ -128,7 +139,8 @@ const columns = [
     dataIndex: 'remark',
     key: 'remark',
     width: 160,
-    rules: [{required: true, message: '请输入申请备注', trigger: 'blur'}]
+    rules: [{required: true, message: '请输入申请备注', trigger: 'blur'}],
+    ellipsis: true,
   },
 
   {
@@ -138,23 +150,6 @@ const columns = [
     width: 160,
     //值类型
     valType: 'object',
-    searchObj: {
-      formType: 'select',
-      options: [
-        {
-          label: '待审核',
-          value: 0
-        },
-        {
-          label: '通过',
-          value: 1
-        },
-        {
-          label: '被驳回',
-          value: 2
-        }
-      ]
-    },
     formType: 'Select',
     props: {
       options: [
@@ -177,14 +172,16 @@ const columns = [
     },
     rules: [{required: true, message: '请选择入驻状态', trigger: 'change'}],
     defaultValue: 0,
-    formSort: 1
+    formSort: 1,
+    ellipsis: true,
   },
 
   {
     title: '排序',
     dataIndex: 'sort',
     key: 'sort',
-    width: 160
+    width: 50,
+    ellipsis: true,
   },
 
   {
@@ -204,7 +201,8 @@ const columns = [
       return [{required: true, message: '请选择创建时间', trigger: 'change'}];
     },
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    ellipsis: true,
   },
 
   {
@@ -225,7 +223,8 @@ const columns = [
     },
     noEdit: true,
     noAdd: true,
-    noSearch: true
+    noSearch: true,
+    ellipsis: true,
   },
 
   {
@@ -236,7 +235,8 @@ const columns = [
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    noShow: true
+    noShow: true,
+    ellipsis: true,
   },
 
   {
@@ -247,7 +247,8 @@ const columns = [
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    noShow: true
+    noShow: true,
+    ellipsis: true,
   }
 ];
 
