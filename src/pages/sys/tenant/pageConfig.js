@@ -13,7 +13,7 @@ const columns = [
     dataIndex: 'id',
     key: 'id',
     width: 160,
-    rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }],
+    rules: [{required: true, message: '请输入商户id', trigger: 'blur'}],
     noEdit: true,
     noAdd: true,
     noShow: true
@@ -24,14 +24,14 @@ const columns = [
     dataIndex: 'spmShopCityId',
     key: 'spmShopCityId',
     width: 160,
-    rules: [{ required: true, message: '请输入归属区域', trigger: 'blur' }],
+    rules: [{required: true, message: '请输入归属区域', trigger: 'blur'}],
     //值类型
     formType: 'cascader',
     props: {
       url: area.getCityTree
     },
     options: [],
-    fieldNames: { label: 'name', value: 'id', children: 'child' }
+    fieldNames: {label: 'name', value: 'id', children: 'child'}
   },
 
   {
@@ -39,7 +39,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     width: 160,
-    rules: [{ required: true, message: '请输入商户名称', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入商户名称', trigger: 'blur'}]
   },
 
   {
@@ -47,7 +47,7 @@ const columns = [
     dataIndex: 'legalPersonName',
     key: 'legalPersonName',
     width: 160,
-    rules: [{ required: true, message: '请输入法人名称', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入法人名称', trigger: 'blur'}]
   },
 
   {
@@ -55,7 +55,7 @@ const columns = [
     dataIndex: 'email',
     key: 'email',
     width: 160,
-    rules: [{ required: true, message: '请输入联系邮箱', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入联系邮箱', trigger: 'blur'}]
   },
 
   {
@@ -63,7 +63,7 @@ const columns = [
     dataIndex: 'phone',
     key: 'phone',
     width: 160,
-    rules: [{ required: true, message: '请输入联系手机', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入联系手机', trigger: 'blur'}]
   },
 
   {
@@ -71,7 +71,7 @@ const columns = [
     dataIndex: 'detailedAddress',
     key: 'detailedAddress',
     width: 160,
-    rules: [{ required: true, message: '请输入详细地址', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入详细地址', trigger: 'blur'}]
   },
 
   {
@@ -80,7 +80,7 @@ const columns = [
     key: 'socialCreditCode',
     width: 160,
     rules: [
-      { required: true, message: '请输入统一社会信用代码', trigger: 'blur' }
+      {required: true, message: '请输入统一社会信用代码', trigger: 'blur'}
     ]
   },
 
@@ -90,7 +90,7 @@ const columns = [
     key: 'businessLicenseImage',
     width: 160,
     rules: [
-      { required: true, message: '请输入营业执照电子版', trigger: 'blur' }
+      {required: true, message: '请输入营业执照电子版', trigger: 'blur'}
     ],
     formType: 'upload',
     fileUrl: null
@@ -102,7 +102,7 @@ const columns = [
     key: 'legalPersonIdFrontImage',
     width: 160,
     rules: [
-      { required: true, message: '请输入法人身份证正面', trigger: 'blur' }
+      {required: true, message: '请输入法人身份证正面', trigger: 'blur'}
     ],
     formType: 'upload',
     fileUrl: null
@@ -114,7 +114,7 @@ const columns = [
     key: 'legalPersonIdBackImage',
     width: 160,
     rules: [
-      { required: true, message: '请输入法人身份证反面', trigger: 'blur' }
+      {required: true, message: '请输入法人身份证反面', trigger: 'blur'}
     ],
     formType: 'upload',
     fileUrl: null
@@ -125,7 +125,7 @@ const columns = [
     dataIndex: 'remark',
     key: 'remark',
     width: 160,
-    rules: [{ required: true, message: '请输入申请备注', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入申请备注', trigger: 'blur'}]
   },
 
   {
@@ -172,7 +172,7 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{ required: true, message: '请选择入驻状态', trigger: 'change' }],
+    rules: [{required: true, message: '请选择入驻状态', trigger: 'change'}],
     defaultValue: 0,
     formSort: 1
   },
@@ -194,11 +194,11 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
+      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
     },
     noEdit: true,
     noAdd: true
@@ -214,11 +214,11 @@ const columns = [
     },
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择更新时间', trigger: 'change' }];
+      return [{required: true, message: '请选择更新时间', trigger: 'change'}];
     },
     noEdit: true,
     noAdd: true,
@@ -380,5 +380,14 @@ const permissionObj = {
   deleteBtn: 'sys:tenant:delete'
   // assignRoleBtn: 'sys:tenant:assignRole',
 };
-
-export { columns, moduleConfig, permissionObj };
+// 渲染对象
+const renderObj = {
+  otherOperationList: [
+    {
+      name: '分配',
+      methodName: 'apply',
+      btnName: 'apply'
+    }
+  ]
+};
+export {columns, moduleConfig, permissionObj, renderObj};

@@ -239,6 +239,8 @@
                 im2.props.options = JSON.parse(all);
                 this.$emit('propsChange', propsTemp);
               }
+
+
             }
           });
         });
@@ -322,12 +324,12 @@
         this.form.resetFields();
         propsTemp.columns.forEach((im) => {
           im.forEach((im2) => {
-            if (`upload`.indexOf(im2.formType) != -1) {
-              // let formItemData = {};
-              im2.fileUrl = null;
+            if (im2.formType == `upload`) {
+              im2.fileUrl = '';
             }
           });
         });
+
         this.$emit('propsChange', propsTemp);
         this.$message.success(msg);
       },

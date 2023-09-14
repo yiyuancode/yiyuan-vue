@@ -32,71 +32,75 @@
 </template>
 
 <script>
-import ManagePage from '@/components/manage/ManagePage.vue';
-import manage from '@/mixins/manage';
-import { columns, moduleConfig, permissionObj } from './pageConfig';
-import AddForm from '@/components/addForm/AddForm.vue';
+  import ManagePage from '@/components/manage/ManagePage.vue';
+  import manage from '@/mixins/manage';
+  import {columns, moduleConfig, permissionObj, renderObj} from './pageConfig';
+  import AddForm from '@/components/addForm/AddForm.vue';
 
-export default {
-  components: {
-    ManagePage,
-    AddForm
-  },
-  mixins: [manage({ permissionObj })],
-  data() {
-    return {
-      columns,
-      ...moduleConfig
-    };
-  },
-  methods: {
-    applyClick() {
-      let data = {
-        title: '商户入驻申请',
-        show: true,
-        loading: false,
-        columns: this.filterColumns(columns, [
-          'spmShopCityId',
-          'name',
-          'legalPersonName',
-          'email',
-          'phone',
-          'detailedAddress',
-          'socialCreditCode',
-          'businessLicenseImage',
-          'legalPersonIdFrontImage',
-          'legalPersonIdBackImage',
-          'remark'
-        ]),
-        groupSize: 2
+  export default {
+    components: {
+      ManagePage,
+      AddForm
+    },
+    mixins: [manage({permissionObj, renderObj})],
+    data() {
+      return {
+        columns,
+        ...moduleConfig
       };
-      this.$refs.addForm.onOpen(data);
     },
-    async addFormPropsSubmit(data) {
-      try {
-        data.spmShopCityId = data.spmShopCityId.join(',');
-        await this.module['applyTenant'](data);
-        this.$refs.addForm.ok('申请提交成功');
-        this.getData();
-      } catch (e) {
-        console.error(e);
-        this.$refs.addForm.no();
+    methods: {
+      applyClick() {
+        let data = {
+          title: '商户入驻申请',
+          show: true,
+          loading: false,
+          columns: this.filterColumns(columns, [
+            'spmShopCityId',
+            'name',
+            'legalPersonName',
+            'email',
+            'phone',
+            'detailedAddress',
+            'socialCreditCode',
+            'businessLicenseImage',
+            'legalPersonIdFrontImage',
+            'legalPersonIdBackImage',
+            'remark'
+          ]),
+          groupSize: 2
+        };
+        this.$refs.addForm.onOpen(data);
+      },
+      async addFormPropsSubmit(data) {
+        try {
+          data.spmShopCityId = data.spmShopCityId.join(',');
+          await this.module['applyTenant'](data);
+          this.$refs.addForm.ok('申请提交成功');
+          this.getData();
+        } catch (e) {
+          console.error(e);
+          this.$refs.addForm.no();
+        }
+      },
+      async processClick(record) {
+        try {
+          console.log('applyClick', record);
+          this.applyClick();
+          setTimeout(() => {
+            this.$refs.addForm.setFormData(record);
+          }, 300)
+
+
+        } catch (e) {
+          console.error(e);
+        }
+      },
+      handleDetailModel(newModel) {
+        newModel.spmShopCityId = newModel.spmShopCityId.split(',');
       }
-    },
-    async processClick(record) {
-      try {
-        console.log('applyClick', record);
-        this.applyClick();
-        this.$refs.addForm.setFormData(record);
-      } catch (e) {
-        console.error(e);
-      }
-    },
-    handleDetailModel(newModel) {
-      newModel.spmShopCityId = newModel.spmShopCityId.split(',');
     }
-  }
-};
+  };
 </script>
 
 <style lang="less" scoped></style>
