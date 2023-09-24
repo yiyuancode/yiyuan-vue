@@ -10,7 +10,13 @@
     @onSearch="searchHandle"
     @onReset="resetHandle"
     @onOtherEventChange="otherEventChangeHandle"
+    @onChange="tableChangeHandle"
   >
+
+
+    <template slot="table-spmShopCityIdZh" slot-scope="{ record }">
+      {{record.spmShopCityIdZh}}
+    </template>
     <template slot="otherOperationsGOContainer">
       <AddForm
         ref="addForm"
@@ -19,69 +25,98 @@
         @propsSubmit="addFormPropsSubmit"
       ></AddForm>
 
-      <a-button type="primary" @click="generateCodeClick"> 商户入驻</a-button>
+      <a-button type="primary" @click="applyClick"> 商户入驻</a-button>
     </template>
 
-    <template slot="otherOperationsContainer" slot-scope="{ record }">
-      <a-button type="primary" @click="generateCodeClick(record)">
-        入驻审核</a-button
-      >
+    <template slot="otherOperationsContainer" slot-scope="{ record, text }">
+      <a-button type="primary" @click="processClick(record, text)">
+        入驻审核
+      </a-button>
     </template>
   </ManagePage>
 </template>
 
 <script>
-import ManagePage from '@/components/manage/ManagePage.vue';
-import manage from '@/mixins/manage';
-import {
-  applyColumns,
-  columns,
-  moduleConfig,
-  permissionObj
-} from './pageConfig';
-import AddForm from '@/components/addForm/AddForm.vue';
+  import ManagePage from '@/components/manage/ManagePage.vue';
+  import manage from '@/mixins/manage';
+  import {columns, moduleConfig, permissionObj, renderObj} from './pageConfig';
+  import AddForm from '@/components/addForm/AddForm.vue';
 
-export default {
-  components: {
-    ManagePage,
-    AddForm
-  },
-  mixins: [manage({ permissionObj })],
-  data() {
-    return {
-      renderObj: {
-        editBtn: { isOpen: false }
-      },
-      columns,
-      ...moduleConfig
-    };
-  },
-  methods: {
-    generateCodeClick() {
-      let data = {
-        title: '商户入驻申请',
-        show: true,
-        loading: false,
-        columns: applyColumns,
-        groupSize: 2
-      };
-      this.$refs.addForm.onOpen(data);
+  export default {
+    components: {
+      ManagePage,
+      AddForm
     },
-    async addFormPropsSubmit(data) {
-      try {
-        console.log('addFormPropsSubmit', data);
-        data.spmShopCityId = data.spmShopCityId.join(',');
-        let resp = await this.module['applyTenant'](data);
-        console.log('applyTenant.resp', resp);
-        this.$refs.addForm.ok('申请提交成功');
-        this.getData();
-      } catch (e) {
-        console.error(e);
-        this.$refs.addForm.no();
+    mixins: [manage({permissionObj, renderObj})],
+    data() {
+      return {
+        columns,
+        ...moduleConfig,
+        //入驻申请表单字段
+        applyFileds: [
+          'spmShopCityId',
+          'name',
+          'legalPersonName',
+          'email',
+          'phone',
+          'detailedAddress',
+          'socialCreditCode',
+          'businessLicenseImage',
+          'legalPersonIdFrontImage',
+          'legalPersonIdBackImage',
+          'remark'
+        ]
+      };
+    },
+    methods: {
+      applyClick() {
+        let data = {
+          title: '商户入驻申请',
+          show: true,
+          loading: false,
+          columns: this.filterColumns(columns, this.applyFileds),
+          groupSize: 2,
+          subMitMethod: "applyTenant",
+        };
+        this.$refs.addForm.onOpen(data);
+      },
+      async processClick(record) {
+        try {
+          console.log('applyClick', record);
+          let data = {
+            title: '商户入驻审核',
+            show: true,
+            loading: false,
+            columns: this.filterColumns(columns, this.applyFileds),
+            groupSize: 2,
+            subMitMethod: "processTenant",
+          };
+          this.$refs.addForm.onOpen(data);
+          setTimeout(() => {
+            this.$refs.addForm.setFormData(record);
+          }, 150)
+
+        } catch (e) {
+          console.error(e);
+        }
+      },
+      async addFormPropsSubmit({propsTemp, data}) {
+        try {
+          data.spmShopCityId = data.spmShopCityId.join(',');
+          await this.module[propsTemp.subMitMethod](data);
+          this.$refs.addForm.ok('申请提交成功');
+          this.getData();
+        } catch (e) {
+          console.error(e);
+          this.$refs.addForm.no();
+        }
+      },
+
+      handleDetailModel(newModel) {
+        newModel.spmShopCityId = newModel.spmShopCityId.split(',');
       }
     }
-  }
-};
+  };
 </script>
 
 <style lang="less" scoped></style>

@@ -182,6 +182,7 @@ const columns = [
     key: 'sort',
     width: 50,
     ellipsis: true,
+    noSearch: true,
   },
 
   {
@@ -249,7 +250,15 @@ const columns = [
     noSearch: true,
     noShow: true,
     ellipsis: true,
-  }
+  },
+  {
+    title: '操作',
+    key: 'action',
+    fixed: 'right',
+    width: 180,
+    scopedSlots: {customRender: 'action'},
+    noSearch: true,
+  },
 ];
 
 
