@@ -1,4 +1,4 @@
-import { request } from '@/utils/request';
+import {request} from '@/utils/request';
 
 /**
  * 登录服务
@@ -8,11 +8,12 @@ import { request } from '@/utils/request';
  */
 export async function login(username, password) {
   const resp = await request({
-    url: '/login/accountLogin',
+    url: '/sys/user/login',
     method: 'post',
     data: {
       username,
-      password
+      password,
+      "platform": "0"
     }
   });
 
@@ -25,7 +26,7 @@ export async function login(username, password) {
  */
 export async function getUserInfo() {
   const resp = await request({
-    url: '/login/getUserInfo',
+    url: '/sys/user/getUserInfo',
     method: 'get'
   });
 

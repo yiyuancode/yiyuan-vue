@@ -19,7 +19,7 @@ const reqCommon = {
       message.warning('认证 token 已过期，请重新登录');
     }
     const satokn = localStorage.getItem(xsrfCookieName);
-    config.headers['satoken'] = satokn;
+    config.headers['admintoken'] = satokn;
     config.headers['platform'] = '0';
     return config;
   },

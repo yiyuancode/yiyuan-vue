@@ -116,12 +116,12 @@
         </div> -->
       </a-form>
     </div>
-    <a-button
-      @click="addNew"
-      htmlType="submit"
-      type="primary"
-    >下载
-    </a-button>
+<!--    <a-button-->
+<!--      @click="addNew"-->
+<!--      htmlType="submit"-->
+<!--      type="primary"-->
+<!--    >下载-->
+<!--    </a-button>-->
   </common-layout>
 </template>
 
