@@ -24,6 +24,7 @@ import manage from '@/mixins/manage';
 import { columns, moduleConfig, permissionObj } from './pageConfig';
 
 export default {
+  name: 'redis',
   components: {
     ManagePage
   },

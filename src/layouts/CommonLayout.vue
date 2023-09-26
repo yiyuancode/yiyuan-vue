@@ -1,19 +1,28 @@
 <template>
   <div class="common-layout">
-    <div class="content"><slot></slot></div>
+    <div class="content">
+      <slot></slot>
+    </div>
     <page-footer :link-list="footerLinks" :copyright="copyright"></page-footer>
   </div>
 </template>
 
 <script>
 import PageFooter from '@/layouts/footer/PageFooter';
-import { mapState } from 'vuex';
 
 export default {
   name: 'CommonLayout',
   components: { PageFooter },
-  computed: {
-    ...mapState('setting', ['footerLinks', 'copyright'])
+  data() {
+    return {
+      footerLinks: [
+        //页面底部链接，{link: '链接地址', name: '名称/显示文字', icon: '图标，支持 ant design vue 图标库'}
+        { link: 'https://pro.ant.design', name: 'Pro首页' },
+        { link: 'https://github.com/iczer/vue-antd-admin', icon: 'github' },
+        { link: 'https://ant.design', name: 'Ant Design' }
+      ],
+      copyright: '2023 YIYUAN 工作室出品' //copyright
+    };
   }
 };
 </script>
@@ -30,6 +39,7 @@ export default {
   background-position-x: center;
   background-position-y: 110px;
   background-size: 100%;
+
   .content {
     padding: 32px 0;
     flex: 1;

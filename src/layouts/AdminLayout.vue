@@ -76,7 +76,7 @@ import PageFooter from './footer/PageFooter';
 import Drawer from '../components/tool/Drawer';
 import SideMenu from '../components/menu/SideMenu';
 import Setting from '../components/setting/Setting';
-import { mapState, mapMutations, mapGetters } from 'vuex';
+import { mapGetters, mapMutations, mapState } from 'vuex';
 
 // const minHeight = window.innerHeight - 64 - 122
 
@@ -89,7 +89,16 @@ export default {
       minHeight: window.innerHeight - 64 - 122,
       collapsed: false,
       showSetting: false,
-      drawerOpen: false
+      drawerOpen: false,
+      isMobile: false,
+      // animates: ADMIN.animates,
+      // palettes: ADMIN.palettes,
+      pageMinHeight: 0,
+      menuData: [],
+      activatedFirst: undefined
+      // customTitles,
+      // ...config,
+      // ...localSetting
     };
   },
   provide() {

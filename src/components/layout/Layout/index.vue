@@ -22,7 +22,6 @@
             :type="collapsed ? 'menu-unfold' : 'menu-fold'"
             @click="() => (collapsed = !collapsed)"
           />
-
           <MyAvatar></MyAvatar>
         </a-layout-header>
         <a-layout-content class="layout-content">
@@ -34,6 +33,10 @@
               "
             />
           </keep-alive>
+          <!--          <keep-alive>-->
+          <!--            <router-view v-if="$route.meta.keepAlive"/>-->
+          <!--          </keep-alive>-->
+          <!--          <router-view v-if="!$route.meta.keepAlive"/>-->
         </a-layout-content>
       </a-layout>
     </a-layout>

@@ -1,35 +1,23 @@
 <template>
-  <ManagePage
-    :columns="columns"
-    :data="data"
-    :pagination="pagination"
-    :renderObj="renderObj"
-    @onSave="saveHandle"
-    @onSubmit="submitHandle"
-    @onDelete="deleteHandle"
-    @onSearch="searchHandle"
-    @onReset="resetHandle"
-  >
-  </ManagePage>
+  <div>dept</div>
 </template>
 
 <script>
-import ManagePage from '@/components/manage/ManagePage.vue';
-import manage from '@/mixins/manage';
-import { columns, moduleConfig } from './pageConfig';
+// import manage from '@/mixins/manage';
+// import {columns, moduleConfig} from './pageConfig';
 
 export default {
-  components: {
-    ManagePage
-  },
-  mixins: [manage()],
+  // mixins: [manage()],
+  name: 'dept',
   data() {
     return {
-      columns,
-      ...moduleConfig
+      // columns,
+      // ...moduleConfig
     };
   },
-
+  created() {
+    console.log('初始化创建dept组件', this.$route);
+  },
   methods: {}
 };
 </script>

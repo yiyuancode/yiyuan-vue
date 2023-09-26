@@ -9,8 +9,8 @@ const reqCommon = {
    * @returns {*}
    */
   onFulfilled(config, options) {
-    const {message} = options;
-    const {url, xsrfCookieName} = config;
+    const { message } = options;
+    const { url, xsrfCookieName } = config;
     if (
       url.indexOf('login') === -1 &&
       xsrfCookieName &&
@@ -30,7 +30,7 @@ const reqCommon = {
    * @returns {Promise<never>}
    */
   onRejected(error, options) {
-    const {message} = options;
+    const { message } = options;
     message.error(error.message);
     return Promise.reject(error);
   }
@@ -58,21 +58,21 @@ const respCommon = {
       //   link.click();
       //   URL.revokeObjectURL(url); // 释放内存
       // }
-      const url = URL.createObjectURL(response.data)
-      const link = document.createElement('a')
-      link.style.display = 'none'
-      link.href = url
-      link.setAttribute('download', name)
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      URL.revokeObjectURL(url)
+      const url = URL.createObjectURL(response.data);
+      const link = document.createElement('a');
+      link.style.display = 'none';
+      link.href = url;
+      link.setAttribute('download', name);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
       return response;
       // resolve(response)
     }
 
-    const {message: msg, code} = response.data;
-    const {message} = options;
+    const { message: msg, code } = response.data;
+    const { message } = options;
 
     if (code !== 200 && msg) {
       message.error(msg);
@@ -81,8 +81,8 @@ const respCommon = {
     return response.data;
   },
   onRejected(error, options) {
-    const {message} = options;
-    const {response} = error;
+    const { message } = options;
+    const { response } = error;
     if (error.code === 'ECONNABORTED') {
       message.error('请求超时!!');
     } else if (response && response.status === 502) {

@@ -42,6 +42,7 @@ const assetsCDN = {
 };
 
 module.exports = {
+  runtimeCompiler: true,
   devServer: {
     // proxy: {
     //   '/': {

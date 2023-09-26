@@ -1,5 +1,5 @@
 import eventBus from '@/eventBus';
-import store from '@/store';
+// import store from '@/store';
 
 /**
  *
@@ -28,15 +28,15 @@ export default function (opts = {}) {
       //渲染对象
       isLoading: false,
       addBtn: {
-        // isOpen: false,
+        isOpen: false,
         text: '添加'
       },
       editBtn: {
-        // isOpen: true,
+        isOpen: true,
         text: '编辑'
       },
       deleteBtn: {
-        // isOpen: true,
+        isOpen: true,
         text: '删除'
       },
       importBtn: {
@@ -76,39 +76,39 @@ export default function (opts = {}) {
     renderObj: newRenderObj
   };
 
-  const permissions = store.state.account.permissions;
-  // 按钮权限对象
-  if (opts.permissionObj) {
-    const { id } = opts.permissionObj;
-
-    const operationList = [];
-    if (Array.isArray(id)) {
-      for (let i = 0; i < id.length; i++) {
-        const permissionItem = permissions.find((p) => {
-          return p.id === id[i];
-        });
-        const operation = permissionItem.operation;
-        operationList.push(...operation);
-      }
-    } else {
-      const permissionItem = permissions.find((p) => {
-        return p.id === id;
-      });
-      const operation = permissionItem.operation;
-      operationList.push(...operation);
-    }
-
-    for (let prop in newOpts.permissionObj) {
-      const permission = opts.permissionObj[prop];
-      const operationItem = operationList.find((op) => {
-        return op === permission;
-      });
-      if (operationItem) {
-        newOpts.renderObj[prop] = newOpts.renderObj[prop] || {};
-        newOpts.renderObj[prop].isOpen = true;
-      }
-    }
-  }
+  // const permissions = store.state.account.permissions;
+  // // 按钮权限对象
+  // if (opts.permissionObj) {
+  //   const { id } = opts.permissionObj;
+  //
+  //   const operationList = [];
+  //   if (Array.isArray(id)) {
+  //     for (let i = 0; i < id.length; i++) {
+  //       const permissionItem = permissions.find((p) => {
+  //         return p.id === id[i];
+  //       });
+  //       const operation = permissionItem.operation;
+  //       operationList.push(...operation);
+  //     }
+  //   } else {
+  //     const permissionItem = permissions.find((p) => {
+  //       return p.id === id;
+  //     });
+  //     const operation = permissionItem.operation;
+  //     operationList.push(...operation);
+  //   }
+  //
+  //   for (let prop in newOpts.permissionObj) {
+  //     const permission = opts.permissionObj[prop];
+  //     const operationItem = operationList.find((op) => {
+  //       return op === permission;
+  //     });
+  //     if (operationItem) {
+  //       newOpts.renderObj[prop] = newOpts.renderObj[prop] || {};
+  //       newOpts.renderObj[prop].isOpen = true;
+  //     }
+  //   }
+  // }
 
   return {
     data() {

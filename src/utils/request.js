@@ -1,123 +1,90 @@
 import axios from 'axios';
+// import store from '../store'
+import { message } from 'ant-design-vue';
+import { vm } from '@/main';
+// import { logout } from '@/requests/user';
+// import {initRouter} from './router'
+//多环境API BaseUrl
+// export const baseUrlMap = {
+//   'api': process.env.VUE_APP_API_BASE_URL
+// }
+//
+// function getBaseApi(url) {
+//   let urlSplit = url.split("/");
+//   return baseUrlMap[urlSplit[1]] + url.replace("/" + urlSplit[1], "");
+// }
 
-// 跨域认证信息 header 名
-const xsrfHeaderName = 'satoken';
-
-axios.defaults.timeout = 5000 * 50;
-axios.defaults.withCredentials = true;
-axios.defaults.xsrfHeaderName = xsrfHeaderName;
-axios.defaults.xsrfCookieName = xsrfHeaderName;
-// axios.defaults.baseURL = process.env.NODE_ENV === "development" ? '/' : process.env.VUE_APP_API_BASE_URL + '/';
-axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
-// 认证类型
-// const AUTH_TYPE = {
-//   BEARER: 'Bearer',
-//   BASIC: 'basic',
-//   AUTH1: 'auth1',
-//   AUTH2: 'auth2'
-// };
-
-// // http method
-// const METHOD = {
-//   GET: 'get',
-//   POST: 'post'
-// };
-
-const request = axios;
-
-/**
- * 设置认证信息
- * @param authType {AUTH_TYPE} 认证类型，默认：{AUTH_TYPE.BEARER}
- */
-function setAuthorization(satoken) {
-  localStorage.setItem(xsrfHeaderName, satoken);
-}
-
-/**
- * 移出认证信息
- * @param authType {AUTH_TYPE} 认证类型
- */
-function removeAuthorization() {
-  localStorage.removeItem(xsrfHeaderName);
-}
-
-/**
- * 检查认证信息
- * @param authType
- * @returns {boolean}
- */
-function checkAuthorization() {
-  if (localStorage.getItem(xsrfHeaderName)) {
-    return true;
-  }
-  return false;
-}
-
-/**
- * 加载 axios 拦截器
- * @param interceptors
- * @param options
- */
-function loadInterceptors(interceptors, options) {
-  const { request, response } = interceptors;
-  // 加载请求拦截器
-  request.forEach((item) => {
-    let { onFulfilled, onRejected } = item;
-    if (!onFulfilled || typeof onFulfilled !== 'function') {
-      onFulfilled = (config) => config;
+// 创建axios实例
+let request = axios.create({
+  baseURL: process.env.VUE_APP_API_BASE_URL, // api的base_url
+  timeout: 15000 // 请求超时时间
+  // headers:{
+  //   'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8;',
+  // }
+});
+// request拦截器
+request.interceptors.request.use(
+  (config) => {
+    // getBaseApi(config.url)
+    //   config.url = !getBaseApi(config.url) ? config.url : getBaseApi(config.url);
+    // let isLogin= vm.$store.getters['account/isLogin']
+    // let myToken = vm.$store.getters['account/myToken']
+    let myToken = localStorage.getItem('myToken');
+    console.log(' localStorage.getItem.myToken', myToken);
+    if (myToken) {
+      // config.headers['Authorization'] = "Bearer " + myToken // 让每个请求携带自定义token 请根据实际情况自行修改
+      config.headers['admintoken'] = myToken;
     }
-    if (!onRejected || typeof onRejected !== 'function') {
-      onRejected = (error) => Promise.reject(error);
-    }
-    axios.interceptors.request.use(
-      (config) => onFulfilled(config, options),
-      (error) => onRejected(error, options)
-    );
-  });
-  // 加载响应拦截器
-  response.forEach((item) => {
-    let { onFulfilled, onRejected } = item;
-    if (!onFulfilled || typeof onFulfilled !== 'function') {
-      onFulfilled = (response) => response;
-    }
-    if (!onRejected || typeof onRejected !== 'function') {
-      onRejected = (error) => Promise.reject(error);
-    }
-    axios.interceptors.response.use(
-      (response) => onFulfilled(response, options),
-      (error) => onRejected(error, options)
-    );
-  });
-}
-
-/**
- * 解析 url 中的参数
- * @param url
- * @returns {Object}
- */
-function parseUrlParams(url) {
-  const params = {};
-  if (!url || url === '' || typeof url !== 'string') {
-    return params;
+    // if (config.formUrlHeaders) {
+    //   config.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8;'
+    // }
+    return config;
+  },
+  (error) => {
+    // Do something with request error
+    Promise.reject(error);
   }
-  const paramsStr = url.split('?')[1];
-  if (!paramsStr) {
-    return params;
+);
+// respone拦截器
+request.interceptors.response.use(
+  (response) => {
+    console.log('response', response);
+    /**
+     * code为非200是抛错 可结合自己业务进行修改
+     */
+    // const res = response.data
+    //   return response.data
+    let { code } = response.data;
+    if (code == 200) {
+      return response.data.data;
+    } else {
+      switch (code) {
+        case 500:
+          message.error('请求异常' + response.data.message);
+          break;
+        case 400:
+          message.error('参数错误，请重新检查' + response.data.message);
+          // vm.$router.replace("/404")
+          break;
+        case 401:
+          // this.locale = require('ant-design-vue/es/locale-provider/zh_TW').default
+          message.error('登录失效，请重新登录');
+          vm.$router.replace('/login');
+          break;
+      }
+    }
+  },
+  (error) => {
+    console.log('error', error);
+    switch (error.response.status) {
+      case 400:
+        break;
+      case 401:
+        vm.$router.replace('/login');
+        break;
+      case 'US':
+    }
+    return Promise.reject(error);
   }
-  const paramsArr = paramsStr.replace(/&|=/g, ' ').split(' ');
-  for (let i = 0; i < paramsArr.length / 2; i++) {
-    const value = paramsArr[i * 2 + 1];
-    params[paramsArr[i * 2]] =
-      value === 'true' ? true : value === 'false' ? false : value;
-  }
-  return params;
-}
-
-export {
-  request,
-  setAuthorization,
-  removeAuthorization,
-  checkAuthorization,
-  loadInterceptors,
-  parseUrlParams
-};
+);
+export { request };

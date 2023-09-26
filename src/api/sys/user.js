@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的管理端用户信息(分页)
@@ -8,15 +8,12 @@ import {request} from '@/utils/request';
  * @author  一源-花和尚
  * @date 2023-09-26
  */
-export async function getUserPageList(data) {
-    const resp = await
-    request({
-        url: "/sys/user/page",
-        params: data
-    });
-    return resp.data;
+export function getUserPageList(data) {
+  return request({
+    url: '/sys/user/page',
+    params: data
+  });
 }
-
 
 /**
  * 获取管理端用户详情
@@ -26,12 +23,10 @@ export async function getUserPageList(data) {
  * @author  一源-花和尚
  * @date 2023-09-26
  */
-export async function getUserDetail(id) {
-    const resp = await
-    request({
-        url: `/sys/user/details/${id}`,
-    });
-    return resp.data;
+export function getUserDetail(id) {
+  return request({
+    url: `/sys/user/details/${id}`
+  });
 }
 
 /**
@@ -43,14 +38,12 @@ export async function getUserDetail(id) {
  * @date 2023-09-26
  */
 
-export async function addUser(data) {
-    const resp = await
-    request({
-        url: "/sys/user/add",
-        method: "post",
-        data
-    });
-    return resp.data;
+export function addUser(data) {
+  return request({
+    url: '/sys/user/add',
+    method: 'post',
+    data
+  });
 }
 
 /**
@@ -62,19 +55,17 @@ export async function addUser(data) {
  * @author  一源-花和尚
  * @date 2023-09-26
  */
-export async function editUser(data, id) {
-    const resp = await
-    request({
-        url: "/sys/user/edit",
-        method: "post",
-        data: {
-...
-    data, id
+export function editUser(data, id) {
+  return request({
+    url: '/sys/user/edit',
+    method: 'post',
+    data: {
+      ...data,
+      id
+    }
+  });
 }
-})
-    ;
-    return resp.data;
-}
+
 /**
  * 删除管理端用户（可支持批量删除）
  *
@@ -83,15 +74,40 @@ export async function editUser(data, id) {
  * @author  一源-花和尚
  * @date 2023-09-26
  */
-export async function deleteUser(ids) {
-    const resp = await
-    request({
-        url: "/sys/user/delete",
-        method: "post",
-        params: {
-            ids
-        }
-    });
-    return resp.data;
+export function deleteUser(ids) {
+  return request({
+    url: '/sys/user/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
 }
 
+/**
+ * 登录
+ *
+ * @return
+ * @author  一源-花和尚
+ * @date 2023-09-26
+ */
+export function login(data) {
+  return request({
+    url: '/sys/user/login',
+    method: 'post',
+    data
+  });
+}
+
+/**
+ * 获取用户信息
+ *
+ * @return
+ * @author  一源-花和尚
+ * @date 2023-09-26
+ */
+export function getUserInfo() {
+  return request({
+    url: `/sys/user/getUserInfo`
+  });
+}

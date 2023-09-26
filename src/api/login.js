@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 登录服务
@@ -13,7 +13,7 @@ export async function login(username, password) {
     data: {
       username,
       password,
-      "platform": "0"
+      platform: '0'
     }
   });
 

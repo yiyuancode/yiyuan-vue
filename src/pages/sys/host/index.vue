@@ -1,53 +1,17 @@
 <template>
-  <ManagePage
-    :columns="columns"
-    :data="data"
-    :pagination="pagination"
-    :renderObj="renderObj"
-    :submitModalObj="submitModalObj"
-    @onDelete="deleteHandle"
-    @onReset="resetHandle"
-    @onSave="saveHandle"
-    @onSearch="searchHandle"
-    @onSubmit="submitHandle"
-    @onOtherEventChange="otherEventChangeHandle"
-    @onChange="tableChangeHandle"
-  >
-    <!-- 其他的操作插槽 -->
-    <!-- <template slot="otherOperationsContainer" slot-scope="{record}">
-      <a-button type="primary" @click="toHostMonitor(record)">监控</a-button>
-    </template> -->
-  </ManagePage>
+  <div>host</div>
 </template>
 
 <script>
-import ManagePage from '@/components/manage/ManagePage.vue';
-import manage from '@/mixins/manage';
-import { columns, moduleConfig, permissionObj, renderObj } from './pageConfig';
-
 export default {
-  components: {
-    ManagePage
-  },
-  mixins: [manage({ permissionObj, renderObj })],
+  name: 'host',
   data() {
-    return {
-      columns,
-      ...moduleConfig,
-      submitModalObj: {
-        labelCol: { span: 8 },
-        wrapperCol: { span: 16 }
-      }
-    };
+    return {};
   },
-  methods: {
-    toHostMonitor(record) {
-      this.$router.push({
-        path: '/sys/hostMonitor',
-        query: { id: record.id }
-      });
-    }
-  }
+  created() {
+    console.log('初始化创建host组件');
+  },
+  methods: {}
 };
 </script>
 
