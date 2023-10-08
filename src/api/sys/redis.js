@@ -13,7 +13,7 @@ export async function getRedisPageList(data) {
     url: '/sys/redis/page',
     params: data
   });
-  return resp.data;
+  return resp;
 }
 
 /**
@@ -28,7 +28,7 @@ export async function getRedisDetail(id) {
   const resp = await request({
     url: `/sys/redis/details/${id}`
   });
-  return resp.data;
+  return resp;
 }
 
 /**
@@ -46,7 +46,7 @@ export async function addRedis(data) {
     method: 'post',
     data
   });
-  return resp.data;
+  return resp;
 }
 
 /**
@@ -67,7 +67,7 @@ export async function editRedis(data, id) {
       id
     }
   });
-  return resp.data;
+  return resp;
 }
 /**
  * 删除Redis记录（可支持批量删除）
@@ -85,5 +85,5 @@ export async function deleteRedis(ids) {
       ids
     }
   });
-  return resp.data;
+  return resp;
 }

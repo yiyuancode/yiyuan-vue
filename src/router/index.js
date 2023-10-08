@@ -65,16 +65,16 @@ export const dynamicRoutes = [
           permissions: 'sys:host'
         }
       },
-      {
-        path: 'dept',
-        name: 'dept',
-        component: () => import('@/pages/sys/dept/index.vue'),
-        meta: {
-          title: '部门管理',
-          keepAlive: true,
-          permissions: 'sys:dept'
-        }
-      },
+      // {
+      //   path: 'dept',
+      //   name: 'dept',
+      //   component: () => import('@/pages/sys/dept/index.vue'),
+      //   meta: {
+      //     title: '部门管理',
+      //     keepAlive: true,
+      //     permissions: 'sys:dept'
+      //   }
+      // },
       {
         path: 'redis',
         name: 'redis',

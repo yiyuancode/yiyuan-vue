@@ -1,160 +1,92 @@
-import { request } from '@/utils/request';
+import {request} from '@/utils/request';
 
 /**
- * 获取主机信息(分页)
- * @param {*} opts
- *  @param {*} pageSize 每页显示数量
- *  @param {*} pageNum 当前页面
- *  @param {*} hostName 主机名
- *  @param {*} host IP地址
- *  @param {*} sshPort ssh端口
- *  @param {*} sshUsername ssh用户名
- *  @param {*} sshPassword ssh登录密码
- *  @param {*} isMonitorEnabled 开启监控
- *  @param {*} updateTimeStart 更新时间（开始）
- *  @param {*} updateTimeEnd 更新时间（结束）
- *  @param {*} createTimeStart 创建时间（开始）
- *  @param {*} createTimeEnd 创建时间（结束）
- * @returns
+ * 获取所有的服务器信息(分页)
+ *
+ * @param {*} data 服务器信息
+ * @return
+ * @author  红枣粽子
+ * @date 2023-10-08
  */
-export async function getHostPageList(opts = {}) {
-  const {
-    pageSize,
-    pageNum,
-    hostName,
-    host,
-    sshPort,
-    sshUsername,
-    sshPassword,
-    isMonitorEnabled,
-    createUser,
-    updateUser,
-    createTimeStart,
-    createTimeEnd,
-    updateTimeStart,
-    updateTimeEnd
-  } = opts;
-
-  const resp = await request({
-    url: '/sys/host/page',
-    params: {
-      pageSize,
-      pageNum,
-      hostName,
-      host,
-      sshPort,
-      sshUsername,
-      sshPassword,
-      isMonitorEnabled,
-      createUser,
-      updateUser,
-      createTimeStart,
-      createTimeEnd,
-      updateTimeStart,
-      updateTimeEnd
-    }
+export function getHostPageList(data) {
+  return request({
+    url: "/sys/host/page",
+    params: data
   });
-  return resp.data;
+
 }
 
+
 /**
- * 获取主机详情
+ * 获取服务器详情
+ *
  * @param {*} id
- * @returns
+ * @return
+ * @author  红枣粽子
+ * @date 2023-10-08
  */
-export async function getHostDetail(id) {
-  const resp = await request({
-    url: `/sys/host/details/${id}`
+export function getHostDetail(id) {
+  return request({
+    url: `/sys/host/details/${id}`,
   });
-  return resp.data;
+
 }
 
 /**
- * 添加主机
- * @param {*} hostInfo
- *  @param {*} hostName 主机名
- *  @param {*} host IP地址
- *  @param {*} sshPort SSH端口
- *  @param {*} sshUsername SSH登录用户名
- *  @param {*} sshPassword SSH登录密码
- *  @param {*} isMonitorEnabled 开启监控
- * @returns
+ * 添加服务器
+ *
+ * @param {*} data 服务器信息
+ * @return
+ * @author  红枣粽子
+ * @date 2023-10-08
  */
 
-export async function addHost(hostInfo = {}) {
-  const {
-    hostName,
-    host,
-    sshPort,
-    sshUsername,
-    sshPassword,
-    isMonitorEnabled
-  } = hostInfo;
+export function addHost(data) {
+  return request({
+    url: "/sys/host/add",
+    method: "post",
+    data
+  });
 
-  const resp = await request({
-    url: '/sys/host/add',
-    method: 'post',
+}
+
+/**
+ * 编辑服务器
+ *
+ * @param {*} data 服务器信息
+ * @param {*} id 服务器id
+ * @return
+ * @author  红枣粽子
+ * @date 2023-10-08
+ */
+export function editHost(data, id) {
+  return request({
+    url: "/sys/host/edit",
+    method: "post",
     data: {
-      hostName,
-      host,
-      sshPort,
-      sshUsername,
-      sshPassword,
-      isMonitorEnabled
+      ...
+        data, id
     }
-  });
-  return resp.data;
+  })
+    ;
+
 }
-
 /**
- * 编辑主机
- * @param {*} hostInfo 主机信息
- *  @param {*} hostName 主机名
- *  @param {*} host IP地址
- *  @param {*} sshPort SSH端口
- *  @param {*} sshUsername SSH登录用户名
- *  @param {*} sshPassword SSH登录密码
- *  @param {*} isMonitorEnabled 开启监控
- * @param {*} id 主机id
- * @returns
- */
-export async function editHost(hostInfo, id) {
-  const {
-    hostName,
-    host,
-    sshPort,
-    sshUsername,
-    sshPassword,
-    isMonitorEnabled
-  } = hostInfo;
-
-  const resp = await request({
-    url: '/sys/host/edit',
-    method: 'post',
-    data: {
-      hostName,
-      host,
-      sshPort,
-      sshUsername,
-      sshPassword,
-      isMonitorEnabled,
-      id
-    }
-  });
-  return resp.data;
-}
-
-/**
- * 删除主机（可支持批量删除）
+ * 删除服务器（可支持批量删除）
+ *
  * @param {*} ids
+ * @return
+ * @author  红枣粽子
+ * @date 2023-10-08
  */
-export async function deleteHost(ids) {
-  const resp = await request({
-    url: '/sys/host/delete',
-    method: 'post',
+export function deleteHost(ids) {
+  return request({
+    url: "/sys/host/delete",
+    method: "post",
     params: {
       ids
     }
   });
-  return resp.data;
+
 }
+

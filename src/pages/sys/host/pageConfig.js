@@ -1,130 +1,191 @@
-import * as admin from '@/api/sys/host';
+/**
+ * 服务器页面组件配置配置
+ *
+ * @author  红枣粽子
+ * @date 2023-10-08
+ */
+import * as host from '@/api/sys/host';
 
-// 表格的table配置项
 const columns = [
+  {
+    title: '主键ID',
+    dataIndex: 'id',
+    key: 'id',
+    width: 160,
+    rules: [{ required: true, message: '请输入主键ID', trigger: 'blur' }],
+    noEdit: true,
+    noAdd: true,
+    noShow: true
+  },
+
   {
     title: '主机名',
     dataIndex: 'hostName',
     key: 'hostName',
-    rules: [{ required: true, message: '请输入主机名', trigger: 'blur' }],
-    width: 160
+    width: 160,
+    rules: [{ required: true, message: '请输入主机名', trigger: 'blur' }]
   },
+
   {
     title: 'IP地址',
     dataIndex: 'host',
     key: 'host',
-    rules: [{ required: true, message: '请输入IP地址', trigger: 'blur' }],
-    width: 160
+    width: 160,
+    rules: [{ required: true, message: '请输入IP地址', trigger: 'blur' }]
   },
+
   {
     title: 'SSH端口',
     dataIndex: 'sshPort',
     key: 'sshPort',
-    rules: [{ required: true, message: '请输入SSH端口号', trigger: 'blur' }],
     width: 160
   },
+
   {
     title: 'SSH登录用户名',
     dataIndex: 'sshUsername',
     key: 'sshUsername',
-    rules: [
-      { required: true, message: '请输入SSH登录用户名', trigger: 'blur' }
-    ],
-    width: 160
+    width: 160,
+    rules: [{ required: true, message: '请输入SSH登录用户名', trigger: 'blur' }]
   },
+
   {
     title: 'SSH登录密码',
     dataIndex: 'sshPassword',
-    noShow: true,
     key: 'sshPassword',
-    noSearch: true,
-    props: {
-      type: 'password'
-    },
-    rules: [{ required: true, message: '请输入SSH登录密码', trigger: 'blur' }],
-    width: 160
+    width: 160,
+    rules: [{ required: true, message: '请输入SSH登录密码', trigger: 'blur' }]
   },
+
   {
     title: '开启监控',
     dataIndex: 'isMonitorEnabled',
     key: 'isMonitorEnabled',
+    width: 160,
+    //值类型
     valType: 'object',
-    formType: 'radioGroup',
-    options: [
-      {
-        label: '开启',
-        value: 0
-      },
-      {
-        label: '关闭',
-        value: 1
-      }
-    ],
-    props: {
-      style: { width: '100%' }
-    },
     searchObj: {
-      formType: 'select'
+      formType: 'select',
+      options: [
+        {
+          label: '开启',
+          value: 0
+        },
+        {
+          label: '关闭',
+          value: 1
+        }
+      ]
     },
-    rules: [
-      { required: true, message: '请选择监控开启状态', trigger: 'change' }
-    ],
-    defaultValue: 0,
-    width: 100
+    formType: 'radioGroup',
+    props: {
+      options: [
+        {
+          label: '开启',
+          value: 0
+        },
+        {
+          label: '关闭',
+          value: 1
+        }
+      ],
+      style: {
+        width: '100%'
+      }
+    },
+    rules: [{ required: true, message: '请选择开启监控', trigger: 'change' }],
+    formSort: 1
   },
+
+  {
+    title: '排序字段',
+    dataIndex: 'sortBy',
+    key: 'sortBy',
+    width: 160,
+    noShow: true
+  },
+
   {
     title: '创建时间',
     dataIndex: 'createTime',
     key: 'createTime',
-    noAdd: true,
-    noEdit: true,
+    width: 160,
     searchObj: {
       formType: 'rangePicker'
     },
-    width: 160
+    props: {
+      showTime: true,
+      style: { width: '100%' }
+    },
+    formType: 'datePicker',
+    rules: function () {
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
+    },
+    noEdit: true,
+    noAdd: true
   },
+
   {
     title: '修改时间',
     dataIndex: 'updateTime',
     key: 'updateTime',
+    width: 160,
     searchObj: {
       formType: 'rangePicker'
     },
-    noAdd: true,
+    props: {
+      showTime: true,
+      style: { width: '100%' }
+    },
+    formType: 'datePicker',
+    rules: function () {
+      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
+    },
     noEdit: true,
-    width: 160
+    noAdd: true,
+    noSearch: true
+  },
+
+  {
+    title: '创建人',
+    dataIndex: 'createUser',
+    key: 'createUser',
+    width: 160,
+    noEdit: true,
+    noAdd: true,
+    noSearch: true,
+    noShow: true
+  },
+
+  {
+    title: '修改人',
+    dataIndex: 'updateUser',
+    key: 'updateUser',
+    width: 160,
+    noEdit: true,
+    noAdd: true,
+    noSearch: true,
+    noShow: true
   }
 ];
 
 // 模块配置
 const moduleConfig = {
-  module: admin,
+  module: host,
   moduleAdd: 'addHost',
   moduleEdit: 'editHost',
   moduleDelete: 'deleteHost',
   moduleGetList: 'getHostPageList',
   moduleGetDetail: 'getHostDetail',
-  moduleName: '用户'
+  moduleName: '服务器'
 };
 
 // 权限对象
 const permissionObj = {
-  id: ['sys:host', 'sys:hostMonitor'],
+  id: 'sys:host',
   addBtn: 'sys:host:add',
   editBtn: 'sys:host:edit',
-  deleteBtn: 'sys:host:delete',
-  toHostMonitorBtn: 'sys:hostMonitor:queryCount'
+  deleteBtn: 'sys:host:delete'
 };
 
-// 渲染对象
-const renderObj = {
-  otherOperationList: [
-    {
-      name: '监控',
-      methodName: 'toHostMonitor',
-      btnName: 'toHostMonitorBtn'
-    }
-  ]
-};
-
-export { columns, moduleConfig, permissionObj, renderObj };
+export { columns, moduleConfig, permissionObj };

@@ -1,18 +1,39 @@
 <template>
-  <div>host</div>
+  <ManagePage
+    :columns="columns"
+    :data="data"
+    :pagination="pagination"
+    :renderObj="renderObj"
+    @onSave="saveHandle"
+    @onSubmit="submitHandle"
+    @onDelete="deleteHandle"
+    @onSearch="searchHandle"
+    @onReset="resetHandle"
+    @onChange="tableChangeHandle"
+  >
+  </ManagePage>
 </template>
 
 <script>
+import ManagePage from '@/components/manage/ManagePage.vue';
+import manage from '@/mixins/manage';
+import { columns, moduleConfig, permissionObj } from './pageConfig';
+
 export default {
   name: 'host',
+  components: {
+    ManagePage
+  },
+  mixins: [manage({ permissionObj })],
   data() {
-    return {};
+    return {
+      columns,
+      ...moduleConfig
+    };
   },
-  created() {
-    console.log('初始化创建host组件');
-  },
+
   methods: {}
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>
