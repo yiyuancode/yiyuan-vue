@@ -8,12 +8,11 @@ import {request} from '@/utils/request';
  * @author  一源团队-花和尚
  * @date 2023-08-30
  */
-export async function getRedisPageList(data) {
-  const resp = await request({
+export function getRedisPageList(data) {
+  return request({
     url: '/sys/redis/page',
     params: data
   });
-  return resp;
 }
 
 /**
