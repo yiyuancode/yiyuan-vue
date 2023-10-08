@@ -1,4 +1,4 @@
-import { request } from '@/utils/request';
+import {request} from '@/utils/request';
 
 /**
  * 获取所有的Redis记录信息(分页)
@@ -24,11 +24,10 @@ export async function getRedisPageList(data) {
  * @author  一源团队-花和尚
  * @date 2023-08-30
  */
-export async function getRedisDetail(id) {
-  const resp = await request({
+export function getRedisDetail(id) {
+  return request({
     url: `/sys/redis/details/${id}`
   });
-  return resp;
 }
 
 /**
@@ -40,13 +39,12 @@ export async function getRedisDetail(id) {
  * @date 2023-08-30
  */
 
-export async function addRedis(data) {
-  const resp = await request({
+export function addRedis(data) {
+  return request({
     url: '/sys/redis/add',
     method: 'post',
     data
   });
-  return resp;
 }
 
 /**
@@ -58,8 +56,8 @@ export async function addRedis(data) {
  * @author  一源团队-花和尚
  * @date 2023-08-30
  */
-export async function editRedis(data, id) {
-  const resp = await request({
+export function editRedis(data, id) {
+  return request({
     url: '/sys/redis/edit',
     method: 'post',
     data: {
@@ -67,7 +65,6 @@ export async function editRedis(data, id) {
       id
     }
   });
-  return resp;
 }
 /**
  * 删除Redis记录（可支持批量删除）
@@ -77,13 +74,12 @@ export async function editRedis(data, id) {
  * @author  一源团队-花和尚
  * @date 2023-08-30
  */
-export async function deleteRedis(ids) {
-  const resp = await request({
+export function deleteRedis(ids) {
+  return request({
     url: '/sys/redis/delete',
     method: 'post',
     params: {
       ids
     }
   });
-  return resp;
 }
