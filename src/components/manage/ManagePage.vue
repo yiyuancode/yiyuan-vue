@@ -137,8 +137,6 @@
       </div>
     </div>
 
-    <slot></slot>
-
     <Modal
       :modalWidth="submitModalObj.modalWidth"
       :modalTitle="submitModalTitle"
@@ -156,7 +154,17 @@
         :submitFormList="submitFormList"
         :labelCol="submitModalObj.labelCol"
         :wrapperCol="submitModalObj.wrapperCol"
-      />
+      >
+        <template v-for="(submitFormItem) in submitFormList">
+          <template  v-if="submitFormItem.formType=='customerForm'">
+            <span :slot="submitFormItem.prop">
+              <slot :name="'huaheshang-'+submitFormItem.prop"></slot>
+            </span>
+          </template>
+        </template>
+
+
+      </submitModalForm>
     </Modal>
   </div>
 </template>

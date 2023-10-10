@@ -65,16 +65,6 @@ export const dynamicRoutes = [
           permissions: 'sys:host'
         }
       },
-      // {
-      //   path: 'dept',
-      //   name: 'dept',
-      //   component: () => import('@/pages/sys/dept/index.vue'),
-      //   meta: {
-      //     title: '部门管理',
-      //     keepAlive: true,
-      //     permissions: 'sys:dept'
-      //   }
-      // },
       {
         path: 'redis',
         name: 'redis',
@@ -93,6 +83,51 @@ export const dynamicRoutes = [
           title: '用户管理',
           keepAlive: true,
           permissions: 'sys:redis'
+        }
+      }
+    ]
+  },
+  {
+    path: '/ptm',
+    name: 'pth',
+    component: () => import('@/components/layout/Layout/index.vue'),
+    //只有存放在meta信息里面的其他字段才能被this.$route获取到,不能和path平级
+    meta: {
+      title: '商品管理',
+      permissions: 'ptm'
+    },
+    children: [
+      {
+        path: 'product',
+        name: 'product',
+        component: () => import('@/pages/ptm/product/index.vue'),
+        meta: {
+          title: '商品列表',
+          //一级菜单没有keepalive
+          keepAlive: true
+          // permissions: 'sys:host'
+        }
+      },
+      {
+        path: 'productKey',
+        name: 'productKey',
+        component: () => import('@/pages/ptm/productAttrKey'),
+        meta: {
+          title: '商品属性',
+          //一级菜单没有keepalive
+          keepAlive: true
+          // permissions: 'sys:host'
+        }
+      },
+      {
+        path: 'productValue',
+        name: 'productValue',
+        component: () => import('@/pages/ptm/productAttrValue/index.vue'),
+        meta: {
+          title: '商品属性值',
+          //一级菜单没有keepalive
+          keepAlive: true
+          // permissions: 'sys:host'
         }
       }
     ]

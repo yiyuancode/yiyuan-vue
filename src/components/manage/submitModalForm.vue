@@ -9,19 +9,31 @@
       :label-col="labelCol"
       :wrapper-col="wrapperCol"
     >
-      <a-form-model-item
-        v-for="(submitFormItem, index) in uSubmitFormList"
-        :key="index"
-        has-feedback
-        :label="submitFormItem.label"
-        :prop="submitFormItem.prop"
-      >
-        <FormItem
-          v-model="model[submitFormItem.prop]"
-          :formType="submitFormItem.formType"
-          :props="submitFormItem.props"
-        />
-      </a-form-model-item>
+      <template v-for="(submitFormItem, index) in uSubmitFormList">
+        <template
+          v-if="submitFormItem.formType=='customerForm'"
+          >
+          <template >
+            <slot :name="submitFormItem.prop"></slot>
+          </template>
+        </template>
+
+        <a-form-model-item
+          v-else
+          :key="index"
+          has-feedback
+          :label="submitFormItem.label"
+          :prop="submitFormItem.prop"
+        >
+          <FormItem
+              v-model="model[submitFormItem.prop]"
+              :formType="submitFormItem.formType"
+              :props="submitFormItem.props"
+          />
+        </a-form-model-item>
+
+      </template>
+
     </a-form-model>
 
     <!-- 也可以使用ant-design-vue的a-form -->
@@ -33,6 +45,7 @@
 const undefinedPropArr = ['datePicker', 'rangePicker', 'select'];
 
 import FormItem from '@/components/tool/FormItem';
+
 export default {
   components: {
     FormItem

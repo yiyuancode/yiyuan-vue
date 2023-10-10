@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的Redis记录信息(分页)

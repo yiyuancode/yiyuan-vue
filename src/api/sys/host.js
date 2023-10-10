@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的服务器信息(分页)
@@ -10,12 +10,10 @@ import {request} from '@/utils/request';
  */
 export function getHostPageList(data) {
   return request({
-    url: "/sys/host/page",
+    url: '/sys/host/page',
     params: data
   });
-
 }
-
 
 /**
  * 获取服务器详情
@@ -27,9 +25,8 @@ export function getHostPageList(data) {
  */
 export function getHostDetail(id) {
   return request({
-    url: `/sys/host/details/${id}`,
+    url: `/sys/host/details/${id}`
   });
-
 }
 
 /**
@@ -43,11 +40,10 @@ export function getHostDetail(id) {
 
 export function addHost(data) {
   return request({
-    url: "/sys/host/add",
-    method: "post",
+    url: '/sys/host/add',
+    method: 'post',
     data
   });
-
 }
 
 /**
@@ -61,15 +57,13 @@ export function addHost(data) {
  */
 export function editHost(data, id) {
   return request({
-    url: "/sys/host/edit",
-    method: "post",
+    url: '/sys/host/edit',
+    method: 'post',
     data: {
-      ...
-        data, id
+      ...data,
+      id
     }
-  })
-    ;
-
+  });
 }
 /**
  * 删除服务器（可支持批量删除）
@@ -81,12 +75,10 @@ export function editHost(data, id) {
  */
 export function deleteHost(ids) {
   return request({
-    url: "/sys/host/delete",
-    method: "post",
+    url: '/sys/host/delete',
+    method: 'post',
     params: {
       ids
     }
   });
-
 }
-
