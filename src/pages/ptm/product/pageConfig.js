@@ -281,7 +281,6 @@ const columns = [
     key: 'skuForm',
     width: 160,
     formType: 'customerForm',
-    rules: [{ required: true, message: '请输入单位名', trigger: 'blur' }]
   },
   { // 准备写插槽使用
     title: '商品SKU1',

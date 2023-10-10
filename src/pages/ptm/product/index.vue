@@ -13,90 +13,96 @@
     @onChange="tableChangeHandle"
   >
       <span slot="huaheshang-skuForm">
-<!--        <a-form-model-item label="商品SKU" has-feedback prop="skuForm">-->
-         <a-table :dataSource="myTestData.dataSource" :columns="myTestData.columns" />
-<!--        </a-form-model-item>-->
+        <a-form-model-item label="商品SKU"
+                           required
+                           :help="skuForm.help"
+                           :validateStatus="skuForm.validateStatus">
+         <a-table :dataSource="myTestData.dataSource" :columns="myTestData.columns"/>
+        </a-form-model-item>
 
       </span>
-      <span slot="huaheshang-skuForm1">
-        我自由了
+    <span slot="huaheshang-skuForm1">
+         <a-form-model-item label="商品skuForm1" required>
+         <a-table :dataSource="myTestData.dataSource" :columns="myTestData.columns"/>
+        </a-form-model-item>
       </span>
 
   </ManagePage>
 </template>
 
 <script>
-import ManagePage from '@/components/manage/ManagePage.vue';
-import manageProduct from '@/mixins/manage_product';
-import { columns, moduleConfig, permissionObj } from './pageConfig';
+  import ManagePage from '@/components/manage/ManagePage.vue';
+  import manageProduct from '@/mixins/manage_product';
+  import {columns, moduleConfig, permissionObj} from './pageConfig';
 
-export default {
-  name: 'product',
-  components: {
-    ManagePage
-  },
-  mixins: [manageProduct({ permissionObj })],
-  data() {
-    let validatePass2 = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Please input the password again'));
-      } else if (value !== this.ruleForm.pass) {
-        callback(new Error("Two inputs don't match!"));
-      } else {
-        callback();
-      }
-    };
-    return {
-      columns,
-      ...moduleConfig,
-      myTestData:{
-        dataSource: [
-          {
-            key: '1',
-            name: 'Mike',
-            age: 32,
-            address: '10 Downing Street',
-          },
-          {
-            key: '2',
-            name: 'John',
-            age: 42,
-            address: '10 Downing Street',
-          },
-        ],
+  export default {
+    name: 'product',
+    components: {
+      ManagePage
+    },
+    mixins: [manageProduct({permissionObj})],
+    data() {
 
-        columns: [
-          {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-          },
-          {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-          },
-          {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-          },
-        ],
-      },
-      mytestRule:{
-        rules: {
-          skuForm: [{ required: true,validator: validatePass2, trigger: 'change' }]
+      return {
+        columns,
+        ...moduleConfig,
+        skuForm: {
+          help: "",
+          validateStatus: ""
         },
-      }
-    };
-  },
+        myTestData: {
+          dataSource: [
+            {
+              key: '1',
+              name: 'Mike',
+              age: 32,
+              address: '10 Downing Street',
+            },
+            {
+              key: '2',
+              name: 'John',
+              age: 42,
+              address: '10 Downing Street',
+            },
+          ],
 
-  methods: {
-    addProductHandler(){
-      console.log("花和尚花和尚花和尚花和尚花和尚")
+          columns: [
+            {
+              title: 'Name',
+              dataIndex: 'name',
+              key: 'name',
+            },
+            {
+              title: 'Age',
+              dataIndex: 'age',
+              key: 'age',
+            },
+            {
+              title: 'Address',
+              dataIndex: 'address',
+              key: 'address',
+            },
+          ],
+        },
+
+      };
+    },
+
+    methods: {
+      addProductHandler(data) {
+        // data.formRef.validateField();
+        //非常规表单组件数据校验失败
+        if (data == false) {
+          this.skuForm.help = "请正确选择sku"
+          this.skuForm.validateStatus = "error"
+          data.fail();
+        }
+
+
+        console.log("花和尚花和尚花和尚花和尚花和尚", data.formRef)
+      }
     }
-  }
-};
+  };
 </script>
 
 <style lang="less" scoped></style>
