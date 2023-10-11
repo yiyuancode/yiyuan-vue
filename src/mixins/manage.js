@@ -28,8 +28,8 @@ export default function (opts = {}) {
       //渲染对象
       isLoading: false,
       addBtn: {
-        isOpen: false,
-        text: '添加'
+        isOpen: true,
+        text: '添加111111'
       },
       editBtn: {
         isOpen: true,

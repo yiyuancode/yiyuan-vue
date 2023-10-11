@@ -40,7 +40,7 @@ export default function (opts = {}) {
         text: '删除'
       },
       importBtn: {
-        isOpen: false,
+        isOpen: true,
         text: '导入'
       },
       exportBtn: {
@@ -118,7 +118,6 @@ export default function (opts = {}) {
     // 组件生命周期
     async created() {
       this.getData();
-      console.log('我获取了列表');
       // 获取columns中属性valueType === object的
       eventBus.$on('getObjColumn', (objColumnsArr) => {
         this.objColumnsArr = objColumnsArr;
@@ -134,12 +133,10 @@ export default function (opts = {}) {
       },
       // 其他事件变化的回调
       otherEventChangeHandle(methodName, ...args) {
-        console.log('监听事件：', methodName);
         this[methodName](...args);
       },
       // 提交的回调
       async submitHandle(opts = {}) {
-        console.log('你来了没？', opts);
         const { opType, id, model, done } = opts;
 
         // 如果处理数据方法存在
@@ -148,12 +145,13 @@ export default function (opts = {}) {
         } else {
           this.submitData = model;
         }
+
         if (opType === 'add' || opType === 'edit') {
           if (opType === 'add') {
-            // 进行添加商品
+            // 进行添加租户
             await this.module[this.moduleAdd](this.submitData);
           } else {
-            // 进行编辑商品
+            // 进行编辑租户
             await this.module[this.moduleEdit](this.submitData, id);
           }
           // 重新获取数据
@@ -212,6 +210,7 @@ export default function (opts = {}) {
       // 点击添加和编辑
       async saveHandle(opts = {}) {
         const { id, done } = opts;
+
         if (id) {
           const detailInfo = await this.getDetail(id);
 
@@ -238,7 +237,6 @@ export default function (opts = {}) {
         };
 
         this.getData();
-        console.log('手动执行了查询');
       },
       // 重置的回调
       resetHandle() {
@@ -247,7 +245,6 @@ export default function (opts = {}) {
         };
 
         this.getData();
-        console.log('重置搜索表单');
       },
       // 表格变化处理回调函数
       tableChangeHandle(pagination) {
@@ -255,7 +252,6 @@ export default function (opts = {}) {
           pagination.pageSize;
         this.pagination.current = this.searchObj.pageNum = pagination.current;
         this.getData();
-        console.log('监听表格变化');
       }
     }
   };

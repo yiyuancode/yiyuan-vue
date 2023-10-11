@@ -95,8 +95,7 @@
                 type="primary"
                 style="margin-right: 5px"
                 @click="editHandle(record.id)"
-              >{{ uRenderObj.editBtn.text }}</a-button
-              >
+              >{{ uRenderObj.editBtn.text }}</a-button>
 
               <!-- 删除 -->
               <a-popconfirm
@@ -109,8 +108,7 @@
                   v-if="uRenderObj.deleteBtn.isOpen"
                   type="primary"
                   style="margin-right: 5px"
-                >删除</a-button
-                >
+                >删除</a-button>
               </a-popconfirm>
 
               <!-- 针对单个其他操作容器的添加 -->
@@ -584,7 +582,7 @@
               formRef: this.$refs.submitModalForm.$refs[this.formRef],
               done: () => {
                 this.submitLoading = false;
-
+                this.modalVisble = false;
                 // 提交完重置表单
                 if (this.submitOpType === 'add') {
                   this.$refs.submitModalForm.$refs[this.formRef].resetFields();

@@ -2,6 +2,7 @@
   <component
     :is="getComponentType()"
     :value="value"
+    :disabled="props.disabled"
     v-bind="props"
     @input="handleInput"
     @change="handleChange"

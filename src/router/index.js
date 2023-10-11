@@ -129,6 +129,17 @@ export const dynamicRoutes = [
           keepAlive: true
           // permissions: 'sys:host'
         }
+      },
+      {
+        path: 'productBand',
+        name: 'productBand',
+        component: () => import('@/pages/ptm/productBrand/index.vue'),
+        meta: {
+          title: '品牌',
+          //一级菜单没有keepalive
+          keepAlive: true
+          // permissions: 'sys:host'
+        }
       }
     ]
   }
