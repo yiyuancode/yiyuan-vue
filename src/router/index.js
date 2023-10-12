@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store';
-import { console } from 'vuedraggable/src/util/helper';
+import {console} from 'vuedraggable/src/util/helper';
 // 引入依赖
 // import autoRouter from 'vue-router-auto'
 
@@ -54,6 +54,17 @@ export const dynamicRoutes = [
       permissions: 'sys'
     },
     children: [
+      {
+        path: 'dept',
+        name: 'dept',
+        component: () => import('@/pages/sys/dept/index.vue'),
+        meta: {
+          title: '部门管理',
+          //一级菜单没有keepalive
+          keepAlive: true,
+          permissions: 'sys:host'
+        }
+      },
       {
         path: 'host',
         name: 'host',
@@ -148,7 +159,7 @@ export const dynamicRoutes = [
 // 递归生成 dynamicRoutesMap
 function flattenRoutes(routes, result = {}) {
   routes.forEach((route) => {
-    const { children, ...routeInfo } = route;
+    const {children, ...routeInfo} = route;
     result[routeInfo.name] = routeInfo;
 
     if (children && children.length > 0) {

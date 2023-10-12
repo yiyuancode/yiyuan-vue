@@ -25,6 +25,7 @@ let request = axios.create({
 // request拦截器
 request.interceptors.request.use(
   (config) => {
+    console.log("config",config)
     // getBaseApi(config.url)
     //   config.url = !getBaseApi(config.url) ? config.url : getBaseApi(config.url);
     // let isLogin= vm.$store.getters['account/isLogin']
