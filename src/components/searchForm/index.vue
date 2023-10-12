@@ -197,7 +197,7 @@ export default {
   created() {
     setTimeout(() => {
       this.columns = this.convertTo2DArray(this.props, this.groupSize);
-      console.log(' this.columns', this.columns);
+
       this.loadCascaderOps();
     }, 150);
   },
@@ -225,7 +225,7 @@ export default {
       targetOption.loading = false;
       targetOption.child = ops;
       let columnsTemp = _.cloneDeep(this.columns);
-      console.log('loadData-columnsTemp', columnsTemp);
+
       columnsTemp.forEach((im2) => {
         im2.forEach((im3) => {
           if (`cascader`.indexOf(im3.formType) != -1) {
@@ -238,11 +238,11 @@ export default {
         });
       });
       this.columns = columnsTemp;
-      // console.log("loadData-selectedOptions3", this.columns)
+      //
     },
     filter(inputValue, path, fieldNames) {
-      console.log('filter.inputValue', inputValue);
-      console.log('filter.path', path);
+
+
       return path.some(
         (option) =>
           option[fieldNames.label]
@@ -268,7 +268,7 @@ export default {
           }
         }
       }
-      console.log('onSubmit', params);
+
       this.$emit('onSearch', params);
     },
 

@@ -163,7 +163,7 @@ export default new Vuex.Store({
     },
 
     addMyTags3(state, curTagName) {
-      console.log('addMyTags2', curTag);
+
       let curTag = dynamicRoutesMap[curTagName];
       let myTagsTemp = JSON.parse(JSON.stringify(state.myTags));
       let myTagsArrayTemp = JSON.parse(JSON.stringify(state.myTagsArray));
@@ -179,11 +179,11 @@ export default new Vuex.Store({
       //如果这个不是-1，代表当前添加的在这个mytags里面，只需要改变他的选中效果
       if (inMyTagsIndex != -1) {
         myTagsTemp[inMyTagsIndex].choose = true;
-        console.log('当前页面在myTags', myTagsTemp[inMyTagsIndex].name);
+
       } else {
         curTag.choose = true;
         myTagsTemp.push(curTag);
-        console.log('当前页面不在在myTags', curTag.name);
+
       }
 
       myTagsArrayTemp = [];
@@ -217,7 +217,7 @@ export default new Vuex.Store({
      * @Description: 请输入修改的内容,原因等=>
      */
     addMyTags2(state, curTag) {
-      console.log('addMyTags2', curTag);
+
       let myTagsTemp = JSON.parse(JSON.stringify(state.myTags));
       let myTagsArrayTemp = JSON.parse(JSON.stringify(state.myTagsArray));
 
@@ -232,11 +232,11 @@ export default new Vuex.Store({
       //如果这个不是-1，代表当前添加的在这个mytags里面，只需要改变他的选中效果
       if (inMyTagsIndex != -1) {
         myTagsTemp[inMyTagsIndex].choose = true;
-        console.log('当前页面在myTags', myTagsTemp[inMyTagsIndex].name);
+
       } else {
         curTag.choose = true;
         myTagsTemp.push(curTag);
-        console.log('当前页面不在在myTags', curTag.name);
+
       }
 
       myTagsArrayTemp = [];
@@ -285,11 +285,11 @@ export default new Vuex.Store({
       //如果这个不是-1，代表当前添加的在这个mytags里面，只需要改变他的选中效果
       if (inMyTagsIndex != -1) {
         myTagsTemp[inMyTagsIndex].choose = true;
-        console.log('当前页面在myTags', myTagsTemp[inMyTagsIndex].name);
+
       } else {
         curTag.choose = true;
         myTagsTemp.push(curTag);
-        console.log('当前页面不在在myTags', curTag.name);
+
       }
 
       myTagsArrayTemp = [];
@@ -452,7 +452,7 @@ export default new Vuex.Store({
           inMyTagsIndex = index;
         }
       });
-      console.log('inMyTagsIndex', inMyTagsIndex);
+
 
       if (inMyTagsIndex == myTagsTemp.length - 1) {
         if (inMyTagsIndex == 0) {
@@ -470,10 +470,10 @@ export default new Vuex.Store({
       }
 
       setTimeout(function () {
-        console.log('deleteCurMyTag.myTagsTemp', myTagsTemp);
+
         state.commit('setMyTags', myTagsTemp);
         state.commit('setMyTagsArray', myTagsArrayTemp);
-        console.log(
+
           'myTagsTemp[myTagsTemp.length - 1]',
           myTagsTemp[myTagsTemp.length - 1]
         );

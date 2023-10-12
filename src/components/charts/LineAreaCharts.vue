@@ -28,7 +28,7 @@ export default {
     }
   },
   data() {
-    // console.log(this.props);
+    //
     return {
       echarts: null,
       option: {
@@ -144,7 +144,7 @@ export default {
       // let myChart = echarts.init(chartDom, 'dark');
       this.echarts = echarts.init(chartDom);
       let optionTemp = _.merge(this.option, this.props);
-      // console.log("optionTemp", optionTemp)
+      //
       this.echarts.setOption(optionTemp);
     }
   }

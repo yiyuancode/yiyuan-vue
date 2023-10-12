@@ -140,12 +140,12 @@ export default {
   created() {
     let vm = this;
     this.$nextTick(() => {
-      console.log('created组件');
+
 
       //动态加载下拉框的枚举值
       let propsTmep = _.cloneDeep(vm.props);
-      console.log('propsTmep', propsTmep.record);
-      console.log('propsTmep222', propsTmep);
+
+
       propsTmep.columns.forEach(async (im, ix) => {
         if (im.select && im.select.local) {
           im.select.option = im.select.option;
@@ -162,33 +162,33 @@ export default {
           //vm[arguments[0]](arguments[1])
           // im.select.option=await vm[im.select.remoteUrl]()
           im.select.option = await vm[im.select.remoteUrl]();
-          // console.log("enums",vm.$store.getters['enums/'+im.select.remoteUrl])
-          //console.log("$getLg("pmsProductTypeAllOp")"+vm.$store.getters['enums/'+im.select.remoteUrl])
+          //
+          //
           vm.$emit('propsChange', propsTmep);
         }
       });
 
       //区分修改还是填写
       if (propsTmep.type == 2) {
-        console.log('created组件修改');
+
         let record = {};
         propsTmep.columns.forEach((im, ix) => {
           if (!im.noAdd && !im.upload) {
             record[im.dataIndex] = propsTmep.record[im.dataIndex];
           }
         });
-        console.log('record', record);
+
 
         vm.form.setFieldsValue(record);
 
         vm.$emit('propsChange', propsTmep);
         // vm.form.setFieldsValue(newName.formParm)
       } else {
-        console.log('created组件新增');
+
         vm.form.resetFields();
         propsTmep.columns.forEach((im, ix) => {
           if (im.upload) {
-            console.log('im.upload组件新增', propsTmep.record);
+
             propsTmep.record[im.dataIndex] = null;
           }
         });
@@ -196,7 +196,7 @@ export default {
         if (Object.keys(propsTmep.record).length != 0) {
           setTimeout(() => {
             vm.form.setFieldsValue(propsTmep.record);
-            console.log(
+
               'propsTmep.record.vm.form.getFieldsValue()',
               vm.form.getFieldsValue()
             );
@@ -223,7 +223,7 @@ export default {
       this.visible = true;
     },
     handleOk(e) {
-      console.log('handleOk', e);
+
       let vm = this;
       let propsTmep = _.cloneDeep(vm.props);
 
@@ -243,7 +243,7 @@ export default {
       vm.form.validateFields((err) => {
         if (!err) {
           let formData = vm.form.getFieldsValue();
-          console.log('handleOk.form', formData);
+
 
           if (!notFormErr) {
             propsTmep.show = false;
@@ -253,7 +253,7 @@ export default {
             ...propsTmep.record,
             ...formData
           };
-          console.log('propsTmep', propsTmep);
+
 
           vm.$emit('propsChange', propsTmep);
         } else {
@@ -262,7 +262,7 @@ export default {
       });
     },
     handleCancel(e) {
-      console.log('Clicked cancel button');
+
       let vm = this;
       let propsTmep = _.cloneDeep(vm.props);
       propsTmep.show = false;
@@ -272,7 +272,7 @@ export default {
     UploadSngle(fileUrl, dataIndex) {
       let vm = this;
       let propsTmep = _.cloneDeep(vm.props);
-      console.log('UploadSngle.fileUrl.UploadSngle', fileUrl);
+
       propsTmep.record[dataIndex] = fileUrl;
       propsTmep.columns.forEach((im, ix) => {
         if (im.upload) {
@@ -286,7 +286,7 @@ export default {
     },
 
     handleSearchSelect(value, dataIndex, item) {
-      console.log('handleSearchSelect.value', value);
+
       // if(!value){
       // 	return
       // }
@@ -297,17 +297,17 @@ export default {
           im.select.option = await vm[im.select.method]({
             name: value
           });
-          console.log('im.select.option', im.select.option);
+
         }
       });
-      // console.log("im.select.optio2222n", im.select.option)
+      //
       vm.$emit('propsChange', propsTmep);
 
       // fetch(value, data => (this.data = data));
     },
     handleChangeSelect(value, dataIndex, item, option) {
-      console.log('handleChangeSelect.value', value);
-      console.log('handleChangeSelect.option', option);
+
+
       let vm = this;
       let propsTmep = _.cloneDeep(vm.props);
       propsTmep.record[dataIndex] = value;
@@ -320,7 +320,7 @@ export default {
 
       // if(item.otherDataIndex){
       // 	let selectOptionList= item.select.option
-      // 	console.log("handleChangeSelect.selectOptionList", selectOptionList);
+      //
       // 	let selectOptionListItem= {}
       // 	selectOptionList.forEach((item2,index2)=>{
       // 		if(item2[dataIndex]==value){

@@ -143,7 +143,7 @@ export default {
       });
       this.addListener();
     }
-    console.log(this.pageList);
+
   },
   mounted() {
     this.correctPageMinHeight(-this.tabsOffset);

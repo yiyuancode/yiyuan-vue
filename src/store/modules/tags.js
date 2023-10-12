@@ -21,7 +21,7 @@ export default {
       state.myTags = myTags;
       const nameArray = myTags.map(obj => obj.name);
       const hasTagsName = nameArray.includes(name);
-      console.log("hasTagsName", hasTagsName)
+
       return hasTagsName
     },
     isTagsAlive: () => (name) => {
@@ -87,17 +87,17 @@ export default {
       } else {
         targetObject = myTags[myTags.length + 2]
       }
-      console.log("targetObject", targetObject)
+
       store.commit("curTags", targetObject);
       const filteredObjects = myTags.filter(obj => obj != data);
-      console.log("filteredObjects", filteredObjects)
+
       store.commit("myTags", filteredObjects);
     },
     delOther: async (store, data) => {
       //获取当前要删除的索引
       let myTags = store.state.myTags
       const filteredObjects = myTags.filter(obj => obj == data);
-      console.log("filteredObjects", filteredObjects)
+
       store.commit("myTags", filteredObjects);
 
     },
@@ -112,10 +112,10 @@ export default {
       } else {
         targetObject = myTags[myTags.length + 2]
       }
-      console.log("targetObject", targetObject)
+
       store.commit("curTags", targetObject);
       const filteredObjects = myTags.filter(obj => obj.name != data);
-      console.log("filteredObjects", filteredObjects)
+
       store.commit("myTags", filteredObjects);
     },
     loginout: ({

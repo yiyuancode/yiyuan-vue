@@ -6,7 +6,7 @@
     <!--      </a-button>-->
     <!--    </div>-->
     <a-tabs
-      v-model="$store.state.myTagsActiveKey"
+      v-model="curTags.name"
       hide-add
       type="editable-card"
       @edit="onEdit"
@@ -84,7 +84,7 @@
     },
     methods: {
       tabMenuItemClick({key}, item) {
-        console.log('onContextmenu.key', key);
+
         this[key](item);
       },
       cloeClick(item) {
@@ -106,15 +106,11 @@
         this.$store.dispatch("tags/delOther", item)
       },
 
-      onEdit(targetKey, action) {
-        console.log("targetKey", targetKey)
-        console.log("action", action)
-        // if (action == 'remove') {
-        //
-        // }
+      onEdit() {
+
       },
       myTagsChange(targetKey) {
-        console.log("myTagsChange", targetKey)
+
         this.$router.push({name: targetKey})
       }
     }

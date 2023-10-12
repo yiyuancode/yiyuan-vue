@@ -264,7 +264,7 @@ export default {
           }
         });
       });
-      // console.log("loadData-selectedOptions3", propsTemp.columns)
+      //
       this.$emit('propsChange', propsTemp);
 
       // targetOption.children=ops
@@ -272,13 +272,13 @@ export default {
     },
     //上传组件回调
     UploadSngle(fileUrl, item) {
-      console.log('UploadSngle.fileUrl', fileUrl);
-      console.log('UploadSngle.dataIndex', item);
+
+
       item.fileUrl = fileUrl;
     },
     filter(inputValue, path, fieldNames) {
-      console.log('filter.inputValue', inputValue);
-      console.log('filter.path', path);
+
+
       return path.some(
         (option) =>
           option[fieldNames.label]
@@ -287,22 +287,22 @@ export default {
       );
     },
     handleChangeSelect(val, dataIndex, im2, option) {
-      console.log('handleSearchSelect.val', val);
-      console.log('handleSearchSelect.dataIndex', dataIndex);
-      console.log('handleSearchSelect.im2', im2);
-      console.log('handleSearchSelect.option', option);
+
+
+
+
     },
     onSubmit() {
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log('Received values of form: ', values);
+
           let propsTemp = _.cloneDeep(this.props);
           propsTemp.loading = true;
-          console.log('Received values of propsTemp: ', propsTemp);
+
           propsTemp.columns.forEach((im) => {
             im.forEach((im2) => {
               if (im2.formType == `upload`) {
-                console.log('im.formType == `upload`', im2.fileUrl);
+
                 values[im2.dataIndex] = im2.fileUrl;
               }
             });
@@ -374,7 +374,7 @@ export default {
           im.props.url
         ) {
           let ops = await im.props.url({});
-          console.log('im.props.url({})', ops);
+
           im.props.options = ops;
         }
       }
@@ -386,8 +386,8 @@ export default {
     },
     setFormData(data) {
       let propsTemp = _.cloneDeep(this.props);
-      console.log('setData.propsTemp', propsTemp);
-      console.log('setData.data', data);
+
+
       propsTemp.columns.forEach((im) => {
         im.forEach(async (im2) => {
           if (`upload`.indexOf(im2.formType) == -1) {
@@ -406,7 +406,7 @@ export default {
                 if (im3.id == firstId) {
                   all = JSON.stringify(im2.props.options);
                   targetOptionOldStr = JSON.stringify(im3);
-                  console.log('targetOptionOldStr', targetOptionOldStr);
+
                 }
               });
               //区域级联，回显赋值，一次把当前选择的顶层id传到后台查出层级关系，因为动态加载的级联选择器默认只加载第一层数据

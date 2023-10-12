@@ -59,7 +59,7 @@ function hasAnyItem(required, source, filter) {
  * @returns {boolean}
  */
 function hasAuthority(route, permissions, roles) {
-  // console.log(route,permissions,roles);
+  //
   const authorities = [...route.meta.pAuthorities, route.meta.authority];
 
   for (let authority of authorities) {

@@ -112,7 +112,7 @@ function loadRoutes(routesConfig, type) {
   /*************** 兼容 version < v0.6.1 *****************/
   if (arguments.length > 0) {
     const arg0 = arguments[0];
-    console.log(arguments[0]);
+
     if (arg0.router || arg0.i18n || arg0.store) {
       routesConfig = arguments[1];
       console.error(

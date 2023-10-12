@@ -25,13 +25,13 @@ let request = axios.create({
 // request拦截器
 request.interceptors.request.use(
   (config) => {
-    console.log("config",config)
+
     // getBaseApi(config.url)
     //   config.url = !getBaseApi(config.url) ? config.url : getBaseApi(config.url);
     // let isLogin= vm.$store.getters['account/isLogin']
     // let myToken = vm.$store.getters['account/myToken']
     let myToken = localStorage.getItem('myToken');
-    console.log(' localStorage.getItem.myToken', myToken);
+
     if (myToken) {
       // config.headers['Authorization'] = "Bearer " + myToken // 让每个请求携带自定义token 请根据实际情况自行修改
       config.headers['admintoken'] = myToken;
@@ -49,7 +49,7 @@ request.interceptors.request.use(
 // respone拦截器
 request.interceptors.response.use(
   (response) => {
-    console.log('response', response);
+
     /**
      * code为非200是抛错 可结合自己业务进行修改
      */
@@ -76,7 +76,7 @@ request.interceptors.response.use(
     }
   },
   (error) => {
-    console.log('error', error);
+
     switch (error.response.status) {
       case 400:
         break;

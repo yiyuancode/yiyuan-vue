@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store';
-import {console} from 'vuedraggable/src/util/helper';
+
 // 引入依赖
 // import autoRouter from 'vue-router-auto'
 
@@ -23,7 +23,7 @@ VueRouter.prototype.push = function push(location) {
 //   // 页面级的.vue存放的文件夹，可选，默认为:views
 //   rootFile: 'pages',
 // })
-// console.log("autoRoutes", autoRoutes)
+//
 
 Vue.use(VueRouter);
 //静态路由，不需要做登录拦截的路由
@@ -172,7 +172,7 @@ function flattenRoutes(routes, result = {}) {
 
 export const dynamicRoutesMap = flattenRoutes(dynamicRoutes);
 
-console.log('dynamicRoutesMap', dynamicRoutesMap);
+
 
 const router = new VueRouter({
   routes: [...staticRoutes, ...dynamicRoutes]

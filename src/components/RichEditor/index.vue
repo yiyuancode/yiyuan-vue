@@ -55,7 +55,7 @@
       // vm.html=vm.text
       setTimeout(() => {
         vm.$nextTick(() => {
-          console.log(" vm.editor", vm.text)
+
           //vm.editor.dangerouslyInsertHtml(vm.text)
           vm.editor.setHtml(vm.text)
         })
@@ -65,14 +65,14 @@
     methods: {
       async customUpload(file, insertFn) { //                    // JS 语法
         let resp = await fileUpload(file)
-        console.log("customUpload.resp", resp)
+
         insertFn(this.imgBaseUrl + resp);
       },
       onCreated(editor) {
         this.editor = Object.seal(editor); // 【注意】一定要用 Object.seal() 否则会报错
       },
       onChange(editor) {
-        console.log('onChange.html -v-mode实时变化', editor.getHtml());
+
         this.$emit("input", editor.getHtml())
       },
     }

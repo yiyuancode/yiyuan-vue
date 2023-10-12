@@ -41,6 +41,6 @@ export function setStr(obj, key, data) {
 
 export function setObj(obj, key, data) {
   obj[key] = data;
-  console.log("setObj",JSON.stringify(data))
+
   localStorage.setItem(key, JSON.stringify(data))
 }

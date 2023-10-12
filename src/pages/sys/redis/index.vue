@@ -38,7 +38,7 @@ export default {
 
   methods: {
     toMonitor(record) {
-      console.log('toHostMonitor', record.data);
+
       this.$router.push({
         path: '/sys/redisMonitor',
         query: { id: record.data.id }

@@ -54,7 +54,7 @@
     methods: {
       handleChange(info) {
         let vm = this;
-        console.log('upload.handleChange', info);
+
         if (info.file.status === 'uploading') {
           this.loading = true;
           return;

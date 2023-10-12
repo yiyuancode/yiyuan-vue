@@ -73,10 +73,9 @@
       toggleCollapsed() {
         this.collapsed = !this.collapsed;
       },
-      onMenuSelect({item, key, selectedKeys}) {
-        console.log('onMenuSelect.key', key);
-        console.log('onMenuSelect.item', item);
-        console.log('onMenuSelect.selectedKeys', selectedKeys);
+      onMenuSelect({item, key}) {
+        console.log("item", item)
+
         if (this.hasTagsName(key)) {
           this.$router.push({name: key})
         } else {

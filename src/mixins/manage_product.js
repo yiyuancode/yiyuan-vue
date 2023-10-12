@@ -118,7 +118,7 @@ export default function (opts = {}) {
     // 组件生命周期
     async created() {
       this.getData();
-      console.log('我获取了列表');
+
       // 获取columns中属性valueType === object的
       eventBus.$on('getObjColumn', (objColumnsArr) => {
         this.objColumnsArr = objColumnsArr;
@@ -134,12 +134,12 @@ export default function (opts = {}) {
       },
       // 其他事件变化的回调
       otherEventChangeHandle(methodName, ...args) {
-        console.log('监听事件：', methodName);
+
         this[methodName](...args);
       },
       // 提交的回调
       async submitHandle(opts = {}) {
-        console.log('你来了没？', opts);
+
         const { opType, id, model, done } = opts;
 
         // 如果处理数据方法存在
@@ -238,7 +238,7 @@ export default function (opts = {}) {
         };
 
         this.getData();
-        console.log('手动执行了查询');
+
       },
       // 重置的回调
       resetHandle() {
@@ -247,7 +247,7 @@ export default function (opts = {}) {
         };
 
         this.getData();
-        console.log('重置搜索表单');
+
       },
       // 表格变化处理回调函数
       tableChangeHandle(pagination) {
@@ -255,7 +255,7 @@ export default function (opts = {}) {
           pagination.pageSize;
         this.pagination.current = this.searchObj.pageNum = pagination.current;
         this.getData();
-        console.log('监听表格变化');
+
       }
     }
   };

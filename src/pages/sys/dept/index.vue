@@ -20,7 +20,7 @@
       };
     },
     created() {
-      console.log('初始化创建dept组件', this.$route);
+
     },
     methods: {
 

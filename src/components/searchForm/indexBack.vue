@@ -114,7 +114,7 @@ export default {
   created() {
     setTimeout(() => {
       this.columns = this.convertTo2DArray(this.props.columns, 3);
-      console.log(' this.columns', this.columns);
+
     }, 100);
   },
   methods: {
@@ -146,7 +146,7 @@ export default {
     },
     //远程加载级联组件的数据
     async loadData(selectedOptions, im) {
-      console.log('loadData.');
+
       const targetOption = selectedOptions[selectedOptions.length - 1];
       let targetOptionOld = _.cloneDeep(targetOption);
       targetOption.loading = true;
@@ -166,18 +166,18 @@ export default {
           }
         });
       });
-      // console.log("loadData-selectedOptions3", this.columns)
+      //
       this.$emit('propsChange', propsTemp);
     },
     //上传组件回调
     UploadSngle(fileUrl, item) {
-      console.log('UploadSngle.fileUrl', fileUrl);
-      console.log('UploadSngle.dataIndex', item);
+
+
       item.fileUrl = fileUrl;
     },
     filter(inputValue, path, fieldNames) {
-      console.log('filter.inputValue', inputValue);
-      console.log('filter.path', path);
+
+
       return path.some(
         (option) =>
           option[fieldNames.label]
@@ -186,22 +186,22 @@ export default {
       );
     },
     handleChangeSelect(val, dataIndex, im2, option) {
-      console.log('handleSearchSelect.val', val);
-      console.log('handleSearchSelect.dataIndex', dataIndex);
-      console.log('handleSearchSelect.im2', im2);
-      console.log('handleSearchSelect.option', option);
+
+
+
+
     },
     onSubmit() {
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log('Received values of form: ', values);
+
           let propsTemp = _.cloneDeep(this.props);
           propsTemp.loading = true;
-          console.log('Received values of propsTemp: ', propsTemp);
+
           this.columns.forEach((im) => {
             im.forEach((im2) => {
               if (im2.formType == `upload`) {
-                console.log('im.formType == `upload`', im2.fileUrl);
+
                 values[im2.dataIndex] = im2.fileUrl;
               } else if (`Select`.indexOf(im2.formType) != -1) {
                 values[im2.dataIndex] = this.record[im2.dataIndex].value;
@@ -209,7 +209,7 @@ export default {
             });
           });
           this.$emit('propsChange', propsTemp);
-          console.log('onSubmit', this.record);
+
           this.$emit('propsSubmit', {
             propsTemp,
             data: { ...this.record, ...values }
@@ -278,7 +278,7 @@ export default {
           im.props.url
         ) {
           let ops = await im.props.url({});
-          console.log('im.props.url({})', ops);
+
           im.props.options = ops;
         }
       }
@@ -305,7 +305,7 @@ export default {
                 if (im3.id == firstId) {
                   all = JSON.stringify(im2.props.options);
                   targetOptionOldStr = JSON.stringify(im3);
-                  console.log('targetOptionOldStr', targetOptionOldStr);
+
                 }
               });
               //区域级联，回显赋值，一次把当前选择的顶层id传到后台查出层级关系，因为动态加载的级联选择器默认只加载第一层数据
@@ -328,7 +328,7 @@ export default {
         });
       });
       this.record = data;
-      console.log('setFormData', this.record);
+
       this.$emit('propsChange', propsTemp);
     },
     filterFormData() {},
