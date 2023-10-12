@@ -1,6 +1,6 @@
 <template>
   <div>
-    <RichEditor v-model="richHtml"></RichEditor>
+    <RichEditor v-model="richHtml" ></RichEditor>
   </div>
 </template>
 
@@ -16,7 +16,7 @@
     },
     data() {
       return {
-        richHtml:""
+        richHtml:"<h2>得得得得</h2>"
       };
     },
     created() {

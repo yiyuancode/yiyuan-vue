@@ -22,12 +22,8 @@
       Editor,
       Toolbar
     },
-    props: {
-      text: {
-        type: String,
-        default: ""
-      },
-    },
+
+    props: ['value'],
     data() {
       return {
         imgBaseUrl: process.env.VUE_APP_IMG_BASE_URL,
@@ -42,37 +38,28 @@
             uploadImage: {
               withCredentials: false,
               // 超时时间，默认为 10 秒
-              timeout: 5 * 1000, // 5 秒
+              timeout: 5 * 10000, // 5 秒
               customUpload: this.customUpload,
-              customInsert: this.customInsert
+              // customInsert: this.customInsert
             }
           }
         },
       }
     },
     created() {
-      let vm = this;
-      // vm.html=vm.text
-      setTimeout(() => {
-        vm.$nextTick(() => {
-
-          //vm.editor.dangerouslyInsertHtml(vm.text)
-          vm.editor.setHtml(vm.text)
-        })
-      }, 1000)
+      this.html = this.value
 
     },
     methods: {
       async customUpload(file, insertFn) { //                    // JS 语法
         let resp = await fileUpload(file)
-
-        insertFn(this.imgBaseUrl + resp);
+        // insertFn(url, alt, href)
+        insertFn(this.imgBaseUrl + resp, "", this.imgBaseUrl + resp);
       },
       onCreated(editor) {
         this.editor = Object.seal(editor); // 【注意】一定要用 Object.seal() 否则会报错
       },
       onChange(editor) {
-
         this.$emit("input", editor.getHtml())
       },
     }
