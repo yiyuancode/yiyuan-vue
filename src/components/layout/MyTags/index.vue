@@ -84,7 +84,6 @@
     },
     methods: {
       tabMenuItemClick({key}, item) {
-
         this[key](item);
       },
       cloeClick(item) {
@@ -103,14 +102,14 @@
         this.$router.push({name: item.name})
       },
       cloeOtherClick(item) {
-        this.$store.dispatch("tags/delOther", item)
+        console.log("cloeOtherClick", item)
+        this.$store.dispatch("tags/delOther", item).then(() => {
+          this.$router.push({name: item.name})
+        })
       },
-
       onEdit() {
-
       },
       myTagsChange(targetKey) {
-
         this.$router.push({name: targetKey})
       }
     }
