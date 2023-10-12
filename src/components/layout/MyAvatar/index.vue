@@ -5,7 +5,7 @@
         <a-avatar
           src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
         />
-        管理员:{{ $store.getters.myUserInfo?.username }}
+        管理员:{{ $store.getters['user/myUserInfo']?.username }}
       </a>
 
       <a-menu slot="overlay">
@@ -21,27 +21,29 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {};
-  },
-  methods: {
-    loginout() {
-      this.$store.dispatch('loginout').then(() => {
-        this.$router.replace({ name: 'login' });
-      });
+  export default {
+    data() {
+      return {};
+    },
+    methods: {
+      loginout() {
+        this.$store.dispatch('user/loginout').then(() => {
+          this.$store.dispatch('tags/loginout').then(() => {
+            this.$router.replace({name: 'login'});
+          });
+        });
+      }
     }
-  }
-};
+  };
 </script>
 <style lang="less">
-.MyAvatar {
-  width: auto;
-  height: 100%;
-  margin-right: 100px;
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  display: inline-block;
-}
+  .MyAvatar {
+    width: auto;
+    height: 100%;
+    margin-right: 100px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    display: inline-block;
+  }
 </style>

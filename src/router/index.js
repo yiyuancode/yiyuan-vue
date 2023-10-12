@@ -180,23 +180,18 @@ const router = new VueRouter({
 // router.addRoutes(dynamicRoutes)
 
 router.beforeEach((to, from, next) => {
-  // if (to.name.indexOf('login') == -1) {
-  //   store.commit('addMyTags2', {
-  //     name: to.name,
-  //     path: to.path.split('/')[1],
-  //     meta: to.meta
-  //   });
-  // }
   //跳转路由是否在黑名弹中，如果在，则需要判断是否已经登录
   if (dynamicRoutesMap[to.name]) {
     let myToken = localStorage.getItem('myToken');
     if (myToken) {
-      store.commit('addMyTags2', {
-        name: to.name,
-        path: to.path.split('/')[1],
-        meta: to.meta
-      });
       next();
+      if (!store.getters['tags/hasTagsName'](to.name)) {
+        store.dispatch("tags/add", {name: to.name, meta: to.meta})
+      } else {
+        //不能把to全部塞进去,因为有些属性事箭头函数 json转化不了 会报错
+        store.dispatch("tags/change", {name: to.name, meta: to.meta})
+      }
+
     } else {
       next('/login');
     }
