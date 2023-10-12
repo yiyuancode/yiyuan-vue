@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store';
 
+
 // 引入依赖
 // import autoRouter from 'vue-router-auto'
 
@@ -42,119 +43,20 @@ const staticRoutes = [
   }
 ];
 
+
+// 获取同级目录下所有满足条件的index.js文件
+const context = require.context('./', true, /\/([^/]+)\/index\.js$/);
+// 存储满足条件的对象数组
 //动态路由，需要做登录拦截的路由，并且可以用做菜单的渲染
-export const dynamicRoutes = [
-  {
-    path: '/sys',
-    name: 'sys',
-    component: () => import('@/components/layout/Layout/index.vue'),
-    //只有存放在meta信息里面的其他字段才能被this.$route获取到,不能和path平级
-    meta: {
-      title: '系统管理',
-      permissions: 'sys'
-    },
-    children: [
-      {
-        path: 'dept',
-        name: 'dept',
-        component: () => import('@/pages/sys/dept/index.vue'),
-        meta: {
-          title: '部门管理',
-          //一级菜单没有keepalive
-          keepAlive: true,
-          permissions: 'sys:host'
-        }
-      },
-      {
-        path: 'host',
-        name: 'host',
-        component: () => import('@/pages/sys/host/index.vue'),
-        meta: {
-          title: '主机管理',
-          //一级菜单没有keepalive
-          keepAlive: true,
-          permissions: 'sys:host'
-        }
-      },
-      {
-        path: 'redis',
-        name: 'redis',
-        component: () => import('@/pages/sys/redis/index.vue'),
-        meta: {
-          title: 'redis管理',
-          keepAlive: true,
-          permissions: 'sys:redis'
-        }
-      },
-      {
-        path: 'user',
-        name: 'user',
-        component: () => import('@/pages/sys/user/index.vue'),
-        meta: {
-          title: '用户管理',
-          keepAlive: true,
-          permissions: 'sys:redis'
-        }
-      }
-    ]
-  },
-  {
-    path: '/ptm',
-    name: 'pth',
-    component: () => import('@/components/layout/Layout/index.vue'),
-    //只有存放在meta信息里面的其他字段才能被this.$route获取到,不能和path平级
-    meta: {
-      title: '商品管理',
-      permissions: 'ptm'
-    },
-    children: [
-      {
-        path: 'product',
-        name: 'product',
-        component: () => import('@/pages/ptm/product/index.vue'),
-        meta: {
-          title: '商品列表',
-          //一级菜单没有keepalive
-          keepAlive: true
-          // permissions: 'sys:host'
-        }
-      },
-      {
-        path: 'productKey',
-        name: 'productKey',
-        component: () => import('@/pages/ptm/productAttrKey'),
-        meta: {
-          title: '商品属性',
-          //一级菜单没有keepalive
-          keepAlive: true
-          // permissions: 'sys:host'
-        }
-      },
-      {
-        path: 'productValue',
-        name: 'productValue',
-        component: () => import('@/pages/ptm/productAttrValue/index.vue'),
-        meta: {
-          title: '商品属性值',
-          //一级菜单没有keepalive
-          keepAlive: true
-          // permissions: 'sys:host'
-        }
-      },
-      {
-        path: 'productBand',
-        name: 'productBand',
-        component: () => import('@/pages/ptm/productBrand/index.vue'),
-        meta: {
-          title: '品牌',
-          //一级菜单没有keepalive
-          keepAlive: true
-          // permissions: 'sys:host'
-        }
-      }
-    ]
-  }
-];
+let dynamic = context.keys().map(key => context(key).default);
+//根绝sort字段升序排序
+dynamic.sort((a, b) => {
+  const sortA = a.meta.sort || 0;
+  const sortB = b.meta.sort || 0;
+  return sortB - sortA;
+});
+
+export const dynamicRoutes = dynamic;
 
 // 递归生成 dynamicRoutesMap
 function flattenRoutes(routes, result = {}) {
@@ -171,7 +73,6 @@ function flattenRoutes(routes, result = {}) {
 }
 
 export const dynamicRoutesMap = flattenRoutes(dynamicRoutes);
-
 
 
 const router = new VueRouter({
