@@ -35,14 +35,14 @@
               <a-icon class="icon-close" type="close" @click.stop="cloeClick(item)"/>
             </div>
             <a-menu slot="overlay" @click="(op) => tabMenuItemClick(op, item)">
-              <!--              <a-menu-item key="1">-->
-              <!--                <a-icon type="vertical-right"/>-->
-              <!--                关闭左侧-->
-              <!--              </a-menu-item>-->
-              <!--              <a-menu-item key="2">-->
-              <!--                <a-icon type="vertical-left"/>-->
-              <!--                关闭右侧-->
-              <!--              </a-menu-item>-->
+              <a-menu-item key="cloeLeftClick">
+                <a-icon type="vertical-right"/>
+                关闭左侧
+              </a-menu-item>
+              <a-menu-item key="cloeRightClick">
+                <a-icon type="vertical-left"/>
+                关闭右侧
+              </a-menu-item>
               <a-menu-item key="cloeOtherClick">
                 <a-icon type="close"/>
                 关闭其他
@@ -105,6 +105,22 @@
         console.log("cloeOtherClick", item)
         this.$store.dispatch("tags/delOther", item).then(() => {
           this.$router.push({name: item.name})
+        })
+      },
+      cloeLeftClick(item) {
+        this.$store.dispatch("tags/delLeft", item).then(() => {
+          //如果不是在当前激活得tab上面点击关闭左右侧，则需要跳转当前，但是不需要强制更新
+          if (!this.isTagsAlive(item)) {
+            this.$router.push({name: item.name})
+          }
+        })
+      },
+      cloeRightClick(item) {
+        console.log("cloeRightClick", item)
+        this.$store.dispatch("tags/delRight", item).then(() => {
+          if (!this.isTagsAlive(item)) {
+            this.$router.push({name: item.name})
+          }
         })
       },
       onEdit() {

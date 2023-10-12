@@ -28,8 +28,14 @@
     methods: {
       loginout() {
         this.$router.replace({name: 'login'});
-        this.$store.dispatch('user/loginout')
-        this.$store.dispatch('tags/loginout')
+        //异步清除当前用户登录得所有缓存,因为上面跳转也是一个异步所以执行到清除得不一定跳转完成了，会导致主页一些读取vuex得地方报错
+        setTimeout(
+          () => {
+            this.$store.dispatch('user/loginout')
+            this.$store.dispatch('tags/loginout')
+          }, 50
+        )
+
       }
     }
   };

@@ -1,4 +1,4 @@
-import {getObj,getBoolen, getStr, setObj, setStr} from '@/utils/jsonUtil.js';
+import {getBoolen, getObj, getStr, setObj, setStr} from '@/utils/jsonUtil.js';
 import {getUserInfo, login} from '@/api/sys/user.js';
 
 
@@ -45,7 +45,6 @@ export default {
       let getUserInfoResp = await getUserInfo();
       commit('myUserInfo', getUserInfoResp);
       commit('isLogin', true);
-      commit('myTags', []);
     },
 
     loginout: ({

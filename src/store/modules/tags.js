@@ -97,9 +97,28 @@ export default {
       //获取当前要删除的索引
       let myTags = store.state.myTags
       const filteredObjects = myTags.filter(obj => obj == data);
-
       store.commit("myTags", filteredObjects);
+    },
+    delLeft: async (store, data) => {
+      //获取当前要删除的索引
+      let myTags = store.state.myTags
+      const index = myTags.findIndex(obj => obj.name == data.name);
+      if (index == 0) {
+        return; // 如果找不到匹配的name，则返回原始数组
+      }
+      myTags=myTags.filter((_, i) => i >= index);
+      store.commit("myTags", myTags);
 
+    },
+    delRight: async (store, data) => {
+      //获取当前要删除的索引
+      let myTags = store.state.myTags
+      const index = myTags.findIndex(obj => obj.name == data.name);
+      if (index == myTags.length - 1) {
+        return; // 如果找不到匹配的name，则返回原始数组
+      }
+      myTags=myTags.filter((_, i) => i <= index);
+      store.commit("myTags", myTags);
     },
     delByName: async (store, data) => {
       // store.commit("curTags", data);

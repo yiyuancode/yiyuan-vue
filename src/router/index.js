@@ -1,8 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store';
-
-
+import {gertRouterArray} from "@/utils/autoRouterUtil.js";
 // 引入依赖
 // import autoRouter from 'vue-router-auto'
 
@@ -45,18 +44,10 @@ const staticRoutes = [
 
 
 // 获取同级目录下所有满足条件的index.js文件
-const context = require.context('./', true, /\/([^/]+)\/index\.js$/);
+
 // 存储满足条件的对象数组
 //动态路由，需要做登录拦截的路由，并且可以用做菜单的渲染
-let dynamic = context.keys().map(key => context(key).default);
-//根绝sort字段升序排序
-dynamic.sort((a, b) => {
-  const sortA = a.meta.sort || 0;
-  const sortB = b.meta.sort || 0;
-  return sortB - sortA;
-});
-
-export const dynamicRoutes = dynamic;
+export const dynamicRoutes = gertRouterArray(require.context('./', true, /\/([^/]+)\/index\.js$/));
 
 // 递归生成 dynamicRoutesMap
 function flattenRoutes(routes, result = {}) {

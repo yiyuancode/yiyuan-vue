@@ -73,9 +73,8 @@
       toggleCollapsed() {
         this.collapsed = !this.collapsed;
       },
-      onMenuSelect({item, key}) {
-        console.log("item", item)
-
+      onMenuSelect({key}) {
+        //如果要跳转得key-name在当前缓存中则不需要强制更新，如果不在 需要加上key强制刷新跳转页面
         if (this.hasTagsName(key)) {
           this.$router.push({name: key})
         } else {
