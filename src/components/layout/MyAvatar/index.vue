@@ -27,11 +27,9 @@
     },
     methods: {
       loginout() {
-        this.$store.dispatch('user/loginout').then(() => {
-          this.$store.dispatch('tags/loginout').then(() => {
-            this.$router.replace({name: 'login'});
-          });
-        });
+        this.$router.replace({name: 'login'});
+        this.$store.dispatch('user/loginout')
+        this.$store.dispatch('tags/loginout')
       }
     }
   };
