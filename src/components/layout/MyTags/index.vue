@@ -87,9 +87,11 @@
         this[key](item);
       },
       cloeClick(item) {
+        console.log("cloeClick", item)
         if (this.myTags.length > 1) {
-          this.$store.dispatch("tags/del", item).then(() => {
-            this.$router.push({name: this.curTags.name})
+          this.$store.dispatch("tags/del", item).then((curTags) => {
+            console.log("curTags.res", curTags)
+            this.$router.push({name: curTags.name})
           })
         }
 
@@ -108,6 +110,7 @@
         })
       },
       cloeLeftClick(item) {
+        console.log("cloeLeftClick", item)
         this.$store.dispatch("tags/delLeft", item).then(() => {
           //如果不是在当前激活得tab上面点击关闭左右侧，则需要跳转当前，但是不需要强制更新
           if (!this.isTagsAlive(item)) {

@@ -76,28 +76,33 @@ export default {
     change: async (store, data) => {
       store.commit("curTags", data);
     },
-    del: async (store, data) => {
+    del: (store, data) => {
       // store.commit("curTags", data);
       let targetObject = {};
       //获取当前要删除的索引
       let myTags = store.state.myTags
       const targetIndex = myTags.findIndex(obj => obj == data);
       if (targetIndex == myTags.length - 1) {
-        targetObject = myTags[myTags.length - 2]
+        targetObject = myTags[targetIndex - 1]
       } else {
-        targetObject = myTags[myTags.length + 2]
+        targetObject = myTags[targetIndex + 1]
       }
-
-      store.commit("curTags", targetObject);
+      // store.commit("curTags", targetObject);
       const filteredObjects = myTags.filter(obj => obj != data);
-
       store.commit("myTags", filteredObjects);
+      // return targetObject;
+
+      return new Promise((resolve) => {
+        resolve(targetObject)
+      });
+
     },
     delOther: async (store, data) => {
       //获取当前要删除的索引
       let myTags = store.state.myTags
       const filteredObjects = myTags.filter(obj => obj == data);
       store.commit("myTags", filteredObjects);
+
     },
     delLeft: async (store, data) => {
       //获取当前要删除的索引
@@ -106,7 +111,7 @@ export default {
       if (index == 0) {
         return; // 如果找不到匹配的name，则返回原始数组
       }
-      myTags=myTags.filter((_, i) => i >= index);
+      myTags = myTags.filter((_, i) => i >= index);
       store.commit("myTags", myTags);
 
     },
@@ -117,7 +122,7 @@ export default {
       if (index == myTags.length - 1) {
         return; // 如果找不到匹配的name，则返回原始数组
       }
-      myTags=myTags.filter((_, i) => i <= index);
+      myTags = myTags.filter((_, i) => i <= index);
       store.commit("myTags", myTags);
     },
     delByName: async (store, data) => {
