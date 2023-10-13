@@ -29,10 +29,10 @@ export default function (opts = {}) {
       isLoading: false,
       addBtn: {
         isOpen: true,
-        text: '添加111111'
+        text: '添加'
       },
       editBtn: {
-        isOpen: true,
+        isOpen: false,
         text: '编辑'
       },
       deleteBtn: {
@@ -40,11 +40,11 @@ export default function (opts = {}) {
         text: '删除'
       },
       importBtn: {
-        isOpen: true,
+        isOpen: false,
         text: '导入'
       },
       exportBtn: {
-        isOpen: true,
+        isOpen: false,
         text: '导出'
       },
       batchDeleteBtn: {

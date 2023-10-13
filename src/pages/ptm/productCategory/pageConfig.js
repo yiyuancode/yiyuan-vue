@@ -8,30 +8,30 @@ import * as productCategory from '@/api/ptm/productCategory';
 
 const columns = [
   {
-    title: '',
+    title: 'ID',
     dataIndex: 'id',
     key: 'id',
-    width: 160,
+    width: 100,
     rules: [{ required: true, message: '请输入', trigger: 'blur' }],
     noEdit: true,
     noAdd: true
   },
 
   {
-    title: '父级ID',
+    title: '父ID',
     dataIndex: 'pid',
     key: 'pid',
-    width: 160,
+    width: 100,
     rules: [{ required: true, message: '请输入父级ID', trigger: 'blur' }]
   },
 
-  {
-    title: '商户id',
-    dataIndex: 'tenantId',
-    key: 'tenantId',
-    width: 160,
-    rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }]
-  },
+  // { 平台商户id为0
+  //   title: '商户id',
+  //   dataIndex: 'tenantId',
+  //   key: 'tenantId',
+  //   width: 160,
+  //   rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }]
+  // },
 
   {
     title: '名称',
@@ -45,7 +45,8 @@ const columns = [
     title: 'icon',
     dataIndex: 'icon',
     key: 'icon',
-    width: 160
+    width: 160,
+    scopedSlots: { customRender: 'icon' },
   },
 
   {
@@ -76,9 +77,11 @@ const columns = [
       }
     },
     rules: [{ required: true, message: '请选择分类级别', trigger: 'change' }],
-    formSort: 1
+    formSort: 1,
+    scopedSlots: { customRender: 'level' },
   },
 
+  // todo 需要在列表中实现行编辑，直接修改排序数据
   {
     title: '排序',
     dataIndex: 'sort',
@@ -86,12 +89,13 @@ const columns = [
     width: 160
   },
 
-  {
-    title: '显示状态0=不显示|1=显示',
-    dataIndex: 'isShow',
-    key: 'isShow',
-    width: 160
-  },
+  // TODO 待manage组建强化后实现
+  // {
+  //   title: '显示状态0=不显示|1=显示',
+  //   dataIndex: 'isShow',
+  //   key: 'isShow',
+  //   width: 160
+  // },
 
   {
     title: '创建时间',

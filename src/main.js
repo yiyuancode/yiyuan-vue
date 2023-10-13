@@ -13,6 +13,8 @@ import 'moment/locale/zh-cn';
 // 将自动注册所有组件为全局组件
 import dataV from '@jiaminghi/data-view';
 import addFrom from '@/mixins/addFrom.js';
+import mixin from "@/mixins/index.js"
+
 //在main.js引入qs
 import qs from 'qs';
 // import '@/utils/rem.js'
@@ -20,6 +22,9 @@ import qs from 'qs';
 Vue.use(dataV);
 
 Vue.use(addFrom);
+
+Vue.use(mixin);
+
 //配全局属性配置，在任意组件内可以使用this.$qs获取qs对象
 
 Vue.prototype.$qs = qs;
