@@ -17,7 +17,7 @@
           :scroll="{ x: '100%' }"
         >
           <span slot="icon" slot-scope="icon">
-            {{ globalConfig.imgBaseUrl + icon }}
+            <y-img :src="globalConfig.imgBaseUrl + icon"></y-img>
           </span>
           <!--          slot-scope(当前数据，当前行)-->
           <span slot="level" slot-scope="text">
