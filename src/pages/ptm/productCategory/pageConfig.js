@@ -46,7 +46,7 @@ const columns = [
     dataIndex: 'icon',
     key: 'icon',
     width: 160,
-    scopedSlots: { customRender: 'icon' },
+    scopedSlots: { customRender: 'icon' }
   },
 
   {
@@ -78,7 +78,7 @@ const columns = [
     },
     rules: [{ required: true, message: '请选择分类级别', trigger: 'change' }],
     formSort: 1,
-    scopedSlots: { customRender: 'level' },
+    scopedSlots: { customRender: 'level' }
   },
 
   // todo 需要在列表中实现行编辑，直接修改排序数据

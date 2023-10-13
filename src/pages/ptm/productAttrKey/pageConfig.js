@@ -4,14 +4,14 @@ const columns = [
     dataIndex: 'id',
     key: 'id',
     width: 100,
-    scopedSlots: { customRender: 'id' },
+    scopedSlots: { customRender: 'id' }
   },
   {
     title: '商户id',
     dataIndex: 'tenantId',
     key: 'tenantId',
     width: 110,
-    scopedSlots: { customRender: 'tenantId' },
+    scopedSlots: { customRender: 'tenantId' }
   },
   {
     title: '商品分类',
@@ -30,7 +30,7 @@ const columns = [
     key: 'isShow',
     dataIndex: 'isShow',
     width: 70,
-    scopedSlots: { customRender: 'isShow' },
+    scopedSlots: { customRender: 'isShow' }
   },
   {
     title: '创建时间',
@@ -47,12 +47,12 @@ const columns = [
   {
     title: '创建人',
     key: 'createUser',
-    dataIndex: 'createUser',
+    dataIndex: 'createUser'
   },
   {
     title: '修改人',
     key: 'updateUser',
-    dataIndex: 'updateUser',
+    dataIndex: 'updateUser'
   },
   {
     title: '操作',
@@ -60,7 +60,7 @@ const columns = [
     dataIndex: 'operation',
     scopedSlots: { customRender: 'operation' },
     fixed: 'right'
-  },
+  }
 ];
 
 export { columns };

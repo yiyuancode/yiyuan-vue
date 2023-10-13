@@ -13,11 +13,14 @@ import 'moment/locale/zh-cn';
 // 将自动注册所有组件为全局组件
 import dataV from '@jiaminghi/data-view';
 import addFrom from '@/mixins/addFrom.js';
-import mixin from "@/mixins/index.js"
-
+import mixin from '@/mixins/index.js';
 //在main.js引入qs
 import qs from 'qs';
-// import '@/utils/rem.js'
+/*引入图片预览组件,api得方式*/
+import hevueImgPreview from 'hevue-img-preview';
+import install from '@/components/index.js';
+
+Vue.use(hevueImgPreview);
 
 Vue.use(dataV);
 
@@ -40,7 +43,7 @@ Vue.use(Plugins);
 // Vue.directive("loading", LoadingDirective);
 
 // bootstrap({ router, store, i18n, message: Vue.prototype.$message });
-
+Vue.use(install);
 export default new Vue({
   router,
   store,

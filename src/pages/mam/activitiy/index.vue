@@ -20,7 +20,7 @@
         </a-row>
         <a-row>
           <a-col :span="24" :style="{ textAlign: 'right' }">
-            <a-button type="primary" html-type="submit"> 查询 </a-button>
+            <a-button type="primary" html-type="submit"> 查询</a-button>
             <a-button :style="{ marginLeft: '8px' }" @click="handleReset">
               重置
             </a-button>
@@ -39,17 +39,62 @@
         :data-source="data"
         :scroll="{ x: 1500, y: 300 }"
       >
-        <a slot="action">action</a>
+        <a slot="action">
+          <y-img :src="src"></y-img>
+        </a>
       </a-table>
     </a-card>
   </div>
 </template>
 <script>
+const columns = [
+  {
+    title: 'Full Name',
+    width: 100,
+    dataIndex: 'name',
+    key: 'name',
+    fixed: 'left'
+  },
+  { title: 'Age', width: 100, dataIndex: 'age', key: 'age', fixed: 'left' },
+  { title: 'Column 1', dataIndex: 'address', key: '1' },
+  { title: 'Column 2', dataIndex: 'address', key: '2' },
+  { title: 'Column 3', dataIndex: 'address', key: '3' },
+  { title: 'Column 4', dataIndex: 'address', key: '4' },
+  { title: 'Column 5', dataIndex: 'address', key: '5' },
+  { title: 'Column 6', dataIndex: 'address', key: '6' },
+  { title: 'Column 7', dataIndex: 'address', key: '7' },
+  { title: 'Column 8', dataIndex: 'address', key: '8' },
+  {
+    title: 'Action',
+    key: 'operation',
+    fixed: 'right',
+    width: 120,
+    scopedSlots: { customRender: 'action' }
+  }
+];
+
+const data = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York Park'
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 40,
+    address: 'London Park'
+  }
+];
 export default {
   data() {
     return {
       expand: false,
-      form: this.$form.createForm(this, { name: 'advanced_search' })
+      form: this.$form.createForm(this, { name: 'advanced_search' }),
+      src: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      data,
+      columns
     };
   },
   computed: {

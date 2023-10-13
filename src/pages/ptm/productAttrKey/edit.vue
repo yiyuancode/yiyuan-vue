@@ -1,72 +1,77 @@
 <template>
   <div class="manage-container">
-    <a-form-model :model="formData" :label-col="labelCol" :wrapper-col="wrapperCol">
+    <a-form-model
+      :model="formData"
+      :label-col="labelCol"
+      :wrapper-col="wrapperCol"
+    >
       <a-form-model-item label="商品分类">
-        <a-cascader v-model="formData.ptmProductCategoryId" :options="forPramsData.productCateList" placeholder="请选择商品分类"/>
+        <a-cascader
+          v-model="formData.ptmProductCategoryId"
+          :options="forPramsData.productCateList"
+          placeholder="请选择商品分类"
+        />
       </a-form-model-item>
       <a-form-model-item label="属性名">
         <a-input v-model="formData.attrKey" />
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-        <a-button type="primary" @click="onSubmitHandle">
-          Create
-        </a-button>
-        <a-button style="margin-left: 10px;">
-          Cancel
-        </a-button>
+        <a-button type="primary" @click="onSubmitHandle"> Create </a-button>
+        <a-button style="margin-left: 10px"> Cancel </a-button>
       </a-form-model-item>
     </a-form-model>
   </div>
 </template>
 
 <script>
-import { getProductCategoryPageList } from '@/api/ptm/productCategory.js'
+import { getProductCategoryPageList } from '@/api/ptm/productCategory.js';
 export default {
-  name: "ProductAttrKeyEdit",
-  props:{
-    editData:{ // 待编辑数据
+  name: 'ProductAttrKeyEdit',
+  props: {
+    editData: {
+      // 待编辑数据
       type: Object,
       require: false
     }
   },
-  data(){
-    return{
+  data() {
+    return {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
-      formData: {...this.editData},
-      forPramsData:{ // 当前商品属性业务中用到的整体参数对象
-        productCateList:[]
+      formData: { ...this.editData },
+      forPramsData: {
+        // 当前商品属性业务中用到的整体参数对象
+        productCateList: []
       }
-    }
+    };
   },
-  created(){
+  created() {
     this.getProductCateListHandle();
   },
-  methods:{
-    async getProductCateListHandle(){
+  methods: {
+    async getProductCateListHandle() {
       const currentProductCateList = await getProductCategoryPageList();
-      this.forPramsData.productCateList = this.transformData(currentProductCateList.records);
-
+      this.forPramsData.productCateList = this.transformData(
+        currentProductCateList.records
+      );
     },
     transformData(data) {
-      return data.map(item => {
-          const transformedItem = {
-            label: item.name,
-            value: item.id,
-          };
+      return data.map((item) => {
+        const transformedItem = {
+          label: item.name,
+          value: item.id
+        };
 
-          if (item.level && item.level.length > 0) {
-            transformedItem.children = this.transformData(item.level);
-          }
+        if (item.level && item.level.length > 0) {
+          transformedItem.children = this.transformData(item.level);
+        }
 
-          return transformedItem;
-        });
+        return transformedItem;
+      });
     },
-onSubmitHandle(){
-
-    }
+    onSubmitHandle() {}
   }
-}
+};
 </script>
 
 <style scoped lang="less">

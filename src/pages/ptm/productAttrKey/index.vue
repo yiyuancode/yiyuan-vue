@@ -1,37 +1,40 @@
 <template>
   <div class="manage-container">
-    <div class="search-container">
-    </div>
+    <div class="search-container"></div>
     <div class="content-container">
       <div class="operate-btn-container">
         <!--      <a-button-group>-->
         <a-button type="primary" @click="onAddProductAttrKeyHandle">
           添加属性
         </a-button>
-        <a-button>
-          批量删除
-        </a-button>
+        <a-button> 批量删除 </a-button>
         <!--      </a-button-group>-->
       </div>
       <div ref="listContainer" class="list-container">
-        <a-table :columns="columns" :data-source="tableData.records" :scroll="{ x: '100%' }">
-        <span slot="id" slot-scope="id">
-          <a-tooltip>
-            <template slot="title">
-              {{ id }}
-            </template>
-             <a>copy 主键</a>
-          </a-tooltip>
-        </span>
+        <a-table
+          :columns="columns"
+          :data-source="tableData.records"
+          :scroll="{ x: '100%' }"
+        >
+          <span slot="id" slot-scope="id">
+            <a-tooltip>
+              <template slot="title">
+                {{ id }}
+              </template>
+              <a>copy 主键</a>
+            </a-tooltip>
+          </span>
           <span slot="tenantId" slot-scope="tenantId">
-          <a-tooltip>
-            <template slot="title">
-              {{ tenantId }}
-            </template>
-             <a>copy 商户ID</a>
-          </a-tooltip>
-        </span>
-          <a slot="isShow" slot-scope="isShow">{{ isShow ? '显示':'隐藏'}}</a>
+            <a-tooltip>
+              <template slot="title">
+                {{ tenantId }}
+              </template>
+              <a>copy 商户ID</a>
+            </a-tooltip>
+          </span>
+          <a slot="isShow" slot-scope="isShow">{{
+            isShow ? '显示' : '隐藏'
+          }}</a>
           <template slot="operation" slot-scope="text, record">
             <a-popconfirm
               v-if="tableData.records.length"
@@ -47,51 +50,53 @@
       </div>
     </div>
 
-    <a-drawer title="商品属性" width="500" :visible="editConfig.visible" @close="onCloseEditProductAttrKeyHandle">
+    <a-drawer
+      title="商品属性"
+      width="500"
+      :visible="editConfig.visible"
+      @close="onCloseEditProductAttrKeyHandle"
+    >
       <edit v-if="editConfig.visible"></edit>
     </a-drawer>
   </div>
 </template>
 
 <script>
-    import { columns } from './pageConfig';
-    import { getProductAttrKeyPageList } from '@/api/ptm/productAttrKey.js'
-    import edit from './edit.vue'
-    export default {
-        name: "ProductAttrKey",
-        components: {
-            edit
-        },
-        mixins: [],
-        data() {
-            return {
-                columns,
-                tableData:{
-                },
-              editConfig:{
-                  visible: false
-              }
-            };
-        },
-      created(){
-          this.getList();
-      },
-        methods: {
-          async getList(){
-            this.tableData = await getProductAttrKeyPageList();
-          },
-          onAddProductAttrKeyHandle(){
-            this.editConfig.visible = true;
-          },
-          onDelete(key){
-            console.log('key:', key)
-            this.$message.success('Click on Yes');
-          },
-          onCloseEditProductAttrKeyHandle(){
-
-          }
-        }
+import { columns } from './pageConfig';
+import { getProductAttrKeyPageList } from '@/api/ptm/productAttrKey.js';
+import edit from './edit.vue';
+export default {
+  name: 'ProductAttrKey',
+  components: {
+    edit
+  },
+  mixins: [],
+  data() {
+    return {
+      columns,
+      tableData: {},
+      editConfig: {
+        visible: false
+      }
     };
+  },
+  created() {
+    this.getList();
+  },
+  methods: {
+    async getList() {
+      this.tableData = await getProductAttrKeyPageList();
+    },
+    onAddProductAttrKeyHandle() {
+      this.editConfig.visible = true;
+    },
+    onDelete(key) {
+      console.log('key:', key);
+      this.$message.success('Click on Yes');
+    },
+    onCloseEditProductAttrKeyHandle() {}
+  }
+};
 </script>
 
 <style lang="less" scoped>
