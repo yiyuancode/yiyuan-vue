@@ -8,5 +8,5 @@ const dept = {
     keepAlive: true,
     permissions: 'sys:host'
   }
-}
+};
 export default dept;

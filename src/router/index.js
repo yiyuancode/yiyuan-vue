@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store';
-import {gertRouterArray} from "@/utils/autoRouterUtil.js";
+import { gertRouterArray } from '@/utils/autoRouterUtil.js';
 // 引入依赖
 // import autoRouter from 'vue-router-auto'
 
@@ -14,7 +14,6 @@ VueRouter.prototype.replace = function replace(location) {
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch((err) => err);
 };
-
 
 Vue.use(VueRouter);
 //静态路由，不需要做登录拦截的路由
@@ -33,17 +32,18 @@ const staticRoutes = [
   }
 ];
 
-
 // 获取同级目录下所有满足条件的index.js文件
 
 // 存储满足条件的对象数组
 //动态路由，需要做登录拦截的路由，并且可以用做菜单的渲染
-export const dynamicRoutes = gertRouterArray(require.context('./', true, /\/([^/]+)\/index\.js$/));
+export const dynamicRoutes = gertRouterArray(
+  require.context('./', true, /\/([^/]+)\/index\.js$/)
+);
 
 // 递归生成 dynamicRoutesMap，方便通过name获取，因为递归得关系很难拿到
 function flattenRoutes(routes, result = {}) {
   routes.forEach((route) => {
-    const {children, ...routeInfo} = route;
+    const { children, ...routeInfo } = route;
     result[routeInfo.name] = routeInfo;
     if (children && children.length > 0) {
       flattenRoutes(children, result);
@@ -54,7 +54,6 @@ function flattenRoutes(routes, result = {}) {
 }
 
 export const dynamicRoutesMap = flattenRoutes(dynamicRoutes);
-
 
 const router = new VueRouter({
   routes: [...staticRoutes, ...dynamicRoutes]
@@ -69,10 +68,10 @@ router.beforeEach((to, from, next) => {
       next();
       //一定在next跳转方法以后再添加tags.不然kepp-alivue那里就提前有了该路径，不知道该走缓存还是不走
       if (!store.getters['tags/hasTagsName'](to.name)) {
-        store.dispatch("tags/add", {name: to.name, meta: to.meta})
+        store.dispatch('tags/add', { name: to.name, meta: to.meta });
       } else {
         //不能把to全部塞进去,因为有些属性事箭头函数 json转化不了 会报错
-        store.dispatch("tags/change", {name: to.name, meta: to.meta})
+        store.dispatch('tags/change', { name: to.name, meta: to.meta });
       }
     } else {
       next('/login');

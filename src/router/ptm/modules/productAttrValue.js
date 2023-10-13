@@ -1,4 +1,4 @@
-const productAttrValue =  {
+const productAttrValue = {
   path: 'productAttrValue',
   name: 'productAttrValue',
   component: () => import('@/pages/ptm/productAttrValue/index.vue'),
@@ -8,5 +8,5 @@ const productAttrValue =  {
     keepAlive: true
     // permissions: 'sys:host'
   }
-}
+};
 export default productAttrValue;

@@ -25,7 +25,6 @@ let request = axios.create({
 // request拦截器
 request.interceptors.request.use(
   (config) => {
-
     // getBaseApi(config.url)
     //   config.url = !getBaseApi(config.url) ? config.url : getBaseApi(config.url);
     // let isLogin= vm.$store.getters['account/isLogin']
@@ -49,7 +48,6 @@ request.interceptors.request.use(
 // respone拦截器
 request.interceptors.response.use(
   (response) => {
-
     /**
      * code为非200是抛错 可结合自己业务进行修改
      */
@@ -76,7 +74,6 @@ request.interceptors.response.use(
     }
   },
   (error) => {
-
     switch (error.response.status) {
       case 400:
         break;

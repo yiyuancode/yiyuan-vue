@@ -1,5 +1,4 @@
-import {request} from '@/utils/request';
-
+import { request } from '@/utils/request';
 
 /**
  * 上传文件
@@ -12,7 +11,7 @@ import {request} from '@/utils/request';
  */
 export function fileUpload(file) {
   let formData = new FormData();
-  formData.append("file", file);
+  formData.append('file', file);
   return request({
     url: '/file/upload',
     method: 'POST',
@@ -20,9 +19,8 @@ export function fileUpload(file) {
     //   'Content-type': 'multipart/form-data'
     // },
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8;',
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8;'
     },
     data: formData
   });
 }
-

@@ -11,10 +11,6 @@
     @onReset="resetHandle"
     @onChange="tableChangeHandle"
   >
-    <!-- 其他的操作插槽 -->
-    <!-- <template slot="otherOperationsContainer" slot-scope="{record}">
-      <a-button type="primary" @click="toMonitor(record)">监控</a-button>
-    </template> -->
   </ManagePage>
 </template>
 
@@ -24,7 +20,7 @@ import manage from '@/mixins/manage';
 import { columns, moduleConfig, permissionObj } from './pageConfig';
 
 export default {
-  name: 'redis',
+  name: 'activitiyProduct',
   components: {
     ManagePage
   },
@@ -36,14 +32,7 @@ export default {
     };
   },
 
-  methods: {
-    toMonitor(record) {
-      this.$router.push({
-        path: '/sys/redisMonitor',
-        query: { id: record.data.id }
-      });
-    }
-  }
+  methods: {}
 };
 </script>
 

@@ -1,7 +1,6 @@
-import {gertRouterArray} from "@/utils/autoRouterUtil.js";
+import { gertRouterArray } from '@/utils/autoRouterUtil.js';
 
-const modules = gertRouterArray(require.context('./modules', false, /\.js$/))
-
+const modules = gertRouterArray(require.context('./modules', false, /\.js$/));
 
 const sys = {
   path: '/sys',
@@ -14,6 +13,5 @@ const sys = {
     sort: 2
   },
   children: modules
-}
+};
 export default sys;
-

@@ -8,5 +8,5 @@ const product = {
     keepAlive: true
     // permissions: 'sys:host'
   }
-}
+};
 export default product;

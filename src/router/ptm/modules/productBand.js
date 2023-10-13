@@ -9,5 +9,5 @@ const productBand = {
     sort: 1
     // permissions: 'sys:host'
   }
-}
+};
 export default productBand;

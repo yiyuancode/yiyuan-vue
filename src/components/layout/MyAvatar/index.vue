@@ -21,33 +21,30 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {};
-    },
-    methods: {
-      loginout() {
-        this.$router.replace({name: 'login'});
-        //异步清除当前用户登录得所有缓存,因为上面跳转也是一个异步所以执行到清除得不一定跳转完成了，会导致主页一些读取vuex得地方报错
-        setTimeout(
-          () => {
-            this.$store.dispatch('user/loginout')
-            this.$store.dispatch('tags/loginout')
-          }, 50
-        )
-
-      }
+export default {
+  data() {
+    return {};
+  },
+  methods: {
+    loginout() {
+      this.$router.replace({ name: 'login' });
+      //异步清除当前用户登录得所有缓存,因为上面跳转也是一个异步所以执行到清除得不一定跳转完成了，会导致主页一些读取vuex得地方报错
+      setTimeout(() => {
+        this.$store.dispatch('user/loginout');
+        this.$store.dispatch('tags/loginout');
+      }, 50);
     }
-  };
+  }
+};
 </script>
 <style lang="less">
-  .MyAvatar {
-    width: auto;
-    height: 100%;
-    margin-right: 100px;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    display: inline-block;
-  }
+.MyAvatar {
+  width: auto;
+  height: 100%;
+  margin-right: 100px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  display: inline-block;
+}
 </style>

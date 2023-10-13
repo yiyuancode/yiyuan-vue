@@ -8,5 +8,5 @@ const user = {
     permissions: 'sys:redis',
     sort: 2
   }
-}
+};
 export default user;

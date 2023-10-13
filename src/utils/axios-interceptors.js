@@ -39,9 +39,7 @@ const reqCommon = {
 // 响应通用
 const respCommon = {
   onFulfilled(response, options) {
-
     if (response.data.type === 'application/octet-stream') {
-
       // 获取http头部的文件名信息，若无需重命名文件，将下面这行删去
       // const fileName = response.headers['content-disposition'].split('=')[1];
       /* 兼容ie内核，360浏览器的兼容模式 */

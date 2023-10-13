@@ -8,5 +8,5 @@ const host = {
     keepAlive: true,
     permissions: 'sys:host'
   }
-}
+};
 export default host;

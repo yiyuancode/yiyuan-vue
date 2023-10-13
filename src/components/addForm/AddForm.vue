@@ -273,13 +273,9 @@ export default {
     },
     //上传组件回调
     UploadSngle(fileUrl, item) {
-
-
       item.fileUrl = fileUrl;
     },
     filter(inputValue, path, fieldNames) {
-
-
       return path.some(
         (option) =>
           option[fieldNames.label]
@@ -287,23 +283,16 @@ export default {
             .indexOf(inputValue.toLowerCase()) > -1
       );
     },
-    handleChangeSelect(val, dataIndex, im2, option) {
-
-
-
-
-    },
+    handleChangeSelect(val, dataIndex, im2, option) {},
     onSubmit() {
       this.form.validateFields((err, values) => {
         if (!err) {
-
           let propsTemp = _.cloneDeep(this.props);
           propsTemp.loading = true;
 
           propsTemp.columns.forEach((im) => {
             im.forEach((im2) => {
               if (im2.formType == `upload`) {
-
                 values[im2.dataIndex] = im2.fileUrl;
               } else if (`Select`.indexOf(im2.formType) != -1) {
                 values[im2.dataIndex] = this.record[im2.dataIndex].value;
@@ -410,7 +399,6 @@ export default {
                 if (im3.id == firstId) {
                   all = JSON.stringify(im2.props.options);
                   targetOptionOldStr = JSON.stringify(im3);
-
                 }
               });
               //区域级联，回显赋值，一次把当前选择的顶层id传到后台查出层级关系，因为动态加载的级联选择器默认只加载第一层数据

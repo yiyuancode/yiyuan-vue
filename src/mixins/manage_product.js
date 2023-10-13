@@ -134,12 +134,10 @@ export default function (opts = {}) {
       },
       // 其他事件变化的回调
       otherEventChangeHandle(methodName, ...args) {
-
         this[methodName](...args);
       },
       // 提交的回调
       async submitHandle(opts = {}) {
-
         const { opType, id, model, done } = opts;
 
         // 如果处理数据方法存在
@@ -238,7 +236,6 @@ export default function (opts = {}) {
         };
 
         this.getData();
-
       },
       // 重置的回调
       resetHandle() {
@@ -247,7 +244,6 @@ export default function (opts = {}) {
         };
 
         this.getData();
-
       },
       // 表格变化处理回调函数
       tableChangeHandle(pagination) {
@@ -255,7 +251,6 @@ export default function (opts = {}) {
           pagination.pageSize;
         this.pagination.current = this.searchObj.pageNum = pagination.current;
         this.getData();
-
       }
     }
   };

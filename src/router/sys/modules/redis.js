@@ -7,5 +7,5 @@ const redis = {
     keepAlive: true,
     permissions: 'sys:redis'
   }
-}
+};
 export default redis;

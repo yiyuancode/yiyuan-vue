@@ -10,10 +10,8 @@
       :wrapper-col="wrapperCol"
     >
       <template v-for="(submitFormItem, index) in uSubmitFormList">
-        <template
-          v-if="submitFormItem.formType=='customerForm'"
-          >
-          <template >
+        <template v-if="submitFormItem.formType == 'customerForm'">
+          <template>
             <slot :name="submitFormItem.prop"></slot>
           </template>
         </template>
@@ -26,14 +24,12 @@
           :prop="submitFormItem.prop"
         >
           <FormItem
-              v-model="model[submitFormItem.prop]"
-              :formType="submitFormItem.formType"
-              :props="submitFormItem.props"
+            v-model="model[submitFormItem.prop]"
+            :formType="submitFormItem.formType"
+            :props="submitFormItem.props"
           />
         </a-form-model-item>
-
       </template>
-
     </a-form-model>
 
     <!-- 也可以使用ant-design-vue的a-form -->

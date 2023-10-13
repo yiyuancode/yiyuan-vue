@@ -241,8 +241,6 @@ export default {
       //
     },
     filter(inputValue, path, fieldNames) {
-
-
       return path.some(
         (option) =>
           option[fieldNames.label]

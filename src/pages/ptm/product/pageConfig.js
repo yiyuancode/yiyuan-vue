@@ -275,14 +275,16 @@ const columns = [
     defaultValue: 1,
     formSort: 1
   },
-  { // 准备写插槽使用
+  {
+    // 准备写插槽使用
     title: '商品SKU',
     dataIndex: 'skuForm',
     key: 'skuForm',
     width: 160,
-    formType: 'customerForm',
+    formType: 'customerForm'
   },
-  { // 准备写插槽使用
+  {
+    // 准备写插槽使用
     title: '商品SKU1',
     dataIndex: 'skuForm1',
     key: 'skuForm1',

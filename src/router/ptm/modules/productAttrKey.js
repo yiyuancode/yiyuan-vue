@@ -8,5 +8,5 @@ const productAttrKey = {
     keepAlive: true
     // permissions: 'sys:host'
   }
-}
+};
 export default productAttrKey;
