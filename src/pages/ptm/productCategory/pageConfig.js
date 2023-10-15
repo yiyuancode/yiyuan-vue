@@ -153,6 +153,12 @@ const columns = [
   //   noSearch: true,
   //   noShow: true
   // }
+  {
+    title: '操作',
+    dataIndex: 'operation',
+    fixed: 'right',
+    scopedSlots: { customRender: 'operation' },
+  },
 ];
 
 // 模块配置

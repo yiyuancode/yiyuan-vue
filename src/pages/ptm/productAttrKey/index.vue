@@ -3,12 +3,10 @@
     <div class="search-container"></div>
     <div class="content-container">
       <div class="operate-btn-container">
-        <!--      <a-button-group>-->
         <a-button type="primary" @click="onAddProductAttrKeyHandle">
           添加属性
         </a-button>
         <a-button> 批量删除 </a-button>
-        <!--      </a-button-group>-->
       </div>
       <div ref="listContainer" class="list-container">
         <a-table
