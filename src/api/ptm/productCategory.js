@@ -16,6 +16,21 @@ export function getProductCategoryPageList(data) {
 }
 
 /**
+ * 获取所有的商品分类信息
+ *
+ * @param {*} data 商品分类信息
+ * @return
+ * @author  一源团队-花和尚
+ * @date 2023-10-10
+ */
+export function getProductCategoryList(data) {
+  return request({
+    url: '/ptm/productCategory/list',
+    params: data
+  });
+}
+
+/**
  * 获取商品分类详情
  *
  * @param {*} id

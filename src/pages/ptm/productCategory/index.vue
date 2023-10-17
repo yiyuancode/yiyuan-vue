@@ -18,18 +18,30 @@
               return index;
             }
           "
-          pagination="bottom"
+          :pagination="paginationConfig"
         >
           <span slot="icon" slot-scope="icon">
-            <y-img :src="globalConfig.imgBaseUrl + icon"></y-img>
+            <y-img :src="globalConfig.imgBaseUrl + icon" style="height: 50px; width: 50px;"></y-img>
           </span>
           <!--          slot-scope(当前数据，当前行)-->
           <span slot="level" slot-scope="text">
             {{ text.desc }}
           </span>
-          <a-button-group slot="operation" slot-scope="text, record, index">
-            <a-button @click="()=> onProductCateListRowEdit(text, record, index)">编辑</a-button>
-          </a-button-group>
+          <template slot="operation" slot-scope="text, record, index">
+            <a-button-group >
+<!--            编辑分类-->
+              <a-button icon="edit" shape="round" @click="()=> onProductCateListRowEdit(text, record, index)"></a-button>
+<!--            删除分类-->
+              <a-popconfirm
+                :title="'确定删除名称为【'+record.name +'】的分类'"
+                ok-text="确定"
+                cancel-text="取消"
+                @confirm="() => onProductCateListRowDelete(record)"
+              >
+                <a-button icon="delete" type="danger" shape="round" ></a-button>
+              </a-popconfirm>
+            </a-button-group>
+          </template>
         </a-table>
       </div>
     </div>
@@ -42,7 +54,8 @@
     >
       <edit-product-cate v-if="editConfig.visible"
                          :editData="editConfig.editData"
-                         @onSaveSubmit="onEditProductCateSubmitHandle"></edit-product-cate>
+                         @onSaveSubmit="onEditProductCateSubmitHandle"
+                         @onCancelSubmit="editConfig.visible = false"></edit-product-cate>
     </a-drawer>
   </div>
 </template>
@@ -50,7 +63,7 @@
 <script>
 import editProductCate from './edit.vue';
 import { columns } from './pageConfig';
-import { getProductCategoryPageList } from '@/api/ptm/productCategory';
+import { getProductCategoryPageList, deleteProductCategory } from '@/api/ptm/productCategory';
 
 export default {
   name: 'ProductCategory',
@@ -59,8 +72,35 @@ export default {
   data() {
     return {
       columns,
+      paginationConfig: {
+        current: 1, // 当前页码
+        pageSize: 10, // 每页显示条数
+        total: 0, // 数据总数
+        showSizeChanger: true, // 是否显示每页显示条数切换器
+        pageSizeOptions: ['10', '20', '30', '40'], // 每页显示条数选项
+        showTotal: (total) => `共 ${total} 条数据`, // 自定义显示总条数文本
+        onChange: this.handlePageChange, // 页码改变的回调
+        onShowSizeChange: this.handlePageSizeChange // 每页显示条数改变的回调
+      },
       tableData: {
-        records: []
+        records: [], // 表单数据
+      },
+      tableQueryParams:{ // 表单查询对象
+        pageSize: 10,
+        pageNum: 1,
+        id: null,
+        pid: null,
+        tenantId: null, //商户id
+        name: null, // 分类名称
+        level: null, // 层级
+        isShow: null, // 是否显示
+        createTimeStart: null, // 创建时间
+        createTimeEnd: null,
+        updateTimeStart: null,
+        updateTimeEnd: null,
+        createUser: null,
+        updateUser: null
+
       },
       editConfig: {
         editData: {},
@@ -69,11 +109,12 @@ export default {
     };
   },
   created() {
-    this.getProductCateListData();
+    this.getProductCateListData(this.tableQueryParams);
   },
   methods: {
-    async getProductCateListData() {
-      this.tableData = await getProductCategoryPageList();
+    async getProductCateListData(params) {
+      this.tableData = await getProductCategoryPageList(params);
+      this.paginationConfig.total = this.tableData.total;
     },
     onAddProductCateHandle() {
       this.editConfig.editData={};
@@ -81,14 +122,27 @@ export default {
     },
     onEditProductCateSubmitHandle(){
       this.editConfig.visible = false;
-      this.getProductCateListData();
+      this.getProductCateListData(this.tableQueryParams);
     },
-    onProductCateListRowEdit(text, record, index){
-      console.log('text:', text);
-      console.log('record:', record);
-      console.log('index:', index);
+    onProductCateListRowEdit(text, record){
       this.editConfig.editData = record;
       this.editConfig.visible = true;
+    },
+    onProductCateListRowDelete(record){
+      deleteProductCategory(record.id);
+      this.$message.success(`删除分类${record.name}成功`);
+      this.getProductCateListData(this.tableQueryParams);
+    },
+    // 处理当前第几页
+    handlePageChange(page) {
+      this.tableQueryParams.pageNum = page;
+      this.paginationConfig.current = page;
+      this.getProductCateListData(this.tableQueryParams);
+    },
+    // 处理每页显示条数改变的逻辑
+    handlePageSizeChange(pageSize) {
+      this.tableQueryParams.pageSize = pageSize;
+      this.getProductCateListData(this.tableQueryParams);
     }
   }
 };
