@@ -24,19 +24,19 @@
           @UploadSngle="(fileUrl) => UploadSngle(fileUrl, formData)"
         ></UploadSngle>
       </a-form-model-item>
-      <a-form-model-item label="层级" prop="level">
-        <a-select v-model="formData.level" default-value="1" >
-          <a-select-option :value="1">
-            一级
-          </a-select-option>
-          <a-select-option :value="2">
-            二级
-          </a-select-option>
-          <a-select-option :value="3">
-            三级
-          </a-select-option>
-        </a-select>
-      </a-form-model-item>
+<!--      <a-form-model-item label="层级" prop="level"> 用层级选择的长度代替了 -->
+<!--        <a-select v-model="formData.level" default-value="1" >-->
+<!--          <a-select-option :value="1">-->
+<!--            一级-->
+<!--          </a-select-option>-->
+<!--          <a-select-option :value="2">-->
+<!--            二级-->
+<!--          </a-select-option>-->
+<!--          <a-select-option :value="3">-->
+<!--            三级-->
+<!--          </a-select-option>-->
+<!--        </a-select>-->
+<!--      </a-form-model-item>-->
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmitHandle">{{editData.id ? '编辑':'创建' }}</a-button>
         <a-button style="margin-left: 10px"  @click="onCancelHandle"> 取消 </a-button>
@@ -50,7 +50,7 @@
 import { getProductCategoryList, addProductCategory, editProductCategory } from '@/api/ptm/productCategory.js';
 import UploadSngle from '@/components/uploadSngle';
 export default {
-  name: 'ProductAttrKeyEdit',
+  name: 'ProductCateEdit',
   components:{ UploadSngle },
   props: {
     editData: {
@@ -90,7 +90,9 @@ export default {
   },
   methods: {
     onProductCateOptionSelected(op){
-      console.log('op:', op)
+      if(op){
+        this.formData.level = op.length;
+      }
     },
     async getProductCateListHandle() {
       // 获取数据库分类数据
@@ -126,8 +128,10 @@ export default {
     onSubmitHandle() {
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {
-          this.formData.pid = this.formData.pid[0];
+          // this.formData.pid = this.formData.pid[0];
           if(this.formData.id){
+            // 获取父级 也就是次组建返回的数组中的最后一位
+            this.formData.pid = this.formData.pid[this.formData.pid.length -1]
             await editProductCategory(this.formData, this.formData.id);
             this.$emit('onSaveSubmit')
           }else{
