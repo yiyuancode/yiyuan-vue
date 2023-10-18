@@ -23,7 +23,6 @@ const columns = [
     key: 'spmShopTypeId',
     width: 160,
     formType: 'select',
-
     rules: [{ required: true, message: '请选择店铺类型', trigger: 'blur' }]
   },
 
