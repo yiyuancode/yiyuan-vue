@@ -14,7 +14,8 @@ const columns = [
     width: 100,
     rules: [{ required: true, message: '请输入', trigger: 'blur' }],
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    ellipsis: true
   },
 
   {

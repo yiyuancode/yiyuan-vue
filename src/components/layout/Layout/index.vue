@@ -87,7 +87,8 @@ export default {
 
 .layout-content {
   margin: 24px 16px;
-  padding: 24px;
+  //padding: 24px;
+  padding: 5px;
   background: #fff;
   min-height: 280px;
   margin-top: 55px;

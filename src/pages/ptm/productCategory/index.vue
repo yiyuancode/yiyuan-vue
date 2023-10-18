@@ -1,27 +1,69 @@
 <template>
   <div class="manage-container">
-    <div class="search-container"></div>
+    <div class="search-container">
+      <a-form-model
+        :model="tableQueryParams" layout="inline">
+        <a-form-model-item label="分类名称">
+          <a-input v-model="tableQueryParams.name" placeholder="搜索分类名称" allowClear />
+        </a-form-model-item>
+        <a-form-model-item label="父级分类">
+          <a-cascader
+            v-model="tableQueryParams.pid"
+            :fieldNames="{label:'name', value:'id', children: 'children'}"
+            :options="searchDataOfProductCate"
+            placeholder="请选择商品分类"
+          />
+        </a-form-model-item>
+        <a-form-model-item label="层级">
+          <a-select v-model="tableQueryParams.level" placeholder="选择层级" style="width: 120px;">
+            <a-select-option :value="1">
+              一级
+            </a-select-option>
+            <a-select-option :value="2">
+              二级
+            </a-select-option>
+            <a-select-option :value="3">
+              三级
+            </a-select-option>
+          </a-select>
+        </a-form-model-item>
+        <a-form-model-item>
+          <a-select v-model="tableQueryParams.isShow" placeholder="选择显示状态" style="width: 120px;">
+            <a-select-option value="0">
+              不显示
+            </a-select-option>
+            <a-select-option value="1">
+              显示
+            </a-select-option>
+          </a-select>
+        </a-form-model-item>
+        <a-form-model-item>
+          <a-button type="primary" @click="onProductCateSearchHandle">搜索</a-button>
+        </a-form-model-item>
+      </a-form-model>
+    </div>
     <div class="content-container">
       <div class="operate-btn-container">
         <a-button type="primary" @click="onAddProductCateHandle">
           添加分类
         </a-button>
-        <a-button> 批量删除 </a-button>
+        <a-button :disabled="tableData.selectedRows.length <= 0" @click="onProductCateListDelete"> 批量删除 </a-button>
       </div>
       <div ref="listContainer" class="list-container">
         <a-table
           :columns="columns"
           :data-source="tableData.records"
-          :scroll="{ x: '100%', y: 500 }"
+          :scroll="{ x: '100%', y: tableHeight }"
           :rowKey="
             (record, index) => {
               return index;
             }
           "
           :pagination="paginationConfig"
+          :rowSelection="{ fixed:true, onChange:onTableSelectedChange }"
         >
           <span slot="icon" slot-scope="icon">
-            <y-img :src="globalConfig.imgBaseUrl + icon" style="height: 50px; width: 50px;"></y-img>
+            <y-img :src="globalConfig.imgBaseUrl + icon" style="height: 30px; width: 30px;"></y-img>
           </span>
           <!--          slot-scope(当前数据，当前行)-->
           <span slot="level" slot-scope="text">
@@ -63,7 +105,8 @@
 <script>
 import editProductCate from './edit.vue';
 import { columns } from './pageConfig';
-import { getProductCategoryPageList, deleteProductCategory } from '@/api/ptm/productCategory';
+
+import { getProductCategoryPageList, deleteProductCategory, getProductCategoryTreeList } from '@/api/ptm/productCategory';
 
 export default {
   name: 'ProductCategory',
@@ -82,8 +125,10 @@ export default {
         onChange: this.handlePageChange, // 页码改变的回调
         onShowSizeChange: this.handlePageSizeChange // 每页显示条数改变的回调
       },
+      tableHeight:0,
       tableData: {
         records: [], // 表单数据
+        selectedRows:[], // 表格首列选择项
       },
       tableQueryParams:{ // 表单查询对象
         pageSize: 10,
@@ -92,8 +137,8 @@ export default {
         pid: null,
         tenantId: null, //商户id
         name: null, // 分类名称
-        level: null, // 层级
-        isShow: null, // 是否显示
+        level: undefined, // 层级
+        isShow: undefined, // 是否显示
         createTimeStart: null, // 创建时间
         createTimeEnd: null,
         updateTimeStart: null,
@@ -102,19 +147,34 @@ export default {
         updateUser: null
 
       },
+      searchDataOfProductCate:[], // 商品类型父级选择框下拉数据
       editConfig: {
         editData: {},
         visible: false
       }
     };
   },
+  mounted(){
+    this.calculateTableHeight();
+  },
   created() {
     this.getProductCateListData(this.tableQueryParams);
+    this.getProductCategoryTreeListForSearchForm();
   },
   methods: {
+    calculateTableHeight() {
+      // 根据实际情况计算表格高度，例如根据窗口高度、父容器高度等
+      this.tableHeight = window.innerHeight - 370; // 示例：减去200像素的高度作为表格高度
+    },
+    onProductCateSearchHandle(){
+      this.tableQueryParams.pageNum = 1;
+      this.getProductCateListData(this.tableQueryParams);
+    },
     async getProductCateListData(params) {
-      this.tableData = await getProductCategoryPageList(params);
-      this.paginationConfig.total = this.tableData.total;
+      let productCateListData = await getProductCategoryPageList(params);
+      this.tableData.records = productCateListData.records;
+      this.paginationConfig.total = productCateListData.total;
+      this.paginationConfig.current = productCateListData.current;
     },
     onAddProductCateHandle() {
       this.editConfig.editData={};
@@ -133,6 +193,12 @@ export default {
       this.$message.success(`删除分类${record.name}成功`);
       this.getProductCateListData(this.tableQueryParams);
     },
+    onProductCateListDelete(){
+      let forDelIds = this.tableData.selectedRows.map(item => item.id).join(',');
+      deleteProductCategory(forDelIds);
+      this.$message.success(`批量删除分类成功`);
+      this.getProductCateListData(this.tableQueryParams);
+    },
     // 处理当前第几页
     handlePageChange(page) {
       this.tableQueryParams.pageNum = page;
@@ -143,6 +209,12 @@ export default {
     handlePageSizeChange(pageSize) {
       this.tableQueryParams.pageSize = pageSize;
       this.getProductCateListData(this.tableQueryParams);
+    },
+    async getProductCategoryTreeListForSearchForm(){
+      this.searchDataOfProductCate = await getProductCategoryTreeList();
+    },
+    onTableSelectedChange(selectedRowKeys, selectedRow){
+      this.tableData.selectedRows = selectedRow;
     }
   }
 };
@@ -157,8 +229,9 @@ export default {
 
 .search-container,
 .content-container {
-  margin-top: 20px;
-  padding: 20px;
+  //margin-top: 20px;
+  //padding: 5px;
+  margin-bottom: 5px;
   background-color: #fff;
 }
 

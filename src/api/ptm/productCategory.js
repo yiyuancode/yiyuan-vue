@@ -16,6 +16,18 @@ export function getProductCategoryPageList(data) {
 }
 
 /**
+ * 获取商品类型 属性结构数据
+ * @param data
+ * @returns {*}
+ */
+export function getProductCategoryTreeList(data) {
+  return request({
+    url: '/ptm/productCategory/treeList',
+    params: data
+  });
+}
+
+/**
  * 获取所有的商品分类信息
  *
  * @param {*} data 商品分类信息

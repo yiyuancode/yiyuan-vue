@@ -25,7 +25,7 @@
         ></UploadSngle>
       </a-form-model-item>
       <a-form-model-item label="层级" prop="level">
-        <a-select v-model="formData.level" default-value="1">
+        <a-select v-model="formData.level" default-value="1" >
           <a-select-option :value="1">
             一级
           </a-select-option>
