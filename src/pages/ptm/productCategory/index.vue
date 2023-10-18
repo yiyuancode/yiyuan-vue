@@ -47,7 +47,15 @@
         <a-button type="primary" @click="onAddProductCateHandle">
           添加分类
         </a-button>
-        <a-button :disabled="tableData.selectedRows.length <= 0" @click="onProductCateListDelete"> 批量删除 </a-button>
+        <a-popconfirm
+          :title="'确定批量删除选中的分类'"
+          ok-text="确定"
+          cancel-text="取消"
+          @confirm="() => onProductCateListDelete()"
+        >
+          <a-button :disabled="tableData.selectedRows.length <= 0">
+          批量删除 </a-button>
+        </a-popconfirm>
       </div>
       <div ref="listContainer" class="list-container">
         <a-table
@@ -60,7 +68,7 @@
             }
           "
           :pagination="paginationConfig"
-          :rowSelection="{ fixed:true, onChange:onTableSelectedChange }"
+          :rowSelection="{ fixed:true, onChange:onTableSelectedChange, selectedRowKeys:tableData.selectedKeys }"
         >
           <span slot="icon" slot-scope="icon">
             <y-img :src="globalConfig.imgBaseUrl + icon" style="height: 30px; width: 30px;"></y-img>
@@ -129,6 +137,7 @@ export default {
       tableData: {
         records: [], // 表单数据
         selectedRows:[], // 表格首列选择项
+        selectedKeys:[], // 表格选中的数据，暂时仅仅用于清空操作后的列表选中状态
       },
       tableQueryParams:{ // 表单查询对象
         pageSize: 10,
@@ -188,16 +197,18 @@ export default {
       this.editConfig.editData = record;
       this.editConfig.visible = true;
     },
-    onProductCateListRowDelete(record){
-      deleteProductCategory(record.id);
+    async onProductCateListRowDelete(record){
+      await deleteProductCategory(record.id);
       this.$message.success(`删除分类${record.name}成功`);
-      this.getProductCateListData(this.tableQueryParams);
+      await this.getProductCateListData(this.tableQueryParams);
     },
-    onProductCateListDelete(){
+    async onProductCateListDelete(){
       let forDelIds = this.tableData.selectedRows.map(item => item.id).join(',');
-      deleteProductCategory(forDelIds);
+      await deleteProductCategory(forDelIds);
       this.$message.success(`批量删除分类成功`);
-      this.getProductCateListData(this.tableQueryParams);
+      this.tableData.selectedKeys = [];
+      // this.tableData.selectedRows = [];
+      await this.getProductCateListData(this.tableQueryParams);
     },
     // 处理当前第几页
     handlePageChange(page) {
@@ -214,7 +225,9 @@ export default {
       this.searchDataOfProductCate = await getProductCategoryTreeList();
     },
     onTableSelectedChange(selectedRowKeys, selectedRow){
+      console.log('selectedRowKeys:', selectedRowKeys)
       this.tableData.selectedRows = selectedRow;
+      this.tableData.selectedKeys = selectedRowKeys;
     }
   }
 };
