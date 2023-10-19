@@ -130,8 +130,6 @@ export default {
         if (valid) {
           // this.formData.pid = this.formData.pid[0];
           if(this.formData.id){
-            // 获取父级 也就是次组建返回的数组中的最后一位
-            this.formData.pid = this.formData.pid[this.formData.pid.length -1]
             await editProductCategory(this.formData, this.formData.id);
             this.$emit('onSaveSubmit')
           }else{
