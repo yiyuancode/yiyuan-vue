@@ -18,9 +18,14 @@ import mixin from '@/mixins/index.js';
 import qs from 'qs';
 /*引入图片预览组件,api得方式*/
 import hevueImgPreview from 'hevue-img-preview';
+import 'hevue-img-preview/css/theme-light.css'
+
 import install from '@/components/index.js';
 
-Vue.use(hevueImgPreview);
+Vue.use(hevueImgPreview, {
+  keyboard: true,
+  clickMaskCLose: true
+});
 
 Vue.use(dataV);
 

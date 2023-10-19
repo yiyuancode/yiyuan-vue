@@ -15,10 +15,20 @@ module.exports = {
   },
   rules: {
     // 自定义规则
-    "vue/require-default-prop" : "off", //是否都要给默认值
-    "vue/require-prop-types" : "off",
-    "vue/attribute-hyphenation" : "off",
-    "vue/require-v-for-key" : "off"
+    "vue/require-default-prop": "off", //是否都要给默认值
+    "vue/require-prop-types": "off",
+    "vue/attribute-hyphenation": "off",
+    "vue/require-v-for-key": "off",
+    //关闭插槽形参未使用校验
+    "vue/no-unused-vars": "off",
+    //取消方法形参未使用校
+    //将所有未使用得形参改成警告
+    "no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "."
+      }
+    ]
   },
   env: {
     browser: true,

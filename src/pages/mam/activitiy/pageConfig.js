@@ -8,123 +8,112 @@ import * as activitiy from '@/api/mam/activitiy';
 
 const columns = [
   {
-    title: '活动id',
-    dataIndex: 'id',
-    key: 'id',
-    width: 160,
-    rules: [{ required: true, message: '请输入活动id', trigger: 'blur' }],
-    noEdit: true,
-    noAdd: true
-  },
-
-  {
     title: '商户id',
     dataIndex: 'tenantId',
     key: 'tenantId',
     width: 160,
-    rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }]
-  },
+    ellipsis: true,
+    rules: [{required: true, message: '请输入商户id', trigger: 'blur'}]
 
+  },
   {
     title: '活动名称',
     dataIndex: 'name',
     key: 'name',
     width: 160,
-    rules: [{ required: true, message: '请输入活动名称', trigger: 'blur' }]
+    ellipsis: true,
+    rules: [{required: true, message: '请输入活动名称', trigger: 'blur'}]
   },
-
   {
     title: '开始时间',
     dataIndex: 'startTime',
     key: 'startTime',
     width: 160,
+    ellipsis: true,
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择开始时间', trigger: 'change' }];
+      return [{required: true, message: '请选择开始时间', trigger: 'change'}];
     }
   },
-
   {
     title: '结束时间',
     dataIndex: 'endTime',
     key: 'endTime',
     width: 160,
+    ellipsis: true,
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择结束时间', trigger: 'change' }];
+      return [{required: true, message: '请选择结束时间', trigger: 'change'}];
     }
   },
-
   {
-    title: '是否显示0=否|1=是',
+    title: '是否显示',
     dataIndex: 'isShow',
     key: 'isShow',
-    width: 160
+    width: 160,
+    scopedSlots: {
+      customRender: "isShow"
+    }
   },
-
   {
     title: '创建时间',
     dataIndex: 'createTime',
     key: 'createTime',
     width: 160,
+    ellipsis: true,
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
+      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
     },
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    scopedSlots: {
+      customRender: "createTime"
+    }
   },
-
   {
     title: '修改时间',
     dataIndex: 'updateTime',
     key: 'updateTime',
     width: 160,
+    ellipsis: true,
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
+      return [{required: true, message: '请选择修改时间', trigger: 'change'}];
     },
     noEdit: true,
     noAdd: true,
     noSearch: true
   },
-
   {
-    title: '创建人',
-    dataIndex: 'createUser',
-    key: 'createUser',
-    width: 160,
+    title: '操作',
+    dataIndex: 'action',
+    key: 'action',
+    // width: 160,
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    noShow: true
-  },
-
-  {
-    title: '修改人',
-    dataIndex: 'updateUser',
-    key: 'updateUser',
-    width: 160,
-    noEdit: true,
-    noAdd: true,
-    noSearch: true,
-    noShow: true
+    noShow: true,
+    fixed: "right",
+    scopedSlots: {
+      customRender: "action"
+    }
   }
 ];
 
@@ -147,4 +136,4 @@ const permissionObj = {
   deleteBtn: 'mam:activitiy:delete'
 };
 
-export { columns, moduleConfig, permissionObj };
+export {columns, moduleConfig, permissionObj};
