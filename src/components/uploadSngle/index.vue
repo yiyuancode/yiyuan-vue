@@ -67,8 +67,8 @@ export default {
         //   vm.$emit('UploadSngle', info.file.response.message);
         // });
         vm.loading = false;
-        vm.$emit('input', info.file.response.message);
-        vm.$emit('UploadSngle', info.file.response.message);
+        vm.$emit('input', info.file.response.data);
+        vm.$emit('UploadSngle', info.file.response.data);
       }
     }
   }

@@ -14,7 +14,8 @@ const columns = [
     width: 100,
     rules: [{ required: true, message: '请输入', trigger: 'blur' }],
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    ellipsis: true
   },
 
   {
@@ -101,7 +102,7 @@ const columns = [
     title: '创建时间',
     dataIndex: 'createTime',
     key: 'createTime',
-    width: 160,
+    width: 180,
     props: {
       showTime: true,
       style: { width: '100%' }
@@ -118,7 +119,7 @@ const columns = [
     title: '修改时间',
     dataIndex: 'updateTime',
     key: 'updateTime',
-    width: 160,
+    width: 180,
     props: {
       showTime: true,
       style: { width: '100%' }
@@ -132,27 +133,33 @@ const columns = [
     noSearch: true
   },
 
+  // {
+  //   title: '创建人',
+  //   dataIndex: 'createUser',
+  //   key: 'createUser',
+  //   width: 160,
+  //   noEdit: true,
+  //   noAdd: true,
+  //   noSearch: true,
+  //   noShow: true
+  // },
+  //
+  // {
+  //   title: '修改人',
+  //   dataIndex: 'updateUser',
+  //   key: 'updateUser',
+  //   width: 160,
+  //   noEdit: true,
+  //   noAdd: true,
+  //   noSearch: true,
+  //   noShow: true
+  // }
   {
-    title: '创建人',
-    dataIndex: 'createUser',
-    key: 'createUser',
-    width: 160,
-    noEdit: true,
-    noAdd: true,
-    noSearch: true,
-    noShow: true
+    title: '操作',
+    dataIndex: 'operation',
+    fixed: 'right',
+    scopedSlots: { customRender: 'operation' },
   },
-
-  {
-    title: '修改人',
-    dataIndex: 'updateUser',
-    key: 'updateUser',
-    width: 160,
-    noEdit: true,
-    noAdd: true,
-    noSearch: true,
-    noShow: true
-  }
 ];
 
 // 模块配置

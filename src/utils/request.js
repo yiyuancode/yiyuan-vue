@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import store from '../store'
 import { message } from 'ant-design-vue';
-import { vm } from '@/main';
+import router from '@/router';
 // import { logout } from '@/requests/user';
 // import {initRouter} from './router'
 //多环境API BaseUrl
@@ -63,12 +63,12 @@ request.interceptors.response.use(
           break;
         case 400:
           message.error('参数错误，请重新检查' + response.data.message);
-          // vm.$router.replace("/404")
+          router.replace("/404")
           break;
         case 401:
           // this.locale = require('ant-design-vue/es/locale-provider/zh_TW').default
           message.error('登录失效，请重新登录');
-          vm.$router.replace('/login');
+          router.replace('/login');
           break;
       }
     }
@@ -78,7 +78,7 @@ request.interceptors.response.use(
       case 400:
         break;
       case 401:
-        vm.$router.replace('/login');
+        router.replace('/login');
         break;
       case 'US':
     }

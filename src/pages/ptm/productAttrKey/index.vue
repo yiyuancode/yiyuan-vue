@@ -1,14 +1,26 @@
 <template>
   <div class="manage-container">
-    <div class="search-container"></div>
+    <div class="search-container">
+      <a-form-model>
+        <a-form-model-item label="分类名称">
+          <a-select allowClear placeholder="选择显示状态" style="width: 120px">
+            <a-select-option value="0">
+              不显示
+            </a-select-option>
+            <a-select-option value="1">
+              显示
+            </a-select-option>
+          </a-select>
+        </a-form-model-item>
+      </a-form-model>
+
+    </div>
     <div class="content-container">
       <div class="operate-btn-container">
-        <!--      <a-button-group>-->
         <a-button type="primary" @click="onAddProductAttrKeyHandle">
           添加属性
         </a-button>
         <a-button> 批量删除 </a-button>
-        <!--      </a-button-group>-->
       </div>
       <div ref="listContainer" class="list-container">
         <a-table

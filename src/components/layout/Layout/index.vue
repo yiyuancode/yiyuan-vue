@@ -78,13 +78,12 @@
   }
 
   .layout-content {
-
     min-height: 280px;
     margin-top: 55px;
     position: relative;
     flex: 1;
     padding: 20px;
-    background: rgb(240, 242, 245);
+    background: #fff;
 
     .myTags {
       position: absolute;
