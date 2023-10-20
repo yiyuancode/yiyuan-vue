@@ -22,6 +22,12 @@
           :columns="columns"
           :data-source="tableData.records"
           :scroll="{ x: '100%' }"
+          :rowKey="
+            (record, index) => {
+              return index;
+            }
+          "
+          :pagination="paginationConfig"
         >
           <!--          <span slot="id" slot-scope="id">-->
           <!--            <a-tooltip>-->
@@ -43,14 +49,20 @@
             isShow ? '显示' : '隐藏'
           }}</a>
           <template slot="operation" slot-scope="text, record">
+            <!--            编辑商品属性Key-->
+            <a-button
+              icon="edit"
+              shape="round"
+              @click="() => onProductAttrKeyListRowEdit(record)"
+            ></a-button>
+            <!--            删除属性Key-->
             <a-popconfirm
-              v-if="tableData.records.length"
-              title="Sure to delete?"
-              ok-text="确认"
+              :title="'确定删除名称为【'+ record.attrKey +'】的属性Key'"
+              ok-text="确定"
               cancel-text="取消"
-              @confirm="() => onDelete(record.key)"
+              @confirm="() => onProductAttrKeyRowDelete(record)"
             >
-              <a href="javascript:;">删除</a>
+              <a-button icon="delete" type="danger" shape="round"></a-button>
             </a-popconfirm>
           </template>
         </a-table>
@@ -61,9 +73,9 @@
       title="商品属性"
       width="500"
       :visible="editConfig.visible"
-      @close="onCloseEditProductAttrKeyHandle"
+      @close="editConfig.visible = false"
     >
-      <edit v-if="editConfig.visible"></edit>
+      <edit v-if="editConfig.visible" :editId="editConfig.editId" @onSubmitHandleSuccess="onProductAttrKeySubmitSuccess"></edit>
     </a-drawer>
   </div>
 </template>
@@ -83,25 +95,75 @@ export default {
       columns,
       tableData: {},
       editConfig: {
+        editId: null,
         visible: false
-      }
+      },
+      paginationConfig: {
+        current: 1, // 当前页码
+        pageSize: 10, // 每页显示条数
+        total: 0, // 数据总数
+        showSizeChanger: true, // 是否显示每页显示条数切换器
+        pageSizeOptions: ['10', '20', '30', '40'], // 每页显示条数选项
+        showTotal: (total) => `共 ${total} 条数据`, // 自定义显示总条数文本
+        onChange: this.handlePageChange, // 页码改变的回调
+        onShowSizeChange: this.handlePageSizeChange // 每页显示条数改变的回调
+      },
+      tableQueryParams: {
+        // 表单查询对象
+        pageSize: 10,
+        pageNum: 1,
+        id: null,
+        pid: null,
+        tenantId: null, //商户id
+        attrKey: null, // 分类名称
+        isShow: undefined, // 是否显示
+        ptmProductCategoryId: undefined,
+        createTimeStart: null, // 创建时间
+        createTimeEnd: null,
+        updateTimeStart: null,
+        updateTimeEnd: null,
+        createUser: null,
+        updateUser: null
+      },
     };
   },
   created() {
-    this.getList();
+    this.getProductAttrKeyList(this.tableQueryParams);
   },
   methods: {
-    async getList() {
-      this.tableData = await getProductAttrKeyPageList();
+    async getProductAttrKeyList(params) {
+      this.tableData = await getProductAttrKeyPageList(params);
+      this.paginationConfig.total = this.tableData.total;
+      this.paginationConfig.current = this.tableData.current;
     },
     onAddProductAttrKeyHandle() {
+      this.editConfig.editId = null;
       this.editConfig.visible = true;
     },
-    onDelete(key) {
-      console.log('key:', key);
-      this.$message.success('Click on Yes');
+    onProductAttrKeyRowDelete(rowData) {
+      this.editConfig.editId = rowData.id;
+      this.editConfig.visible = true;
     },
-    onCloseEditProductAttrKeyHandle() {}
+    onProductAttrKeyListRowEdit(rowData){
+      this.editConfig.editId = rowData.id;
+      this.editConfig.visible = true;
+      console.log('this.editConfig:', this.editConfig);
+    },
+    onProductAttrKeySubmitSuccess(){
+      this.editConfig.visible = false;
+      this.getProductAttrKeyList(this.tableQueryParams);
+    },
+    // 处理当前第几页
+    handlePageChange(page) {
+      this.tableQueryParams.pageNum = page;
+      this.paginationConfig.current = page;
+      this.getProductAttrKeyList(this.tableQueryParams);
+    },
+    // 处理每页显示条数改变的逻辑
+    handlePageSizeChange(pageSize) {
+      this.tableQueryParams.pageSize = pageSize;
+      this.getProductAttrKeyList(this.tableQueryParams);
+    },
   }
 };
 </script>

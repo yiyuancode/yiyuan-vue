@@ -13,7 +13,7 @@
         />
       </a-form-model-item>
       <a-form-model-item label="属性名">
-        <a-input v-model="formData.attrKey" />
+        <a-input v-model="formData.attrKey" placeholder="请输入属性名" allowClear/>
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmitHandle"> 创建 </a-button>
@@ -24,14 +24,15 @@
 </template>
 
 <script>
-import { getProductCategoryPageList } from '@/api/ptm/productCategory.js';
-import { addProductAttrKey } from '@/api/ptm/productAttrKey.js';
+import { getProductCategoryList } from '@/api/ptm/productCategory.js';
+import { addProductAttrKey, getProductAttrKeyDetail } from '@/api/ptm/productAttrKey.js';
+import drawer from "../../../components/tool/Drawer.vue";
 export default {
   name: 'ProductAttrKeyEdit',
   props: {
-    editData: {
+    editId: {
       // 待编辑数据
-      type: Object,
+      type: String,
       require: false
     }
   },
@@ -39,7 +40,7 @@ export default {
     return {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
-      formData: { ...this.editData },
+      formData: { },
       forPramsData: {
         // 当前商品属性业务中用到的整体参数对象
         productCateList: []
@@ -48,30 +49,48 @@ export default {
   },
   created() {
     this.getProductCateListHandle();
+    this.genDataForEdit();
   },
   methods: {
     async getProductCateListHandle() {
-      const currentProductCateList = await getProductCategoryPageList();
-      this.forPramsData.productCateList = this.transformData(
-        currentProductCateList.records
-      );
+      // 获取数据库分类数据
+      const currentProductCateList = await getProductCategoryList();
+      // 将数据用前端的方式转换成树形结构，后期页提供了树形节后的api 但是这里还是使用前端的转换方式练习下前端JS逻辑，生产系统建议使用后端生成的tree结构，减少浏览器资源消耗
+      let productCateTreeData = this.buildTree(currentProductCateList, '0');
+      // 手动set 一个0=根目录
+      this.forPramsData.productCateList = [
+        ...productCateTreeData
+      ];
     },
-    transformData(data) {
-      return data.map((item) => {
-        const transformedItem = {
-          label: item.name,
-          value: item.id
-        };
-        if (item.level && item.level.length > 0) {
-          transformedItem.children = this.transformData(item.level);
+    // 构建树形结构
+    buildTree(data, pid) {
+      const tree = [];
+      for (const item of data) {
+        if (item.pid === pid) {
+          const children = this.buildTree(data, item.id);
+          const node = { label: item.name, value: item.id };
+          if (children.length > 0) {
+            node.children = children;
+          }
+          tree.push(node);
         }
-        return transformedItem;
-      });
+      }
+
+      return tree;
+    },
+
+    async genDataForEdit(){
+      console.log('genDataForEdit');
+      if(this.editId){
+        this.formData = await getProductAttrKeyDetail(this.editId);
+        this.formData.productCateId = [this.formData.ptmProductCategoryId];
+        console.log('this.formData:', this.formData);
+      }
     },
     async onSubmitHandle() {
       this.formData.tenantId = 0; // 平台创建商户id为0
-      let result = await addProductAttrKey(this.formData);
-      console.log('result:', result);
+      await addProductAttrKey(this.formData);
+      this.$emit('onSubmitHandleSuccess');
     }
   }
 };

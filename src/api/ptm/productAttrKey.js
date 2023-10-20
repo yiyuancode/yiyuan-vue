@@ -46,7 +46,7 @@ export function addProductAttrKey(data) {
   return request({
     url: '/ptm/productAttrKey/add',
     method: 'post',
-    ...finalData
+    data: finalData
   });
 }
 

@@ -16,7 +16,7 @@
         />
       </a-form-model-item>
       <a-form-model-item label="分类名称" prop="name">
-        <a-input v-model="formData.name" />
+        <a-input v-model="formData.name" placeholder="请输入分类名称" allowClear/>
       </a-form-model-item>
       <a-form-model-item label="分类图标" prop="icon">
         <UploadSngle
