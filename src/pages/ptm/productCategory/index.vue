@@ -103,7 +103,7 @@
       @close="editConfig.visible = false"
     >
       <edit-product-cate v-if="editConfig.visible"
-                         :editData="editConfig.editData"
+                         :editId="editConfig.editId"
                          @onSaveSubmit="onEditProductCateSubmitHandle"
                          @onCancelSubmit="editConfig.visible = false"></edit-product-cate>
     </a-drawer>
@@ -158,7 +158,7 @@ export default {
       },
       searchDataOfProductCate:[], // 商品类型父级选择框下拉数据
       editConfig: {
-        editData: {},
+        editId: null,
         visible: false
       }
     };
@@ -186,7 +186,7 @@ export default {
       this.paginationConfig.current = productCateListData.current;
     },
     onAddProductCateHandle() {
-      this.editConfig.editData={};
+      this.editConfig.editId=null;
       this.editConfig.visible = true;
     },
     onEditProductCateSubmitHandle(){
@@ -194,7 +194,7 @@ export default {
       this.getProductCateListData(this.tableQueryParams);
     },
     onProductCateListRowEdit(text, record){
-      this.editConfig.editData = record;
+      this.editConfig.editId = record.id;
       this.editConfig.visible = true;
     },
     async onProductCateListRowDelete(record){
@@ -225,7 +225,6 @@ export default {
       this.searchDataOfProductCate = await getProductCategoryTreeList();
     },
     onTableSelectedChange(selectedRowKeys, selectedRow){
-      console.log('selectedRowKeys:', selectedRowKeys)
       this.tableData.selectedRows = selectedRow;
       this.tableData.selectedKeys = selectedRowKeys;
     }

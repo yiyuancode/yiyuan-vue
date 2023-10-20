@@ -38,7 +38,7 @@
 <!--        </a-select>-->
 <!--      </a-form-model-item>-->
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-        <a-button type="primary" @click="onSubmitHandle">{{editData.id ? '编辑':'创建' }}</a-button>
+        <a-button type="primary" @click="onSubmitHandle">{{editId ? '编辑':'创建' }}</a-button>
         <a-button style="margin-left: 10px"  @click="onCancelHandle"> 取消 </a-button>
       </a-form-model-item>
 
@@ -47,15 +47,15 @@
 </template>
 
 <script>
-import { getProductCategoryList, addProductCategory, editProductCategory } from '@/api/ptm/productCategory.js';
+import { getProductCategoryList, addProductCategory, editProductCategory, getProductCategoryDetail } from '@/api/ptm/productCategory.js';
 import UploadSngle from '@/components/uploadSngle';
 export default {
   name: 'ProductCateEdit',
   components:{ UploadSngle },
   props: {
-    editData: {
+    editId: {
       // 待编辑数据
-      type: Object,
+      type: String,
       require: false
     }
   },
@@ -63,7 +63,7 @@ export default {
     return {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
-      formData: { ...this.editData, tenantId:0 },
+      formData: { tenantId:0 },
       forPramsData: {
         // 当前商品属性业务中用到的整体参数对象
         productCateList: []
@@ -119,11 +119,14 @@ export default {
       return tree;
     },
     // 如果是编辑操作
-    genDataForEdit(){
-      if(this.formData.id){
-        this.formData.level = this.formData.level.value;
+    async genDataForEdit(){
+      if(this.editId){
+        this.formData = await this.getProductCateDetail();
         this.formData.pid = [this.formData.pid];
       }
+    },
+    async getProductCateDetail(){
+      return await getProductCategoryDetail(this.editId);
     },
     onSubmitHandle() {
       this.$refs.ruleForm.validate(async valid => {
@@ -148,8 +151,6 @@ export default {
     },
     UploadSngle(fileUrl, item) {
       item.icon = fileUrl;
-      console.log('fileUrl:', fileUrl)
-      console.log('item:', item)
     },
   }
 };

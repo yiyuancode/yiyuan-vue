@@ -7,7 +7,7 @@
     >
       <a-form-model-item label="商品分类">
         <a-cascader
-          v-model="formData.ptmProductCategoryId"
+          v-model="formData.productCateId"
           :options="forPramsData.productCateList"
           placeholder="请选择商品分类"
         />
@@ -16,8 +16,8 @@
         <a-input v-model="formData.attrKey" />
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-        <a-button type="primary" @click="onSubmitHandle"> Create </a-button>
-        <a-button style="margin-left: 10px"> Cancel </a-button>
+        <a-button type="primary" @click="onSubmitHandle"> 创建 </a-button>
+        <a-button style="margin-left: 10px"> 取消 </a-button>
       </a-form-model-item>
     </a-form-model>
   </div>
@@ -25,6 +25,7 @@
 
 <script>
 import { getProductCategoryPageList } from '@/api/ptm/productCategory.js';
+import { addProductAttrKey } from '@/api/ptm/productAttrKey.js'
 export default {
   name: 'ProductAttrKeyEdit',
   props: {
@@ -61,15 +62,17 @@ export default {
           label: item.name,
           value: item.id
         };
-
         if (item.level && item.level.length > 0) {
           transformedItem.children = this.transformData(item.level);
         }
-
         return transformedItem;
       });
     },
-    onSubmitHandle() {}
+    async onSubmitHandle() {
+      this.formData.tenantId = 0; // 平台创建商户id为0
+      let result = await addProductAttrKey(this.formData);
+      console.log('result:', result);
+    }
   }
 };
 </script>
