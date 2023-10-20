@@ -40,7 +40,8 @@ export function getProductAttrKeyDetail(id) {
 
 export function addProductAttrKey(data) {
   let finalData = JSON.parse(JSON.stringify(data));
-  finalData.ptmProductCategoryId = finalData.productCateId[finalData.productCateId.length -1];
+  finalData.ptmProductCategoryId =
+    finalData.productCateId[finalData.productCateId.length - 1];
   console.log('finalData:', finalData);
   return request({
     url: '/ptm/productAttrKey/add',

@@ -13,8 +13,7 @@ const columns = [
     key: 'tenantId',
     width: 160,
     ellipsis: true,
-    rules: [{required: true, message: '请输入商户id', trigger: 'blur'}]
-
+    rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }]
   },
   {
     title: '活动名称',
@@ -22,7 +21,7 @@ const columns = [
     key: 'name',
     width: 160,
     ellipsis: true,
-    rules: [{required: true, message: '请输入活动名称', trigger: 'blur'}]
+    rules: [{ required: true, message: '请输入活动名称', trigger: 'blur' }]
   },
   {
     title: '开始时间',
@@ -32,11 +31,11 @@ const columns = [
     ellipsis: true,
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择开始时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择开始时间', trigger: 'change' }];
     }
   },
   {
@@ -47,11 +46,11 @@ const columns = [
     ellipsis: true,
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择结束时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择结束时间', trigger: 'change' }];
     }
   },
   {
@@ -60,7 +59,7 @@ const columns = [
     key: 'isShow',
     width: 160,
     scopedSlots: {
-      customRender: "isShow"
+      customRender: 'isShow'
     }
   },
   {
@@ -71,16 +70,16 @@ const columns = [
     ellipsis: true,
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
     scopedSlots: {
-      customRender: "createTime"
+      customRender: 'createTime'
     }
   },
   {
@@ -91,11 +90,11 @@ const columns = [
     ellipsis: true,
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
     formType: 'datePicker',
     rules: function () {
-      return [{required: true, message: '请选择修改时间', trigger: 'change'}];
+      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
@@ -110,9 +109,9 @@ const columns = [
     noAdd: true,
     noSearch: true,
     noShow: true,
-    fixed: "right",
+    fixed: 'right',
     scopedSlots: {
-      customRender: "action"
+      customRender: 'action'
     }
   }
 ];
@@ -136,4 +135,4 @@ const permissionObj = {
   deleteBtn: 'mam:activitiy:delete'
 };
 
-export {columns, moduleConfig, permissionObj};
+export { columns, moduleConfig, permissionObj };

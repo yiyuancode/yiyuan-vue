@@ -1,44 +1,47 @@
 <template>
   <div class="manage-container">
     <div class="search-container">
-      <a-form-model
-        :model="tableQueryParams" layout="inline">
+      <a-form-model :model="tableQueryParams" layout="inline">
         <a-form-model-item label="分类名称">
-          <a-input v-model="tableQueryParams.name" placeholder="搜索分类名称" allowClear />
+          <a-input
+            v-model="tableQueryParams.name"
+            placeholder="搜索分类名称"
+            allowClear
+          />
         </a-form-model-item>
         <a-form-model-item label="父级分类">
           <a-cascader
             v-model="tableQueryParams.pid"
-            :fieldNames="{label:'name', value:'id', children: 'children'}"
+            :fieldNames="{ label: 'name', value: 'id', children: 'children' }"
             :options="searchDataOfProductCate"
             placeholder="请选择商品分类"
           />
         </a-form-model-item>
         <a-form-model-item label="层级">
-          <a-select v-model="tableQueryParams.level" placeholder="选择层级" style="width: 120px;">
-            <a-select-option :value="1">
-              一级
-            </a-select-option>
-            <a-select-option :value="2">
-              二级
-            </a-select-option>
-            <a-select-option :value="3">
-              三级
-            </a-select-option>
+          <a-select
+            v-model="tableQueryParams.level"
+            placeholder="选择层级"
+            style="width: 120px"
+          >
+            <a-select-option :value="1"> 一级 </a-select-option>
+            <a-select-option :value="2"> 二级 </a-select-option>
+            <a-select-option :value="3"> 三级 </a-select-option>
           </a-select>
         </a-form-model-item>
         <a-form-model-item>
-          <a-select v-model="tableQueryParams.isShow" placeholder="选择显示状态" style="width: 120px;">
-            <a-select-option value="0">
-              不显示
-            </a-select-option>
-            <a-select-option value="1">
-              显示
-            </a-select-option>
+          <a-select
+            v-model="tableQueryParams.isShow"
+            placeholder="选择显示状态"
+            style="width: 120px"
+          >
+            <a-select-option value="0"> 不显示 </a-select-option>
+            <a-select-option value="1"> 显示 </a-select-option>
           </a-select>
         </a-form-model-item>
         <a-form-model-item>
-          <a-button type="primary" @click="onProductCateSearchHandle">搜索</a-button>
+          <a-button type="primary" @click="onProductCateSearchHandle"
+            >搜索</a-button
+          >
         </a-form-model-item>
       </a-form-model>
     </div>
@@ -54,7 +57,8 @@
           @confirm="() => onProductCateListDelete()"
         >
           <a-button :disabled="tableData.selectedRows.length <= 0">
-          批量删除 </a-button>
+            批量删除
+          </a-button>
         </a-popconfirm>
       </div>
       <div ref="listContainer" class="list-container">
@@ -68,27 +72,38 @@
             }
           "
           :pagination="paginationConfig"
-          :rowSelection="{ fixed:true, onChange:onTableSelectedChange, selectedRowKeys:tableData.selectedKeys }"
+          :rowSelection="{
+            fixed: true,
+            onChange: onTableSelectedChange,
+            selectedRowKeys: tableData.selectedKeys
+          }"
         >
           <span slot="icon" slot-scope="icon">
-            <y-img :src="globalConfig.imgBaseUrl + icon" style="height: 30px; width: 30px;"></y-img>
+            <y-img
+              :src="globalConfig.imgBaseUrl + icon"
+              style="height: 30px; width: 30px"
+            ></y-img>
           </span>
           <!--          slot-scope(当前数据，当前行)-->
           <span slot="level" slot-scope="text">
             {{ text.desc }}
           </span>
           <template slot="operation" slot-scope="text, record, index">
-            <a-button-group >
-<!--            编辑分类-->
-              <a-button icon="edit" shape="round" @click="()=> onProductCateListRowEdit(text, record, index)"></a-button>
-<!--            删除分类-->
+            <a-button-group>
+              <!--            编辑分类-->
+              <a-button
+                icon="edit"
+                shape="round"
+                @click="() => onProductCateListRowEdit(text, record, index)"
+              ></a-button>
+              <!--            删除分类-->
               <a-popconfirm
-                :title="'确定删除名称为【'+record.name +'】的分类'"
+                :title="'确定删除名称为【' + record.name + '】的分类'"
                 ok-text="确定"
                 cancel-text="取消"
                 @confirm="() => onProductCateListRowDelete(record)"
               >
-                <a-button icon="delete" type="danger" shape="round" ></a-button>
+                <a-button icon="delete" type="danger" shape="round"></a-button>
               </a-popconfirm>
             </a-button-group>
           </template>
@@ -102,10 +117,12 @@
       :visible="editConfig.visible"
       @close="editConfig.visible = false"
     >
-      <edit-product-cate v-if="editConfig.visible"
-                         :editId="editConfig.editId"
-                         @onSaveSubmit="onEditProductCateSubmitHandle"
-                         @onCancelSubmit="editConfig.visible = false"></edit-product-cate>
+      <edit-product-cate
+        v-if="editConfig.visible"
+        :editId="editConfig.editId"
+        @onSaveSubmit="onEditProductCateSubmitHandle"
+        @onCancelSubmit="editConfig.visible = false"
+      ></edit-product-cate>
     </a-drawer>
   </div>
 </template>
@@ -114,7 +131,11 @@
 import editProductCate from './edit.vue';
 import { columns } from './pageConfig';
 
-import { getProductCategoryPageList, deleteProductCategory, getProductCategoryTreeList } from '@/api/ptm/productCategory';
+import {
+  getProductCategoryPageList,
+  deleteProductCategory,
+  getProductCategoryTreeList
+} from '@/api/ptm/productCategory';
 
 export default {
   name: 'ProductCategory',
@@ -133,13 +154,14 @@ export default {
         onChange: this.handlePageChange, // 页码改变的回调
         onShowSizeChange: this.handlePageSizeChange // 每页显示条数改变的回调
       },
-      tableHeight:0,
+      tableHeight: 0,
       tableData: {
         records: [], // 表单数据
-        selectedRows:[], // 表格首列选择项
-        selectedKeys:[], // 表格选中的数据，暂时仅仅用于清空操作后的列表选中状态
+        selectedRows: [], // 表格首列选择项
+        selectedKeys: [] // 表格选中的数据，暂时仅仅用于清空操作后的列表选中状态
       },
-      tableQueryParams:{ // 表单查询对象
+      tableQueryParams: {
+        // 表单查询对象
         pageSize: 10,
         pageNum: 1,
         id: null,
@@ -154,16 +176,15 @@ export default {
         updateTimeEnd: null,
         createUser: null,
         updateUser: null
-
       },
-      searchDataOfProductCate:[], // 商品类型父级选择框下拉数据
+      searchDataOfProductCate: [], // 商品类型父级选择框下拉数据
       editConfig: {
         editId: null,
         visible: false
       }
     };
   },
-  mounted(){
+  mounted() {
     this.calculateTableHeight();
   },
   created() {
@@ -175,7 +196,7 @@ export default {
       // 根据实际情况计算表格高度，例如根据窗口高度、父容器高度等
       this.tableHeight = window.innerHeight - 370; // 示例：减去200像素的高度作为表格高度
     },
-    onProductCateSearchHandle(){
+    onProductCateSearchHandle() {
       this.tableQueryParams.pageNum = 1;
       this.getProductCateListData(this.tableQueryParams);
     },
@@ -186,24 +207,26 @@ export default {
       this.paginationConfig.current = productCateListData.current;
     },
     onAddProductCateHandle() {
-      this.editConfig.editId=null;
+      this.editConfig.editId = null;
       this.editConfig.visible = true;
     },
-    onEditProductCateSubmitHandle(){
+    onEditProductCateSubmitHandle() {
       this.editConfig.visible = false;
       this.getProductCateListData(this.tableQueryParams);
     },
-    onProductCateListRowEdit(text, record){
+    onProductCateListRowEdit(text, record) {
       this.editConfig.editId = record.id;
       this.editConfig.visible = true;
     },
-    async onProductCateListRowDelete(record){
+    async onProductCateListRowDelete(record) {
       await deleteProductCategory(record.id);
       this.$message.success(`删除分类${record.name}成功`);
       await this.getProductCateListData(this.tableQueryParams);
     },
-    async onProductCateListDelete(){
-      let forDelIds = this.tableData.selectedRows.map(item => item.id).join(',');
+    async onProductCateListDelete() {
+      let forDelIds = this.tableData.selectedRows
+        .map((item) => item.id)
+        .join(',');
       await deleteProductCategory(forDelIds);
       this.$message.success(`批量删除分类成功`);
       this.tableData.selectedKeys = [];
@@ -221,10 +244,10 @@ export default {
       this.tableQueryParams.pageSize = pageSize;
       this.getProductCateListData(this.tableQueryParams);
     },
-    async getProductCategoryTreeListForSearchForm(){
+    async getProductCategoryTreeListForSearchForm() {
       this.searchDataOfProductCate = await getProductCategoryTreeList();
     },
-    onTableSelectedChange(selectedRowKeys, selectedRow){
+    onTableSelectedChange(selectedRowKeys, selectedRow) {
       this.tableData.selectedRows = selectedRow;
       this.tableData.selectedKeys = selectedRowKeys;
     }

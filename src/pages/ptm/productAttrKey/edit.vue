@@ -25,7 +25,7 @@
 
 <script>
 import { getProductCategoryPageList } from '@/api/ptm/productCategory.js';
-import { addProductAttrKey } from '@/api/ptm/productAttrKey.js'
+import { addProductAttrKey } from '@/api/ptm/productAttrKey.js';
 export default {
   name: 'ProductAttrKeyEdit',
   props: {

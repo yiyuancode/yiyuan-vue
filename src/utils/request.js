@@ -63,7 +63,7 @@ request.interceptors.response.use(
           break;
         case 400:
           message.error('参数错误，请重新检查' + response.data.message);
-          router.replace("/404")
+          router.replace('/404');
           break;
         case 401:
           // this.locale = require('ant-design-vue/es/locale-provider/zh_TW').default

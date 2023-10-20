@@ -4,16 +4,11 @@
       <a-form-model>
         <a-form-model-item label="分类名称">
           <a-select allowClear placeholder="选择显示状态" style="width: 120px">
-            <a-select-option value="0">
-              不显示
-            </a-select-option>
-            <a-select-option value="1">
-              显示
-            </a-select-option>
+            <a-select-option value="0"> 不显示 </a-select-option>
+            <a-select-option value="1"> 显示 </a-select-option>
           </a-select>
         </a-form-model-item>
       </a-form-model>
-
     </div>
     <div class="content-container">
       <div class="operate-btn-container">
@@ -28,22 +23,22 @@
           :data-source="tableData.records"
           :scroll="{ x: '100%' }"
         >
-<!--          <span slot="id" slot-scope="id">-->
-<!--            <a-tooltip>-->
-<!--              <template slot="title">-->
-<!--                {{ id }}-->
-<!--              </template>-->
-<!--              <a>copy 主键</a>-->
-<!--            </a-tooltip>-->
-<!--          </span>-->
-<!--          <span slot="tenantId" slot-scope="tenantId">-->
-<!--            <a-tooltip>-->
-<!--              <template slot="title">-->
-<!--                {{ tenantId }}-->
-<!--              </template>-->
-<!--              <a>copy 商户ID</a>-->
-<!--            </a-tooltip>-->
-<!--          </span>-->
+          <!--          <span slot="id" slot-scope="id">-->
+          <!--            <a-tooltip>-->
+          <!--              <template slot="title">-->
+          <!--                {{ id }}-->
+          <!--              </template>-->
+          <!--              <a>copy 主键</a>-->
+          <!--            </a-tooltip>-->
+          <!--          </span>-->
+          <!--          <span slot="tenantId" slot-scope="tenantId">-->
+          <!--            <a-tooltip>-->
+          <!--              <template slot="title">-->
+          <!--                {{ tenantId }}-->
+          <!--              </template>-->
+          <!--              <a>copy 商户ID</a>-->
+          <!--            </a-tooltip>-->
+          <!--          </span>-->
           <a slot="isShow" slot-scope="isShow">{{
             isShow ? '显示' : '隐藏'
           }}</a>

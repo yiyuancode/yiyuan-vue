@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的店铺信息(分页)
@@ -9,13 +9,11 @@ import {request} from '@/utils/request';
  * @date 2023-10-16
  */
 export function getShopPageList(data) {
-    return request({
-        url: "/spm/shop/page",
-        params: data
-    });
-
+  return request({
+    url: '/spm/shop/page',
+    params: data
+  });
 }
-
 
 /**
  * 获取店铺详情
@@ -26,10 +24,9 @@ export function getShopPageList(data) {
  * @date 2023-10-16
  */
 export function getShopDetail(id) {
-    return request({
-        url: `/spm/shop/details/${id}`,
-    });
-
+  return request({
+    url: `/spm/shop/details/${id}`
+  });
 }
 
 /**
@@ -42,12 +39,11 @@ export function getShopDetail(id) {
  */
 
 export function addShop(data) {
-    return request({
-        url: "/spm/shop/add",
-        method: "post",
-        data
-    });
-
+  return request({
+    url: '/spm/shop/add',
+    method: 'post',
+    data
+  });
 }
 
 /**
@@ -60,16 +56,14 @@ export function addShop(data) {
  * @date 2023-10-16
  */
 export function editShop(data, id) {
-    return request({
-        url: "/spm/shop/edit",
-        method: "post",
-        data: {
-...
-    data, id
-}
-})
-    ;
-
+  return request({
+    url: '/spm/shop/edit',
+    method: 'post',
+    data: {
+      ...data,
+      id
+    }
+  });
 }
 /**
  * 删除店铺（可支持批量删除）
@@ -80,13 +74,11 @@ export function editShop(data, id) {
  * @date 2023-10-16
  */
 export function deleteShop(ids) {
-    return request({
-        url: "/spm/shop/delete",
-        method: "post",
-        params: {
-            ids
-        }
-    });
-
+  return request({
+    url: '/spm/shop/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
 }
-

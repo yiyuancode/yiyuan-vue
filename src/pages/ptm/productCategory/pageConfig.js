@@ -158,8 +158,8 @@ const columns = [
     title: '操作',
     dataIndex: 'operation',
     fixed: 'right',
-    scopedSlots: { customRender: 'operation' },
-  },
+    scopedSlots: { customRender: 'operation' }
+  }
 ];
 
 // 模块配置

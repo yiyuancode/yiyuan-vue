@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的店铺-主营类目关联信息(分页)
@@ -9,13 +9,11 @@ import {request} from '@/utils/request';
  * @date 2023-10-16
  */
 export function getShopCategoryLinkPageList(data) {
-    return request({
-        url: "/spm/shopCategoryLink/page",
-        params: data
-    });
-
+  return request({
+    url: '/spm/shopCategoryLink/page',
+    params: data
+  });
 }
-
 
 /**
  * 获取店铺-主营类目关联详情
@@ -26,10 +24,9 @@ export function getShopCategoryLinkPageList(data) {
  * @date 2023-10-16
  */
 export function getShopCategoryLinkDetail(id) {
-    return request({
-        url: `/spm/shopCategoryLink/details/${id}`,
-    });
-
+  return request({
+    url: `/spm/shopCategoryLink/details/${id}`
+  });
 }
 
 /**
@@ -42,12 +39,11 @@ export function getShopCategoryLinkDetail(id) {
  */
 
 export function addShopCategoryLink(data) {
-    return request({
-        url: "/spm/shopCategoryLink/add",
-        method: "post",
-        data
-    });
-
+  return request({
+    url: '/spm/shopCategoryLink/add',
+    method: 'post',
+    data
+  });
 }
 
 /**
@@ -60,16 +56,14 @@ export function addShopCategoryLink(data) {
  * @date 2023-10-16
  */
 export function editShopCategoryLink(data, id) {
-    return request({
-        url: "/spm/shopCategoryLink/edit",
-        method: "post",
-        data: {
-...
-    data, id
-}
-})
-    ;
-
+  return request({
+    url: '/spm/shopCategoryLink/edit',
+    method: 'post',
+    data: {
+      ...data,
+      id
+    }
+  });
 }
 /**
  * 删除店铺-主营类目关联（可支持批量删除）
@@ -80,13 +74,11 @@ export function editShopCategoryLink(data, id) {
  * @date 2023-10-16
  */
 export function deleteShopCategoryLink(ids) {
-    return request({
-        url: "/spm/shopCategoryLink/delete",
-        method: "post",
-        params: {
-            ids
-        }
-    });
-
+  return request({
+    url: '/spm/shopCategoryLink/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
 }
-
