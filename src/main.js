@@ -19,6 +19,7 @@ import qs from 'qs';
 /*引入图片预览组件,api得方式*/
 import hevueImgPreview from 'hevue-img-preview';
 import 'hevue-img-preview/css/theme-light.css'
+import '@/assets/common.less'
 
 import install from '@/components/index.js';
 

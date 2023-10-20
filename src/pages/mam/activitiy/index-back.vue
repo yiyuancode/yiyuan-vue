@@ -27,13 +27,14 @@
       <span slot="isShow" slot-scope="{text, record}"></span>
       <span slot="createTime" slot-scope="{text, record} ">
       </span>
-      <div class="y-flex" slot="action" slot-scope="{text, record} ">
-        <a-button icon="edit" @click="reloadTableSelectedRowKeys">
-        </a-button>
+      <span slot="action" slot-scope="{text, record} ">
+         <a-button icon="edit" @click="reloadTableSelectedRowKeys">
+      </a-button>
         <a-divider type="vertical"/>
-        <a-button type="danger" icon="delete">
-        </a-button>
-      </div>
+     <a-button type="danger" icon="delete">
+
+    </a-button>
+      </span>
     </y-table>
 
   </div>

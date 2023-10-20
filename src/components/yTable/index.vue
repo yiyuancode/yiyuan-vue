@@ -131,6 +131,7 @@
     </div>
     <div class="y-table">
       <a-table
+
         :rowKey="rowKey"
         :columns="uColumns"
         :data-source="records"
@@ -375,12 +376,14 @@
         this.noFixedColumns.unshift(item);
       },
       checkedChneg(e, item) {
+        // e.stopPropagation();
+        // console.log("checkedChneg",item)
         this.$set(item, 'checked', e.target.checked);
       }
     }
   };
 </script>
-<style lang="less">
+<style lang="less" scoped>
   .y-tools {
     height: 40px;
     width: 100%;
@@ -466,5 +469,24 @@
   .setting-title-name {
 
   }
+
+  /*.ant-table-tbody > tr > td {*/
+  /*   padding: 0px !important;*/
+  /* }*/
+
+  /*.ant-table-tbody > tr > th {*/
+  /*  padding: 0px !important;*/
+  /*}*/
+
+  /*/deep/ .ant-table-thead > tr > th {*/
+  /*  padding: 12px 15px !important;*/
+  /*  !*line-height: 0px!important;*!*/
+  /*}*/
+
+  /*/deep/ .ant-table-tbody > tr > td {*/
+  /*  padding: 12px 15px !important;*/
+
+  /*}*/
+
 
 </style>
