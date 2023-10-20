@@ -4,14 +4,14 @@ const columns = [
     dataIndex: 'id',
     key: 'id',
     width: 100,
-    scopedSlots: { customRender: 'id' }
+    ellipsis: true
   },
   {
     title: '商户id',
     dataIndex: 'tenantId',
     key: 'tenantId',
     width: 110,
-    scopedSlots: { customRender: 'tenantId' }
+    ellipsis: true
   },
   {
     title: '商品分类',
@@ -47,12 +47,14 @@ const columns = [
   {
     title: '创建人',
     key: 'createUser',
-    dataIndex: 'createUser'
+    dataIndex: 'createUser',
+    ellipsis: true
   },
   {
     title: '修改人',
     key: 'updateUser',
-    dataIndex: 'updateUser'
+    dataIndex: 'updateUser',
+    ellipsis: true
   },
   {
     title: '操作',

@@ -28,22 +28,22 @@
           :data-source="tableData.records"
           :scroll="{ x: '100%' }"
         >
-          <span slot="id" slot-scope="id">
-            <a-tooltip>
-              <template slot="title">
-                {{ id }}
-              </template>
-              <a>copy 主键</a>
-            </a-tooltip>
-          </span>
-          <span slot="tenantId" slot-scope="tenantId">
-            <a-tooltip>
-              <template slot="title">
-                {{ tenantId }}
-              </template>
-              <a>copy 商户ID</a>
-            </a-tooltip>
-          </span>
+<!--          <span slot="id" slot-scope="id">-->
+<!--            <a-tooltip>-->
+<!--              <template slot="title">-->
+<!--                {{ id }}-->
+<!--              </template>-->
+<!--              <a>copy 主键</a>-->
+<!--            </a-tooltip>-->
+<!--          </span>-->
+<!--          <span slot="tenantId" slot-scope="tenantId">-->
+<!--            <a-tooltip>-->
+<!--              <template slot="title">-->
+<!--                {{ tenantId }}-->
+<!--              </template>-->
+<!--              <a>copy 商户ID</a>-->
+<!--            </a-tooltip>-->
+<!--          </span>-->
           <a slot="isShow" slot-scope="isShow">{{
             isShow ? '显示' : '隐藏'
           }}</a>
