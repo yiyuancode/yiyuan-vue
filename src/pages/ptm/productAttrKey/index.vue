@@ -84,6 +84,7 @@
 import { columns } from './pageConfig';
 import { getProductAttrKeyPageList } from '@/api/ptm/productAttrKey.js';
 import edit from './edit.vue';
+import {deleteProductAttrKey} from "../../../api/ptm/productAttrKey";
 export default {
   name: 'ProductAttrKey',
   components: {
@@ -140,14 +141,14 @@ export default {
       this.editConfig.editId = null;
       this.editConfig.visible = true;
     },
-    onProductAttrKeyRowDelete(rowData) {
-      this.editConfig.editId = rowData.id;
-      this.editConfig.visible = true;
+    async onProductAttrKeyRowDelete(rowData) {
+      await deleteProductAttrKey(rowData.id);
+      await this.getProductAttrKeyList(this.tableQueryParams);
+      this.$message.success('删除属性名成功');
     },
     onProductAttrKeyListRowEdit(rowData){
       this.editConfig.editId = rowData.id;
       this.editConfig.visible = true;
-      console.log('this.editConfig:', this.editConfig);
     },
     onProductAttrKeySubmitSuccess(){
       this.editConfig.visible = false;

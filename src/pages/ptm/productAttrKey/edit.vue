@@ -25,8 +25,7 @@
 
 <script>
 import { getProductCategoryList } from '@/api/ptm/productCategory.js';
-import { addProductAttrKey, getProductAttrKeyDetail } from '@/api/ptm/productAttrKey.js';
-import drawer from "../../../components/tool/Drawer.vue";
+import { addProductAttrKey, getProductAttrKeyDetail, editProductAttrKey } from '@/api/ptm/productAttrKey.js';
 export default {
   name: 'ProductAttrKeyEdit',
   props: {
@@ -40,7 +39,7 @@ export default {
     return {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
-      formData: { },
+      formData: {  },
       forPramsData: {
         // 当前商品属性业务中用到的整体参数对象
         productCateList: []
@@ -80,17 +79,21 @@ export default {
     },
 
     async genDataForEdit(){
-      console.log('genDataForEdit');
       if(this.editId){
         this.formData = await getProductAttrKeyDetail(this.editId);
         this.formData.productCateId = [this.formData.ptmProductCategoryId];
-        console.log('this.formData:', this.formData);
       }
     },
     async onSubmitHandle() {
       this.formData.tenantId = 0; // 平台创建商户id为0
-      await addProductAttrKey(this.formData);
-      this.$emit('onSubmitHandleSuccess');
+      if(this.editId){
+        await editProductAttrKey(this.formData, this.formData.id);
+        this.$emit('onSubmitHandleSuccess');
+      }else{
+        await addProductAttrKey(this.formData);
+        this.$emit('onSubmitHandleSuccess');
+      }
+
     }
   }
 };
