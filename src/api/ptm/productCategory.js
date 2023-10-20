@@ -66,10 +66,14 @@ export function getProductCategoryDetail(id) {
  */
 
 export function addProductCategory(data) {
+  const finalData = JSON.parse(JSON.stringify(data));
+  if (finalData.pid) {
+    finalData.pid = finalData.pid = finalData.pid[finalData.pid.length - 1];
+  }
   return request({
     url: '/ptm/productCategory/add',
     method: 'post',
-    data
+    data: finalData
   });
 }
 
