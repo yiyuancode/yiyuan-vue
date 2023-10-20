@@ -41,10 +41,12 @@
                 固定在左侧
                 <draggable v-model="fixedLeftColumns" chosenClass="chosen" forceFallback="true"
                            group="people"
+                           handle=".drag-icon"
                            animation="1000" @start="onStart" @end="onEnd">
                   <transition-group>
                     <div class="item" v-for="(item) in fixedLeftColumns" :key="item.key">
-                      <a-icon type="more" :style="{color:'#8E989D'}"/>
+                      <span class="drag-icon"> <a-icon type="more" :style="{color:'#8E989D'}"/></span>
+
                       <div class="item-right">
                         <a-checkbox :checked="item['checked']" @change="(e)=>checkedChneg(e,item)">
                           {{item.title}}
@@ -63,10 +65,11 @@
                 不固定
                 <draggable v-model="noFixedColumns" chosenClass="chosen" forceFallback="true"
                            group="people"
+                           handle=".drag-icon"
                            animation="1000" @start="onStart" @end="onEnd">
                   <transition-group>
                     <div class="item" v-for="(item) in noFixedColumns" :key="item.key">
-                      <a-icon type="more" :style="{color:'#8E989D'}"/>
+                      <span class="drag-icon"> <a-icon type="more" :style="{color:'#8E989D'}"/></span>
                       <div class="item-right">
                         <a-checkbox :checked="item['checked']" @change="(e)=>checkedChneg(e,item)">
                           {{item.title}}
@@ -89,10 +92,11 @@
                 固定在右侧
                 <draggable v-model="fixedRightColumns" chosenClass="chosen" forceFallback="true"
                            group="people"
+                           handle=".drag-icon"
                            animation="1000" @start="onStart" @end="onEnd">
                   <transition-group>
                     <div class="item" v-for="(item) in fixedRightColumns" :key="item.key">
-                      <a-icon type="more" :style="{color:'#8E989D'}"/>
+                      <span class="drag-icon"> <a-icon type="more" :style="{color:'#8E989D'}"/></span>
                       <div class="item-right">
                         <a-checkbox :checked="item['checked']" @change="(e)=>checkedChneg(e,item)">
                           {{item.title}}
