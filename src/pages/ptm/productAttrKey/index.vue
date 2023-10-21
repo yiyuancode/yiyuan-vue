@@ -132,24 +132,44 @@ export default {
     this.getProductAttrKeyList(this.tableQueryParams);
   },
   methods: {
+    /**
+     * 获取商品属性key分页列表数据
+     * @param params
+     * @returns {Promise<void>}
+     */
     async getProductAttrKeyList(params) {
       this.tableData = await getProductAttrKeyPageList(params);
       this.paginationConfig.total = this.tableData.total;
       this.paginationConfig.current = this.tableData.current;
     },
+    /**
+     * 打开新增商品属性Key新增
+     */
     onAddProductAttrKeyHandle() {
       this.editConfig.editId = null;
       this.editConfig.visible = true;
     },
+    /**
+     * 列表上行数据点击删除
+     * @param rowData
+     * @returns {Promise<void>}
+     */
     async onProductAttrKeyRowDelete(rowData) {
       await deleteProductAttrKey(rowData.id);
       await this.getProductAttrKeyList(this.tableQueryParams);
       this.$message.success('删除属性名成功');
     },
+    /**
+     * 列表上行数据，点击编辑，传递待编辑id，打开编辑页面
+     * @param rowData
+     */
     onProductAttrKeyListRowEdit(rowData){
       this.editConfig.editId = rowData.id;
       this.editConfig.visible = true;
     },
+    /**
+     * 维护商品属性Key操作后的表单提交事件
+     */
     onProductAttrKeySubmitSuccess(){
       this.editConfig.visible = false;
       this.getProductAttrKeyList(this.tableQueryParams);
