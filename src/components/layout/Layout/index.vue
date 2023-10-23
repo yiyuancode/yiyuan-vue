@@ -54,6 +54,7 @@
       height: 100%;
       /*background: #1f1f1f;*/
       overflow-y: auto;
+      background: #032121;
     }
 
     .content {
@@ -82,6 +83,7 @@
         margin-top: 32px !important;
         position: relative;
         padding: 20px;
+
         .myTags {
           position: absolute;
           top: -20px;
