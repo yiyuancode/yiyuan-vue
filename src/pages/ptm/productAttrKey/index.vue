@@ -1,12 +1,24 @@
 <template>
   <div class="manage-container">
     <div class="search-container">
-      <a-form-model>
-        <a-form-model-item label="分类名称">
-          <a-select allowClear placeholder="选择显示状态" style="width: 120px">
-            <a-select-option value="0"> 不显示 </a-select-option>
-            <a-select-option value="1"> 显示 </a-select-option>
+      <a-form-model :model="tableQueryParams" layout="inline">
+        <a-form-model-item label="状态">
+          <a-select v-model="tableQueryParams.isShow" allowClear placeholder="选择显示状态" style="width: 120px">
+            <a-select-option :value="0"> 不显示 </a-select-option>
+            <a-select-option :value="1"> 显示 </a-select-option>
           </a-select>
+        </a-form-model-item>
+<!--        <a-form-model-item label="商户"> TODO 商户选项待添加-->
+<!--          <a-select v-model="tableQueryParams.isShow" allowClear placeholder="选择显示状态" style="width: 120px">-->
+<!--            <a-select-option :value="0"> 不显示 </a-select-option>-->
+<!--            <a-select-option :value="1"> 显示 </a-select-option>-->
+<!--          </a-select>-->
+<!--        </a-form-model-item>-->
+        <a-form-model-item label="ID">
+          <a-input v-model="tableQueryParams.id" allowClear placeholder="商户"></a-input>
+        </a-form-model-item>
+        <a-form-model-item>
+          <a-button type="primary" @click="onProductAttrSearchHandle">搜索</a-button>
         </a-form-model-item>
       </a-form-model>
     </div>
@@ -15,7 +27,14 @@
         <a-button type="primary" @click="onAddProductAttrKeyHandle">
           添加属性
         </a-button>
-        <a-button> 批量删除 </a-button>
+        <a-popconfirm
+          :title="'确定批量删除选中的属性'"
+          ok-text="确定"
+          cancel-text="取消"
+          @confirm="() => onProductAttrListDelete()"
+        >
+          <a-button :disabled="tableData.selectedRows.length <= 0"> 批量删除 </a-button>
+        </a-popconfirm>
       </div>
       <div ref="listContainer" class="list-container">
         <a-table
@@ -28,6 +47,11 @@
             }
           "
           :pagination="paginationConfig"
+          :rowSelection="{
+            fixed: true,
+            onChange: onTableSelectedChange,
+            selectedRowKeys: tableData.selectedKeys
+          }"
         >
           <!--          <span slot="id" slot-scope="id">-->
           <!--            <a-tooltip>-->
@@ -94,7 +118,11 @@ export default {
   data() {
     return {
       columns,
-      tableData: {},
+      tableData: {
+        records:[],
+        selectedRows: [], // 表格首列选择项
+        selectedKeys: [] // 表格选中的数据，暂时仅仅用于清空操作后的列表选中状态
+      },
       editConfig: {
         editId: null,
         visible: false
@@ -132,15 +160,21 @@ export default {
     this.getProductAttrKeyList(this.tableQueryParams);
   },
   methods: {
+    onProductAttrSearchHandle() {
+      this.tableQueryParams.pageNum = 1;
+      console.log('this.tableQueryParams:', this.tableQueryParams)
+      this.getProductAttrKeyList(this.tableQueryParams);
+    },
     /**
      * 获取商品属性key分页列表数据
      * @param params
      * @returns {Promise<void>}
      */
     async getProductAttrKeyList(params) {
-      this.tableData = await getProductAttrKeyPageList(params);
-      this.paginationConfig.total = this.tableData.total;
-      this.paginationConfig.current = this.tableData.current;
+      let productAttrKeyListResult = await getProductAttrKeyPageList(params);
+      this.tableData.records = productAttrKeyListResult.records;
+      this.paginationConfig.total = productAttrKeyListResult.total;
+      this.paginationConfig.current = productAttrKeyListResult.current;
     },
     /**
      * 打开新增商品属性Key新增
@@ -184,6 +218,21 @@ export default {
     handlePageSizeChange(pageSize) {
       this.tableQueryParams.pageSize = pageSize;
       this.getProductAttrKeyList(this.tableQueryParams);
+    },
+    // 列表多选事件
+    onTableSelectedChange(selectedRowKeys, selectedRow) {
+      this.tableData.selectedRows = selectedRow;
+      this.tableData.selectedKeys = selectedRowKeys;
+    },
+    async onProductAttrListDelete() {
+      let forDelIds = this.tableData.selectedRows
+        .map((item) => item.id)
+        .join(',');
+      await deleteProductAttrKey(forDelIds);
+      this.$message.success(`批量删除属性成功`);
+      this.tableData.selectedKeys = [];
+      // this.tableData.selectedRows = [];
+      await this.getProductAttrKeyList(this.tableQueryParams);
     },
   }
 };
