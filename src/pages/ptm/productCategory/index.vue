@@ -68,7 +68,7 @@
         <a-table
           :columns="columns"
           :data-source="tableData.records"
-          :scroll="{ x: '100%', y: tableHeight }"
+          :scroll="{ x: '100%'}"
           :rowKey="
             (record, index) => {
               return index;

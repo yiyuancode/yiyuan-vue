@@ -88,6 +88,12 @@
             isShow ? '显示' : '隐藏'
           }}</a>
           <template slot="operation" slot-scope="text, record">
+<!--            根据商品shuxingzhi-->
+            <a-button
+              icon="tool"
+              shape="round"
+              @click="() => onProductAttrKeyListRowAttrValue(record)"
+            ></a-button>
             <!--            编辑商品属性Key-->
             <a-button
               icon="edit"
@@ -254,6 +260,9 @@ export default {
     async getProductCategoryTreeListForSearchForm() {
       this.searchDataOfProductCate = await getProductCategoryTreeList();
     },
+    onProductAttrKeyListRowAttrValue(rowData){
+      console.log("编辑商品属性", rowData);
+    }
   }
 };
 </script>
