@@ -9,9 +9,13 @@ import { request } from '@/utils/request';
  * @date 2023-10-10
  */
 export function getProductCategoryPageList(data) {
+  const finalData = JSON.parse(JSON.stringify(data));
+  if (finalData.pid) {
+    finalData.pid = finalData.pid = finalData.pid[finalData.pid.length - 1];
+  }
   return request({
     url: '/ptm/productCategory/page',
-    params: data
+    params: finalData
   });
 }
 

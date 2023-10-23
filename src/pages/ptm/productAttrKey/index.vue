@@ -17,6 +17,21 @@
         <a-form-model-item label="ID">
           <a-input v-model="tableQueryParams.id" allowClear placeholder="商户"></a-input>
         </a-form-model-item>
+        <a-form-model-item label="父级分类">
+          <a-cascader
+            v-model="tableQueryParams.ptmProductCategoryId"
+            :fieldNames="{ label: 'name', value: 'id', children: 'children' }"
+            :options="searchDataOfProductCate"
+            placeholder="请选择商品分类"
+          />
+        </a-form-model-item>
+        <a-form-model-item label="属性名称">
+          <a-input
+            v-model="tableQueryParams.attrKey"
+            placeholder="搜索 属性名称"
+            allowClear
+          />
+        </a-form-model-item>
         <a-form-model-item>
           <a-button type="primary" @click="onProductAttrSearchHandle">搜索</a-button>
         </a-form-model-item>
@@ -106,9 +121,9 @@
 
 <script>
 import { columns } from './pageConfig';
-import { getProductAttrKeyPageList } from '@/api/ptm/productAttrKey.js';
+import { getProductAttrKeyPageList, deleteProductAttrKey} from '@/api/ptm/productAttrKey.js';
 import edit from './edit.vue';
-import {deleteProductAttrKey} from "../../../api/ptm/productAttrKey";
+import { getProductCategoryTreeList } from '@/api/ptm/productCategory';
 export default {
   name: 'ProductAttrKey',
   components: {
@@ -146,7 +161,7 @@ export default {
         tenantId: null, //商户id
         attrKey: null, // 分类名称
         isShow: undefined, // 是否显示
-        ptmProductCategoryId: undefined,
+        ptmProductCategoryId: null,
         createTimeStart: null, // 创建时间
         createTimeEnd: null,
         updateTimeStart: null,
@@ -154,10 +169,12 @@ export default {
         createUser: null,
         updateUser: null
       },
+      searchDataOfProductCate: [], // 商品类型父级选择框下拉数据
     };
   },
   created() {
     this.getProductAttrKeyList(this.tableQueryParams);
+    this.getProductCategoryTreeListForSearchForm();
   },
   methods: {
     onProductAttrSearchHandle() {
@@ -233,6 +250,9 @@ export default {
       this.tableData.selectedKeys = [];
       // this.tableData.selectedRows = [];
       await this.getProductAttrKeyList(this.tableQueryParams);
+    },
+    async getProductCategoryTreeListForSearchForm() {
+      this.searchDataOfProductCate = await getProductCategoryTreeList();
     },
   }
 };

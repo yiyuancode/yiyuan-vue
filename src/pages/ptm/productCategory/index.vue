@@ -15,6 +15,7 @@
             :fieldNames="{ label: 'name', value: 'id', children: 'children' }"
             :options="searchDataOfProductCate"
             placeholder="请选择商品分类"
+            allowClear
           />
         </a-form-model-item>
         <a-form-model-item label="层级">
@@ -22,6 +23,7 @@
             v-model="tableQueryParams.level"
             placeholder="选择层级"
             style="width: 120px"
+            allowClear
           >
             <a-select-option :value="1"> 一级 </a-select-option>
             <a-select-option :value="2"> 二级 </a-select-option>
@@ -33,6 +35,7 @@
             v-model="tableQueryParams.isShow"
             placeholder="选择显示状态"
             style="width: 120px"
+            allowClear
           >
             <a-select-option value="0"> 不显示 </a-select-option>
             <a-select-option value="1"> 显示 </a-select-option>
@@ -85,8 +88,11 @@
             ></y-img>
           </span>
           <!--          slot-scope(当前数据，当前行)-->
-          <span slot="level" slot-scope="text">
-            {{ text.desc }}
+          <span slot="level" slot-scope="level">
+            {{ level.desc }}
+          </span>
+          <span slot="isShow" slot-scope="isShow">
+            {{ isShow === true ?'显示':'不显示' }}
           </span>
           <template slot="operation" slot-scope="text, record, index">
             <a-button-group>

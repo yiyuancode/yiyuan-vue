@@ -9,9 +9,14 @@ import { request } from '@/utils/request';
  * @date 2023-10-10
  */
 export function getProductAttrKeyPageList(data) {
+  let finalData = JSON.parse(JSON.stringify(data));
+  if(finalData.ptmProductCategoryId && finalData.ptmProductCategoryId.length > 0){
+    finalData.ptmProductCategoryId =
+      finalData.ptmProductCategoryId[finalData.ptmProductCategoryId.length - 1];
+  }
   return request({
     url: '/ptm/productAttrKey/page',
-    params: data
+    params: finalData
   });
 }
 
@@ -42,7 +47,6 @@ export function addProductAttrKey(data) {
   let finalData = JSON.parse(JSON.stringify(data));
   finalData.ptmProductCategoryId =
     finalData.productCateId[finalData.productCateId.length - 1];
-  console.log('finalData:', finalData);
   return request({
     url: '/ptm/productAttrKey/add',
     method: 'post',
