@@ -11,12 +11,14 @@
     @onReset="resetHandle"
     @onChange="tableChangeHandle"
   >
+<!--    table- 是因为manage组建插槽为了有区分，添加了table前缀-->
+    <span slot="table-isShow" slot-scope="text">{{ text.record.isShow ? '显示':'不显示' }}</span>
   </ManagePage>
 </template>
 
 <script>
 import ManagePage from '@/components/manage/ManagePage.vue';
-import manage from '@/mixins/manage';
+import manageProductAttrKeyValue from '@/mixins/manage_product_attr_key.js';
 import { columns, moduleConfig, permissionObj } from './pageConfig';
 
 export default {
@@ -24,7 +26,7 @@ export default {
   components: {
     ManagePage
   },
-  mixins: [manage({ permissionObj })],
+  mixins: [manageProductAttrKeyValue({ permissionObj })],
   data() {
     return {
       columns,
