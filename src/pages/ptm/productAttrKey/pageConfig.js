@@ -17,7 +17,8 @@ const columns = [
     title: '商品分类',
     dataIndex: 'ptmProductCategoryId',
     key: 'ptmProductCategoryId',
-    width: 100
+    width: 100,
+    ellipsis: true
   },
   {
     title: '属性',

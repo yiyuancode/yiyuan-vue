@@ -36,6 +36,9 @@ body {
 }
 </style>
 <style>
+.popContainer {
+  height: 100%;
+}
 .popContainer::-webkit-scrollbar {
   background-color: #e8eaec;
   width: 0 !important;

@@ -15,6 +15,7 @@
             :fieldNames="{ label: 'name', value: 'id', children: 'children' }"
             :options="searchDataOfProductCate"
             placeholder="请选择商品分类"
+            allowClear
           />
         </a-form-model-item>
         <a-form-model-item label="层级">
@@ -22,6 +23,7 @@
             v-model="tableQueryParams.level"
             placeholder="选择层级"
             style="width: 120px"
+            allowClear
           >
             <a-select-option :value="1"> 一级 </a-select-option>
             <a-select-option :value="2"> 二级 </a-select-option>
@@ -33,6 +35,7 @@
             v-model="tableQueryParams.isShow"
             placeholder="选择显示状态"
             style="width: 120px"
+            allowClear
           >
             <a-select-option value="0"> 不显示 </a-select-option>
             <a-select-option value="1"> 显示 </a-select-option>
@@ -65,7 +68,7 @@
         <a-table
           :columns="columns"
           :data-source="tableData.records"
-          :scroll="{ x: '100%', y: tableHeight }"
+          :scroll="{ x: '100%'}"
           :rowKey="
             (record, index) => {
               return index;
@@ -85,8 +88,11 @@
             ></y-img>
           </span>
           <!--          slot-scope(当前数据，当前行)-->
-          <span slot="level" slot-scope="text">
-            {{ text.desc }}
+          <span slot="level" slot-scope="level">
+            {{ level.desc }}
+          </span>
+          <span slot="isShow" slot-scope="isShow">
+            {{ isShow === true ?'显示':'不显示' }}
           </span>
           <template slot="operation" slot-scope="text, record, index">
             <a-button-group>
@@ -185,6 +191,7 @@ export default {
     };
   },
   mounted() {
+    // 计算table高度
     this.calculateTableHeight();
   },
   created() {
@@ -196,33 +203,44 @@ export default {
       // 根据实际情况计算表格高度，例如根据窗口高度、父容器高度等
       this.tableHeight = window.innerHeight - 370; // 示例：减去200像素的高度作为表格高度
     },
+    // 商品分类搜索
     onProductCateSearchHandle() {
       this.tableQueryParams.pageNum = 1;
       this.getProductCateListData(this.tableQueryParams);
     },
+    /**
+     * 商品分类分类列表
+     * @param params 分页参数
+     * @returns {Promise<void>}
+     */
     async getProductCateListData(params) {
       let productCateListData = await getProductCategoryPageList(params);
       this.tableData.records = productCateListData.records;
       this.paginationConfig.total = productCateListData.total;
       this.paginationConfig.current = productCateListData.current;
     },
+    // 新增商品分类
     onAddProductCateHandle() {
       this.editConfig.editId = null;
       this.editConfig.visible = true;
     },
+    // 商品分类编辑后提交事件
     onEditProductCateSubmitHandle() {
       this.editConfig.visible = false;
       this.getProductCateListData(this.tableQueryParams);
     },
+    // 商品分类行编辑
     onProductCateListRowEdit(text, record) {
       this.editConfig.editId = record.id;
       this.editConfig.visible = true;
     },
+    // 列表点击删除商品分类
     async onProductCateListRowDelete(record) {
       await deleteProductCategory(record.id);
       this.$message.success(`删除分类${record.name}成功`);
       await this.getProductCateListData(this.tableQueryParams);
     },
+    // 批量删除商品分类
     async onProductCateListDelete() {
       let forDelIds = this.tableData.selectedRows
         .map((item) => item.id)
@@ -247,6 +265,7 @@ export default {
     async getProductCategoryTreeListForSearchForm() {
       this.searchDataOfProductCate = await getProductCategoryTreeList();
     },
+    // 列表多选事件
     onTableSelectedChange(selectedRowKeys, selectedRow) {
       this.tableData.selectedRows = selectedRow;
       this.tableData.selectedKeys = selectedRowKeys;

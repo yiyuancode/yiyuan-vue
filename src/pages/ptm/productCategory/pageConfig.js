@@ -89,14 +89,13 @@ const columns = [
     key: 'sort',
     width: 160
   },
-
-  // TODO 待manage组建强化后实现
-  // {
-  //   title: '显示状态0=不显示|1=显示',
-  //   dataIndex: 'isShow',
-  //   key: 'isShow',
-  //   width: 160
-  // },
+  {
+    title: '状态',
+    dataIndex: 'isShow',
+    key: 'isShow',
+    width: 160,
+    scopedSlots: { customRender: 'isShow' }
+  },
 
   {
     title: '创建时间',
