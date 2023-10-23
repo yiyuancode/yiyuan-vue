@@ -57,7 +57,6 @@
 <script>
   import {columns} from '@/pages/mam/activitiy/pageConfig.js';
   import {editActivitiy, getActivitiyPageList} from '@/api/mam/activitiy.js';
-
   export default {
     data() {
       return {
