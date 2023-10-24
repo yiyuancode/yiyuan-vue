@@ -3,8 +3,8 @@
     <div class="y-tools">
       <div class="y-tools-title">{{ $route.meta.title }}</div>
       <div class="y-tools-action">
-        <a-button type="primary" icon="plus"> 新建</a-button>
-        <a-divider type="vertical" />
+<!--        <a-button type="primary" icon="plus"> 新建</a-button>-->
+        <!--        <a-divider type="vertical" />-->
         <slot name="operations"> </slot>
 
         <a-tooltip placement="top" title="刷新">
@@ -223,9 +223,9 @@
   </a-card>
 </template>
 <script>
-import _ from 'lodash';
+  import _ from 'lodash';
 
-export default {
+  export default {
   props: {
     rowKey: {
       type: String,

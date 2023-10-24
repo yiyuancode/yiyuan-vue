@@ -12,7 +12,7 @@ const columns = [
     dataIndex: 'id',
     key: 'id',
     width: 100,
-    rules: [{ required: true, message: '请输入', trigger: 'blur' }],
+    rules: [{required: true, message: '请输入', trigger: 'blur'}],
     noEdit: true,
     noAdd: true,
     ellipsis: true
@@ -23,7 +23,7 @@ const columns = [
     dataIndex: 'pid',
     key: 'pid',
     width: 100,
-    rules: [{ required: true, message: '请输入父级ID', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入父级ID', trigger: 'blur'}]
   },
 
   // { 平台商户id为0
@@ -39,7 +39,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     width: 160,
-    rules: [{ required: true, message: '请输入名称', trigger: 'blur' }]
+    rules: [{required: true, message: '请输入名称', trigger: 'blur'}]
   },
 
   {
@@ -47,7 +47,7 @@ const columns = [
     dataIndex: 'icon',
     key: 'icon',
     width: 160,
-    scopedSlots: { customRender: 'icon' }
+    scopedSlots: {customRender: 'icon'}
   },
 
   {
@@ -77,9 +77,9 @@ const columns = [
         width: '100%'
       }
     },
-    rules: [{ required: true, message: '请选择分类级别', trigger: 'change' }],
+    rules: [{required: true, message: '请选择分类级别', trigger: 'change'}],
     formSort: 1,
-    scopedSlots: { customRender: 'level' }
+    scopedSlots: {customRender: 'level'}
   },
 
   // todo 需要在列表中实现行编辑，直接修改排序数据
@@ -94,7 +94,7 @@ const columns = [
     dataIndex: 'isShow',
     key: 'isShow',
     width: 160,
-    scopedSlots: { customRender: 'isShow' }
+    scopedSlots: {customRender: 'isShow'}
   },
 
   {
@@ -104,11 +104,11 @@ const columns = [
     width: 180,
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
+      return [{required: true, message: '请选择创建时间', trigger: 'change'}];
     },
     noEdit: true,
     noAdd: true
@@ -121,11 +121,11 @@ const columns = [
     width: 180,
     props: {
       showTime: true,
-      style: { width: '100%' }
+      style: {width: '100%'}
     },
     formType: 'datePicker',
     rules: function () {
-      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
+      return [{required: true, message: '请选择修改时间', trigger: 'change'}];
     },
     noEdit: true,
     noAdd: true,
@@ -157,7 +157,10 @@ const columns = [
     title: '操作',
     dataIndex: 'operation',
     fixed: 'right',
-    scopedSlots: { customRender: 'operation' }
+    // width: 150,
+    //操作列可以不加宽度，但是必须要要加这个不换行属性
+    ellipsis: true,
+    scopedSlots: {customRender: 'operation'}
   }
 ];
 
@@ -180,4 +183,4 @@ const permissionObj = {
   deleteBtn: 'ptm:productCategory:delete'
 };
 
-export { columns, moduleConfig, permissionObj };
+export {columns, moduleConfig, permissionObj};

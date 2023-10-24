@@ -1,20 +1,20 @@
 <template>
   <div>
     <y-search
-      :columns="[]"
       :scopedSlots="3"
-      @search="onProductCateSearchHandle"
+      :loading="table.loading"
+      @search="search"
     >
       <a-form-model-item slot="scopedSlots-0" label="分类名称">
         <a-input
-          v-model="tableQueryParams.name"
+          v-model="searchForm.name"
           placeholder="搜索分类名称"
           allowClear
         />
       </a-form-model-item>
       <a-form-model-item slot="scopedSlots-1" label="父级分类">
         <a-cascader
-          v-model="tableQueryParams.pid"
+          v-model="searchForm.pid"
           :fieldNames="{ label: 'name', value: 'id', children: 'children' }"
           :options="searchDataOfProductCate"
           placeholder="请选择商品分类"
@@ -23,7 +23,7 @@
       </a-form-model-item>
       <a-form-model-item slot="scopedSlots-2" label="层级">
         <a-select
-          v-model="tableQueryParams.level"
+          v-model="searchForm.level"
           placeholder="选择层级"
           allowClear
         >
@@ -34,7 +34,7 @@
       </a-form-model-item>
       <a-form-model-item slot="scopedSlots-3" label="显示状态">
         <a-select
-          v-model="tableQueryParams.isShow"
+          v-model="searchForm.isShow"
           placeholder="选择显示状态"
           allowClear
         >
@@ -45,19 +45,16 @@
     </y-search>
     <y-table
       rowKey="id"
-      :columns="columns"
-      :records="tableData.records"
-      :pagination="paginationConfig"
-      :rowSelection="{
-        fixed: true,
-        onChange: onTableSelectedChange,
-        selectedRowKeys: tableData.selectedKeys
-      }"
+      :columns="table.columns"
+      :records="table.records"
+      :pagination="table.pagination"
+      :row-selection="table.rowSelection"
+      :loading="table.loading"
+      @change="tableChange"
     >
-      <div class="operate-btn-container" slot="operations">
-        <a-button type="primary" @click="onAddProductCateHandle">
-          添加分类
-        </a-button>
+
+      <div slot="operations">
+        <a-button type="primary" icon="plus"> 新建</a-button>
         <a-divider type="vertical"/>
         <a-popconfirm
           :title="'确定批量删除选中的分类'"
@@ -65,45 +62,43 @@
           cancel-text="取消"
           @confirm="() => onProductCateListDelete()"
         >
-          <a-button :disabled="tableData.selectedRows.length <= 0">
+          <a-button :disabled="table.rowSelection.selectedRowKeys.length <= 0">
             批量删除
           </a-button>
         </a-popconfirm>
         <a-divider type="vertical"/>
       </div>
-      <span slot="createTime" slot-scope="{ text, record }"> </span>
-      <span slot="icon" slot-scope="{ text, record }">
-        <y-img
-          :src="globalConfig.imgBaseUrl + text"
-          style="height: 30px; width: 30px"
-        ></y-img>
-      </span>
+
+
+      <div class="y-flex" slot="icon" slot-scope="{ text, record }">
+        <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
+      </div>
       <!--          slot-scope(当前数据，当前行)-->
-      <span slot="level" slot-scope="{ text, record }">
+      <div class="y-flex" slot="level" slot-scope="{ text, record }">
         {{ text.desc }}
-      </span>
-      <span slot="isShow" slot-scope="{ text, record }">
+      </div>
+      <div class="y-flex" slot="isShow" slot-scope="{ text, record }">
         {{ text ? '显示' : '不显示' }}
-      </span>
-      <template slot="operation" slot-scope="{ text, record }">
+      </div>
+      <div class="y-flex" slot="operation" slot-scope="{ text, record }">
         <a-button-group>
           <!--            编辑分类-->
           <a-button
             icon="edit"
             shape="round"
-            @click="() => onProductCateListRowEdit(text, record)"
+            @click="() => onEdit(text, record)"
           ></a-button>
           <!--            删除分类-->
           <a-popconfirm
             :title="'确定删除名称为【' + record.name + '】的分类'"
             ok-text="确定"
             cancel-text="取消"
-            @confirm="() => onProductCateListRowDelete(record)"
+            @confirm="() => onDelete(record)"
           >
             <a-button icon="delete" type="danger" shape="round"></a-button>
           </a-popconfirm>
         </a-button-group>
-      </template>
+      </div>
     </y-table>
 
     <a-drawer
@@ -112,152 +107,118 @@
       :visible="editConfig.visible"
       @close="editConfig.visible = false"
     >
-      <edit-product-cate
+      <edit
         v-if="editConfig.visible"
         :editId="editConfig.editId"
-        @onSaveSubmit="onEditProductCateSubmitHandle"
+        @onSaveSubmit="onEditSubmit"
         @onCancelSubmit="editConfig.visible = false"
-      ></edit-product-cate>
+      ></edit>
     </a-drawer>
   </div>
 </template>
 <script>
-  import editProductCate from './edit.vue';
-  import {columns} from './pageConfig';
-
+  import {columns} from './pageConfig.js';
   import {
     deleteProductCategory,
     getProductCategoryPageList,
     getProductCategoryTreeList
   } from '@/api/ptm/productCategory';
+  import edit from './edit.vue';
 
   export default {
-    name: 'ProductCategory',
-    components: {editProductCate},
-    mixins: [],
+    components: {edit},
     data() {
       return {
-        columns,
-        paginationConfig: {
-          pageNum: 1, // 当前页码
-          pageSize: 10, // 每页显示条数
-          total: 0, // 数据总数
-          showSizeChanger: true, // 是否显示每页显示条数切换器
-          pageSizeOptions: ['10', '20', '30', '40'], // 每页显示条数选项
-          showTotal: (total) => `共 ${total} 条数据`, // 自定义显示总条数文本
-          onChange: this.handlePageChange, // 页码改变的回调
-          onShowSizeChange: this.handlePageSizeChange // 每页显示条数改变的回调
+        searchForm: {},
+        table: {
+          columns,
+          records: [],
+          loading: false,
+          pagination: {
+            pageNum: 1,
+            pageSize: 10,
+            total: 0,
+            pageSizeOptions: ['10', '20', '30', '40'],
+            showSizeChanger: true,
+            showTotal: (total) => `共 ${total} 条` // 显示总条数和当前数据范围
+          },
+          rowSelection: {
+            selectedRowKeys: [],
+            onChange: this.tableSelectedRowKeys
+          }
         },
-        tableHeight: 0,
-        tableData: {
-          records: [], // 表单数据
-          selectedRows: [], // 表格首列选择项
-          selectedKeys: [] // 表格选中的数据，暂时仅仅用于清空操作后的列表选中状态
-        },
-        tableQueryParams: {
-          // 表单查询对象
-          pageSize: 10,
-          pageNum: 1,
-          id: null,
-          pid: null,
-          tenantId: null, //商户id
-          name: null, // 分类名称
-          level: undefined, // 层级
-          isShow: undefined, // 是否显示
-          createTimeStart: null, // 创建时间
-          createTimeEnd: null,
-          updateTimeStart: null,
-          updateTimeEnd: null,
-          createUser: null,
-          updateUser: null
-        },
-        searchDataOfProductCate: [], // 商品类型父级选择框下拉数据
+        // 商品类型父级选择框下拉数据
+        searchDataOfProductCate: [],
         editConfig: {
           editId: null,
           visible: false
         }
       };
     },
-    mounted() {
-      // 计算table高度
-      this.calculateTableHeight();
-    },
     created() {
-      this.getProductCateListData(this.tableQueryParams);
+      this.getData();
       this.getProductCategoryTreeListForSearchForm();
     },
     methods: {
-      calculateTableHeight() {
-        // 根据实际情况计算表格高度，例如根据窗口高度、父容器高度等
-        this.tableHeight = window.innerHeight - 370; // 示例：减去200像素的高度作为表格高度
+      search(form) {
+        this.searchForm = form;
+        this.getData();
       },
-      // 商品分类搜索
-      onProductCateSearchHandle() {
-        this.tableQueryParams.pageNum = 1;
-        this.getProductCateListData(this.tableQueryParams);
+      tableSelectedRowKeys(selectedRowKeys) {
+        console.log('tableSelectedRowKeys', selectedRowKeys);
+        this.table.rowSelection.selectedRowKeys = selectedRowKeys;
       },
-      /**
-       * 商品分类分类列表
-       * @param params 分页参数
-       * @returns {Promise<void>}
-       */
-      async getProductCateListData(params) {
-        let productCateListData = await getProductCategoryPageList(params);
-        this.tableData.records = productCateListData.records;
-        this.paginationConfig.total = productCateListData.total;
-        this.paginationConfig.pageNum = productCateListData.current;
+      tableChange(pagination, log) {
+        this.table.pagination = pagination;
+        this.getData();
       },
-      // 新增商品分类
-      onAddProductCateHandle() {
-        this.editConfig.editId = null;
-        this.editConfig.visible = true;
+      async getData() {
+        this.table.loading = true;
+        let {pageNum, pageSize} = this.table.pagination;
+        let {records, total, current} = await getProductCategoryPageList({
+          pageNum: pageNum,
+          pageSize: pageSize,
+          ...this.searchForm
+        });
+        this.table.records = records;
+        this.table.pagination.total = total;
+        this.table.pagination.current = current;
+        this.table.loading = false;
       },
-      // 商品分类编辑后提交事件
-      onEditProductCateSubmitHandle() {
-        this.editConfig.visible = false;
-        this.getProductCateListData(this.tableQueryParams);
-      },
-      // 商品分类行编辑
-      onProductCateListRowEdit(text, record) {
-        this.editConfig.editId = record.id;
-        this.editConfig.visible = true;
-      },
-      // 列表点击删除商品分类
-      async onProductCateListRowDelete(record) {
-        await deleteProductCategory(record.id);
-        this.$message.success(`删除分类${record.name}成功`);
-        await this.getProductCateListData(this.tableQueryParams);
-      },
-      // 批量删除商品分类
-      async onProductCateListDelete() {
-        let forDelIds = this.tableData.selectedRows
-          .map((item) => item.id)
-          .join(',');
-        await deleteProductCategory(forDelIds);
-        this.$message.success(`批量删除分类成功`);
-        this.tableData.selectedKeys = [];
-        // this.tableData.selectedRows = [];
-        await this.getProductCateListData(this.tableQueryParams);
-      },
-      // 处理当前第几页
-      handlePageChange(page) {
-        this.tableQueryParams.pageNum = page;
-        this.paginationConfig.current = page;
-        this.getProductCateListData(this.tableQueryParams);
-      },
-      // 处理每页显示条数改变的逻辑
-      handlePageSizeChange(pageSize) {
-        this.tableQueryParams.pageSize = pageSize;
-        this.getProductCateListData(this.tableQueryParams);
-      },
+      // async onRowChange(record) {
+      //   await editActivitiy(record, record.id);
+      //   await this.getData();
+      // },
       async getProductCategoryTreeListForSearchForm() {
         this.searchDataOfProductCate = await getProductCategoryTreeList();
       },
-      // 列表多选事件
-      onTableSelectedChange(selectedRowKeys, selectedRow) {
-        this.tableData.selectedRows = selectedRow;
-        this.tableData.selectedKeys = selectedRowKeys;
-      }
+      // 新增商品分类
+      onAdd() {
+        this.editConfig.editId = null;
+        this.editConfig.visible = true;
+      },
+      // 批量删除商品分类
+      async onProductCateListDelete() {
+        await deleteProductCategory(this.table.rowSelection.selectedRowKeys.join(","));
+        this.$message.success(`批量删除分类成功`);
+        this.getData();
+      },
+      // 商品分类编辑后提交事件
+      onEditSubmit() {
+        this.editConfig.visible = false;
+        this.getData(this.tableQueryParams);
+      },
+      // 列表点击删除商品分类
+      async onDelete(record) {
+        await deleteProductCategory(record.id);
+        this.$message.success(`删除分类${record.name}成功`);
+        await this.getData(this.tableQueryParams);
+      },
+      // 商品分类行编辑
+      onEdit(text, record) {
+        this.editConfig.editId = record.id;
+        this.editConfig.visible = true;
+      },
     }
   };
 </script>
