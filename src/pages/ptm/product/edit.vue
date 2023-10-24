@@ -5,15 +5,79 @@
       :label-col="labelCol"
       :wrapper-col="wrapperCol"
     >
-      <a-form-model-item label="商品分类">
+      <a-form-model-item label="平台分类">
         <a-cascader
-          v-model="formData.productCateId"
+          v-model="formData.tenantCategoryId"
           :options="forPramsData.productCateList"
-          placeholder="请选择商品分类"
+          placeholder="请选择平台分类"
         />
       </a-form-model-item>
-      <a-form-model-item label="属性名">
-        <a-input v-model="formData.attrKey" placeholder="请输入属性名" allowClear/>
+      <a-form-model-item label="商户分类">
+        <a-cascader
+          v-model="formData.shopCategoryId"
+          :options="forPramsData.productCateList"
+          placeholder="请选择商户分类"
+        />
+      </a-form-model-item>
+      <a-form-model-item label="品牌">
+        <a-cascader
+          v-model="formData.brandId"
+          :options="forPramsData.productCateList"
+          placeholder="请选择品牌"
+        />
+      </a-form-model-item>
+<!--      <a-form-model-item label="保障服务"> TODO 保障服务待维护后-->
+<!--        <a-cascader-->
+<!--          v-model="formData.guaranteeIds"-->
+<!--          :options="forPramsData.productCateList"-->
+<!--          placeholder="请选择品牌"-->
+<!--        />-->
+<!--      </a-form-model-item>-->
+      <a-form-model-item label="运费模版">
+        <a-cascader
+          v-model="formData.tempId"
+          :options="forPramsData.productCateList"
+          placeholder="请选择品牌"
+        />
+      </a-form-model-item>
+      <a-form-model-item label="主图">
+        <y-img
+          :src="globalConfig.imgBaseUrl + image"
+          style="height: 30px; width: 30px"
+        ></y-img>
+      </a-form-model-item>
+      <a-form-model-item label="轮播图">
+        <y-img
+          :src="globalConfig.imgBaseUrl + sliderImage"
+          style="height: 30px; width: 30px"
+        ></y-img>
+      </a-form-model-item>
+      <a-form-model-item label="商品名">
+        <a-input v-model="formData.name" placeholder="请输入商品名" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item label="商品简介">
+        <a-input v-model="formData.title" placeholder="请输入商品简介" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item label="关键字">
+        <a-input v-model="formData.keyword" placeholder="请输入关键字" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item label="单位">
+        <a-input v-model="formData.unitName" placeholder="请输入单位" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item label="虚拟销量">
+        <a-input v-model="formData.fictiSales" placeholder="根据情况输入虚拟销量" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item label="排序">
+        <a-input v-model="formData.tenantSort" placeholder="排序"/>
+      </a-form-model-item>
+      <a-form-model-item label="分佣">
+        <a-input v-model="formData.isSub" placeholder="分佣"/>
+      </a-form-model-item>
+      <a-form-model-item label="详情">
+        <a-input v-model="formData.goodsDesc" placeholder="详情"/>
+      </a-form-model-item>
+      <a-form-model-item label="视频连接">
+        <a-input v-model="formData.videoLink" placeholder="详情"/>
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmitHandle"> 创建 </a-button>
@@ -51,7 +115,7 @@ export default {
         title: null,              // 简介
         keyword: null,            // 关键字
         unitName: null,           // 单位名称
-        sales: 0,                 // 实际销量
+        // sales: 0,                 // 实际销量
         fictiSales: 0,            // 虚拟销量
         // browse: 0,             // 浏览量
         tenantSort: 0,            // 排序
@@ -59,7 +123,7 @@ export default {
         // isAudit: true,
         // auditStatus: ,
         goodsDesc: null,          // 商品富文本描述
-        codePath: null,           // 商品二维码/小程序码
+        // codePath: null,           // 商品二维码/小程序码
         videoLink: null,          // 视频连接
         skuList: [
             {
