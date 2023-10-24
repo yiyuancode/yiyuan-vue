@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { makeSkuTempList } from '@/api/ptm/productSku'
 export default {
   name: "EditProduct",
   props: {
@@ -38,49 +39,41 @@ export default {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
       formData: {
-      "tenantId": "string",
-      "tenantCategoryId": "string",
-      "shopCategoryId": "string",
-      "brandId": "string",
-      "guaranteeIds": "string",
-      "tempId": "string",
-      "image": "string",
-      "sliderImage": "string",
-      "videoLink": "string",
-      "name": "string",
-      "title": "string",
-      "keyword": "string",
-      "goodsDesc": "string",
-      "unitName": "string",
-      "sales": 0,
-      "fictiSales": 0,
-      "browse": 0,
-      "codePath": "string",
-      "tenantSort": 0,
-      "isSub": true,
-      "isAudit": true,
-      "auditStatus": "NO_NEED_FOR_REVIEW",
-      "skuList": [
-      {
-        "id": "string",
-        "tenantId": "string",
-        "ptmProductId": "string",
-        "sku": "string",
-        "stock": 0,
-        "salePrice": 0,
-        "crossedPrice": 0,
-        "costPrice": 0,
-        "isShow": true,
-        "createTime": "string",
-        "createTimeStart": "string",
-        "createTimeEnd": "string",
-        "updateTime": "string",
-        "updateTimeStart": "string",
-        "updateTimeEnd": "string",
-        "createUser": "string",
-        "updateUser": "string"
-      }
-    ]
+        tenantId: 0,            // 商户id TODO 商户创建自带参数，暂时指定0=平台
+        tenantCategoryId: null,   // 平台分类id TODO 字段名称待优化
+        shopCategoryId: null,     // 商户分类id
+        brandId: null,            // 品牌 TODO 检查品牌和分类的关联
+        guaranteeIds: null,       // 保障服务
+        tempId: null,             // 运费模版
+        image: null,              // 主图
+        sliderImage: null,        // 轮播图
+        name: null,               // 名称
+        title: null,              // 简介
+        keyword: null,            // 关键字
+        unitName: null,           // 单位名称
+        sales: 0,                 // 实际销量
+        fictiSales: 0,            // 虚拟销量
+        // browse: 0,             // 浏览量
+        tenantSort: 0,            // 排序
+        isSub: true,              // 分佣模式
+        // isAudit: true,
+        // auditStatus: ,
+        goodsDesc: null,          // 商品富文本描述
+        codePath: null,           // 商品二维码/小程序码
+        videoLink: null,          // 视频连接
+        skuList: [
+            {
+              updateUser: null,
+              sku: null,
+              salePrice: 0,       // 售价
+              id: null,
+              costPrice: 0,       // 成本价
+              stock: 0,
+              tenantId: 0,
+              crossedPrice: 0,    // 划线价
+              isShow: true        // 上下架状态
+            }
+        ]
       },
       forPramsData: {
         productCateList: []
