@@ -23,7 +23,12 @@
           v-for="index in scopedSlots"
           :key="index"
           :span="span"
-          :style="{ display: expand ? 'block' : 'none' }"
+          :style="{
+            display:
+              expand || (uColumns.length == 0 && scopedSlots > 0)
+                ? 'block'
+                : 'none'
+          }"
         >
           <slot :name="`scopedSlots-${index}`" v-bind="{ form }"></slot>
         </a-col>
@@ -52,6 +57,7 @@
 </template>
 <script>
 import _ from 'lodash';
+
 export default {
   props: {
     props: {

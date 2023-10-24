@@ -10,7 +10,10 @@ import { request } from '@/utils/request';
  */
 export function getProductAttrKeyPageList(data) {
   let finalData = JSON.parse(JSON.stringify(data));
-  if(finalData.ptmProductCategoryId && finalData.ptmProductCategoryId.length > 0){
+  if (
+    finalData.ptmProductCategoryId &&
+    finalData.ptmProductCategoryId.length > 0
+  ) {
     finalData.ptmProductCategoryId =
       finalData.ptmProductCategoryId[finalData.ptmProductCategoryId.length - 1];
   }

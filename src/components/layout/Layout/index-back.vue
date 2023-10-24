@@ -1,21 +1,14 @@
 <template>
   <div style="width: 100%; height: 100%">
-
-
-
-
-
-
-
     <a-layout
-      style="width: 100%; height: 100% !important;"
+      style="width: 100%; height: 100% !important"
       id="components-layout-demo-custom-trigger"
     >
       <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
         <div class="logo" />
         <MyMenu></MyMenu>
       </a-layout-sider>
-      <a-layout style="width: 100%; height: 100% !important;">
+      <a-layout style="width: 100%; height: 100% !important">
         <a-layout-header
           style="
             background: #fff;
@@ -31,7 +24,10 @@
           />
           <MyAvatar></MyAvatar>
         </a-layout-header>
-        <a-layout-content class="layout-content" style="width: 100%; height: 100% !important;">
+        <a-layout-content
+          class="layout-content"
+          style="width: 100%; height: 100% !important"
+        >
           <MyTags class="myTags"></MyTags>
           <keep-alive>
             <router-view v-if="hasTagsName($route.name) && !$route.query.key" />
