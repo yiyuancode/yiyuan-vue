@@ -3,8 +3,10 @@
     <div class="y-tools">
       <div class="y-tools-title">{{ $route.meta.title }}</div>
       <div class="y-tools-action">
-        <a-button type="primary" icon="plus"> 新建 </a-button>
+        <a-button type="primary" icon="plus"> 新建</a-button>
         <a-divider type="vertical" />
+        <slot name="operations"> </slot>
+
         <a-tooltip placement="top" title="刷新">
           <a-icon :style="iconStyle" type="reload" @click="reload" />
         </a-tooltip>
@@ -26,9 +28,9 @@
                 }
               "
             >
-              <a-menu-item key="default"> 默认 </a-menu-item>
-              <a-menu-item key="middle"> 中等 </a-menu-item>
-              <a-menu-item key="small"> 紧凑 </a-menu-item>
+              <a-menu-item key="default"> 默认</a-menu-item>
+              <a-menu-item key="middle"> 中等</a-menu-item>
+              <a-menu-item key="small"> 紧凑</a-menu-item>
             </a-menu>
           </a-dropdown>
         </a-tooltip>

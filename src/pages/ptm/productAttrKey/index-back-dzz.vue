@@ -1,83 +1,131 @@
 <template>
-  <div>
-    <y-search
-      :columns="[]"
-      :scopedSlots="5"
-      @search="onProductAttrSearchHandle"
-    >
-      <a-form-model-item slot="scopedSlots-0" label="状态">
-        <a-select
-          v-model="tableQueryParams.isShow"
-          allowClear
-          placeholder="选择显示状态"
-        >
-          <a-select-option :value="0"> 不显示</a-select-option>
-          <a-select-option :value="1"> 显示</a-select-option>
-        </a-select>
-      </a-form-model-item>
-
-      <a-form-model-item slot="scopedSlots-1" label="ID">
-        <a-input
-          v-model="tableQueryParams.id"
-          allowClear
-          placeholder="商户"
-        ></a-input>
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-2" label="父级分类">
-        <a-cascader
-          v-model="tableQueryParams.ptmProductCategoryId"
-          :fieldNames="{ label: 'name', value: 'id', children: 'children' }"
-          :options="searchDataOfProductCate"
-          placeholder="请选择商品分类"
-        />
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-3" label="属性名称">
-        <a-input
-          v-model="tableQueryParams.attrKey"
-          placeholder="搜索 属性名称"
-          allowClear
-        />
-      </a-form-model-item>
-    </y-search>
-    <y-table
-      rowKey="id"
-      :columns="columns"
-      :records="tableData.records"
-      :pagination="paginationConfig"
-      :rowSelection="{
-        fixed: true,
-        onChange: onTableSelectedChange,
-        selectedRowKeys: tableData.selectedKeys
-      }"
-    >
-      <span slot="createTime" slot-scope="{ text, record }"> </span>
-      <a slot="isShow" slot-scope="{ text, record }">{{
-        text ? '显示' : '隐藏'
-      }}</a>
-      <template slot="operation" slot-scope="{ text, record }">
-        <!--            根据商品shuxingzhi-->
-        <a-button
-          icon="tool"
-          shape="round"
-          @click="() => onProductAttrKeyListRowAttrValue(record)"
-        ></a-button>
-        <!--            编辑商品属性Key-->
-        <a-button
-          icon="edit"
-          shape="round"
-          @click="() => onProductAttrKeyListRowEdit(record)"
-        ></a-button>
-        <!--            删除属性Key-->
+  <div class="manage-container">
+    <div class="search-container">
+      <a-form-model :model="tableQueryParams" layout="inline">
+        <a-form-model-item label="状态">
+          <a-select
+            v-model="tableQueryParams.isShow"
+            allowClear
+            placeholder="选择显示状态"
+            style="width: 120px"
+          >
+            <a-select-option :value="0"> 不显示 </a-select-option>
+            <a-select-option :value="1"> 显示 </a-select-option>
+          </a-select>
+        </a-form-model-item>
+        <!--        <a-form-model-item label="商户"> TODO 商户选项待添加-->
+        <!--          <a-select v-model="tableQueryParams.isShow" allowClear placeholder="选择显示状态" style="width: 120px">-->
+        <!--            <a-select-option :value="0"> 不显示 </a-select-option>-->
+        <!--            <a-select-option :value="1"> 显示 </a-select-option>-->
+        <!--          </a-select>-->
+        <!--        </a-form-model-item>-->
+        <a-form-model-item label="ID">
+          <a-input
+            v-model="tableQueryParams.id"
+            allowClear
+            placeholder="商户"
+          ></a-input>
+        </a-form-model-item>
+        <a-form-model-item label="父级分类">
+          <a-cascader
+            v-model="tableQueryParams.ptmProductCategoryId"
+            :fieldNames="{ label: 'name', value: 'id', children: 'children' }"
+            :options="searchDataOfProductCate"
+            placeholder="请选择商品分类"
+          />
+        </a-form-model-item>
+        <a-form-model-item label="属性名称">
+          <a-input
+            v-model="tableQueryParams.attrKey"
+            placeholder="搜索 属性名称"
+            allowClear
+          />
+        </a-form-model-item>
+        <a-form-model-item>
+          <a-button type="primary" @click="onProductAttrSearchHandle"
+            >搜索</a-button
+          >
+        </a-form-model-item>
+      </a-form-model>
+    </div>
+    <div class="content-container">
+      <div class="operate-btn-container">
+        <a-button type="primary" @click="onAddProductAttrKeyHandle">
+          添加属性
+        </a-button>
         <a-popconfirm
-          :title="'确定删除名称为【' + record.attrKey + '】的属性Key'"
+          :title="'确定批量删除选中的属性'"
           ok-text="确定"
           cancel-text="取消"
-          @confirm="() => onProductAttrKeyRowDelete(record)"
+          @confirm="() => onProductAttrListDelete()"
         >
-          <a-button icon="delete" type="danger" shape="round"></a-button>
+          <a-button :disabled="tableData.selectedRows.length <= 0">
+            批量删除
+          </a-button>
         </a-popconfirm>
-      </template>
-    </y-table>
+      </div>
+      <div ref="listContainer" class="list-container">
+        <a-table
+          :columns="columns"
+          :data-source="tableData.records"
+          :scroll="{ x: '100%' }"
+          :rowKey="
+            (record, index) => {
+              return index;
+            }
+          "
+          :pagination="paginationConfig"
+          :rowSelection="{
+            fixed: true,
+            onChange: onTableSelectedChange,
+            selectedRowKeys: tableData.selectedKeys
+          }"
+        >
+          <!--          <span slot="id" slot-scope="id">-->
+          <!--            <a-tooltip>-->
+          <!--              <template slot="title">-->
+          <!--                {{ id }}-->
+          <!--              </template>-->
+          <!--              <a>copy 主键</a>-->
+          <!--            </a-tooltip>-->
+          <!--          </span>-->
+          <!--          <span slot="tenantId" slot-scope="tenantId">-->
+          <!--            <a-tooltip>-->
+          <!--              <template slot="title">-->
+          <!--                {{ tenantId }}-->
+          <!--              </template>-->
+          <!--              <a>copy 商户ID</a>-->
+          <!--            </a-tooltip>-->
+          <!--          </span>-->
+          <a slot="isShow" slot-scope="isShow">{{
+            isShow ? '显示' : '隐藏'
+          }}</a>
+          <template slot="operation" slot-scope="text, record">
+            <!--            根据商品shuxingzhi-->
+            <a-button
+              icon="tool"
+              shape="round"
+              @click="() => onProductAttrKeyListRowAttrValue(record)"
+            ></a-button>
+            <!--            编辑商品属性Key-->
+            <a-button
+              icon="edit"
+              shape="round"
+              @click="() => onProductAttrKeyListRowEdit(record)"
+            ></a-button>
+            <!--            删除属性Key-->
+            <a-popconfirm
+              :title="'确定删除名称为【' + record.attrKey + '】的属性Key'"
+              ok-text="确定"
+              cancel-text="取消"
+              @confirm="() => onProductAttrKeyRowDelete(record)"
+            >
+              <a-button icon="delete" type="danger" shape="round"></a-button>
+            </a-popconfirm>
+          </template>
+        </a-table>
+      </div>
+    </div>
 
     <a-drawer
       title="商品属性"
@@ -97,12 +145,11 @@
 <script>
 import { columns } from './pageConfig';
 import {
-  deleteProductAttrKey,
-  getProductAttrKeyPageList
+  getProductAttrKeyPageList,
+  deleteProductAttrKey
 } from '@/api/ptm/productAttrKey.js';
 import edit from './edit.vue';
 import { getProductCategoryTreeList } from '@/api/ptm/productCategory';
-
 export default {
   name: 'ProductAttrKey',
   components: {

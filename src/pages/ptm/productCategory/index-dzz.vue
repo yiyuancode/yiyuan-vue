@@ -1,64 +1,58 @@
 <template>
-  <div>
-    <y-search
-      :columns="[]"
-      :scopedSlots="3"
-      @search="onProductCateSearchHandle"
-    >
-      <a-form-model-item slot="scopedSlots-0" label="分类名称">
-        <a-input
-          v-model="tableQueryParams.name"
-          placeholder="搜索分类名称"
-          allowClear
-        />
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-1" label="父级分类">
-        <a-cascader
-          v-model="tableQueryParams.pid"
-          :fieldNames="{ label: 'name', value: 'id', children: 'children' }"
-          :options="searchDataOfProductCate"
-          placeholder="请选择商品分类"
-          allowClear
-        />
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-2" label="层级">
-        <a-select
-          v-model="tableQueryParams.level"
-          placeholder="选择层级"
-          allowClear
-        >
-          <a-select-option :value="1"> 一级</a-select-option>
-          <a-select-option :value="2"> 二级</a-select-option>
-          <a-select-option :value="3"> 三级</a-select-option>
-        </a-select>
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-3" label="显示状态">
-        <a-select
-          v-model="tableQueryParams.isShow"
-          placeholder="选择显示状态"
-          allowClear
-        >
-          <a-select-option value="0"> 不显示</a-select-option>
-          <a-select-option value="1"> 显示</a-select-option>
-        </a-select>
-      </a-form-model-item>
-    </y-search>
-    <y-table
-      rowKey="id"
-      :columns="columns"
-      :records="tableData.records"
-      :pagination="paginationConfig"
-      :rowSelection="{
-        fixed: true,
-        onChange: onTableSelectedChange,
-        selectedRowKeys: tableData.selectedKeys
-      }"
-    >
-      <div class="operate-btn-container" slot="operations">
+  <div class="manage-container">
+    <div class="search-container">
+      <a-form-model :model="tableQueryParams" layout="inline">
+        <a-form-model-item label="分类名称">
+          <a-input
+            v-model="tableQueryParams.name"
+            placeholder="搜索分类名称"
+            allowClear
+          />
+        </a-form-model-item>
+        <a-form-model-item label="父级分类">
+          <a-cascader
+            v-model="tableQueryParams.pid"
+            :fieldNames="{ label: 'name', value: 'id', children: 'children' }"
+            :options="searchDataOfProductCate"
+            placeholder="请选择商品分类"
+            allowClear
+          />
+        </a-form-model-item>
+        <a-form-model-item label="层级">
+          <a-select
+            v-model="tableQueryParams.level"
+            placeholder="选择层级"
+            style="width: 120px"
+            allowClear
+          >
+            <a-select-option :value="1"> 一级</a-select-option>
+            <a-select-option :value="2"> 二级</a-select-option>
+            <a-select-option :value="3"> 三级</a-select-option>
+          </a-select>
+        </a-form-model-item>
+        <a-form-model-item>
+          <a-select
+            v-model="tableQueryParams.isShow"
+            placeholder="选择显示状态"
+            style="width: 120px"
+            allowClear
+          >
+            <a-select-option value="0"> 不显示</a-select-option>
+            <a-select-option value="1"> 显示</a-select-option>
+          </a-select>
+        </a-form-model-item>
+        <a-form-model-item>
+          <a-button type="primary" @click="onProductCateSearchHandle"
+            >搜索
+          </a-button>
+        </a-form-model-item>
+      </a-form-model>
+    </div>
+    <div class="content-container">
+      <div class="operate-btn-container">
         <a-button type="primary" @click="onAddProductCateHandle">
           添加分类
         </a-button>
-        <a-divider type="vertical" />
         <a-popconfirm
           :title="'确定批量删除选中的分类'"
           ok-text="确定"
@@ -69,42 +63,59 @@
             批量删除
           </a-button>
         </a-popconfirm>
-        <a-divider type="vertical" />
       </div>
-      <span slot="createTime" slot-scope="{ text, record }"> </span>
-      <span slot="icon" slot-scope="{ text, record }">
-        <y-img
-          :src="globalConfig.imgBaseUrl + text"
-          style="height: 30px; width: 30px"
-        ></y-img>
-      </span>
-      <!--          slot-scope(当前数据，当前行)-->
-      <span slot="level" slot-scope="{ text, record }">
-        {{ text.desc }}
-      </span>
-      <span slot="isShow" slot-scope="{ text, record }">
-        {{ text ? '显示' : '不显示' }}
-      </span>
-      <template slot="operation" slot-scope="{ text, record }">
-        <a-button-group>
-          <!--            编辑分类-->
-          <a-button
-            icon="edit"
-            shape="round"
-            @click="() => onProductCateListRowEdit(text, record)"
-          ></a-button>
-          <!--            删除分类-->
-          <a-popconfirm
-            :title="'确定删除名称为【' + record.name + '】的分类'"
-            ok-text="确定"
-            cancel-text="取消"
-            @confirm="() => onProductCateListRowDelete(record)"
-          >
-            <a-button icon="delete" type="danger" shape="round"></a-button>
-          </a-popconfirm>
-        </a-button-group>
-      </template>
-    </y-table>
+      <div ref="listContainer" class="list-container">
+        <a-table
+          :columns="columns"
+          :data-source="tableData.records"
+          :scroll="{ x: '100%' }"
+          :rowKey="
+            (record, index) => {
+              return index;
+            }
+          "
+          :pagination="paginationConfig"
+          :rowSelection="{
+            fixed: true,
+            onChange: onTableSelectedChange,
+            selectedRowKeys: tableData.selectedKeys
+          }"
+        >
+          <span slot="icon" slot-scope="icon">
+            <y-img
+              :src="globalConfig.imgBaseUrl + icon"
+              style="height: 30px; width: 30px"
+            ></y-img>
+          </span>
+          <!--          slot-scope(当前数据，当前行)-->
+          <span slot="level" slot-scope="level">
+            {{ level.desc }}
+          </span>
+          <span slot="isShow" slot-scope="isShow">
+            {{ isShow === true ? '显示' : '不显示' }}
+          </span>
+          <template slot="operation" slot-scope="text, record, index">
+            <a-button-group>
+              <!--            编辑分类-->
+              <a-button
+                icon="edit"
+                shape="round"
+                @click="() => onProductCateListRowEdit(text, record, index)"
+              ></a-button>
+              <!--            删除分类-->
+              <a-popconfirm
+                :title="'确定删除名称为【' + record.name + '】的分类'"
+                ok-text="确定"
+                cancel-text="取消"
+                @confirm="() => onProductCateListRowDelete(record)"
+              >
+                <a-button icon="delete" type="danger" shape="round"></a-button>
+              </a-popconfirm>
+            </a-button-group>
+          </template>
+        </a-table>
+      </div>
+    </div>
 
     <a-drawer
       title="商品属性"
@@ -121,6 +132,7 @@
     </a-drawer>
   </div>
 </template>
+
 <script>
 import editProductCate from './edit.vue';
 import { columns } from './pageConfig';

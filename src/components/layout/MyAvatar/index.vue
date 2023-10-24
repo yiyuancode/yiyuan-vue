@@ -1,12 +1,12 @@
 <template>
   <div class="MyAvatar">
     <a-dropdown>
-      <a>
+      <div class="img">
         <a-avatar
           src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
         />
-        管理员:{{ $store.getters['user/myUserInfo']?.username }}
-      </a>
+        <a>管理员:{{ $store.getters['user/myUserInfo']?.username }}</a>
+      </div>
 
       <a-menu slot="overlay">
         <a-menu-item>
@@ -40,11 +40,16 @@ export default {
 <style lang="less">
 .MyAvatar {
   width: auto;
-  height: 100%;
-  margin-right: 100px;
+  height: 64px;
+  margin-right: 30px;
   display: flex;
   justify-content: right;
   align-items: center;
-  display: inline-block;
+
+  .img {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+  }
 }
 </style>
