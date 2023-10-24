@@ -122,7 +122,7 @@ export default {
         visible: false
       },
       paginationConfig: {
-        current: 1, // 当前页码
+        pageNum: 1, // 当前页码
         pageSize: 10, // 每页显示条数
         total: 0, // 数据总数
         showSizeChanger: true, // 是否显示每页显示条数切换器
@@ -170,7 +170,7 @@ export default {
       let productAttrKeyListResult = await getProductAttrKeyPageList(params);
       this.tableData.records = productAttrKeyListResult.records;
       this.paginationConfig.total = productAttrKeyListResult.total;
-      this.paginationConfig.current = productAttrKeyListResult.current;
+      this.paginationConfig.pageNum = productAttrKeyListResult.current;
     },
     /**
      * 打开新增商品属性Key新增
