@@ -350,17 +350,17 @@ const columns = [
     noSearch: true
   },
 
-  // {
-  //   title: '创建人',
-  //   dataIndex: 'createUser',
-  //   key: 'createUser',
-  //   width: 160,
-  //   noEdit: true,
-  //   noAdd: true,
-  //   noSearch: true,
-  //   noShow: true
-  // },
-  //
+  {
+    title: '创建人',
+    dataIndex: 'createUser',
+    key: 'createUser',
+    width: 160,
+    noEdit: true,
+    noAdd: true,
+    noSearch: true,
+    noShow: true
+  },
+
   // {
   //   title: '修改人',
   //   dataIndex: 'updateUser',
@@ -371,6 +371,15 @@ const columns = [
   //   noSearch: true,
   //   noShow: true
   // }
+
+  {
+    title: '操作',
+    key: 'operation',
+    dataIndex: 'operation',
+    scopedSlots: {customRender: 'operation'},
+    fixed: 'right',
+    ellipsis: true
+  }
 ];
 
 // 模块配置

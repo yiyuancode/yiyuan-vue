@@ -28,7 +28,7 @@ export default function (opts = {}) {
       //渲染对象
       isLoading: false,
       addBtn: {
-        isOpen: false,
+        isOpen: true,
         text: '添加'
       },
       editBtn: {
@@ -40,16 +40,16 @@ export default function (opts = {}) {
         text: '删除'
       },
       importBtn: {
-        isOpen: true,
+        isOpen: false,
         text: '导入'
       },
       exportBtn: {
-        isOpen: true,
+        isOpen: false,
         text: '导出'
       },
       batchDeleteBtn: {
         isOpen: true,
-        text: '批量删除-大粽子'
+        text: '批量删除'
       }
     },
     submitLoading: false, //提交的loading
