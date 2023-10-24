@@ -625,74 +625,74 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .manage-container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+.manage-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
-  .search-container,
-  .content-container {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #fff;
-  }
+.search-container,
+.content-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+}
 
-  .content-container {
-    flex: 1 1 auto;
-    /*overflow: hidden;*/
-    display: flex;
-    flex-direction: column;
-  }
+.content-container {
+  flex: 1 1 auto;
+  /*overflow: hidden;*/
+  display: flex;
+  flex-direction: column;
+}
 
-  .list-container {
-    margin-top: 10px;
-    flex: 1 1 auto;
-    /*overflow: hidden;*/
+.list-container {
+  margin-top: 10px;
+  flex: 1 1 auto;
+  /*overflow: hidden;*/
 
-    /deep/ .ant-table {
-      tr {
-        td,
-        th {
-          min-width: 60px;
-        }
-      }
-    }
-
-    .manage-table {
-      /deep/ .ant-table-body-inner,
-      /deep/ .ant-table-body {
-        overflow-y: auto !important;
-        scrollbar-color: @primary-color @primary-2;
-        scrollbar-width: thin;
-        -ms-overflow-style: none;
-        position: relative;
-
-        &::-webkit-scrollbar {
-          width: 8px;
-          height: 8px;
-        }
-
-        &::-webkit-scrollbar-thumb {
-          border-radius: 3px;
-          background: @primary-color;
-        }
-
-        &::-webkit-scrollbar-track {
-          -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0);
-          border-radius: 3px;
-          background: @primary-3;
-        }
+  /deep/ .ant-table {
+    tr {
+      td,
+      th {
+        min-width: 60px;
       }
     }
   }
 
-  // 操作按钮容器
-  .operate-btn-container {
-    display: flex;
+  .manage-table {
+    /deep/ .ant-table-body-inner,
+    /deep/ .ant-table-body {
+      overflow-y: auto !important;
+      scrollbar-color: @primary-color @primary-2;
+      scrollbar-width: thin;
+      -ms-overflow-style: none;
+      position: relative;
 
-    .ant-btn {
-      margin-right: 10px;
+      &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background: @primary-color;
+      }
+
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0);
+        border-radius: 3px;
+        background: @primary-3;
+      }
     }
   }
+}
+
+// 操作按钮容器
+.operate-btn-container {
+  display: flex;
+
+  .ant-btn {
+    margin-right: 10px;
+  }
+}
 </style>
