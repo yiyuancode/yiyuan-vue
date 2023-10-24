@@ -174,6 +174,10 @@
       },
       async getData() {
         this.table.loading = true;
+        console.log("this.table.records.length", this.table.records.length)
+        if (this.table.records.length == 0 && this.table.pagination.pageNum > 1) {
+          this.table.pagination.pageNum = this.table.pagination.pageNum - 1;
+        }
         let {pageNum, pageSize} = this.table.pagination;
         let {records, total, current} = await getProductCategoryPageList({
           pageNum: pageNum,
@@ -195,6 +199,8 @@
       async onBatchDelete() {
         await deleteProductCategory(this.table.rowSelection.selectedRowKeys.join(","));
         this.$message.success(`批量删除分类成功`);
+        this.table.records = this.table.records.filter((item) => !this.table.rowSelection.selectedRowKeys.includes(item.id))
+        this.table.rowSelection.selectedRowKeys = [];
         this.getData();
       },
       // 商品分类编辑后提交事件
@@ -206,7 +212,8 @@
       async onDelete(record) {
         await deleteProductCategory(record.id);
         this.$message.success(`删除分类${record.name}成功`);
-        await this.getData(this.tableQueryParams);
+        this.table.records = this.table.records.filter((item) => item.id != record.id)
+        this.getData();
       },
       // 商品分类行编辑
       onEdit(text, record) {
