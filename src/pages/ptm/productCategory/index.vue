@@ -54,13 +54,13 @@
     >
 
       <div slot="operations">
-        <a-button type="primary" icon="plus"> 新建</a-button>
+        <a-button type="primary" icon="plus" @click="onAdd"> 新建</a-button>
         <a-divider type="vertical"/>
         <a-popconfirm
           :title="'确定批量删除选中的分类'"
           ok-text="确定"
           cancel-text="取消"
-          @confirm="() => onProductCateListDelete()"
+          @confirm="() => onBatchDelete()"
         >
           <a-button :disabled="table.rowSelection.selectedRowKeys.length <= 0">
             批量删除
@@ -157,7 +157,7 @@
     },
     created() {
       this.getData();
-      this.getProductCategoryTreeListForSearchForm();
+      this.getProductCategoryTree();
     },
     methods: {
       search(form) {
@@ -185,20 +185,14 @@
         this.table.pagination.current = current;
         this.table.loading = false;
       },
-      // async onRowChange(record) {
-      //   await editActivitiy(record, record.id);
-      //   await this.getData();
-      // },
-      async getProductCategoryTreeListForSearchForm() {
-        this.searchDataOfProductCate = await getProductCategoryTreeList();
-      },
+
       // 新增商品分类
       onAdd() {
         this.editConfig.editId = null;
         this.editConfig.visible = true;
       },
       // 批量删除商品分类
-      async onProductCateListDelete() {
+      async onBatchDelete() {
         await deleteProductCategory(this.table.rowSelection.selectedRowKeys.join(","));
         this.$message.success(`批量删除分类成功`);
         this.getData();
@@ -218,6 +212,10 @@
       onEdit(text, record) {
         this.editConfig.editId = record.id;
         this.editConfig.visible = true;
+      },
+      //获取父级树结构
+      async getProductCategoryTree() {
+        this.searchDataOfProductCate = await getProductCategoryTreeList();
       },
     }
   };
