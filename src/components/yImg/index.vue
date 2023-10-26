@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'index',
+  name: 'Index',
   props: ['src', 'width'],
   data() {
     return {

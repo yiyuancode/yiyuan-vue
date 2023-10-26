@@ -45,8 +45,8 @@
                 </a-select>
                 <a-range-picker
                   v-else-if="im2.formType == `datePicker`"
-                  allowClear
                   v-decorator="[im2.dataIndex]"
+                  allowClear
                   showTime
                   :placeholder="[`开始时间`, `结束时间`]"
                 />
@@ -119,8 +119,8 @@
 
                 <a-range-picker
                   v-else-if="im2.formType == `datePicker`"
-                  allowClear
                   v-decorator="[im2.dataIndex]"
+                  allowClear
                   showTime
                   :placeholder="[`开始时间`, `结束时间`]"
                 />
@@ -162,7 +162,7 @@
       >
         <a-button type="primary" @click="onSubmit">查询</a-button>
         <a-button style="margin-left: 8px">重置</a-button>
-        <a @click="toggleAdvanced" style="margin-left: 8px">
+        <a style="margin-left: 8px" @click="toggleAdvanced">
           {{ advanced ? '收起' : '展开' }}
           <a-icon :type="advanced ? 'up' : 'down'" />
         </a>

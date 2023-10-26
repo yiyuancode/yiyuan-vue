@@ -1,6 +1,6 @@
 <template>
   <a-card style="width: 100%">
-    <a-form-model class="ant-advanced-search-form" :model="form" ref="form">
+    <a-form-model ref="form" class="ant-advanced-search-form" :model="form">
       <a-row :gutter="10">
         <a-col
           v-for="(item, index) in uColumns"
@@ -8,30 +8,40 @@
           :span="span"
           :style="{ display: index < count ? 'block' : 'none' }"
         >
-          <a-form-model-item :label="`${item.title}`">
-            <a-range-picker
-              v-if="item.formType == `datePicker`"
-              allowClear
-              v-model="form[item.dataIndex]"
-              showTime
-              :placeholder="[`开始时间`, `结束时间`]"
-            />
-            <a-input v-if="!item.formType" v-model="form[item.dataIndex]" />
-          </a-form-model-item>
+          <template v-if="item.dataIndex">
+            <a-form-model-item :label="`${item.title}`">
+              <a-range-picker
+                v-if="item.formType == `datePicker`"
+                v-model="form[item.dataIndex]"
+                allowClear
+                showTime
+                :placeholder="[`开始时间`, `结束时间`]"
+              />
+              <a-input
+                v-if="!item.formType"
+                v-model="form[item.dataIndex]"
+                allowClear
+                :placeholder="`请输入` + item.title"
+              />
+            </a-form-model-item>
+          </template>
+          <template v-else>
+            <slot :name="item" v-bind="{ form }"></slot>
+          </template>
         </a-col>
-        <a-col
-          v-for="index in scopedSlots"
-          :key="index"
-          :span="span"
-          :style="{
-            display:
-              expand || (uColumns.length == 0 && scopedSlots > 0)
-                ? 'block'
-                : 'none'
-          }"
-        >
-          <slot :name="`scopedSlots-${index}`" v-bind="{ form }"></slot>
-        </a-col>
+        <!--        <a-col-->
+        <!--          v-for="index in scopedSlots"-->
+        <!--          :key="index"-->
+        <!--          :span="span"-->
+        <!--          :style="{-->
+        <!--            display:-->
+        <!--              expand || (uColumns.length == 0 && scopedSlots > 0)||index < count-->
+        <!--                ? 'block'-->
+        <!--                : 'none'-->
+        <!--          }"-->
+        <!--        >-->
+        <!--          <slot :name="`scopedSlots-${index}`" v-bind="{ form }"></slot>-->
+        <!--        </a-col>-->
       </a-row>
       <a-row>
         <a-col :span="24" :style="{ textAlign: 'right' }">
@@ -67,9 +77,9 @@ export default {
       }
     },
     scopedSlots: {
-      type: Number,
+      type: Array,
       default: function () {
-        return 0;
+        return [];
       }
     },
     columns: {
@@ -94,12 +104,14 @@ export default {
   },
   computed: {
     uColumns() {
-      return this.columns.filter((item) => {
+      let columnsTemp = this.columns.filter((item) => {
         return !item.noSearch;
       });
+      columnsTemp = [...columnsTemp, ...this.scopedSlots];
+      return columnsTemp;
     },
     count() {
-      return this.expand ? this.uColumns.length + this.scopedSlots : 4;
+      return this.expand ? this.uColumns.length : 4;
     }
   },
   created() {

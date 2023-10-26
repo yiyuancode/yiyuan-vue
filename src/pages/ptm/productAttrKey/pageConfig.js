@@ -31,7 +31,7 @@ const columns = [
     key: 'isShow',
     dataIndex: 'isShow',
     width: 70,
-    scopedSlots: {customRender: 'isShow'}
+    scopedSlots: { customRender: 'isShow' }
   },
   {
     title: '创建时间',
@@ -63,10 +63,10 @@ const columns = [
     title: '操作',
     key: 'operation',
     dataIndex: 'operation',
-    scopedSlots: {customRender: 'operation'},
+    scopedSlots: { customRender: 'operation' },
     fixed: 'right',
     ellipsis: true
   }
 ];
 
-export {columns};
+export { columns };

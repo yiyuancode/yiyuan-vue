@@ -1,8 +1,8 @@
 <template>
   <div style="width: 100%; height: 100%">
     <a-layout
-      style="width: 100%; height: 100% !important"
       id="components-layout-demo-custom-trigger"
+      style="width: 100%; height: 100% !important"
     >
       <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
         <div class="logo" />

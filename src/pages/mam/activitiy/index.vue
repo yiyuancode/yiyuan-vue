@@ -2,30 +2,18 @@
   <div>
     <y-search
       :columns="table.columns"
-      :scopedSlots="3"
+      :scopedSlots="['username', 'phone', 'sex']"
       :loading="table.loading"
       @search="search"
     >
-      <a-form-model-item
-        slot="scopedSlots-0"
-        slot-scope="{ form }"
-        label="姓名"
-      >
-        <a-input v-model="form.name" />
+      <a-form-model-item slot="username" slot-scope="{ form }" label="姓名">
+        <a-input v-model="form.username" allowClear placeholder="请输入姓名" />
       </a-form-model-item>
-      <a-form-model-item
-        slot="scopedSlots-1"
-        slot-scope="{ form }"
-        label="手机"
-      >
-        <a-input v-model="form.phone" />
+      <a-form-model-item slot="phone" slot-scope="{ form }" label="手机">
+        <a-input v-model="form.phone" allowClear placeholder="请输入手机" />
       </a-form-model-item>
-      <a-form-model-item
-        slot="scopedSlots-2"
-        slot-scope="{ form }"
-        label="性别"
-      >
-        <a-input v-model="form.sex" />
+      <a-form-model-item slot="sex" slot-scope="{ form }" label="性别">
+        <a-input v-model="form.sex" allowClear placeholder="请输入性别" />
       </a-form-model-item>
     </y-search>
     <y-table
@@ -39,14 +27,14 @@
     >
       <span slot="isShow" slot-scope="{ text, record }">
         <a-switch
+          v-model="record.isShow"
           checked-children="是"
           un-checked-children="否"
-          v-model="record.isShow"
           @change="(checked) => onRowChange({ ...record, isShow: checked })"
         />
       </span>
       <span slot="createTime" slot-scope="{ text, record }"> </span>
-      <div class="y-flex" slot="action" slot-scope="{ text, record }">
+      <div slot="action" slot-scope="{ text, record }" class="y-flex">
         <a-button icon="edit"></a-button>
         <a-divider type="vertical" />
         <a-button type="danger" icon="delete"></a-button>
@@ -57,6 +45,7 @@
 <script>
 import { columns } from '@/pages/mam/activitiy/pageConfig.js';
 import { editActivitiy, getActivitiyPageList } from '@/api/mam/activitiy.js';
+
 export default {
   data() {
     return {
