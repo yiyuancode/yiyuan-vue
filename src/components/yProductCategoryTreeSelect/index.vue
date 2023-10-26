@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%;">
     <a-tree-select
-      v-model="value"
+      v-model="selectedKeys"
       style="width: 100%;"
       :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
       :allowClear="allowClear"
@@ -17,8 +17,15 @@
 </template>
 <script>
   import {getProductCategoryTreeList} from "@/api/ptm/productCategory.js";
+
   export default {
     props: {
+      value: {
+        type: Array || String,
+        default: function () {
+          return [];
+        }
+      },
       allowClear: {
         type: Boolean,
         default: function () {
@@ -54,12 +61,13 @@
     data() {
       return {
         treeData: [],
-        value: []
+        selectedKeys: []
       };
     },
     computed: {},
-    created() {
-      this.getData();
+    async created() {
+      await this.getData();
+      this.selectedKeys=this.value
     },
     methods: {
       async getData() {
@@ -67,7 +75,7 @@
         this.treeData = treeList;
       },
       change(value, label, extra) {
-        this.$emit('input', this.value);
+        this.$emit('input', value);
       }
     }
   };

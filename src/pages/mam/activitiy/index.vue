@@ -13,7 +13,6 @@
         <a-input v-model="form.phone" allowClear placeholder="请输入手机"/>
       </a-form-model-item>
       <a-form-model-item slot="sex" slot-scope="{ form }" label="商品分类">
-        <!--        <a-input v-model="form.sex" allowClear placeholder="请输入性别"/>-->
         <y-product-category-tree-select v-model="form.category"></y-product-category-tree-select>
       </a-form-model-item>
     </y-search>
