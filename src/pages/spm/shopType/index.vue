@@ -2,7 +2,7 @@
 
   <div>
     <y-search :scopedSlots="3" :loading="table.loading" @search="search">
-      <a-form-model-item slot="scopedSlots-1" label="店铺ID">
+      <a-form-model-item slot="scopedSlots" label="店铺ID">
         <a-input
           v-model="searchForm.name"
           placeholder="搜索店铺ID"
