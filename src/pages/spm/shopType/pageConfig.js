@@ -1,7 +1,7 @@
 /**
  * 店铺类型页面组件配置配置
  *
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 import * as shopType from '@/api/spm/shopType';

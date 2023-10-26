@@ -5,7 +5,8 @@ import { request } from '@/utils/request';
  *
  * @param {*} data 店铺-主营类目关联信息
  * @return
- * @author  spring
+ * @author  一源-spring
+>>>>>>> ac1fec6c32b59a5ac86ef2412701781b69d042af
  * @date 2023-10-16
  */
 export function getShopCategoryLinkPageList(data) {
@@ -20,7 +21,7 @@ export function getShopCategoryLinkPageList(data) {
  *
  * @param {*} id
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 export function getShopCategoryLinkDetail(id) {
@@ -34,7 +35,7 @@ export function getShopCategoryLinkDetail(id) {
  *
  * @param {*} data 店铺-主营类目关联信息
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 
@@ -52,7 +53,7 @@ export function addShopCategoryLink(data) {
  * @param {*} data 店铺-主营类目关联信息
  * @param {*} id 店铺-主营类目关联id
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 export function editShopCategoryLink(data, id) {
@@ -70,7 +71,7 @@ export function editShopCategoryLink(data, id) {
  *
  * @param {*} ids
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 export function deleteShopCategoryLink(ids) {
