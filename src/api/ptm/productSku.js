@@ -82,3 +82,36 @@ export function deleteProductSku(ids) {
     }
   });
 }
+
+
+/**
+ * 根据属性和属性值生成sku列表
+ * 示例参数
+ * {
+ *     "attrKeyList": [
+ *         "颜色",
+ *         "内存"
+ *     ],
+ *     "attrValList": [
+ *         [
+ *             "卡其色",
+ *             "天蓝色",
+ *             "金属黑"
+ *         ],
+ *         [
+ *             "256GB",
+ *             "512GB",
+ *             "128GB"
+ *         ]
+ *     ]
+ * }
+ * @param data
+ * @returns {*}
+ */
+export function makeSkuTempList(data) {
+  return request({
+    url: '/ptm/productSku/makeSkuTempList',
+    method: 'post',
+    data: data
+  });
+}

@@ -8,52 +8,54 @@ import * as product from '@/api/ptm/product';
 
 const columns = [
   {
-    title: '商品id',
+    title: 'id',
     dataIndex: 'id',
     key: 'id',
     width: 160,
     rules: [{ required: true, message: '请输入商品id', trigger: 'blur' }],
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    ellipsis: true
   },
   {
     title: '商户id',
     dataIndex: 'tenantId',
     key: 'tenantId',
     width: 160,
-    rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }],
+    ellipsis: true
   },
 
   {
-    title: '主类目id(商品分类2级id，逗号拼接)',
+    title: '平台分类',
     dataIndex: 'tenantCategoryId',
     key: 'tenantCategoryId',
     width: 160,
     rules: [
       {
         required: true,
-        message: '请输入主类目id(商品分类2级id，逗号拼接)',
+        message: '请选择 平台分类',
         trigger: 'blur'
       }
     ]
   },
 
   {
-    title: '店铺内部分类id(商品分类3级)',
+    title: '商家分类',
     dataIndex: 'shopCategoryId',
     key: 'shopCategoryId',
     width: 160,
     rules: [
       {
         required: true,
-        message: '请输入店铺内部分类id(商品分类3级)',
+        message: '请选择商家id(商品分类3级)',
         trigger: 'blur'
       }
     ]
   },
 
   {
-    title: '品牌id',
+    title: '品牌',
     dataIndex: 'brandId',
     key: 'brandId',
     width: 160,
@@ -61,7 +63,7 @@ const columns = [
   },
 
   {
-    title: '保障服务ids(英文逗号拼接)',
+    title: '保障服务',
     dataIndex: 'guaranteeIds',
     key: 'guaranteeIds',
     width: 160,
@@ -75,7 +77,7 @@ const columns = [
   },
 
   {
-    title: '运费模板ID',
+    title: '运费模板',
     dataIndex: 'tempId',
     key: 'tempId',
     width: 160,
@@ -83,7 +85,7 @@ const columns = [
   },
 
   {
-    title: '商品橱窗图片',
+    title: '主图',
     dataIndex: 'image',
     key: 'image',
     width: 160,
@@ -91,20 +93,20 @@ const columns = [
   },
 
   {
-    title: '详情图(多个逗号分割)',
+    title: '主视频',
+    dataIndex: 'videoLink',
+    key: 'videoLink',
+    width: 160
+  },
+
+  {
+    title: '详情图',
     dataIndex: 'sliderImage',
     key: 'sliderImage',
     width: 160,
     rules: [
       { required: true, message: '请输入详情图(多个逗号分割)', trigger: 'blur' }
     ]
-  },
-
-  {
-    title: '详情视频链接',
-    dataIndex: 'videoLink',
-    key: 'videoLink',
-    width: 160
   },
 
   {
@@ -124,7 +126,7 @@ const columns = [
   },
 
   {
-    title: '关键字,英文逗号拼接',
+    title: '搜索字符',
     dataIndex: 'keyword',
     key: 'keyword',
     width: 160,
@@ -133,41 +135,41 @@ const columns = [
     ]
   },
 
-  {
-    title: '商品详情(富文本)',
-    dataIndex: 'goodsDesc',
-    key: 'goodsDesc',
-    width: 160,
-    formType: 'text'
-  },
+  // {
+  //   title: '商品详情(富文本)',
+  //   dataIndex: 'goodsDesc',
+  //   key: 'goodsDesc',
+  //   width: 160,
+  //   formType: 'text'
+  // },
 
   {
-    title: '库存(根据sku所有累计库存自动设置)',
+    title: '库存',
     dataIndex: 'stock',
     key: 'stock',
     width: 160
   },
 
   {
-    title: '售卖价格(根据sku最低售卖价格自动设置)',
+    title: '售价',
     dataIndex: 'salePrice',
     key: 'salePrice',
     width: 160
   },
 
-  {
-    title: '划线价格(根据sku最低划线价格自动设置)',
-    dataIndex: 'crossedPrice',
-    key: 'crossedPrice',
-    width: 160
-  },
+  // {
+  //   title: '划线价格(根据sku最低划线价格自动设置)',
+  //   dataIndex: 'crossedPrice',
+  //   key: 'crossedPrice',
+  //   width: 160
+  // },
 
-  {
-    title: '成本价(根据sku最低成本价自动设置)',
-    dataIndex: 'costPrice',
-    key: 'costPrice',
-    width: 160
-  },
+  // {
+  //   title: '成本价(根据sku最低成本价自动设置)',
+  //   dataIndex: 'costPrice',
+  //   key: 'costPrice',
+  //   width: 160
+  // },
 
   {
     title: '单位名',
@@ -184,12 +186,12 @@ const columns = [
     width: 160
   },
 
-  {
-    title: '虚拟销量(如果为默认值前端展示实际销量,反之展示虚拟销量)',
-    dataIndex: 'fictiSales',
-    key: 'fictiSales',
-    width: 160
-  },
+  // {
+  //   title: '虚拟销量(如果为默认值前端展示实际销量,反之展示虚拟销量)',
+  //   dataIndex: 'fictiSales',
+  //   key: 'fictiSales',
+  //   width: 160
+  // },
 
   {
     title: '浏览量',
@@ -359,15 +361,24 @@ const columns = [
     noShow: true
   },
 
+  // {
+  //   title: '修改人',
+  //   dataIndex: 'updateUser',
+  //   key: 'updateUser',
+  //   width: 160,
+  //   noEdit: true,
+  //   noAdd: true,
+  //   noSearch: true,
+  //   noShow: true
+  // }
+
   {
-    title: '修改人',
-    dataIndex: 'updateUser',
-    key: 'updateUser',
-    width: 160,
-    noEdit: true,
-    noAdd: true,
-    noSearch: true,
-    noShow: true
+    title: '操作',
+    key: 'operation',
+    dataIndex: 'operation',
+    scopedSlots: {customRender: 'operation'},
+    fixed: 'right',
+    ellipsis: true
   }
 ];
 

@@ -506,6 +506,8 @@ export default {
     width: auto;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+
   }
 }
 
@@ -535,6 +537,7 @@ export default {
   }
 }
 
+
 .item:hover .item-right-icon {
   /*display: inline-block;*/
   width: auto;
@@ -543,6 +546,7 @@ export default {
   align-items: center;
   justify-content: end;
 }
+
 
 /*选中样式*/
 .chosen {

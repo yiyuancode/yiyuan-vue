@@ -8,57 +8,60 @@ import * as productAttrValue from '@/api/ptm/productAttrValue';
 
 const columns = [
   {
-    title: '商品属性value主键',
+    title: '主键',
     dataIndex: 'id',
     key: 'id',
     width: 160,
     rules: [
-      { required: true, message: '请输入商品属性value主键', trigger: 'blur' }
+      { required: true, message: '请输入商品属性值主键', trigger: 'blur' }
     ],
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    ellipsis: true
   },
 
   {
     title: '商户id',
     dataIndex: 'tenantId',
     key: 'tenantId',
-    width: 160,
-    rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }]
+    width: 280,
+    rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }],
+    ellipsis: true
   },
 
   {
-    title: '商品属性key表id',
+    title: '属性id',
     dataIndex: 'ptmProductAttrKeyId',
     key: 'ptmProductAttrKeyId',
-    width: 160,
+    width: 280,
     rules: [
       { required: true, message: '请输入商品属性key表id', trigger: 'blur' }
     ]
   },
 
   {
-    title: '商品属性value值',
+    title: '属性值',
     dataIndex: 'attrValue',
     key: 'attrValue',
     width: 160,
     rules: [
-      { required: true, message: '请输入商品属性value值', trigger: 'blur' }
+      { required: true, message: '请输入商品属性值', trigger: 'blur' }
     ]
   },
 
   {
-    title: '是否上架0=否|1=是',
+    title: '状态',
     dataIndex: 'isShow',
     key: 'isShow',
-    width: 160
+    width: 160,
+    scopedSlots: { customRender: 'isShow' }
   },
 
   {
     title: '创建时间',
     dataIndex: 'createTime',
     key: 'createTime',
-    width: 160,
+    width: 180,
     props: {
       showTime: true,
       style: { width: '100%' }
@@ -75,7 +78,7 @@ const columns = [
     title: '修改时间',
     dataIndex: 'updateTime',
     key: 'updateTime',
-    width: 160,
+    width: 180,
     props: {
       showTime: true,
       style: { width: '100%' }
@@ -93,7 +96,7 @@ const columns = [
     title: '创建人',
     dataIndex: 'createUser',
     key: 'createUser',
-    width: 160,
+    width: 260,
     noEdit: true,
     noAdd: true,
     noSearch: true,

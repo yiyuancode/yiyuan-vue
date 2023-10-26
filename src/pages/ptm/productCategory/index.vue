@@ -59,7 +59,6 @@
         </a-popconfirm>
         <a-divider type="vertical" />
       </div>
-
       <div slot="icon" slot-scope="{ text, record }" class="y-flex">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
       </div>

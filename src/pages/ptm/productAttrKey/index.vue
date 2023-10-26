@@ -90,6 +90,7 @@
       </div>
     </y-table>
 
+<!--    商品属性编辑-->
     <a-drawer
       title="商品属性"
       width="500"
