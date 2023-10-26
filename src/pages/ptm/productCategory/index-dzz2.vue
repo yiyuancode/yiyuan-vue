@@ -54,7 +54,7 @@
         selectedRowKeys: tableData.selectedKeys
       }"
     >
-      <div class="operate-btn-container" slot="operations">
+      <div slot="operations" class="operate-btn-container">
         <a-button type="primary" @click="onAddProductCateHandle">
           添加分类
         </a-button>

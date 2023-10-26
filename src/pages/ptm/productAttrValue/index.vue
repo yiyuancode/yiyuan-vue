@@ -22,7 +22,7 @@ import manageProductAttrKeyValue from '@/mixins/manage_product_attr_key.js';
 import { columns, moduleConfig, permissionObj } from './pageConfig';
 
 export default {
-  name: 'productAttrValue',
+  name: 'ProductAttrValue',
   components: {
     ManagePage
   },

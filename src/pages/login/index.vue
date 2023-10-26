@@ -100,8 +100,8 @@
           <a-button
             style="width: 100%; margin-top: 24px"
             size="large"
-            @click="loginHandle"
             type="primary"
+            @click="loginHandle"
             >登录
           </a-button>
         </a-form-item>

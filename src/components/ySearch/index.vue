@@ -1,6 +1,6 @@
 <template>
   <a-card style="width: 100%">
-    <a-form-model class="ant-advanced-search-form" :model="form" ref="form">
+    <a-form-model ref="form" class="ant-advanced-search-form" :model="form">
       <a-row :gutter="10">
         <a-col
           v-for="(item, index) in uColumns"
@@ -11,8 +11,8 @@
           <a-form-model-item :label="`${item.title}`">
             <a-range-picker
               v-if="item.formType == `datePicker`"
-              allowClear
               v-model="form[item.dataIndex]"
+              allowClear
               showTime
               :placeholder="[`开始时间`, `结束时间`]"
             />

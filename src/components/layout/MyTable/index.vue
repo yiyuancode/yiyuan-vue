@@ -50,15 +50,15 @@
     <el-table :data="tableData" class="RoleMan-yz-table-el-table">
       <template v-for="(item, index) in columns">
         <el-table-column
-          :width="item.width ? item.width : ''"
           v-if="!item.scope"
+          :width="item.width ? item.width : ''"
           :prop="item.dataIndex"
           :label="item.title"
         >
         </el-table-column>
         <el-table-column
-          :width="item.width ? item.width : ''"
           v-if="item.scope"
+          :width="item.width ? item.width : ''"
           :label="item.title"
         >
           <template slot-scope="scope">
@@ -90,6 +90,11 @@
     </el-table>
     <div class="RoleMan-yz-table-pagination">
       <el-pagination
+        :current-page="currentPage"
+        :page-sizes="pageSizes"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
         @size-change="
           (size) => {
             $emit(`pageChange`, { page: currentPage, size: size });
@@ -100,11 +105,6 @@
             $emit(`pageChange`, { page: page, size: pageSize });
           }
         "
-        :current-page="currentPage"
-        :page-sizes="pageSizes"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
       >
       </el-pagination>
     </div>
