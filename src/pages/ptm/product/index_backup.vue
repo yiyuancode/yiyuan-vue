@@ -42,7 +42,7 @@ import manageProduct from '@/mixins/manage_product';
 import { columns, moduleConfig, permissionObj } from './pageConfig';
 
 export default {
-  name: 'product',
+  name: 'Product',
   components: {
     ManagePage
   },

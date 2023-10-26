@@ -14,7 +14,7 @@
           <a-icon type="pie-chart" />
           <span>{{ item.meta.title }}</span>
         </a-menu-item>
-        <sub-menu v-else :menu-info="item" :key="item.name" />
+        <sub-menu v-else :key="item.name" :menu-info="item"  />
       </template>
     </a-menu>
   </div>

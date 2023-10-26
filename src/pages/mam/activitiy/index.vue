@@ -39,14 +39,14 @@
     >
       <span slot="isShow" slot-scope="{ text, record }">
         <a-switch
+          v-model="record.isShow"
           checked-children="是"
           un-checked-children="否"
-          v-model="record.isShow"
           @change="(checked) => onRowChange({ ...record, isShow: checked })"
         />
       </span>
       <span slot="createTime" slot-scope="{ text, record }"> </span>
-      <div class="y-flex" slot="action" slot-scope="{ text, record }">
+      <div slot="action" slot-scope="{ text, record }" class="y-flex">
         <a-button icon="edit"></a-button>
         <a-divider type="vertical" />
         <a-button type="danger" icon="delete"></a-button>

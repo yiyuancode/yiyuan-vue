@@ -64,17 +64,17 @@
         </a-popconfirm>
         <a-divider type="vertical"/>
       </div>
-      <div class="y-flex" slot="icon" slot-scope="{ text, record }">
+      <div slot="icon" slot-scope="{ text, record }" class="y-flex">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
       </div>
       <!--          slot-scope(当前数据，当前行)-->
-      <div class="y-flex" slot="level" slot-scope="{ text, record }">
+      <div slot="level" slot-scope="{ text, record }" class="y-flex">
         {{ text.desc }}
       </div>
-      <div class="y-flex" slot="isShow" slot-scope="{ text, record }">
+      <div slot="isShow" slot-scope="{ text, record }" class="y-flex">
         {{ text ? '显示' : '不显示' }}
       </div>
-      <div class="y-flex" slot="operation" slot-scope="{ text, record }">
+      <div slot="operation" slot-scope="{ text, record }" class="y-flex">
         <a-button-group>
           <!--            编辑分类-->
           <a-button

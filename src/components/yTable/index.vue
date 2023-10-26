@@ -19,8 +19,8 @@
               @click="(e) => e.preventDefault()"
             />
             <a-menu
-              :selectedKeys="selectedKeys"
               slot="overlay"
+              :selectedKeys="selectedKeys"
               @click="
                 ({ key }) => {
                   size = key;
@@ -39,7 +39,7 @@
           <a-popover placement="bottomLeft" trigger="click">
             <template slot="content">
               <!--              <a-checkbox-group v-model="columnsCheckboxValue">-->
-              <div class="setting-content" v-if="fixedLeftColumns.length != 0">
+              <div v-if="fixedLeftColumns.length != 0" class="setting-content" >
                 固定在左侧
                 <draggable
                   v-model="fixedLeftColumns"
@@ -53,9 +53,9 @@
                 >
                   <transition-group>
                     <div
-                      class="item"
                       v-for="item in fixedLeftColumns"
                       :key="item.key"
+                      class="item"
                     >
                       <span class="drag-icon">
                         <a-icon type="more" :style="{ color: '#8E989D' }"
@@ -81,7 +81,7 @@
                   </transition-group>
                 </draggable>
               </div>
-              <div class="setting-content" v-if="noFixedColumns.length != 0">
+              <div v-if="noFixedColumns.length != 0" class="setting-content">
                 不固定
                 <draggable
                   v-model="noFixedColumns"
@@ -95,9 +95,9 @@
                 >
                   <transition-group>
                     <div
-                      class="item"
                       v-for="item in noFixedColumns"
                       :key="item.key"
+                      class="item"
                     >
                       <span class="drag-icon">
                         <a-icon type="more" :style="{ color: '#8E989D' }"
@@ -129,7 +129,7 @@
                   </transition-group>
                 </draggable>
               </div>
-              <div class="setting-content" v-if="fixedRightColumns.length != 0">
+              <div v-if="fixedRightColumns.length != 0" class="setting-content">
                 固定在右侧
                 <draggable
                   v-model="fixedRightColumns"
@@ -143,9 +143,9 @@
                 >
                   <transition-group>
                     <div
-                      class="item"
                       v-for="item in fixedRightColumns"
                       :key="item.key"
+                      class="item"
                     >
                       <span class="drag-icon">
                         <a-icon type="more" :style="{ color: '#8E989D' }"
@@ -207,9 +207,9 @@
         @change="change"
       >
         <template
+          v-for="item in uScopedSlots"
           :slot="item.scopedSlots.customRender"
           slot-scope="text, record"
-          v-for="item in uScopedSlots"
         >
           <slot
             :name="`${item.scopedSlots.customRender}`"
@@ -524,7 +524,7 @@
     display: flex;
     flex: 1;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
   }
 
   /*选中样式*/
@@ -549,8 +549,8 @@
     justify-content: space-between;
   }
 
-  .setting-title-name {
-  }
+  // .setting-title-name {
+  // }
 
   /*.ant-table-tbody > tr > td {*/
   /*   padding: 0px !important;*/
