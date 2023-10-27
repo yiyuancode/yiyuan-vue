@@ -1,10 +1,6 @@
 <template>
   <div>
-    <y-search
-      :scopedSlots="3"
-      :loading="table.loading"
-      @search="search"
-    >
+    <y-search :scopedSlots="3" :loading="table.loading" @search="search">
       <a-form-model-item slot="scopedSlots-0" label="状态">
         <a-select
           v-model="searchForm.isShow"
@@ -15,7 +11,6 @@
           <a-select-option :value="1"> 显示</a-select-option>
         </a-select>
       </a-form-model-item>
-
       <a-form-model-item slot="scopedSlots-1" label="ID">
         <a-input
           v-model="searchForm.id"
@@ -48,7 +43,6 @@
       :loading="table.loading"
       @change="tableChange"
     >
-
       <div slot="operations">
         <a-button type="primary" icon="plus" @click="onAdd"> 新建</a-button>
         <a-divider type="vertical"/>
@@ -95,7 +89,7 @@
       </div>
     </y-table>
 
-<!--    商品属性编辑-->
+    <!--    商品属性编辑-->
     <a-drawer
       title="商品属性"
       width="500"
@@ -188,10 +182,17 @@
       },
       // 批量删除商品分类
       async onBatchDelete() {
-        console.log("onBatchDelete.selectedRowKeys", this.table.rowSelection.selectedRowKeys)
-        await deleteProductAttrKey(this.table.rowSelection.selectedRowKeys.join(","));
+        console.log(
+          'onBatchDelete.selectedRowKeys',
+          this.table.rowSelection.selectedRowKeys
+        );
+        await deleteProductAttrKey(
+          this.table.rowSelection.selectedRowKeys.join(',')
+        );
         this.$message.success(`批量删除分类成功`);
-        this.table.records = this.table.records.filter((item) => !this.table.rowSelection.selectedRowKeys.includes(item.id))
+        this.table.records = this.table.records.filter(
+          (item) => !this.table.rowSelection.selectedRowKeys.includes(item.id)
+        );
         this.table.rowSelection.selectedRowKeys = [];
         this.getData();
       },
@@ -204,7 +205,9 @@
       async onDelete(record) {
         await deleteProductAttrKey(record.id);
         this.$message.success(`删除分类${record.name}成功`);
-        this.table.records = this.table.records.filter((item) => item.id != record.id)
+        this.table.records = this.table.records.filter(
+          (item) => item.id != record.id
+        );
         this.getData();
       },
       // 商品分类行编辑
@@ -215,7 +218,7 @@
       //获取父级树结构
       async getProductCategoryTree() {
         this.searchDataOfProductCate = await getProductCategoryTreeList();
-      },
+      }
     }
   };
 </script>
