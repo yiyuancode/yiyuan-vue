@@ -544,7 +544,7 @@ export default {
   display: flex;
   flex: 1;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 

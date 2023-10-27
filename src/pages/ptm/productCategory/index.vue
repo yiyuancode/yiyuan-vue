@@ -1,32 +1,36 @@
 <template>
   <div>
-    <y-search :scopedSlots="3" :loading="table.loading" @search="search">
-      <a-form-model-item slot="scopedSlots-0" label="分类名称">
+    <y-search
+      :scopedSlots="['name', 'pid', 'level','isShow']"
+      :loading="table.loading"
+      @search="search"
+    >
+      <a-form-model-item slot="name" slot-scope="{ form }" label="分类名称">
         <a-input
-          v-model="searchForm.name"
+          v-model="form.name"
           placeholder="搜索分类名称"
           allowClear
         />
       </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-1" label="父级分类">
+      <a-form-model-item slot="pid" slot-scope="{ form }"  label="父级分类">
         <a-cascader
-          v-model="searchForm.pid"
+          v-model="form.pid"
           :fieldNames="{ label: 'name', value: 'id', children: 'children' }"
           :options="searchDataOfProductCate"
           placeholder="请选择商品分类"
           allowClear
         />
       </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-2" label="层级">
-        <a-select v-model="searchForm.level" placeholder="选择层级" allowClear>
+      <a-form-model-item slot="level" slot-scope="{ form }" label="层级">
+        <a-select v-model="form.level" placeholder="选择层级" allowClear>
           <a-select-option :value="1"> 一级</a-select-option>
           <a-select-option :value="2"> 二级</a-select-option>
           <a-select-option :value="3"> 三级</a-select-option>
         </a-select>
       </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-3" label="显示状态">
+      <a-form-model-item slot="isShow" slot-scope="{ form }" label="显示状态">
         <a-select
-          v-model="searchForm.isShow"
+          v-model="form.isShow"
           placeholder="选择显示状态"
           allowClear
         >

@@ -139,6 +139,7 @@
           }
         });
 
+        console.log(formTemp);
         this.$emit('search', formTemp);
       },
 
