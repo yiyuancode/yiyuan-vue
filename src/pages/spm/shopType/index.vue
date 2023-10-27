@@ -1,15 +1,11 @@
 <template>
-
   <div>
-    <y-search :scopedSlots="3" :loading="table.loading" @search="search">
-      <a-form-model-item slot="scopedSlots" label="店铺ID">
-        <a-input
-          v-model="searchForm.name"
-          placeholder="搜索店铺ID"
-          allowClear
-        />
+    <y-search :scopedSlots="['name','id']" :loading="table.loading" @search="search" :columns="table.columns" >
+      <a-form-model-item slot="name" :slot-scope="{ form }" label="店铺ID">
+        <a-input v-model="form.name" placeholder="搜索店铺ID" allowClear />
       </a-form-model-item>
     </y-search>
+    
     <y-table
       rowKey="id"
       :columns="table.columns"
@@ -26,7 +22,7 @@
           :title="'确定批量删除选中的分类'"
           ok-text="确定"
           cancel-text="取消"
-          @confirm="() => onBatchDelete()"
+          @confirm="() => delData()"
         >
           <a-button :disabled="table.rowSelection.selectedRowKeys.length <= 0">
             批量删除
@@ -34,10 +30,30 @@
         </a-popconfirm>
         <a-divider type="vertical" />
       </div>
+      <div slot="isShow" slot-scope="{ text, record }" class="y-flex">
+        {{ text ? '显示' : '不显示' }}
+      </div>
+      <div slot="operation" slot-scope="{ text, record }" class="y-flex">
+        <a-button-group>
+          <a-button
+            icon="edit"
+            shape="round"
+            @click="() => onEdit(text, record)"
+          ></a-button>
+          <a-popconfirm
+            :title="'确定删除为【' + record.name + '】的店铺类型吗'"
+            ok-text="确定"
+            cancel-text="取消"
+            @confirm="() => delData(record)"
+          >
+            <a-button icon="delete" type="danger" shape="round"></a-button>
+          </a-popconfirm>
+        </a-button-group>
+      </div>
     </y-table>
     <a-drawer
       :title="editConfig.title"
-      width="500"
+      width="700"
       :visible="editConfig.visible"
       @close="editConfig.visible = false"
     >
@@ -53,14 +69,13 @@
 
 <script>
 import { columns } from './pageConfig';
-import { getShopTypePageList } from '@/api/spm/shopType';
+import { getShopTypePageList, deleteShopType } from '@/api/spm/shopType';
 import edit from './edit.vue';
 export default {
-  components: {edit},
+  components: { edit },
   data() {
     return {
-      searchForm: {
-        name: ''
+      form: {
       },
       table: {
         loading: false,
@@ -74,18 +89,18 @@ export default {
           showSizeChanger: true,
           showTotal: (total) => `共 ${total} 条` // 显示总条数和当前数据范围
         },
-     
+
         rowSelection: {
           selectedRowKeys: [],
           onChange: this.tableSelectedRowKeys
         }
       },
       editConfig: {
-          editId: null,
-          visible: false,
-          title:null
-        },
-      columns,
+        editId: null,
+        visible: false,
+        title: null
+      },
+      columns
     };
   },
   created() {
@@ -93,9 +108,37 @@ export default {
   },
 
   methods: {
+    // 批量选中
+    tableSelectedRowKeys(selectedRowKeys) {
+      console.log('tableSelectedRowKeys', selectedRowKeys);
+      this.table.rowSelection.selectedRowKeys = selectedRowKeys;
+    },
+    // 单条删除,批量删除
+    async delData(data) {
+     
+      if (data == undefined) {
+        deleteShopType(this.table.rowSelection.selectedRowKeys.join(','));
+        this.$message.success("批量删除成功")
+        this.getData();
+      } else {
+        await deleteShopType(data.id);
+        this.$message.success('删除成功');
+        this.getData();
+
+      }
+    },
+    onEditSubmit() {
+      // emit 触发 重新加载table
+      this.getData(this.tableQueryParams);
+    },
+    tableChange() {},
     addForm() {
-      this.editConfig.visible=true;
-      this.editConfig.title="添加店铺类型"
+      this.editConfig.visible = true;
+      this.editConfig.title = '添加店铺类型';
+    },
+    onEdit(text, record) {
+      this.editConfig.editId = record.id;
+      this.editConfig.visible = true;
     },
     search(form) {
       this.searchForm = form;
