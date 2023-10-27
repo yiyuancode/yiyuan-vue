@@ -58,7 +58,7 @@
         <a-button type="primary" @click="onAddProductCateHandle">
           添加分类
         </a-button>
-        <a-divider type="vertical"/>
+        <a-divider type="vertical" />
         <a-popconfirm
           :title="'确定批量删除选中的分类'"
           ok-text="确定"
@@ -69,7 +69,7 @@
             批量删除
           </a-button>
         </a-popconfirm>
-        <a-divider type="vertical"/>
+        <a-divider type="vertical" />
       </div>
       <span slot="createTime" slot-scope="{ text, record }"> </span>
       <span slot="icon" slot-scope="{ text, record }">
@@ -122,142 +122,142 @@
   </div>
 </template>
 <script>
-  import editProductCate from './edit.vue';
-  import {columns} from './pageConfig';
+import editProductCate from './edit.vue';
+import { columns } from './pageConfig';
 
-  import {
-    deleteProductCategory,
-    getProductCategoryPageList,
-    getProductCategoryTreeList
-  } from '@/api/ptm/productCategory';
+import {
+  deleteProductCategory,
+  getProductCategoryPageList,
+  getProductCategoryTreeList
+} from '@/api/ptm/productCategory';
 
-  export default {
-    name: 'ProductCategory',
-    components: {editProductCate},
-    mixins: [],
-    data() {
-      return {
-        columns,
-        paginationConfig: {
-          pageNum: 1, // 当前页码
-          pageSize: 10, // 每页显示条数
-          total: 0, // 数据总数
-          showSizeChanger: true, // 是否显示每页显示条数切换器
-          pageSizeOptions: ['10', '20', '30', '40'], // 每页显示条数选项
-          showTotal: (total) => `共 ${total} 条数据`, // 自定义显示总条数文本
-          onChange: this.handlePageChange, // 页码改变的回调
-          onShowSizeChange: this.handlePageSizeChange // 每页显示条数改变的回调
-        },
-        tableHeight: 0,
-        tableData: {
-          records: [], // 表单数据
-          selectedRows: [], // 表格首列选择项
-          selectedKeys: [] // 表格选中的数据，暂时仅仅用于清空操作后的列表选中状态
-        },
-        tableQueryParams: {
-          // 表单查询对象
-          pageSize: 10,
-          pageNum: 1,
-          id: null,
-          pid: null,
-          tenantId: null, //商户id
-          name: null, // 分类名称
-          level: undefined, // 层级
-          isShow: undefined, // 是否显示
-          createTimeStart: null, // 创建时间
-          createTimeEnd: null,
-          updateTimeStart: null,
-          updateTimeEnd: null,
-          createUser: null,
-          updateUser: null
-        },
-        searchDataOfProductCate: [], // 商品类型父级选择框下拉数据
-        editConfig: {
-          editId: null,
-          visible: false
-        }
-      };
-    },
-    mounted() {
-      // 计算table高度
-      this.calculateTableHeight();
-    },
-    created() {
-      this.getProductCateListData(this.tableQueryParams);
-      this.getProductCategoryTreeListForSearchForm();
-    },
-    methods: {
-      calculateTableHeight() {
-        // 根据实际情况计算表格高度，例如根据窗口高度、父容器高度等
-        this.tableHeight = window.innerHeight - 370; // 示例：减去200像素的高度作为表格高度
+export default {
+  name: 'ProductCategory',
+  components: { editProductCate },
+  mixins: [],
+  data() {
+    return {
+      columns,
+      paginationConfig: {
+        pageNum: 1, // 当前页码
+        pageSize: 10, // 每页显示条数
+        total: 0, // 数据总数
+        showSizeChanger: true, // 是否显示每页显示条数切换器
+        pageSizeOptions: ['10', '20', '30', '40'], // 每页显示条数选项
+        showTotal: (total) => `共 ${total} 条数据`, // 自定义显示总条数文本
+        onChange: this.handlePageChange, // 页码改变的回调
+        onShowSizeChange: this.handlePageSizeChange // 每页显示条数改变的回调
       },
-      // 商品分类搜索
-      onProductCateSearchHandle() {
-        this.tableQueryParams.pageNum = 1;
-        this.getProductCateListData(this.tableQueryParams);
+      tableHeight: 0,
+      tableData: {
+        records: [], // 表单数据
+        selectedRows: [], // 表格首列选择项
+        selectedKeys: [] // 表格选中的数据，暂时仅仅用于清空操作后的列表选中状态
       },
-      /**
-       * 商品分类分类列表
-       * @param params 分页参数
-       * @returns {Promise<void>}
-       */
-      async getProductCateListData(params) {
-        let productCateListData = await getProductCategoryPageList(params);
-        this.tableData.records = productCateListData.records;
-        this.paginationConfig.total = productCateListData.total;
-        this.paginationConfig.pageNum = productCateListData.current;
+      tableQueryParams: {
+        // 表单查询对象
+        pageSize: 10,
+        pageNum: 1,
+        id: null,
+        pid: null,
+        tenantId: null, //商户id
+        name: null, // 分类名称
+        level: undefined, // 层级
+        isShow: undefined, // 是否显示
+        createTimeStart: null, // 创建时间
+        createTimeEnd: null,
+        updateTimeStart: null,
+        updateTimeEnd: null,
+        createUser: null,
+        updateUser: null
       },
-      // 新增商品分类
-      onAddProductCateHandle() {
-        this.editConfig.editId = null;
-        this.editConfig.visible = true;
-      },
-      // 商品分类编辑后提交事件
-      onEditProductCateSubmitHandle() {
-        this.editConfig.visible = false;
-        this.getProductCateListData(this.tableQueryParams);
-      },
-      // 商品分类行编辑
-      onProductCateListRowEdit(text, record) {
-        this.editConfig.editId = record.id;
-        this.editConfig.visible = true;
-      },
-      // 列表点击删除商品分类
-      async onProductCateListRowDelete(record) {
-        await deleteProductCategory(record.id);
-        this.$message.success(`删除分类${record.name}成功`);
-        await this.getProductCateListData(this.tableQueryParams);
-      },
-      // 批量删除商品分类
-      async onProductCateListDelete() {
-        let forDelIds = this.tableData.selectedRows
-          .map((item) => item.id)
-          .join(',');
-        await deleteProductCategory(forDelIds);
-        this.$message.success(`批量删除分类成功`);
-        this.tableData.selectedKeys = [];
-        // this.tableData.selectedRows = [];
-        await this.getProductCateListData(this.tableQueryParams);
-      },
-      // 处理当前第几页
-      handlePageChange(page) {
-        this.tableQueryParams.pageNum = page;
-        this.paginationConfig.current = page;
-        this.getProductCateListData(this.tableQueryParams);
-      },
-      // 处理每页显示条数改变的逻辑
-      handlePageSizeChange(pageSize) {
-        this.tableQueryParams.pageSize = pageSize;
-        this.getProductCateListData(this.tableQueryParams);
-      },
-      async getProductCategoryTreeListForSearchForm() {
-        this.searchDataOfProductCate = await getProductCategoryTreeList();
-      },
-      // 列表多选事件
-      onTableSelectedChange(selectedRowKeys, selectedRow) {
-        this.tableData.selectedRows = selectedRow;
-        this.tableData.selectedKeys = selectedRowKeys;
+      searchDataOfProductCate: [], // 商品类型父级选择框下拉数据
+      editConfig: {
+        editId: null,
+        visible: false
       }
+    };
+  },
+  mounted() {
+    // 计算table高度
+    this.calculateTableHeight();
+  },
+  created() {
+    this.getProductCateListData(this.tableQueryParams);
+    this.getProductCategoryTreeListForSearchForm();
+  },
+  methods: {
+    calculateTableHeight() {
+      // 根据实际情况计算表格高度，例如根据窗口高度、父容器高度等
+      this.tableHeight = window.innerHeight - 370; // 示例：减去200像素的高度作为表格高度
+    },
+    // 商品分类搜索
+    onProductCateSearchHandle() {
+      this.tableQueryParams.pageNum = 1;
+      this.getProductCateListData(this.tableQueryParams);
+    },
+    /**
+     * 商品分类分类列表
+     * @param params 分页参数
+     * @returns {Promise<void>}
+     */
+    async getProductCateListData(params) {
+      let productCateListData = await getProductCategoryPageList(params);
+      this.tableData.records = productCateListData.records;
+      this.paginationConfig.total = productCateListData.total;
+      this.paginationConfig.pageNum = productCateListData.current;
+    },
+    // 新增商品分类
+    onAddProductCateHandle() {
+      this.editConfig.editId = null;
+      this.editConfig.visible = true;
+    },
+    // 商品分类编辑后提交事件
+    onEditProductCateSubmitHandle() {
+      this.editConfig.visible = false;
+      this.getProductCateListData(this.tableQueryParams);
+    },
+    // 商品分类行编辑
+    onProductCateListRowEdit(text, record) {
+      this.editConfig.editId = record.id;
+      this.editConfig.visible = true;
+    },
+    // 列表点击删除商品分类
+    async onProductCateListRowDelete(record) {
+      await deleteProductCategory(record.id);
+      this.$message.success(`删除分类${record.name}成功`);
+      await this.getProductCateListData(this.tableQueryParams);
+    },
+    // 批量删除商品分类
+    async onProductCateListDelete() {
+      let forDelIds = this.tableData.selectedRows
+        .map((item) => item.id)
+        .join(',');
+      await deleteProductCategory(forDelIds);
+      this.$message.success(`批量删除分类成功`);
+      this.tableData.selectedKeys = [];
+      // this.tableData.selectedRows = [];
+      await this.getProductCateListData(this.tableQueryParams);
+    },
+    // 处理当前第几页
+    handlePageChange(page) {
+      this.tableQueryParams.pageNum = page;
+      this.paginationConfig.current = page;
+      this.getProductCateListData(this.tableQueryParams);
+    },
+    // 处理每页显示条数改变的逻辑
+    handlePageSizeChange(pageSize) {
+      this.tableQueryParams.pageSize = pageSize;
+      this.getProductCateListData(this.tableQueryParams);
+    },
+    async getProductCategoryTreeListForSearchForm() {
+      this.searchDataOfProductCate = await getProductCategoryTreeList();
+    },
+    // 列表多选事件
+    onTableSelectedChange(selectedRowKeys, selectedRow) {
+      this.tableData.selectedRows = selectedRow;
+      this.tableData.selectedKeys = selectedRowKeys;
     }
-  };
+  }
+};
 </script>
