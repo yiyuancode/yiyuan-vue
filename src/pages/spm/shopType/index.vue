@@ -138,10 +138,12 @@ export default {
     },
     onEdit(text, record) {
       this.editConfig.editId = record.id;
+      this.editConfig.title="修改店铺类型";
       this.editConfig.visible = true;
     },
     search(form) {
       this.searchForm = form;
+      this.getData();
     },
     async getData() {
       this.table.loading = true;
