@@ -33,7 +33,6 @@
           @change="(checked) => onRowChange({ ...record, isShow: checked })"
         />
       </span>
-      <span slot="createTime" slot-scope="{ text, record }"> </span>
       <div slot="action" slot-scope="{ text, record }" class="y-flex">
         <a-button icon="edit"></a-button>
         <a-divider type="vertical"/>
@@ -50,6 +49,7 @@
     data() {
       return {
         searchForm: {},
+        c: ["1", "58"],
         table: {
           columns,
           records: [],

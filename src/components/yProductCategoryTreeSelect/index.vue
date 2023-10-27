@@ -9,6 +9,8 @@
       :tree-data="treeData"
       :placeholder="placeholder"
       :replaceFields="replaceFields"
+      tree-checkable
+      treeCheckStrictly
       :tree-default-expand-all="treeDefaultExpandAll"
       @change="change"
     >
@@ -67,7 +69,7 @@
     computed: {},
     async created() {
       await this.getData();
-      this.selectedKeys=this.value
+      this.selectedKeys = this.value
     },
     methods: {
       async getData() {
