@@ -14,11 +14,65 @@
 
 ## 属性列表
 
-| 参数        | 说明                                         | 类型    | 默认值/实例 | 是否必填 |
-| ----------- | -------------------------------------------- | ------- | ----------- | -------- |
-| scopedSlots | 配置查询表单项的数组（对应columns）          | Array   | []          | 否       |
-| columns     | 数据列配置（table的columns配置，需要有一个） | Array   | []          | 否       |
-| loading     | 加载中                                       | Boolean | false       | 否       |
+| 参数        | 说明                                           | 类型    | 默认值/实例 | 是否必填 |
+| ----------- | ---------------------------------------------- | ------- | ----------- | -------- |
+| scopedSlots | 配置查询表单项的数组（对应columns的dataIndex） | Array   | []          | 否       |
+| columns     | 数据列配置（table的columns配置，需要有一个）   | Array   | []          | 否       |
+| loading     | 加载中                                         | Boolean | false       | 否       |
+
+**传递scopedSlots示例**
+
+```vue
+  <y-search
+      :scopedSlots="['isShow', 'id']"
+      :loading="table.loading"
+      @search="search"
+   ></y-search>
+```
+
+**对应的columns示例**
+
+```js
+//columns
+const columns = [
+  {
+    title: '主键',
+    dataIndex: 'id',
+    key: 'id',
+    width: 100,
+    ellipsis: true
+  },
+  {
+    title: '显示',
+    key: 'isShow',
+    dataIndex: 'isShow',
+    width: 70,
+    scopedSlots: { customRender: 'isShow' }
+  },
+  {
+    title: '创建时间',
+    key: 'createTime',
+    dataIndex: 'createTime',
+    width: 180
+  },
+  {
+    title: '修改时间',
+    key: 'updateTime',
+    dataIndex: 'updateTime',
+    width: 180
+  },
+  {
+    title: '操作',
+    key: 'operation',
+    dataIndex: 'operation',
+    scopedSlots: { customRender: 'operation' },
+    fixed: 'right',
+    ellipsis: true
+  }
+];
+```
+
+
 
 
 
@@ -41,14 +95,15 @@
 
 
 
-```
-searchFormObj:{
-	formType,
-	dataIndex,
-	`${dataIndex}Start`,
-	`${dataIndex}End`,
-}
-```
+searchFormObj
+
+这里的查询表单的对象，是根据columns的配置，默认都会加入查询列
+
+默认情况是searchFormObj里面的属性是columns里每一项的dataIndex，值对应y-search表单项的值
+
+如果formType类型是datePicker
+
+​	那么这个dataIndex会处理成两个属性，${dataIndex}Start,${dataIndex}End
 
 
 
@@ -57,5 +112,4 @@ searchFormObj:{
 # 组件作者
 
 一源团队-花和尚
-
 
