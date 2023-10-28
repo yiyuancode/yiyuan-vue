@@ -14,15 +14,8 @@
           allowClear
         />
       </a-form-model-item>
-      <a-form-model-item label="父级分类" prop="pid">
-        <a-cascader
-          v-model="formData.pid"
-          :options="forPramsData.productCateList"
-          placeholder="请选择商品分类"
-          :fieldNames="{label:'name', value:'id', children:'children'}"
-          :multiple="true"
-          @change="onProductCateOptionSelected"
-        />
+      <a-form-model-item label="关联分类" prop="categoryIds">
+        <y-product-category-tree-select v-model="formData.categoryIds" />
       </a-form-model-item>
       <a-form-model-item label="品牌名称" prop="name">
         <a-input
@@ -78,31 +71,22 @@ export default {
         productCateList: []
       },
       rules: {
-        pid: [{ required: true, message: '请选择父级分类', trigger: 'blur' }],
-        name: [{ required: true, message: '请填写分类名称', trigger: 'blur' }],
-        icon: [{ required: true, message: '请选择分类图标', trigger: 'blur' }],
-        level: [{ required: true, message: '请选择层级', trigger: 'blur' }]
+        categoryIds: [{ required: true, message: '请选择关联分类', trigger: 'blur' }],
+        name: [{ required: true, message: '请填写品牌名称', trigger: 'blur' }],
+        icon: [{ required: true, message: '请选择品牌图标', trigger: 'blur' }]
       }
     };
   },
   created() {
     this.genDataForEdit();
-    this.onGetCateTreeList();
   },
   methods: {
-    onProductCateOptionSelected(op) {
-      if (op) {
-        this.formData.level = op.length;
-      }
-    },
-    async onGetCateTreeList(){
-      this.forPramsData.productCateList = await getProductCategoryTreeList();
-    },
     // 如果是编辑操作
     async genDataForEdit() {
       if (this.editId) {
         this.formData = await this.getProductCateDetail();
-        this.formData.pid = [this.formData.pid];
+        // TODO 这里赋值需要处理
+        this.formData.categoryIds = [this.formData.categoryIds];
       }
     },
     async getProductCateDetail() {
@@ -111,7 +95,6 @@ export default {
     onSubmitHandle() {
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
-          // this.formData.pid = this.formData.pid[0];
           if (this.formData.id) {
             await editProductBrand(this.formData, this.formData.id);
             this.$emit('onSaveSubmit');

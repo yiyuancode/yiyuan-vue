@@ -9,9 +9,14 @@ import { request } from '@/utils/request';
  * @date 2023-10-10
  */
 export function getProductBrandPageList(data) {
+  let finalData = JSON.parse(JSON.stringify(data));
+  if(finalData.categoryIds && finalData.categoryIds.length > 0) {
+    finalData.categoryIds = finalData.categoryIds.map(item => item.value).join(",");
+  }
+  finalData.name = finalData.name ? encodeURI(finalData.name) : null;
   return request({
     url: '/ptm/productBrand/page',
-    params: data
+    params: finalData
   });
 }
 
@@ -39,10 +44,14 @@ export function getProductBrandDetail(id) {
  */
 
 export function addProductBrand(data) {
+  let finalData = JSON.parse(JSON.stringify(data));
+  if(finalData.categoryIds && finalData.categoryIds.length > 0) {
+    finalData.categoryIds = finalData.categoryIds.map(item => item.value).join(",");
+  }
   return request({
     url: '/ptm/productBrand/add',
     method: 'post',
-    data
+    finalData
   });
 }
 
@@ -56,11 +65,15 @@ export function addProductBrand(data) {
  * @date 2023-10-10
  */
 export function editProductBrand(data, id) {
+  let finalData = JSON.parse(JSON.stringify(data));
+  if(finalData.categoryIds && finalData.categoryIds.length > 0) {
+    finalData.categoryIds = finalData.categoryIds.map(item => item.value).join(",");
+  }
   return request({
     url: '/ptm/productBrand/edit',
     method: 'post',
     data: {
-      ...data,
+      ...finalData,
       id
     }
   });

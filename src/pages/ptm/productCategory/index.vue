@@ -166,7 +166,6 @@
         this.getData();
       },
       tableSelectedRowKeys(selectedRowKeys) {
-        console.log('tableSelectedRowKeys', selectedRowKeys);
         this.table.rowSelection.selectedRowKeys = selectedRowKeys;
       },
       tableChange(pagination, log) {
@@ -175,7 +174,6 @@
       },
       async getData() {
         this.table.loading = true;
-        console.log("this.table.records.length", this.table.records.length)
         if (this.table.records.length == 0 && this.table.pagination.pageNum > 1) {
           this.table.pagination.pageNum = this.table.pagination.pageNum - 1;
         }

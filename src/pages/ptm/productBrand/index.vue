@@ -1,40 +1,39 @@
 <template>
   <div>
+<!--    TODO scopedSlots 属性限制使用见文档: 这里是官网的使用链接-->
     <y-search
-      :scopedSlots="3"
+      :scopedSlots="['id','tenantId','name','isShow','categoryIds']"
       :loading="table.loading"
       @search="search"
     >
-      <a-form-model-item slot="scopedSlots-0" label="分类名称">
+      <a-form-model-item slot="id" slot-scope="{ form }" label="ID">
         <a-input
-          v-model="searchForm.name"
-          placeholder="搜索分类名称"
+          v-model="form.id"
+          placeholder="ID"
           allowClear
         />
       </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-1" label="父级分类">
-        <a-cascader
-          v-model="searchForm.pid"
-          :fieldNames="{ label: 'name', value: 'id', children: 'children' }"
-          :options="searchDataOfProductCate"
-          placeholder="请选择商品分类"
+<!--      TODO 商户选择器-->
+      <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户">
+        <a-input
+          v-model="form.tenantId"
+          placeholder="请选择商户信息"
           allowClear
         />
       </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-2" label="层级">
-        <a-select
-          v-model="searchForm.level"
-          placeholder="选择层级"
+      <a-form-model-item slot="name" slot-scope="{ form }" label="品牌名称">
+        <a-input
+          v-model="form.name"
+          placeholder="搜索品牌名称"
           allowClear
-        >
-          <a-select-option :value="1"> 一级</a-select-option>
-          <a-select-option :value="2"> 二级</a-select-option>
-          <a-select-option :value="3"> 三级</a-select-option>
-        </a-select>
+        />
       </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-3" label="显示状态">
+      <a-form-model-item slot="categoryIds" slot-scope="{ form }" label="商品分类">
+        <y-product-category-tree-select v-model="form.categoryIds" />
+      </a-form-model-item>
+      <a-form-model-item slot="isShow" slot-scope="{ form }" label="显示状态">
         <a-select
-          v-model="searchForm.isShow"
+          v-model="form.isShow"
           placeholder="选择显示状态"
           allowClear
         >
@@ -52,7 +51,6 @@
       :loading="table.loading"
       @change="tableChange"
     >
-
       <div slot="operations">
         <a-button type="primary" icon="plus" @click="onAdd"> 新建</a-button>
         <a-divider type="vertical"/>
@@ -68,8 +66,6 @@
         </a-popconfirm>
         <a-divider type="vertical"/>
       </div>
-
-
       <div class="y-flex" slot="icon" slot-scope="{ text, record }">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
       </div>
@@ -146,8 +142,6 @@ export default {
           onChange: this.tableSelectedRowKeys
         }
       },
-      // 商品类型父级选择框下拉数据
-      searchDataOfProductCate: [],
       editConfig: {
         editId: null,
         visible: false
@@ -158,8 +152,10 @@ export default {
     this.getData();
   },
   methods: {
+    // TODO 此处是组件将查询的固定属性赋值给当前业务组件使用 将文档链接 。。。
     search(form) {
       this.searchForm = form;
+      this.searchForm.pageNum = 1;
       this.getData();
     },
     tableSelectedRowKeys(selectedRowKeys) {
@@ -186,12 +182,12 @@ export default {
       this.table.loading = false;
     },
 
-    // 新增商品分类
+    // 新增商品标签
     onAdd() {
       this.editConfig.editId = null;
       this.editConfig.visible = true;
     },
-    // 批量删除商品分类
+    // 批量删除商品标签
     async onBatchDelete() {
       await deleteProductBrand(this.table.rowSelection.selectedRowKeys.join(","));
       this.$message.success(`批量删除分类成功`);
@@ -199,19 +195,19 @@ export default {
       this.table.rowSelection.selectedRowKeys = [];
       this.getData();
     },
-    // 商品分类编辑后提交事件
+    // 商品标签编辑后提交事件
     onEditSubmit() {
       this.editConfig.visible = false;
-      this.getData(this.tableQueryParams);
+      this.getData();
     },
-    // 列表点击删除商品分类
+    // 列表点击删除商品标签
     async onDelete(record) {
       await deleteProductBrand(record.id);
       this.$message.success(`删除品牌${record.name}成功`);
       this.table.records = this.table.records.filter((item) => item.id != record.id)
       this.getData();
     },
-    // 商品分类行编辑
+    // 商品标签行编辑
     onEdit(text, record) {
       this.editConfig.editId = record.id;
       this.editConfig.visible = true;
