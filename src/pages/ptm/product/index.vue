@@ -201,7 +201,7 @@ export default {
         },
         rowSelection: {
           selectedRowKeys: [],
-          fixed: true,
+          fixed: true, // 锁定左侧复选框
           onChange: this.tableSelectedRowKeys
         }
       },

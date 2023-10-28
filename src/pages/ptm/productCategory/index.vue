@@ -143,6 +143,7 @@
             showTotal: (total) => `共 ${total} 条` // 显示总条数和当前数据范围
           },
           rowSelection: {
+            fixed: true, // 锁定左侧复选框
             selectedRowKeys: [],
             onChange: this.tableSelectedRowKeys
           }
