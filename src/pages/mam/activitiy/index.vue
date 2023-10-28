@@ -13,9 +13,12 @@
         <a-input v-model="form.phone" allowClear placeholder="请输入手机"/>
       </a-form-model-item>
       <a-form-model-item slot="sex" slot-scope="{ form }" label="商品分类">
-        <!--        <y-product-category-tree-select v-model="form.category"></y-product-category-tree-select>-->
-        <y-area-select v-model="form.area"></y-area-select>
+        <y-product-category-tree-select v-model="form.category"></y-product-category-tree-select>
 
+        <y-product-category-tree-select v-model="form.category"
+                                        :tenantId="233"></y-product-category-tree-select>
+        <y-area-select v-model="form.area"></y-area-select>
+        <y-shop-select v-model="form.tenantId" @change="tenantIdChange"></y-shop-select>
       </a-form-model-item>
     </y-search>
     <y-table
@@ -76,6 +79,9 @@
       this.getData();
     },
     methods: {
+      tenantIdChange(tenantId) {
+        console.log("tenantIdChange", tenantId)
+      },
       search(form) {
         this.searchForm = form;
         this.getData();

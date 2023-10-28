@@ -1,37 +1,26 @@
 <template>
   <div style="width: 100%;">
-    <a-tree-select
-      v-model="selectedKeys"
-      style="width: 100%;"
-      :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-      :allowClear="allowClear"
-      :multiple="multiple"
-      :tree-data="treeData"
-      :placeholder="placeholder"
-      :replaceFields="replaceFields"
-      :tree-checkable="multiple"
-      :treeCheckStrictly="multiple"
-      :tree-default-expand-all="treeDefaultExpandAll"
-      @change="change"
-    >
-    </a-tree-select>
+
+    <a-select v-model="selectedKeys"
+              :placeholder="placeholder"
+              :allowClear="allowClear"
+              @change="change">
+      <a-select-option v-for="(item) in options" :value="item.id" :key="item.id">
+        {{ item.shopName }}
+      </a-select-option>
+    </a-select>
+
   </div>
 </template>
 <script>
-  import {getProductCategoryTreeList} from "@/api/ptm/productCategory.js";
+  import {getShopList} from "@/api/spm/shop.js";
 
   export default {
     props: {
-      tenantId: {
+      value: {
         type: String,
         default: function () {
           return null;
-        }
-      },
-      value: {
-        type: Array || String,
-        default: function () {
-          return [];
         }
       },
       allowClear: {
@@ -40,50 +29,37 @@
           return false;
         }
       },
-      multiple: {
-        type: Boolean,
-        default: function () {
-          return true;
-        }
-      },
       placeholder: {
         type: String,
         default: function () {
           return "请选择";
         }
       },
-      treeDefaultExpandAll: {
-        type: Boolean,
-        default: function () {
-          return false;
-        }
-      },
-      replaceFields: {
-        type: Object,
-        default: function () {
-          return {children: 'children', title: 'name', key: 'id', value: 'id'};
-        }
-      },
+
 
     },
     data() {
       return {
-        treeData: [],
-        selectedKeys: []
+        selectedKeys: "",
+        options: [],
       };
     },
     computed: {},
     async created() {
       await this.getData();
-      this.selectedKeys = this.value
+      if (this.value) {
+        this.selectedKeys = this.value
+      }
+      //
     },
     methods: {
       async getData() {
-        let treeList = await getProductCategoryTreeList({tenantId: this.tenantId});
-        this.treeData = treeList;
+        this.options = await getShopList();
+        console.log("this.options", this.options)
       },
       change(value, label, extra) {
         this.$emit('input', value);
+        this.$emit('change', value);
       }
     }
   };
