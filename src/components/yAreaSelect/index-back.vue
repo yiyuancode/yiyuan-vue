@@ -1,33 +1,21 @@
 <template>
   <div style="width: 100%;">
-    <a-tree-select
-      v-model="selectedKeys"
-      style="width: 100%;"
-      :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-      :allowClear="allowClear"
-      :multiple="multiple"
-      :tree-data="treeData"
-      :placeholder="placeholder"
-      :replaceFields="replaceFields"
-      :tree-checkable="multiple"
-      :treeCheckStrictly="multiple"
-      :tree-default-expand-all="treeDefaultExpandAll"
-      @change="change"
-    >
-    </a-tree-select>
+    <a-cascader
+      :options="options"
+      :load-data="loadData"
+      placeholder="请选择区域"
+      :field-names="fieldNames"
+      change-on-select
+      @change="onChange"
+    />
   </div>
 </template>
 <script>
-  import {getProductCategoryTreeList} from "@/api/ptm/productCategory.js";
+  import {getCityTreeByPid} from '@/api/sys/area.js';
+  import _ from 'lodash';
 
   export default {
     props: {
-      tenantId: {
-        type: String,
-        default: function () {
-          return null;
-        }
-      },
       value: {
         type: Array || String,
         default: function () {
@@ -58,10 +46,10 @@
           return false;
         }
       },
-      replaceFields: {
+      fieldNames: {
         type: Object,
         default: function () {
-          return {children: 'children', title: 'name', key: 'id', value: 'id'};
+          return {label: 'name', value: 'id', children: 'children'};
         }
       },
 
@@ -69,22 +57,44 @@
     data() {
       return {
         treeData: [],
-        selectedKeys: []
+        options: [],
       };
     },
     computed: {},
     async created() {
-      await this.getData();
-      this.selectedKeys = this.value
+      this.options = await this.getData(0);
     },
     methods: {
-      async getData() {
-        let treeList = await getProductCategoryTreeList({tenantId: this.tenantId});
-        this.treeData = treeList;
+      async getData(pid) {
+        let treeList = await getCityTreeByPid(pid);
+        return treeList;
+        // this.options = treeList
       },
       change(value, label, extra) {
         this.$emit('input', value);
-      }
+      },
+      onChange(value) {
+        console.log(value);
+      },
+      async loadData(selectedOptions) {
+        const targetOption = selectedOptions[selectedOptions.length - 1];
+        targetOption.loading = true;
+        let targetOptionOld = _.cloneDeep(targetOption);
+        console.log("targetOptionOld", targetOptionOld)
+        targetOption.children = await this.getData(targetOption.id);
+        targetOption.loading = false;
+        console.log("targetOptionNew", targetOption)
+        // this.options = [...this.options];
+        //直接转成字符串进行替换,避免用递归循环替换新的对象
+        let all = JSON.stringify(this.options);
+        let targetOptionOldStr = JSON.stringify(targetOptionOld);
+        let targetOptionNewStr = JSON.stringify(targetOption);
+        all.replace(targetOptionOldStr, targetOptionNewStr);
+        console.log("all", {all, targetOptionOldStr, targetOptionNewStr})
+        this.options = JSON.parse(all);
+
+
+      },
     }
   };
 </script>
@@ -115,6 +125,7 @@
   .y-tools {
     height: 100px;
     width: 100%;
+    background: red;
   }
 
   .y-table {

@@ -21,7 +21,7 @@
       :columns="table.columns"
       :records="table.records"
       :pagination="table.pagination"
-      :row-selection="table.rowSelection"
+      :row-selection="table.rowS election"
       :loading="table.loading"
       @change="tableChange"
     >
