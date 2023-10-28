@@ -1,16 +1,16 @@
 <template>
   <div>
-    <y-search
-      :scopedSlots="3"
-      :loading="table.loading"
-      @search="search"
-    >
-      <a-form-model-item slot="scopedSlots-1" label="ID">
-        <a-input v-model="searchForm.id"  allowClear/>
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-2" label="NAME">
-        <a-input v-model="searchForm.name"  allowClear/>
-      </a-form-model-item>
+<!--    <y-search-->
+<!--      :scopedSlots="3"-->
+<!--      :loading="table.loading"-->
+<!--      @search="search"-->
+<!--    >-->
+<!--      <a-form-model-item slot="scopedSlots-1" label="ID">-->
+<!--        <a-input v-model="searchForm.id"  allowClear/>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-2" label="NAME">-->
+<!--        <a-input v-model="searchForm.name"  allowClear/>-->
+<!--      </a-form-model-item>-->
 <!--      <a-form-model-item slot="scopedSlots-3" label="平台分类">-->
 <!--        <a-cascader-->
 <!--          v-model="searchForm.tenantCategoryId"-->
@@ -58,28 +58,28 @@
 <!--          style="height: 30px; width: 30px"-->
 <!--        ></y-img>-->
 <!--      </a-form-model-item>-->
-      <a-form-model-item slot="scopedSlots-3" label="商品名">
-        <a-input v-model="searchForm.name" placeholder="请输入商品名" allowClear/>
-      </a-form-model-item>
+<!--      <a-form-model-item slot="scopedSlots-3" label="商品名">-->
+<!--        <a-input v-model="searchForm.name" placeholder="请输入商品名" allowClear/>-->
+<!--      </a-form-model-item>-->
 <!--      <a-form-model-item slot="scopedSlots-10" label="商品简介">-->
 <!--        <a-input v-model="searchForm.title" placeholder="请输入商品简介" allowClear/>-->
 <!--      </a-form-model-item>-->
-      <a-form-model-item slot="scopedSlots-11" label="关键字">
-        <a-input v-model="searchForm.keyword" placeholder="请输入关键字" allowClear/>
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-13" label="虚拟销量">
-        <a-input v-model="searchForm.fictiSales" placeholder="根据情况输入虚拟销量" allowClear/>
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-14" label="排序">
-        <a-input v-model="searchForm.tenantSort" placeholder="排序"/>
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-15" label="分佣">
-        <a-input v-model="searchForm.isSub" placeholder="分佣"/>
-      </a-form-model-item>
+<!--      <a-form-model-item slot="scopedSlots-11" label="关键字">-->
+<!--        <a-input v-model="searchForm.keyword" placeholder="请输入关键字" allowClear/>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-13" label="虚拟销量">-->
+<!--        <a-input v-model="searchForm.fictiSales" placeholder="根据情况输入虚拟销量" allowClear/>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-14" label="排序">-->
+<!--        <a-input v-model="searchForm.tenantSort" placeholder="排序"/>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-15" label="分佣">-->
+<!--        <a-input v-model="searchForm.isSub" placeholder="分佣"/>-->
+<!--      </a-form-model-item>-->
 
 
 
-    </y-search>
+<!--    </y-search>-->
     <y-table
       rowKey="id"
       :columns="table.columns"
@@ -139,7 +139,7 @@
     <!--    商品属性编辑-->
     <a-drawer
       title="商品属性"
-      width="500"
+      width="1000"
       :visible="editConfig.visible"
       @close="editConfig.visible = false"
     >

@@ -109,7 +109,6 @@
   .y-tools {
     height: 100px;
     width: 100%;
-    background: red;
   }
 
   .y-table {
