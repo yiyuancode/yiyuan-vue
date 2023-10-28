@@ -22,7 +22,7 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import { fileUpload } from '@/api/sys/file.js';
 // import {client,headers} from "@/utils/alioss.js";
 export default {
-  name: 'index',
+  name: 'Index',
   components: {
     Editor,
     Toolbar
