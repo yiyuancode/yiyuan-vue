@@ -1,4 +1,20 @@
-import { request } from '@/utils/request';
+import {request} from '@/utils/request';
+
+
+/**
+ * 获取所有的店铺信息(分页)
+ *
+ * @param {*} data 店铺信息
+ * @return
+ * @author  spring
+ * @date 2023-10-16
+ */
+export function getShopList(data) {
+  return request({
+    url: '/spm/shop/list',
+    params: data
+  });
+}
 
 /**
  * 获取所有的店铺信息(分页)
@@ -65,6 +81,7 @@ export function editShop(data, id) {
     }
   });
 }
+
 /**
  * 删除店铺（可支持批量删除）
  *

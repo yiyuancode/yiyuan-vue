@@ -1,4 +1,4 @@
-import { request } from '@/utils/request';
+import {request} from '@/utils/request';
 
 /**
  * 获取所有的区域信息(分页)
@@ -69,6 +69,7 @@ export async function editArea(data, id) {
   });
   return resp.data;
 }
+
 /**
  * 删除区域（可支持批量删除）
  *
@@ -96,26 +97,23 @@ export async function deleteArea(ids) {
  * @author  一源团队-花和尚
  * @date 2023-09-10
  */
-export async function getCityTreeById(data) {
-  const resp = await request({
-    url: '/sys/area/getAreaTreeById',
-    params: data
+export function getCityTreeById(id) {
+  return request({
+    url:  `/sys/area/getAreaTreeById/${id}`
   });
-  return resp.data;
 }
 
+
 /**
- * 查询城市区域树结构
+ * 根据父id查询下一级树结构
  *
- * @param {*} data 城市区域信息
+ * @param {*} id
  * @return
- * @author  一源团队-花和尚
- * @date 2023-09-10
+ * @author  一源-花和尚
+ * @date 2023-10-13
  */
-export async function getCityTree(data) {
-  const resp = await request({
-    url: '/sys/area/getAreaTree',
-    params: data
+export function getCityTreeByPid(pid) {
+  return request({
+    url: `/sys/area/getAreaTree/${pid}`
   });
-  return resp.data;
 }
