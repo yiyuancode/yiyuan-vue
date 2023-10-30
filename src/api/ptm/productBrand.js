@@ -95,3 +95,15 @@ export function deleteProductBrand(ids) {
     }
   });
 }
+
+/**
+ * 根据分类id查询对应品牌
+ * @param categoryId 分类id
+ * @returns {*}
+ */
+export function listOfProductBrandByCid(categoryId) {
+  return request({
+    url: `/ptm/productBrand/listOfCategory/${categoryId}`,
+    method: 'get'
+  });
+}

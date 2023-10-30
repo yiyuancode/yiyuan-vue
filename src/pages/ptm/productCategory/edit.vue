@@ -7,6 +7,11 @@
       :label-col="labelCol"
       :wrapper-col="wrapperCol"
     >
+<!--      TODO 需要在此页面处理平台端分类还是商户分类-->
+<!--      <a-form-model-item label="商户">-->
+<!--        <y-shop-select v-model="formData.tenantId"-->
+<!--                       @change="tenantIdChange"></y-shop-select>-->
+<!--      </a-form-model-item>-->
       <a-form-model-item label="父级分类" prop="pid">
         <a-cascader
           v-model="formData.pid"
@@ -28,19 +33,6 @@
           @UploadSngle="(fileUrl) => UploadSngle(fileUrl, formData)"
         ></UploadSngle>
       </a-form-model-item>
-      <!--      <a-form-model-item label="层级" prop="level"> 用层级选择的长度代替了 -->
-      <!--        <a-select v-model="formData.level" default-value="1" >-->
-      <!--          <a-select-option :value="1">-->
-      <!--            一级-->
-      <!--          </a-select-option>-->
-      <!--          <a-select-option :value="2">-->
-      <!--            二级-->
-      <!--          </a-select-option>-->
-      <!--          <a-select-option :value="3">-->
-      <!--            三级-->
-      <!--          </a-select-option>-->
-      <!--        </a-select>-->
-      <!--      </a-form-model-item>-->
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmitHandle">{{
           editId ? '编辑' : '创建'
@@ -138,7 +130,6 @@ export default {
     onSubmitHandle() {
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
-          // this.formData.pid = this.formData.pid[0];
           if (this.formData.id) {
             await editProductCategory(this.formData, this.formData.id);
             this.$emit('onSaveSubmit');

@@ -12,11 +12,13 @@
       <a-form-model-item label="平台分类">
 <!--        todo 需要有商户参数的传递-->
         <y-product-category-tree-select
-          v-model="formData.platCategoryIds" />
+          v-model="formData.platCategoryIds"
+        @change="cateIdChange"/>
       </a-form-model-item>
       <a-form-model-item label="店铺分类">
         <!--        todo 根据商户id查询对应店铺分类-->
         <y-product-category-tree-select
+          :disabled="formData.tenantId == 0"
           :tenantId="forPramsData.tenantId"
           :key="forPramsData.tenantId"
           v-model="formData.platCategoryIds" />
@@ -101,6 +103,7 @@
 
 <script>
 import { addProduct, editProduct } from '@/api/ptm/product.js';
+import { listOfProductBrandByCid } from "@/api/ptm/productBrand.js"
 export default {
   name: "EditProduct",
   props: {
@@ -173,10 +176,17 @@ export default {
       }
     },
     tenantIdChange(tenantId) {
-      console.log("tenantIdChange", tenantId);
       this.forPramsData.tenantId = tenantId;
-
     },
+    cateIdChange(cid){
+      this.formData.platCategoryIds=cid.value
+      this.getProductBrandListByCid();
+    },
+    // 根据分类id获取品牌
+    async getProductBrandListByCid(){
+      let currentBandList = await listOfProductBrandByCid(this.formData.platCategoryIds);
+      console.log('currentBandList:', currentBandList);
+    }
   }
 }
 </script>

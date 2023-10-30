@@ -102,7 +102,7 @@
     </y-table>
 
     <a-drawer
-      title="商品属性"
+      title="商品分类"
       width="500"
       :visible="editConfig.visible"
       @close="editConfig.visible = false"

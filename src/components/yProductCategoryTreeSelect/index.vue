@@ -6,6 +6,7 @@
       :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
       :allowClear="allowClear"
       :multiple="multiple"
+      :disabled="disabled"
       :tree-data="treeData"
       :placeholder="placeholder"
       :replaceFields="replaceFields"
@@ -46,6 +47,12 @@
           return true;
         }
       },
+      disabled:{
+        type: Boolean,
+        default: function () {
+          return false;
+        }
+      },
       placeholder: {
         type: String,
         default: function () {
@@ -84,6 +91,7 @@
       },
       change(value, label, extra) {
         this.$emit('input', value);
+        this.$emit('change', value);
       }
     }
   };
