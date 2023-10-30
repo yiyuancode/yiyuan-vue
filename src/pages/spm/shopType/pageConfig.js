@@ -39,7 +39,8 @@ const columns = [
     key: 'typeContract',
     width: 160,
     rules: [{ required: true, message: '请输入店铺类型合约', trigger: 'blur' }],
-    formType: 'text'
+    formType: 'text',
+    noSearch:true
   },
 
   {

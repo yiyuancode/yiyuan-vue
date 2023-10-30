@@ -1,9 +1,7 @@
 <template>
   <div>
     <y-search :scopedSlots="['name','id']" :loading="table.loading" @search="search" :columns="table.columns" >
-      <a-form-model-item slot="name" :slot-scope="{ form }" label="店铺ID">
-        <a-input v-model="form.name" placeholder="搜索店铺ID" allowClear />
-      </a-form-model-item>
+    
     </y-search>
     
     <y-table
