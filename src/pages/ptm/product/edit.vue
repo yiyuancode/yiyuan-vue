@@ -6,21 +6,20 @@
       :wrapper-col="wrapperCol"
     >
       <a-form-model-item label="商户">
-<!--        <a-cascader-->
-<!--          v-model="formData.tenantId"-->
-<!--          :options="forPramsData.productCateList"-->
-<!--          placeholder="请选择平台分类"-->
-<!--        />-->
+        <y-shop-select v-model="formData.tenantId"
+                       @change="tenantIdChange"></y-shop-select>
       </a-form-model-item>
       <a-form-model-item label="平台分类">
 <!--        todo 需要有商户参数的传递-->
-<!--        <y-product-category-tree-select-->
-<!--          v-model="formData.platCategoryIds" />-->
+        <y-product-category-tree-select
+          v-model="formData.platCategoryIds" />
       </a-form-model-item>
       <a-form-model-item label="店铺分类">
         <!--        todo 根据商户id查询对应店铺分类-->
-        <!--        <y-product-category-tree-select-->
-        <!--          v-model="formData.platCategoryIds" />-->
+        <y-product-category-tree-select
+          :tenantId="forPramsData.tenantId"
+          :key="forPramsData.tenantId"
+          v-model="formData.platCategoryIds" />
       </a-form-model-item>
       <a-form-model-item label="品牌">
 <!--        todo 根据当前平台id加载对应品牌列表 此字为非必填-->
@@ -153,7 +152,8 @@ export default {
         ]
       },
       forPramsData: {
-        productCateList: []
+        productCateList: [],
+        tenantId: null, // 此处为选择商户后的id
       }
     }
   },
@@ -171,7 +171,12 @@ export default {
         await addProduct(this.formData);
         this.$emit('onSubmitHandleSuccess');
       }
-    }
+    },
+    tenantIdChange(tenantId) {
+      console.log("tenantIdChange", tenantId);
+      this.forPramsData.tenantId = tenantId;
+
+    },
   }
 }
 </script>
