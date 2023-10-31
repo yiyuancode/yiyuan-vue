@@ -73,14 +73,45 @@
     },
     methods: {
       async getData() {
-        let treeList = await getProductCategoryTreeListForPlat({tenantId: this.tenantId});
+        let treeList = await getProductCategoryTreeListForPlat();
+        this.setDisable(3, treeList)
         this.treeData = treeList;
+        console.log("this.treeData", this.treeData)
+
       },
       change(value) {
         console.log("change", value)
-        this.$emit('input', value);
-        this.$emit('change', value);
-      }
+        // let idArray = value.map((item) => {
+        //   return item[item.length - 1]
+        // })
+        let idArray = value.map(function (item) {
+          return item[item.length - 1]
+        });
+        this.$emit('input', idArray);
+        this.$emit('change', idArray);
+      },
+      /**
+       * level: 当前层级
+       * data: 当前层级的数据
+       */
+      setDisable(level, data) {
+        let _this = this;
+        data.forEach((v) => {
+          //此处判断可根据你后台返回的数据类型适当变换，原理就是将不符合条件的项给禁掉
+          if (!v.children && v.level.value < level) {
+            v.disabled = true;
+          }
+          if (v.children && v.level.value < level) {
+            v.disabled = false;
+          }
+          if (!v.children && v.level.value == level) {
+            v.disabled = false;
+          }
+          if (v.children) {
+            _this.setDisable(level, v.children);
+          }
+        });
+      },
     }
   };
 </script>

@@ -25,10 +25,14 @@
 
         <y-shop-category-select :tenantId="form.tenantId" :key="form.tenantId"></y-shop-category-select>
 
-        <y-rich-editor v-model="form.rich"></y-rich-editor>
+<!--        <y-rich-editor v-model="form.rich"></y-rich-editor>-->
 
+        <y-upload-multiple v-model="form.imgs"  @change="imgsChange"></y-upload-multiple>
+
+        <y-upload-single v-model="form.img2" ></y-upload-single>
       </a-form-model-item>
     </y-search>
+
     <y-table
       rowKey="id"
       :columns="table.columns"
@@ -61,6 +65,7 @@
   export default {
     data() {
       return {
+        imgs:"315ae6f9-8613-411d-a422-212c6cc3288c.png,918e048d-06ab-47b1-9d7b-583450ca582b.webp",
         area: "11, 1101,110101",
         searchForm: {},
         c: ["1", "58"],
@@ -87,6 +92,9 @@
       this.getData();
     },
     methods: {
+      imgsChange(imgs){
+        console.log("imgsChange", imgs)
+      },
       tenantIdChange(tenantId) {
         console.log("tenantIdChange", tenantId)
       },
