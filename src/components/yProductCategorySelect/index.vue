@@ -23,7 +23,7 @@
         }
       },
       value: {
-        type: Object,
+        type: String,
         default: function () {
           return null;
         }
@@ -83,9 +83,9 @@
         //   return item[item.length - 1]
         // })
         let id = value[value.length - 1];
-        console.log("change", {id, level: value.length})
-        this.$emit('input', {id, level: value.length});
-        this.$emit('change', {id, level: value.length});
+        console.log("change", id)
+        this.$emit('input', id);
+        this.$emit('change', id);
       },
 
     }

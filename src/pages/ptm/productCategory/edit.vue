@@ -136,6 +136,7 @@ export default {
             await editProductCategory(this.formData, this.formData.id);
             this.$emit('onSaveSubmit');
           } else {
+            console.log("this.formData",this.formData)
             await addProductCategory(this.formData);
             this.$emit('onSaveSubmit');
           }
