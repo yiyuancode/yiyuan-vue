@@ -9,6 +9,8 @@ import draggable from 'vuedraggable';
 import yPlatCategorySelect from '@/components/yPlatCategorySelect/index.vue';
 import yShopCategorySelect from '@/components/yShopCategorySelect/index.vue';
 import yRichEditor from '@/components/yRichEditor/index.vue';
+import yUploadMultiple from '@/components/yUploadMultiple/index.vue';
+import yUploadSingle from '@/components/yUploadSingle/index.vue';
 import {Cascader} from 'element-ui';
 
 export default {
@@ -24,6 +26,9 @@ export default {
     Vue.component('yPlatCategorySelect', yPlatCategorySelect);
     Vue.component('yShopCategorySelect', yShopCategorySelect);
     Vue.component('yRichEditor', yRichEditor);
+    Vue.component('yUploadMultiple', yUploadMultiple);
+    Vue.component('yUploadSingle', yUploadSingle);
+
     Vue.component(Cascader.name, Cascader);
 
   }

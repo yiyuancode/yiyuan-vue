@@ -16,7 +16,7 @@
     />
     <div v-else>
       <a-icon :type="loading ? 'loading' : 'plus'" />
-      <div class="ant-upload-text">Upload</div>
+      <div class="ant-upload-text">上传</div>
     </div>
   </a-upload>
 </template>
@@ -32,7 +32,7 @@ import { mapGetters } from 'vuex';
 export default {
   computed: {
     ...mapGetters({
-      myToken: 'account/myToken'
+      myToken: 'user/myToken'
     })
   },
   props: {
