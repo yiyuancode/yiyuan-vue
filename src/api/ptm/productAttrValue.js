@@ -16,6 +16,18 @@ export function getProductAttrValuePageList(data) {
 }
 
 /**
+ * 获取所有的商品属性value信息 不分页
+ * @param data
+ * @returns {*}
+ */
+export function getProductAttrValueList(data) {
+  return request({
+    url: '/ptm/productAttrValue/list',
+    params: data
+  });
+}
+
+/**
  * 获取商品属性value详情
  *
  * @param {*} id

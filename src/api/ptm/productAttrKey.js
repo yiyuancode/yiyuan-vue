@@ -24,6 +24,27 @@ export function getProductAttrKeyPageList(data) {
 }
 
 /**
+ * 获取所有的商品属性key信息不分页
+ * @param data 查询参数
+ * @returns {*}
+ */
+export function getProductAttrKeyList(data) {
+  let finalData = JSON.parse(JSON.stringify(data));
+  if (
+    finalData.ptmProductCategoryId &&
+    finalData.ptmProductCategoryId.length > 0
+  ) {
+    finalData.ptmProductCategoryId =
+      finalData.ptmProductCategoryId[finalData.ptmProductCategoryId.length - 1];
+  }
+  return request({
+    url: '/ptm/productAttrKey/list',
+    params: finalData
+  });
+}
+
+
+/**
  * 获取商品属性key详情
  *
  * @param {*} id

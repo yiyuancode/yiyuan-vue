@@ -105,6 +105,23 @@
           <a-radio :value="1">是</a-radio>
         </a-radio-group>
       </a-form-model-item>
+      <a-form-model-item label="商品属性名">
+        <a-select label-in-value v-model="formData.attrKey" placeholder="请选择商品属性" @change="handleAttrValueChange">
+          <a-select-option v-for="(item, index) in forPramsData.productAttrKeyList" :key="index" :value="item.id">
+            {{ item.attrKey }}
+          </a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item label="商品属性值">
+        <a-select label-in-value v-model="formData.attrValue" mode="multiple" placeholder="请选择商品属性">
+          <a-select-option v-for="(item, index) in forPramsData.productAttrValueList" :key="index" :value="item.id">
+            {{ item.attrValue }}
+          </a-select-option>
+        </a-select>
+        <a-button type="primary" @click="handleSkuList">
+          确认生成sku
+        </a-button>
+      </a-form-model-item>
       <a-form-model-item label="商品详情">
         <rich-editor v-model="formData.goodsDesc"></rich-editor>
       </a-form-model-item>
@@ -121,6 +138,9 @@ import { addProduct, editProduct } from '@/api/ptm/product.js';
 import { listOfProductBrandByCid } from "@/api/ptm/productBrand.js"
 import UploadSngle from '@/components/uploadSngle';
 import richEditor from "../../../components/RichEditor/index.vue";
+import {getProductAttrKeyList} from "@/api/ptm/productAttrKey";
+import {getProductAttrValueList} from "../../../api/ptm/productAttrValue";
+import {makeSkuTempList} from "../../../api/ptm/productSku";
 export default {
   name: "EditProduct",
   components:{ UploadSngle, richEditor },
@@ -155,6 +175,8 @@ export default {
         goodsDesc: null,          // 商品富文本描述
         // codePath: null,           // 商品二维码/小程序码
         videoLink: null,          // 视频连接
+        attrKey:[],                // 临时用到的属性名 不当作参数
+        attrValue:[],                // 临时用到的属性值 不当作参数
         skuList: [
             {
               updateUser: null,
@@ -172,6 +194,8 @@ export default {
       forPramsData: {
         productCateList: [],
         tenantId: null, // 此处为选择商户后的id
+        productAttrKeyList: [], // 商品属性key列表
+        productAttrValueList: [], // 商品属性Value列表
       }
     }
   },
@@ -192,6 +216,8 @@ export default {
     },
     tenantIdChange(tenantId) {
       this.forPramsData.tenantId = tenantId;
+      // 根据当前商户获取对应属性名称
+      this.handleAttrKeyChange({tenantId:this.forPramsData.tenantId});
     },
     cateIdChange(cid){
       console.log('CID:', cid);
@@ -210,6 +236,21 @@ export default {
     UploadSngleSliderImage(fileUrl, item) {
       console.log('item:', item.image);
       item.sliderImage.add(fileUrl);
+    },
+    // 选择属性key
+    async handleAttrKeyChange(params){
+      this.forPramsData.productAttrKeyList = await getProductAttrKeyList(params);
+    },
+    // 根据选择的attrKeyID加载AttrValue
+    async handleAttrValueChange(selectedAttrKey){
+      console.log('selectedAttrKey:',selectedAttrKey)
+      this.forPramsData.productAttrValueList = await getProductAttrValueList({ptmProductAttrKeyId:selectedAttrKey.key});
+    },
+    async handleSkuList(){
+      let attrKey = [this.formData.attrKey.label.trim()];
+      let attrValue =[this.formData.attrValue.map(obj => obj.label.trim())];
+      const skuList = await makeSkuTempList({attrKeyList:attrKey, attrValList:attrValue});
+      console.log('skuList:', skuList);
     }
   }
 }

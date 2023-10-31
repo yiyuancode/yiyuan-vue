@@ -5,6 +5,10 @@
       :label-col="labelCol"
       :wrapper-col="wrapperCol"
     >
+      <a-form-model-item label="商户">
+<!--        这里的key必须指定，要么编辑是数据回显会有问题，添加key就可以让differnt 算法继续执行-->
+        <y-shop-select :key="formData.tenantId" v-model="formData.tenantId"></y-shop-select>
+      </a-form-model-item>
       <a-form-model-item label="商品分类">
         <a-cascader
           v-model="formData.productCateId"
@@ -47,7 +51,9 @@ export default {
     return {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
-      formData: {},
+      formData: {
+        tenantId: null
+      },
       forPramsData: {
         // 当前商品属性业务中用到的整体参数对象
         productCateList: []
@@ -86,12 +92,13 @@ export default {
 
     async genDataForEdit() {
       if (this.editId) {
-        this.formData = await getProductAttrKeyDetail(this.editId);
-        this.formData.productCateId = [this.formData.ptmProductCategoryId];
+        // setTimeout(async () => {
+          this.formData = await getProductAttrKeyDetail(this.editId);
+          this.formData.productCateId = [this.formData.ptmProductCategoryId];
+        // }, 800);
       }
     },
     async onSubmitHandle() {
-      this.formData.tenantId = 0; // 平台创建商户id为0
       if (this.editId) {
         await editProductAttrKey(this.formData, this.formData.id);
         this.$emit('onSaveSubmit');
