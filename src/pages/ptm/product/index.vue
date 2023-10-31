@@ -174,9 +174,9 @@ export default {
         name: null, // 商品名称
         title: null, // 商品title
         keyword: null, // 商品关键字
-        stock: null, // 库存 TODO 前端可以给出预设区间做选择
-        salePrice: null, // 售价 TODO 前端可以给出预设区间做价格选择
-        sales: null, // 销量 TODO 前端给出区间做选择
+        stock: 0, // 库存 TODO 前端可以给出预设区间做选择
+        salePrice: 0, // 售价 TODO 前端可以给出预设区间做价格选择
+        sales: 0, // 销量 TODO 前端给出区间做选择
         browse: null, // 浏览量 TODO 前端给区间做选择 做选择的均为后端需要同步支持的参数，次功能需要设计后再决定
         isSpecType: null, // 商品规格 是否放入回收站0=否|1=是
         isSub: null, // 商品规格 是否单独分佣0=否|1=是

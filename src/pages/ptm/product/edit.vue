@@ -48,16 +48,28 @@
 <!--        />-->
       </a-form-model-item>
       <a-form-model-item label="主图">
-<!--        <y-img todo 缺省值处理中 -->
-<!--          :src="globalConfig.imgBaseUrl + image"-->
-<!--          style="height: 30px; width: 30px"-->
-<!--        ></y-img>-->
+        <y-img
+          v-if="formData.image"
+          :src="formData.image"
+          style="height: 100px; width: 100px;"
+        ></y-img>
+        <UploadSngle
+          v-else
+          v-model="formData.image"
+          @UploadSngle="(fileUrl) => UploadSngle(fileUrl, formData)"
+        ></UploadSngle>
       </a-form-model-item>
       <a-form-model-item label="轮播图">
-<!--        <y-img todo 多图上传 组件后补-->
-<!--          :src="globalConfig.imgBaseUrl + sliderImage"-->
-<!--          style="height: 30px; width: 30px"-->
-<!--        ></y-img>-->
+<!--        todo 多图上传 组件后补-->
+        <y-img
+          v-if="formData.sliderImage"
+          :src="formData.sliderImage"
+          style="height: 100px; width: 100px;"
+        ></y-img>
+        <UploadSngle
+          v-model="formData.sliderImage"
+          @UploadSngle="(fileUrl) => UploadSngleSliderImage(fileUrl, formData)"
+        ></UploadSngle>
       </a-form-model-item>
 
       <a-form-model-item label="视频">
@@ -72,26 +84,29 @@
       <a-form-model-item label="关键字">
         <a-input v-model="formData.keyword" placeholder="请输入关键字" allowClear/>
       </a-form-model-item>
-      <a-form-model-item label="详情">
-        <a-input v-model="formData.goodsDesc" placeholder="请输商品详情" allowClear/>
-      </a-form-model-item>
       <a-form-model-item label="单位">
         <a-input v-model="formData.unitName" placeholder="请输入单位" allowClear/>
       </a-form-model-item>
       <a-form-model-item label="销量">
-        <a-input v-model="formData.sales" placeholder="请输入单位" allowClear/>
+        <a-input-number v-model="formData.sales" :min="0" :max="999999" />
       </a-form-model-item>
       <a-form-model-item label="虚拟销量">
-        <a-input v-model="formData.fictiSales" placeholder="根据情况输入虚拟销量" allowClear/>
+        <a-input-number v-model="formData.fictiSales" :min="0" :max="999999" />
       </a-form-model-item>
       <a-form-model-item label="商品二维码">
         <a-input v-model="formData.codePath" placeholder="商品二维码"/>
       </a-form-model-item>
       <a-form-model-item label="商户排序">
-        <a-input v-model="formData.tenantSort" placeholder="商户排序"/>
+        <a-input-number v-model="formData.tenantSort" :min="0" :max="999999" />
       </a-form-model-item>
       <a-form-model-item label="单独分佣">
-        <a-input v-model="formData.isSub" placeholder="单独分佣"/>
+        <a-radio-group v-model="formData.isSub">
+          <a-radio :value="0">否</a-radio>
+          <a-radio :value="1">是</a-radio>
+        </a-radio-group>
+      </a-form-model-item>
+      <a-form-model-item label="商品详情">
+        <rich-editor v-model="formData.goodsDesc"></rich-editor>
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmitHandle"> 创建 </a-button>
@@ -104,8 +119,11 @@
 <script>
 import { addProduct, editProduct } from '@/api/ptm/product.js';
 import { listOfProductBrandByCid } from "@/api/ptm/productBrand.js"
+import UploadSngle from '@/components/uploadSngle';
+import richEditor from "../../../components/RichEditor/index.vue";
 export default {
   name: "EditProduct",
+  components:{ UploadSngle, richEditor },
   props: {
     editId: {
       // 待编辑数据
@@ -118,7 +136,7 @@ export default {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
       formData: {
-        tenantId: 0,            // 商户id TODO 商户创建自带参数，暂时指定0=平台
+        tenantId: null,            // 商户id
         platCategoryIds: null,   // 平台分类id
         shopCategoryId: null,     // 商户分类id
         brandId: null,            // 品牌 TODO 检查品牌和分类的关联
@@ -130,13 +148,10 @@ export default {
         title: null,              // 简介
         keyword: null,            // 关键字
         unitName: null,           // 单位名称
-        // sales: 0,                 // 实际销量
+        sales: 0,                 // 实际销量
         fictiSales: 0,            // 虚拟销量
-        // browse: 0,             // 浏览量
         tenantSort: 0,            // 排序
-        isSub: true,              // 分佣模式
-        // isAudit: true,
-        // auditStatus: ,
+        isSub: 0,              // 分佣模式 是否单独分佣0=否|1=是
         goodsDesc: null,          // 商品富文本描述
         // codePath: null,           // 商品二维码/小程序码
         videoLink: null,          // 视频连接
@@ -179,13 +194,22 @@ export default {
       this.forPramsData.tenantId = tenantId;
     },
     cateIdChange(cid){
-      this.formData.platCategoryIds=cid.value
+      console.log('CID:', cid);
+      this.formData.platCategoryIds=cid[0].value
       this.getProductBrandListByCid();
     },
     // 根据分类id获取品牌
     async getProductBrandListByCid(){
       let currentBandList = await listOfProductBrandByCid(this.formData.platCategoryIds);
       console.log('currentBandList:', currentBandList);
+    },
+    UploadSngle(fileUrl, item) {
+      console.log('item:', item);
+      item.image = fileUrl;
+    },
+    UploadSngleSliderImage(fileUrl, item) {
+      console.log('item:', item.image);
+      item.sliderImage.add(fileUrl);
     }
   }
 }
