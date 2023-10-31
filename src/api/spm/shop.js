@@ -21,7 +21,7 @@ export function getShopList(data) {
  *
  * @param {*} data 店铺信息
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 export function getShopPageList(data) {
@@ -36,7 +36,7 @@ export function getShopPageList(data) {
  *
  * @param {*} id
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 export function getShopDetail(id) {
@@ -50,7 +50,7 @@ export function getShopDetail(id) {
  *
  * @param {*} data 店铺信息
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 
@@ -68,7 +68,7 @@ export function addShop(data) {
  * @param {*} data 店铺信息
  * @param {*} id 店铺id
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 export function editShop(data, id) {
@@ -87,7 +87,7 @@ export function editShop(data, id) {
  *
  * @param {*} ids
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 export function deleteShop(ids) {

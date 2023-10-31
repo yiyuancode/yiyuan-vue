@@ -1,7 +1,7 @@
 /**
  * 店铺类型页面组件配置配置
  *
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 import * as shopType from '@/api/spm/shopType';
@@ -50,12 +50,14 @@ const columns = [
   },
 
   {
-    title: '显示状态0=不显示|1=显示',
+    title: '显示',
     dataIndex: 'isShow',
     key: 'isShow',
-    width: 160
+    width: 160,
+    scopedSlots: {
+      customRender: "isShow"
+    }
   },
-
   {
     title: '创建时间',
     dataIndex: 'createTime',
@@ -91,26 +93,35 @@ const columns = [
     noSearch: true
   },
 
-  {
-    title: '创建人',
-    dataIndex: 'createUser',
-    key: 'createUser',
-    width: 160,
-    noEdit: true,
-    noAdd: true,
-    noSearch: true,
-    noShow: true
-  },
+  // {
+  //   title: '创建人',
+  //   dataIndex: 'createUser',
+  //   key: 'createUser',
+  //   width: 160,
+  //   noEdit: true,
+  //   noAdd: true,
+  //   noSearch: true,
+  //   noShow: true
+  // },
 
+  // {
+  //   title: '修改人',
+  //   dataIndex: 'updateUser',
+  //   key: 'updateUser',
+  //   width: 160,
+  //   noEdit: true,
+  //   noAdd: true,
+  //   noSearch: true,
+  //   noShow: true
+  // },
   {
-    title: '修改人',
-    dataIndex: 'updateUser',
-    key: 'updateUser',
-    width: 160,
-    noEdit: true,
-    noAdd: true,
-    noSearch: true,
-    noShow: true
+    title: '操作',
+    dataIndex: 'operation',
+    fixed: 'right',
+    // width: 150,
+    //操作列可以不加宽度，但是必须要要加这个不换行属性
+    ellipsis: true,
+    scopedSlots: {customRender: 'operation'}
   }
 ];
 

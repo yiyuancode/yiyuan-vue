@@ -1,7 +1,7 @@
 /**
  * 店铺页面组件配置配置
  *
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 import * as shop from '@/api/spm/shop';
@@ -18,11 +18,12 @@ const columns = [
   },
 
   {
-    title: '店铺类型id',
+    title: '店铺类型',
     dataIndex: 'spmShopTypeId',
     key: 'spmShopTypeId',
     width: 160,
-    rules: [{ required: true, message: '请输入店铺类型id', trigger: 'blur' }]
+    formType: 'select',
+    rules: [{ required: true, message: '请选择店铺类型', trigger: 'blur' }]
   },
 
   {

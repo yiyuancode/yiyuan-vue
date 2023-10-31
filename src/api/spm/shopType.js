@@ -5,7 +5,7 @@ import { request } from '@/utils/request';
  *
  * @param {*} data 店铺类型信息
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 export function getShopTypePageList(data) {
@@ -20,7 +20,7 @@ export function getShopTypePageList(data) {
  *
  * @param {*} id
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 export function getShopTypeDetail(id) {
@@ -34,7 +34,7 @@ export function getShopTypeDetail(id) {
  *
  * @param {*} data 店铺类型信息
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 
@@ -52,7 +52,7 @@ export function addShopType(data) {
  * @param {*} data 店铺类型信息
  * @param {*} id 店铺类型id
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 export function editShopType(data, id) {
@@ -70,7 +70,7 @@ export function editShopType(data, id) {
  *
  * @param {*} ids
  * @return
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 export function deleteShopType(ids) {
