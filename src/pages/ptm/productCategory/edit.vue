@@ -13,12 +13,14 @@
 <!--                       @change="tenantIdChange"></y-shop-select>-->
 <!--      </a-form-model-item>-->
       <a-form-model-item label="父级分类" prop="pid">
-        <a-cascader
-          v-model="formData.pid"
-          :options="forPramsData.productCateList"
-          placeholder="请选择商品分类"
-          @change="onProductCateOptionSelected"
-        />
+<!--        <a-cascader-->
+<!--          v-model="formData.pid"-->
+<!--          :options="forPramsData.productCateList"-->
+<!--          changeOnSelect-->
+<!--          placeholder="请选择商品分类"-->
+<!--          @change="onProductCateOptionSelected"-->
+<!--        />-->
+        <y-product-category-select v-model="formData.pid"></y-product-category-select>
       </a-form-model-item>
       <a-form-model-item label="分类名称" prop="name">
         <a-input

@@ -8,6 +8,8 @@ import yShopSelect from '@/components/yShopSelect/index.vue';
 import draggable from 'vuedraggable';
 import yPlatCategorySelect from '@/components/yPlatCategorySelect/index.vue';
 import yShopCategorySelect from '@/components/yShopCategorySelect/index.vue';
+import yProductCategorySelect from '@/components/yProductCategorySelect/index.vue';
+
 import yRichEditor from '@/components/yRichEditor/index.vue';
 import yUploadMultiple from '@/components/yUploadMultiple/index.vue';
 import yUploadSingle from '@/components/yUploadSingle/index.vue';
@@ -28,6 +30,7 @@ export default {
     Vue.component('yRichEditor', yRichEditor);
     Vue.component('yUploadMultiple', yUploadMultiple);
     Vue.component('yUploadSingle', yUploadSingle);
+    Vue.component('yProductCategorySelect', yProductCategorySelect);
 
     Vue.component(Cascader.name, Cascader);
 
