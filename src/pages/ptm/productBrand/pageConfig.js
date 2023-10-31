@@ -8,13 +8,14 @@ import * as productBrand from '@/api/ptm/productBrand';
 
 const columns = [
   {
-    title: '品牌id',
+    title: 'id',
     dataIndex: 'id',
     key: 'id',
-    width: 160,
+    width: 80,
     rules: [{ required: true, message: '请输入品牌id', trigger: 'blur' }],
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    ellipsis: true
   },
 
   {
@@ -38,7 +39,8 @@ const columns = [
     dataIndex: 'icon',
     key: 'icon',
     width: 160,
-    rules: [{ required: true, message: '请输入品牌图标', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入品牌图标', trigger: 'blur' }],
+    scopedSlots: {customRender: 'icon'}
   },
 
   {
@@ -49,7 +51,7 @@ const columns = [
   },
 
   {
-    title: '状态0=不显示|1=显示',
+    title: '状态',
     dataIndex: 'isShow',
     key: 'isShow',
     width: 160
@@ -59,7 +61,7 @@ const columns = [
     title: '创建时间',
     dataIndex: 'createTime',
     key: 'createTime',
-    width: 160,
+    width: 180,
     props: {
       showTime: true,
       style: { width: '100%' }
@@ -76,7 +78,7 @@ const columns = [
     title: '修改时间',
     dataIndex: 'updateTime',
     key: 'updateTime',
-    width: 160,
+    width: 180,
     props: {
       showTime: true,
       style: { width: '100%' }
@@ -110,6 +112,15 @@ const columns = [
     noAdd: true,
     noSearch: true,
     noShow: true
+  },
+  {
+    title: '操作',
+    dataIndex: 'operation',
+    fixed: 'right',
+    // width: 150,
+    //操作列可以不加宽度，但是必须要要加这个不换行属性
+    ellipsis: true,
+    scopedSlots: {customRender: 'operation'}
   }
 ];
 

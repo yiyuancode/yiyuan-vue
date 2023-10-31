@@ -18,7 +18,7 @@ const columns = [
     ellipsis: true
   },
   {
-    title: '商户id',
+    title: '商户', // todo 这里后面根据缓存的商户信息显示对应商户名称
     dataIndex: 'tenantId',
     key: 'tenantId',
     width: 160,
@@ -122,7 +122,8 @@ const columns = [
     dataIndex: 'title',
     key: 'title',
     width: 160,
-    rules: [{ required: true, message: '请输入商品简介', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入商品简介', trigger: 'blur' }],
+    ellipsis: true
   },
 
   {
@@ -134,14 +135,6 @@ const columns = [
       { required: true, message: '请输入关键字,英文逗号拼接', trigger: 'blur' }
     ]
   },
-
-  // {
-  //   title: '商品详情(富文本)',
-  //   dataIndex: 'goodsDesc',
-  //   key: 'goodsDesc',
-  //   width: 160,
-  //   formType: 'text'
-  // },
 
   {
     title: '库存',
@@ -157,19 +150,19 @@ const columns = [
     width: 160
   },
 
-  // {
-  //   title: '划线价格(根据sku最低划线价格自动设置)',
-  //   dataIndex: 'crossedPrice',
-  //   key: 'crossedPrice',
-  //   width: 160
-  // },
+  {
+    title: '划线价格',
+    dataIndex: 'crossedPrice',
+    key: 'crossedPrice',
+    width: 160
+  },
 
-  // {
-  //   title: '成本价(根据sku最低成本价自动设置)',
-  //   dataIndex: 'costPrice',
-  //   key: 'costPrice',
-  //   width: 160
-  // },
+  {
+    title: '成本价',
+    dataIndex: 'costPrice',
+    key: 'costPrice',
+    width: 160
+  },
 
   {
     title: '单位名',
@@ -186,12 +179,12 @@ const columns = [
     width: 160
   },
 
-  // {
-  //   title: '虚拟销量(如果为默认值前端展示实际销量,反之展示虚拟销量)',
-  //   dataIndex: 'fictiSales',
-  //   key: 'fictiSales',
-  //   width: 160
-  // },
+  {
+    title: '虚拟销量',
+    dataIndex: 'fictiSales',
+    key: 'fictiSales',
+    width: 160
+  },
 
   {
     title: '浏览量',
@@ -200,43 +193,44 @@ const columns = [
     width: 160
   },
 
+  // todo 暂时仅仅保存单个链接，多类型的处理再实现
   {
-    title: '商品二维码地址(用户小程序海报)',
+    title: '二维码',
     dataIndex: 'codePath',
     key: 'codePath',
     width: 160
   },
 
   {
-    title: '总后台排序',
+    title: '商户排序',
     dataIndex: 'tenantSort',
     key: 'tenantSort',
     width: 160
   },
 
   {
-    title: '是否单规格0=单|1=多',
+    title: '规格',
     dataIndex: 'isSpecType',
     key: 'isSpecType',
     width: 160
   },
 
-  {
-    title: '是否放入回收站0=否|1=是',
-    dataIndex: 'isRecycle',
-    key: 'isRecycle',
-    width: 160
-  },
+  // { todo 此条件会用上面的tab区分，并非选项实现
+  //   title: '是否放入回收站0=否|1=是',
+  //   dataIndex: 'isRecycle',
+  //   key: 'isRecycle',
+  //   width: 160
+  // },
 
   {
-    title: '是否单独分佣0=否|1=是',
+    title: '单独分佣',
     dataIndex: 'isSub',
     key: 'isSub',
     width: 160
   },
 
   {
-    title: '是否加入审核0=否|1=是',
+    title: '审核',
     dataIndex: 'isAudit',
     key: 'isAudit',
     width: 160
@@ -278,22 +272,6 @@ const columns = [
     formSort: 1
   },
   {
-    // 准备写插槽使用
-    title: '商品SKU',
-    dataIndex: 'skuForm',
-    key: 'skuForm',
-    width: 160,
-    formType: 'customerForm'
-  },
-  {
-    // 准备写插槽使用
-    title: '商品SKU1',
-    dataIndex: 'skuForm1',
-    key: 'skuForm1',
-    width: 160,
-    formType: 'customerForm'
-  },
-  {
     title: '拒绝原因',
     dataIndex: 'reasonContent',
     key: 'reasonContent',
@@ -309,7 +287,7 @@ const columns = [
   },
 
   {
-    title: '是否上架0=否|1=是',
+    title: '上架',
     dataIndex: 'isShow',
     key: 'isShow',
     width: 160
@@ -361,16 +339,16 @@ const columns = [
     noShow: true
   },
 
-  // {
-  //   title: '修改人',
-  //   dataIndex: 'updateUser',
-  //   key: 'updateUser',
-  //   width: 160,
-  //   noEdit: true,
-  //   noAdd: true,
-  //   noSearch: true,
-  //   noShow: true
-  // }
+  {
+    title: '修改人',
+    dataIndex: 'updateUser',
+    key: 'updateUser',
+    width: 160,
+    noEdit: true,
+    noAdd: true,
+    noSearch: true,
+    noShow: true
+  },
 
   {
     title: '操作',
