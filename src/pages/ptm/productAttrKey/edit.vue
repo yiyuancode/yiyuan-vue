@@ -20,8 +20,8 @@
         />
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-        <a-button type="primary" @click="onSubmitHandle"> 创建 </a-button>
-        <a-button style="margin-left: 10px"> 取消 </a-button>
+        <a-button type="primary" @click="onSubmitHandle"> {{ editId ? '编辑':'创建'}} </a-button>
+        <a-button style="margin-left: 10px" @click="onCancel"> 取消 </a-button>
       </a-form-model-item>
     </a-form-model>
   </div>
@@ -94,11 +94,14 @@ export default {
       this.formData.tenantId = 0; // 平台创建商户id为0
       if (this.editId) {
         await editProductAttrKey(this.formData, this.formData.id);
-        this.$emit('onSubmitHandleSuccess');
+        this.$emit('onSaveSubmit');
       } else {
         await addProductAttrKey(this.formData);
-        this.$emit('onSubmitHandleSuccess');
+        this.$emit('onSaveSubmit');
       }
+    },
+    onCancel(){
+      this.$emit("onCancel")
     }
   }
 };

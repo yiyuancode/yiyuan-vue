@@ -5,7 +5,7 @@
               :placeholder="placeholder"
               :allowClear="allowClear"
               @change="change">
-      <a-select-option v-for="(item) in options" :value="item.id" :key="item.id">
+      <a-select-option v-for="(item) in options" :key="item.id" :value="item.id">
         {{ item.shopName }}
       </a-select-option>
     </a-select>
@@ -35,12 +35,10 @@
           return "请选择";
         }
       },
-
-
     },
     data() {
       return {
-        selectedKeys: "",
+        selectedKeys: [],
         options: [],
       };
     },
@@ -50,7 +48,6 @@
       if (this.value) {
         this.selectedKeys = this.value
       }
-      //
     },
     methods: {
       async getData() {

@@ -1,7 +1,8 @@
 <template>
   <div>
+<!--    注意scopedSlots数字定义的item序列需要和下面的实际form-item 对应-->
     <y-search
-      :scopedSlots="['isShow', 'id', 'ptmProductCategoryId', 'attrKey']"
+      :scopedSlots="['isShow', 'id','tenantId', 'ptmProductCategoryId', 'attrKey']"
       :loading="table.loading"
       @search="search"
     >
@@ -12,7 +13,10 @@
         </a-select>
       </a-form-model-item>
       <a-form-model-item slot="id" slot-scope="{ form }" label="ID">
-        <a-input v-model="form.id" allowClear placeholder="商户"></a-input>
+        <a-input v-model="form.id" allowClear placeholder="ID"></a-input>
+      </a-form-model-item>
+      <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户">
+        <y-shop-select v-model="form.tenantId" placeholder="请选择商户"></y-shop-select>
       </a-form-model-item>
       <a-form-model-item
         slot="ptmProductCategoryId"
@@ -100,7 +104,7 @@
         v-if="editConfig.visible"
         :editId="editConfig.editId"
         @onSaveSubmit="onEditSubmit"
-        @onCancelSubmit="editConfig.visible = false"
+        @onCancel="editConfig.visible = false"
       ></edit>
     </a-drawer>
   </div>
@@ -185,10 +189,6 @@ export default {
     },
     // 批量删除商品分类
     async onBatchDelete() {
-      console.log(
-        'onBatchDelete.selectedRowKeys',
-        this.table.rowSelection.selectedRowKeys
-      );
       await deleteProductAttrKey(
         this.table.rowSelection.selectedRowKeys.join(',')
       );
