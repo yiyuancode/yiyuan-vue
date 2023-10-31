@@ -23,9 +23,9 @@
         }
       },
       value: {
-        type: Array || String,
+        type: String,
         default: function () {
-          return [];
+          return null;
         }
       },
       allowClear: {
