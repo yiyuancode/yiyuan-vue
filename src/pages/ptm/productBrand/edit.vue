@@ -8,11 +8,7 @@
       :wrapper-col="wrapperCol"
     >
       <a-form-model-item label="商户id" prop="name">
-        <a-input
-          v-model="formData.tenantId"
-          placeholder="请输入分类名称"
-          allowClear
-        />
+        <y-shop-select v-model="formData.tenantId"></y-shop-select>
       </a-form-model-item>
       <a-form-model-item label="关联分类" prop="categoryIds">
         <y-product-category-tree-select v-model="formData.categoryIds" />
@@ -46,9 +42,6 @@
 import {
    addProductBrand, editProductBrand
 } from '@/api/ptm/productBrand';
-import {
-  getProductCategoryTreeList
-} from '@/api/ptm/productCategory.js';
 import UploadSngle from '@/components/uploadSngle';
 import {getProductBrandDetail} from "../../../api/ptm/productBrand";
 export default {
@@ -85,7 +78,6 @@ export default {
     async genDataForEdit() {
       if (this.editId) {
         this.formData = await this.getProductCateDetail();
-        // TODO 这里赋值需要处理
         this.formData.categoryIds = [this.formData.categoryIds];
       }
     },
@@ -94,6 +86,7 @@ export default {
     },
     onSubmitHandle() {
       this.$refs.ruleForm.validate(async (valid) => {
+        console.log("this.formData:", this.formData);
         if (valid) {
           if (this.formData.id) {
             await editProductBrand(this.formData, this.formData.id);
