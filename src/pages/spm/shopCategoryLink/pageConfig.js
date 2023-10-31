@@ -1,7 +1,7 @@
 /**
  * 店铺-主营类目关联页面组件配置配置
  *
- * @author  spring
+ * @author  一源-spring
  * @date 2023-10-16
  */
 import * as shopCategoryLink from '@/api/spm/shopCategoryLink';
