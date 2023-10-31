@@ -64,7 +64,7 @@
         <a-divider type="vertical" />
       </div>
       <div slot="icon" slot-scope="{ text, record }" class="y-flex">
-        <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
+        <y-img :src="text" :width="35"></y-img>
       </div>
       <!--          slot-scope(当前数据，当前行)-->
       <div slot="level" slot-scope="{ text, record }" class="y-flex">

@@ -1,63 +1,60 @@
 <template>
   <div style="width: 100%;">
-
-    <a-select v-model="selectedKeys"
-              :placeholder="placeholder"
-              :allowClear="allowClear"
-              @change="change">
-      <a-select-option v-for="(item) in options" :value="item.id" :key="item.id">
-        {{ item.shopName }}
-      </a-select-option>
-    </a-select>
-
+    <el-cascader
+      v-model="selectedKeys"
+      :options="treeData"
+      :props="{ multiple,children: 'children', label: 'name', value: 'id' }"
+      size="small"
+      :show-all-levels="false"
+      clearable
+      @change="change"
+    ></el-cascader>
   </div>
 </template>
 <script>
-  import {getShopList} from "@/api/spm/shop.js";
+  import {getProductCategoryTreeListForShop} from "@/api/ptm/productCategory.js";
 
   export default {
     props: {
-      value: {
+      tenantId: {
         type: String,
         default: function () {
           return null;
         }
       },
-      allowClear: {
+      value: {
+        type: Array || String,
+        default: function () {
+          return [];
+        }
+      },
+      multiple: {
         type: Boolean,
         default: function () {
           return true;
         }
       },
-      placeholder: {
-        type: String,
-        default: function () {
-          return "请选择";
-        }
-      },
-
 
     },
     data() {
       return {
-        selectedKeys: "",
-        options: [],
+        treeData: [],
+        selectedKeys: []
       };
     },
     computed: {},
     async created() {
-      await this.getData();
-      if (this.value) {
-        this.selectedKeys = this.value
+      if (this.tenantId) {
+        await this.getData();
       }
-      //
     },
     methods: {
       async getData() {
-        this.options = await getShopList();
-        console.log("this.options", this.options)
+        let treeList = await getProductCategoryTreeListForShop({tenantId: this.tenantId});
+        this.treeData = treeList;
       },
-      change(value, label, extra) {
+      change(value) {
+        console.log("change", value)
         this.$emit('input', value);
         this.$emit('change', value);
       }

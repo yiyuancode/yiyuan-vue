@@ -31,6 +31,28 @@ export function getProductCategoryTreeList(data) {
   });
 }
 
+
+/**
+ * 获取商品类型 属性结构数据
+ * @param data
+ * @returns {*}
+ */
+export function getProductCategoryTreeListForPlat(data) {
+  return request({
+    url: '/ptm/productCategory/treeListForPlat',
+    params: data
+  });
+}
+
+
+export function getProductCategoryTreeListForShop(data) {
+  return request({
+    url: '/ptm/productCategory/treeListForShop',
+    params: data
+  });
+}
+
+
 /**
  * 获取所有的商品分类信息
  *

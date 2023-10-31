@@ -1,29 +1,40 @@
 <template>
   <div style="width: 100%;">
-
-    <a-select v-model="selectedKeys"
-              :placeholder="placeholder"
-              :allowClear="allowClear"
-              @change="change">
-      <a-select-option v-for="(item) in options" :value="item.id" :key="item.id">
-        {{ item.shopName }}
-      </a-select-option>
-    </a-select>
-
+    <el-cascader
+      v-model="selectedKeys"
+      :options="treeData"
+      :props="{ multiple,children: 'children', label: 'name', value: 'id' }"
+      size="small"
+      :show-all-levels="false"
+      clearable
+      @change="change"
+    ></el-cascader>
   </div>
 </template>
 <script>
-  import {getShopList} from "@/api/spm/shop.js";
+  import {getProductCategoryTreeListForPlat} from "@/api/ptm/productCategory.js";
 
   export default {
     props: {
-      value: {
+      tenantId: {
         type: String,
         default: function () {
           return null;
         }
       },
+      value: {
+        type: Array || String,
+        default: function () {
+          return [];
+        }
+      },
       allowClear: {
+        type: Boolean,
+        default: function () {
+          return false;
+        }
+      },
+      multiple: {
         type: Boolean,
         default: function () {
           return true;
@@ -35,29 +46,38 @@
           return "请选择";
         }
       },
-
+      treeDefaultExpandAll: {
+        type: Boolean,
+        default: function () {
+          return false;
+        }
+      },
+      replaceFields: {
+        type: Object,
+        default: function () {
+          return {children: 'children', title: 'name', key: 'id', value: 'id'};
+        }
+      },
 
     },
     data() {
       return {
-        selectedKeys: "",
-        options: [],
+        treeData: [],
+        selectedKeys: []
       };
     },
     computed: {},
     async created() {
       await this.getData();
-      if (this.value) {
-        this.selectedKeys = this.value
-      }
-      //
+      // this.selectedKeys = this.value
     },
     methods: {
       async getData() {
-        this.options = await getShopList();
-        console.log("this.options", this.options)
+        let treeList = await getProductCategoryTreeListForPlat({tenantId: this.tenantId});
+        this.treeData = treeList;
       },
-      change(value, label, extra) {
+      change(value) {
+        console.log("change", value)
         this.$emit('input', value);
         this.$emit('change', value);
       }
