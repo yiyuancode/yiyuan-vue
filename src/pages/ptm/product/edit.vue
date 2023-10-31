@@ -50,26 +50,25 @@
       <a-form-model-item label="主图">
         <y-img
           v-if="formData.image"
-          :src="globalConfig.imgBaseUrl + formData.image"
+          :src="formData.image"
           style="height: 100px; width: 100px;"
         ></y-img>
         <UploadSngle
           v-else
           v-model="formData.image"
-          @UploadSngle="(fileUrl) => UploadSngle(fileUrl, formData.image)"
+          @UploadSngle="(fileUrl) => UploadSngle(fileUrl, formData)"
         ></UploadSngle>
       </a-form-model-item>
       <a-form-model-item label="轮播图">
 <!--        todo 多图上传 组件后补-->
         <y-img
           v-if="formData.sliderImage"
-          :src="globalConfig.imgBaseUrl + formData.sliderImage"
+          :src="formData.sliderImage"
           style="height: 100px; width: 100px;"
         ></y-img>
         <UploadSngle
-          v-else
           v-model="formData.sliderImage"
-          @UploadSngle="(fileUrl) => UploadSngle(fileUrl, formData.sliderImage)"
+          @UploadSngle="(fileUrl) => UploadSngleSliderImage(fileUrl, formData)"
         ></UploadSngle>
       </a-form-model-item>
 
@@ -84,9 +83,6 @@
       </a-form-model-item>
       <a-form-model-item label="关键字">
         <a-input v-model="formData.keyword" placeholder="请输入关键字" allowClear/>
-      </a-form-model-item>
-      <a-form-model-item label="详情">
-        <rich-editor v-model="formData.goodsDesc"></rich-editor>
       </a-form-model-item>
       <a-form-model-item label="单位">
         <a-input v-model="formData.unitName" placeholder="请输入单位" allowClear/>
@@ -104,7 +100,13 @@
         <a-input-number v-model="formData.tenantSort" :min="0" :max="999999" />
       </a-form-model-item>
       <a-form-model-item label="单独分佣">
-        <a-input v-model="formData.isSub" placeholder="单独分佣"/>
+        <a-radio-group v-model="formData.isSub">
+          <a-radio :value="0">否</a-radio>
+          <a-radio :value="1">是</a-radio>
+        </a-radio-group>
+      </a-form-model-item>
+      <a-form-model-item label="商品详情">
+        <rich-editor v-model="formData.goodsDesc"></rich-editor>
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmitHandle"> 创建 </a-button>
@@ -146,13 +148,10 @@ export default {
         title: null,              // 简介
         keyword: null,            // 关键字
         unitName: null,           // 单位名称
-        // sales: 0,                 // 实际销量
+        sales: 0,                 // 实际销量
         fictiSales: 0,            // 虚拟销量
-        // browse: 0,             // 浏览量
         tenantSort: 0,            // 排序
-        isSub: true,              // 分佣模式
-        // isAudit: true,
-        // auditStatus: ,
+        isSub: 0,              // 分佣模式 是否单独分佣0=否|1=是
         goodsDesc: null,          // 商品富文本描述
         // codePath: null,           // 商品二维码/小程序码
         videoLink: null,          // 视频连接
@@ -205,7 +204,12 @@ export default {
       console.log('currentBandList:', currentBandList);
     },
     UploadSngle(fileUrl, item) {
-      item.icon = fileUrl;
+      console.log('item:', item);
+      item.image = fileUrl;
+    },
+    UploadSngleSliderImage(fileUrl, item) {
+      console.log('item:', item.image);
+      item.sliderImage.add(fileUrl);
     }
   }
 }
