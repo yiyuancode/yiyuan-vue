@@ -141,7 +141,7 @@
           placeholder="请输入店铺类型"
           allowClear
         /> -->
-        <yShopSelect v-model="shopType" />
+        <yShopSelect v-model="formData.shopType" />
       </a-form-model-item>
       <a-form-model-item label="库存告警阈值" prop="inventoryAlert">
         <a-input
