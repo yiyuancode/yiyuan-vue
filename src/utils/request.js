@@ -28,7 +28,7 @@ request.interceptors.request.use(
     // getBaseApi(config.url)
     //   config.url = !getBaseApi(config.url) ? config.url : getBaseApi(config.url);
     // let isLogin= vm.$store.getters['account/isLogin']
-    // let myToken = vm.$store.getters['account/myToken']
+    // let myToken = vm.$store.getters['user/myToken']
     let myToken = localStorage.getItem('myToken');
 
     if (myToken) {

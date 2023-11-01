@@ -1,25 +1,18 @@
 <template>
   <div style="width: 100%;">
-    <a-tree-select
+    <el-cascader
       v-model="selectedKeys"
-      style="width: 100%;"
-      :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-      :allowClear="allowClear"
-      :multiple="multiple"
-      :disabled="disabled"
-      :tree-data="treeData"
-      :placeholder="placeholder"
-      :replaceFields="replaceFields"
-      :tree-checkable="multiple"
-      :treeCheckStrictly="multiple"
-      :tree-default-expand-all="treeDefaultExpandAll"
+      :options="treeData"
+      :props="{ multiple,children: 'children', label: 'name', value: 'id' }"
+      size="small"
+      :show-all-levels="false"
+      clearable
       @change="change"
-    >
-    </a-tree-select>
+    ></el-cascader>
   </div>
 </template>
 <script>
-  import {getProductCategoryTreeList} from "@/api/ptm/productCategory.js";
+  import {getProductCategoryTreeListForPlat} from "@/api/ptm/productCategory.js";
 
   export default {
     props: {
@@ -45,12 +38,6 @@
         type: Boolean,
         default: function () {
           return true;
-        }
-      },
-      disabled:{
-        type: Boolean,
-        default: function () {
-          return false;
         }
       },
       placeholder: {
@@ -82,17 +69,49 @@
     computed: {},
     async created() {
       await this.getData();
-      this.selectedKeys = this.value
+      // this.selectedKeys = this.value
     },
     methods: {
       async getData() {
-        let treeList = await getProductCategoryTreeList({tenantId: this.tenantId});
+        let treeList = await getProductCategoryTreeListForPlat();
+        this.setDisable(3, treeList)
         this.treeData = treeList;
+        console.log("this.treeData", this.treeData)
+
       },
-      change(value, label, extra) {
-        this.$emit('input', value);
-        this.$emit('change', value);
-      }
+      change(value) {
+        console.log("change", value)
+        // let idArray = value.map((item) => {
+        //   return item[item.length - 1]
+        // })
+        let idArray = value.map(function (item) {
+          return item[item.length - 1]
+        });
+        this.$emit('input', idArray);
+        this.$emit('change', idArray);
+      },
+      /**
+       * level: 当前层级
+       * data: 当前层级的数据
+       */
+      setDisable(level, data) {
+        let _this = this;
+        data.forEach((v) => {
+          //此处判断可根据你后台返回的数据类型适当变换，原理就是将不符合条件的项给禁掉
+          if (!v.children && v.level.value < level) {
+            v.disabled = true;
+          }
+          if (v.children && v.level.value < level) {
+            v.disabled = false;
+          }
+          if (!v.children && v.level.value == level) {
+            v.disabled = false;
+          }
+          if (v.children) {
+            _this.setDisable(level, v.children);
+          }
+        });
+      },
     }
   };
 </script>
@@ -123,6 +142,7 @@
   .y-tools {
     height: 100px;
     width: 100%;
+    background: red;
   }
 
   .y-table {
