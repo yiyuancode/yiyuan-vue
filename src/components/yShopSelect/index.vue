@@ -32,7 +32,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择";
+          return "请选择商户";
         }
       },
 
@@ -40,7 +40,7 @@
     },
     data() {
       return {
-        selectedKeys: "",
+        selectedKeys: undefined,
         options: [],
       };
     },

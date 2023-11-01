@@ -5,6 +5,7 @@
       :options="treeData"
       :props="{ multiple,children: 'children', label: 'name', value: 'id' }"
       size="small"
+      :placeholder="placeholder"
       :show-all-levels="false"
       clearable
       @change="change"
@@ -23,9 +24,9 @@
         }
       },
       value: {
-        type: Array || String,
+        type: String,
         default: function () {
-          return [];
+          return null;
         }
       },
       allowClear: {
@@ -43,7 +44,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择";
+          return "请选择平台分类";
         }
       },
       treeDefaultExpandAll: {
@@ -70,7 +71,18 @@
     async created() {
       await this.getData();
       // this.selectedKeys = this.value
-    },
+      if (this.value) {
+        // 之后遍历，获取父节点
+        let ids = this.value.split(",");
+        ids.forEach((element) => {
+          let selectSubsidiaryDepartment = [
+            this.cascadeDisplay(this.treeData, element)
+          ]
+          ids.push(...selectSubsidiaryDepartment)
+        })
+      }
+    }
+    ,
     methods: {
       async getData() {
         let treeList = await getProductCategoryTreeListForPlat();
@@ -78,18 +90,22 @@
         this.treeData = treeList;
         console.log("this.treeData", this.treeData)
 
-      },
+      }
+      ,
       change(value) {
-        console.log("change", value)
+
         // let idArray = value.map((item) => {
         //   return item[item.length - 1]
         // })
-        let idArray = value.map(function (item) {
+        let ids = value.map(function (item) {
           return item[item.length - 1]
-        });
-        this.$emit('input', idArray);
-        this.$emit('change', idArray);
-      },
+        }).join(",");
+        this.$emit('input', ids);
+        this.$emit('change', ids);
+        console.log("change", value)
+        console.log("change", ids)
+      }
+      ,
       /**
        * level: 当前层级
        * data: 当前层级的数据
@@ -111,7 +127,41 @@
             _this.setDisable(level, v.children);
           }
         });
-      },
+      }
+      ,
+      cascadeDisplay(object, value) {
+        for (var key in object) {
+          if (object[key].id == value) return [object[key].id]
+          if (object[key].children && Object.keys(object[key].children).length > 0) {
+            var temp = this.cascadeDisplay(object[key].children, value)
+            if (temp) return [object[key].id, temp].flat()
+          }
+        }
+      }
+      ,
+
+      /**
+       * el-cascader递归获取父级id
+       * @param  list 数据列表
+       * @param  id 后端返回的id
+       * propsCascader 是el-cascader props属性
+       **/
+      getParentsById(list, id) {
+        for (let i in list) {
+          if (list[i][this.propsCascader.value || 'value'] == id) {
+            return [list[i][this.propsCascader.value || 'value']]
+          }
+          if (list[i].children) {
+            let node = this.getParentsById(list[i].children, id)
+            if (node !== undefined) {
+              // 追加父节点
+              node.unshift(list[i][this.propsCascader.value || 'value'])
+              return node
+            }
+          }
+        }
+      }
+      ,
     }
   };
 </script>

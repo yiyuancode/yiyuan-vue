@@ -17,19 +17,20 @@
 
         <!--        <y-product-category-tree-select v-model="form.category"-->
         <!--                                        :tenantId="233"></y-product-category-tree-select>-->
-        <!--        <y-area-select v-model="form.area"></y-area-select>-->
+        <y-area-select v-model="form.area"></y-area-select>
         <!--        <y-shop-select v-model="form.tenantId" @change="tenantIdChange"></y-shop-select>-->
-        <y-plat-category-select></y-plat-category-select>
+        <y-plat-category-select v-model="plat"></y-plat-category-select>
 
-        <y-shop-select v-model="form.tenantId" :key="form.tenantId" @change="(tenantId)=>form.tenantId=tenantId"></y-shop-select>
+        <y-shop-select v-model="form.tenantId2"></y-shop-select>
 
-        <y-shop-category-select :tenantId="form.tenantId" :key="form.tenantId"></y-shop-category-select>
+        <y-shop-category-select :tenantId="form.tenantId"
+                                :key="form.tenantId"></y-shop-category-select>
 
-<!--        <y-rich-editor v-model="form.rich"></y-rich-editor>-->
+        <!--        <y-rich-editor v-model="form.rich"></y-rich-editor>-->
 
-        <y-upload-multiple v-model="form.imgs"  @change="imgsChange"></y-upload-multiple>
+        <y-upload-multiple v-model="form.imgs" @change="imgsChange"></y-upload-multiple>
 
-        <y-upload-single v-model="form.img2" ></y-upload-single>
+        <y-upload-single v-model="form.img2"></y-upload-single>
       </a-form-model-item>
     </y-search>
 
@@ -65,7 +66,8 @@
   export default {
     data() {
       return {
-        imgs:"315ae6f9-8613-411d-a422-212c6cc3288c.png,918e048d-06ab-47b1-9d7b-583450ca582b.webp",
+        plat: "09f865dc40218bbba2dc5fff8be63b93,828a4e6cb6f2a3fd63bbc8f5957bd28b,f50318da50e28a0d0dd24d3264d4185a,98efff963f1b77e7f6b9953c0d2e8510,bb7deac51ab01bca1f85e333d300d46f",
+        imgs: "315ae6f9-8613-411d-a422-212c6cc3288c.png,918e048d-06ab-47b1-9d7b-583450ca582b.webp",
         area: "11, 1101,110101",
         searchForm: {},
         c: ["1", "58"],
@@ -92,7 +94,7 @@
       this.getData();
     },
     methods: {
-      imgsChange(imgs){
+      imgsChange(imgs) {
         console.log("imgsChange", imgs)
       },
       tenantIdChange(tenantId) {

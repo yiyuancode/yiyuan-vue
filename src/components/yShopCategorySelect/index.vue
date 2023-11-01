@@ -6,6 +6,7 @@
       :props="{ multiple,children: 'children', label: 'name', value: 'id' }"
       size="small"
       :show-all-levels="false"
+      :placeholder="placeholder"
       clearable
       @change="change"
     ></el-cascader>
@@ -32,6 +33,12 @@
         type: Boolean,
         default: function () {
           return true;
+        }
+      },
+      placeholder: {
+        type: String,
+        default: function () {
+          return "请选择商户分类";
         }
       },
 
