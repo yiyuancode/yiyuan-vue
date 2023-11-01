@@ -134,7 +134,9 @@ columns的scopedSlots.customRender
 
 
 
+2.批量删除，当没有选择的时候也能点击，并且可以确认删除，删除之后提示删除成功，并且又报了一个错误
 
+![](https://z1.ax1x.com/2023/10/28/pieZBe1.md.jpg)
 
 # 组件作者
 
