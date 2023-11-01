@@ -21,7 +21,7 @@
         <!--        <y-shop-select v-model="form.tenantId" @change="tenantIdChange"></y-shop-select>-->
         <y-plat-category-select></y-plat-category-select>
 
-        <y-shop-select v-model="form.tenantId" @change="(tenantId)=>form.tenantId=tenantId"></y-shop-select>
+        <y-shop-select v-model="form.tenantId" :key="form.tenantId" @change="(tenantId)=>form.tenantId=tenantId"></y-shop-select>
 
         <y-shop-category-select :tenantId="form.tenantId" :key="form.tenantId"></y-shop-category-select>
 
