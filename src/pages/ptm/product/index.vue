@@ -1,37 +1,37 @@
 <template>
   <div>
-    <y-search
-      :scopedSlots="3"
-      :loading="table.loading"
-      @search="search"
-    >
-      <a-form-model-item slot="scopedSlots-1" label="ID">
-        <a-input v-model="searchForm.id" allowClear/>
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-2" label="NAME">
-        <a-input v-model="searchForm.name" allowClear/>
-      </a-form-model-item>
-      <!--      <a-form-model-item slot="scopedSlots-3" label="平台分类">-->
-      <!--        <a-cascader-->
-      <!--          v-model="searchForm.tenantCategoryId"-->
-      <!--          :options="searchForm.productCateList"-->
-      <!--          placeholder="请选择平台分类"-->
-      <!--        />-->
-      <!--      </a-form-model-item>-->
-      <!--      <a-form-model-item slot="scopedSlots-4" label="商户分类">-->
-      <!--        <a-cascader-->
-      <!--          v-model="searchForm.shopCategoryId"-->
-      <!--          :options="searchForm.productCateList"-->
-      <!--          placeholder="请选择商户分类"-->
-      <!--        />-->
-      <!--      </a-form-model-item>-->
-      <!--      <a-form-model-item slot="scopedSlots-5" label="品牌">-->
-      <!--        <a-cascader-->
-      <!--          v-model="searchForm.brandId"-->
-      <!--          :options="searchForm.productCateList"-->
-      <!--          placeholder="请选择品牌"-->
-      <!--        />-->
-      <!--      </a-form-model-item>-->
+<!--    <y-search-->
+<!--      :scopedSlots="3"-->
+<!--      :loading="table.loading"-->
+<!--      @search="search"-->
+<!--    >-->
+<!--      <a-form-model-item slot="scopedSlots-1" label="ID">-->
+<!--        <a-input v-model="searchForm.id"  allowClear/>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-2" label="NAME">-->
+<!--        <a-input v-model="searchForm.name"  allowClear/>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-3" label="平台分类">-->
+<!--        <a-cascader-->
+<!--          v-model="searchForm.tenantCategoryId"-->
+<!--          :options="searchForm.productCateList"-->
+<!--          placeholder="请选择平台分类"-->
+<!--        />-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-4" label="商户分类">-->
+<!--        <a-cascader-->
+<!--          v-model="searchForm.shopCategoryId"-->
+<!--          :options="searchForm.productCateList"-->
+<!--          placeholder="请选择商户分类"-->
+<!--        />-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-5" label="品牌">-->
+<!--        <a-cascader-->
+<!--          v-model="searchForm.brandId"-->
+<!--          :options="searchForm.productCateList"-->
+<!--          placeholder="请选择品牌"-->
+<!--        />-->
+<!--      </a-form-model-item>-->
       <!--      <a-form-model-item label="保障服务"> TO DO 保障服务待维护后-->
       <!--        <a-cascader-->
       <!--          v-model="formData.guaranteeIds"-->
@@ -39,46 +39,47 @@
       <!--          placeholder="请选择品牌"-->
       <!--        />-->
       <!--      </a-form-model-item>-->
-      <!--      <a-form-model-item slot="scopedSlots-6" label="运费模版">-->
-      <!--        <a-cascader-->
-      <!--          v-model="searchForm.tempId"-->
-      <!--          :options="searchForm.productCateList"-->
-      <!--          placeholder="请选择品牌"-->
-      <!--        />-->
-      <!--      </a-form-model-item>-->
-      <!--      <a-form-model-item slot="scopedSlots-7" label="主图">-->
-      <!--        <y-img-->
-      <!--          :src="globalConfig.imgBaseUrl + image"-->
-      <!--          style="height: 30px; width: 30px"-->
-      <!--        ></y-img>-->
-      <!--      </a-form-model-item>-->
-      <!--      <a-form-model-item slot="scopedSlots-8" label="轮播图">-->
-      <!--        <y-img-->
-      <!--          :src="globalConfig.imgBaseUrl + sliderImage"-->
-      <!--          style="height: 30px; width: 30px"-->
-      <!--        ></y-img>-->
-      <!--      </a-form-model-item>-->
-      <a-form-model-item slot="scopedSlots-3" label="商品名">
-        <a-input v-model="searchForm.name" placeholder="请输入商品名" allowClear/>
-      </a-form-model-item>
-      <!--      <a-form-model-item slot="scopedSlots-10" label="商品简介">-->
-      <!--        <a-input v-model="searchForm.title" placeholder="请输入商品简介" allowClear/>-->
-      <!--      </a-form-model-item>-->
-      <a-form-model-item slot="scopedSlots-11" label="关键字">
-        <a-input v-model="searchForm.keyword" placeholder="请输入关键字" allowClear/>
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-13" label="虚拟销量">
-        <a-input v-model="searchForm.fictiSales" placeholder="根据情况输入虚拟销量" allowClear/>
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-14" label="排序">
-        <a-input v-model="searchForm.tenantSort" placeholder="排序"/>
-      </a-form-model-item>
-      <a-form-model-item slot="scopedSlots-15" label="分佣">
-        <a-input v-model="searchForm.isSub" placeholder="分佣"/>
-      </a-form-model-item>
+<!--      <a-form-model-item slot="scopedSlots-6" label="运费模版">-->
+<!--        <a-cascader-->
+<!--          v-model="searchForm.tempId"-->
+<!--          :options="searchForm.productCateList"-->
+<!--          placeholder="请选择品牌"-->
+<!--        />-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-7" label="主图">-->
+<!--        <y-img-->
+<!--          :src="globalConfig.imgBaseUrl + image"-->
+<!--          style="height: 30px; width: 30px"-->
+<!--        ></y-img>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-8" label="轮播图">-->
+<!--        <y-img-->
+<!--          :src="globalConfig.imgBaseUrl + sliderImage"-->
+<!--          style="height: 30px; width: 30px"-->
+<!--        ></y-img>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-3" label="商品名">-->
+<!--        <a-input v-model="searchForm.name" placeholder="请输入商品名" allowClear/>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-10" label="商品简介">-->
+<!--        <a-input v-model="searchForm.title" placeholder="请输入商品简介" allowClear/>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-11" label="关键字">-->
+<!--        <a-input v-model="searchForm.keyword" placeholder="请输入关键字" allowClear/>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-13" label="虚拟销量">-->
+<!--        <a-input v-model="searchForm.fictiSales" placeholder="根据情况输入虚拟销量" allowClear/>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-14" label="排序">-->
+<!--        <a-input v-model="searchForm.tenantSort" placeholder="排序"/>-->
+<!--      </a-form-model-item>-->
+<!--      <a-form-model-item slot="scopedSlots-15" label="分佣">-->
+<!--        <a-input v-model="searchForm.isSub" placeholder="分佣"/>-->
+<!--      </a-form-model-item>-->
 
 
-    </y-search>
+
+<!--    </y-search>-->
     <y-table
       rowKey="id"
       :columns="table.columns"
@@ -104,17 +105,17 @@
         </a-popconfirm>
         <a-divider type="vertical"/>
       </div>
-      <div slot="icon" slot-scope="{ text, record }" class="y-flex">
+      <div class="y-flex" slot="icon" slot-scope="{ text, record }">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
       </div>
       <!--          slot-scope(当前数据，当前行)-->
-      <div slot="level" slot-scope="{ text, record }" class="y-flex">
+      <div class="y-flex" slot="level" slot-scope="{ text, record }">
         {{ text.desc }}
       </div>
-      <div slot="isShow" slot-scope="{ text, record }" class="y-flex">
+      <div class="y-flex" slot="isShow" slot-scope="{ text, record }">
         {{ text ? '显示' : '不显示' }}
       </div>
-      <div slot="operation" slot-scope="{ text, record }" class="y-flex">
+      <div class="y-flex" slot="operation" slot-scope="{ text, record }">
         <a-button-group>
           <!--            编辑分类-->
           <a-button
@@ -138,7 +139,7 @@
     <!--    商品属性编辑-->
     <a-drawer
       title="商品属性"
-      width="500"
+      width="1000"
       :visible="editConfig.visible"
       @close="editConfig.visible = false"
     >
@@ -152,130 +153,130 @@
   </div>
 </template>
 <script>
-  import {columns} from './pageConfig.js';
-  import {deleteProduct, getProductPageList} from '@/api/ptm/product.js';
-  import edit from './edit.vue';
+import {columns} from './pageConfig.js';
+import {deleteProduct, getProductPageList} from '@/api/ptm/product.js';
+import edit from './edit.vue';
 
-  export default {
-    components: {edit},
-    data() {
-      return {
-        searchForm: {
-          // 表单查询对象
-          id: null,
-          tenantId: null, //商户id
-          platCategoryId: null, // 平台分类id
-          ptmProductCategoryId: null,// TODO 待修改为平台属性
-          shopCategoryId: null, // 商户分类id
-          brandId: null, // 品牌
-          guaranteeIds: null, // 保障服务 多个逗号分隔
-          tempId: null, // TODO 平台可以直接搜索和选择运费模版，也可以根据商家筛选对应的运费模版
-          name: null, // 商品名称
-          title: null, // 商品title
-          keyword: null, // 商品关键字
-          stock: null, // 库存 TODO 前端可以给出预设区间做选择
-          salePrice: null, // 售价 TODO 前端可以给出预设区间做价格选择
-          sales: null, // 销量 TODO 前端给出区间做选择
-          browse: null, // 浏览量 TODO 前端给区间做选择 做选择的均为后端需要同步支持的参数，次功能需要设计后再决定
-          isSpecType: null, // 商品规格 是否放入回收站0=否|1=是
-          isSub: null, // 商品规格 是否单独分佣0=否|1=是
-          isShow: null, // 商品上下架状态 是否上架0=否|1=是
-          auditStatus: null, // 审核状态#0=无需审核|1=待审核|2=审核成功|3=审核拒绝
-          createTimeStart: null, // 创建时间
-          createTimeEnd: null,
-          updateTimeStart: null,
-          updateTimeEnd: null
+export default {
+  components: {edit},
+  data() {
+    return {
+      searchForm: {
+        // 表单查询对象
+        id: null,
+        tenantId: null, //商户id
+        platCategoryId: null, // 平台分类id
+        ptmProductCategoryId: null,// TODO 待修改为平台属性
+        shopCategoryId: null, // 商户分类id
+        brandId: null, // 品牌
+        guaranteeIds: null, // 保障服务 多个逗号分隔
+        tempId: null, // TODO 平台可以直接搜索和选择运费模版，也可以根据商家筛选对应的运费模版
+        name: null, // 商品名称
+        title: null, // 商品title
+        keyword: null, // 商品关键字
+        stock: 0, // 库存 TODO 前端可以给出预设区间做选择
+        salePrice: 0, // 售价 TODO 前端可以给出预设区间做价格选择
+        sales: 0, // 销量 TODO 前端给出区间做选择
+        browse: null, // 浏览量 TODO 前端给区间做选择 做选择的均为后端需要同步支持的参数，次功能需要设计后再决定
+        isSpecType: null, // 商品规格 是否放入回收站0=否|1=是
+        isSub: null, // 商品规格 是否单独分佣0=否|1=是
+        isShow: null, // 商品上下架状态 是否上架0=否|1=是
+        auditStatus: null, // 审核状态#0=无需审核|1=待审核|2=审核成功|3=审核拒绝
+        createTimeStart: null, // 创建时间
+        createTimeEnd: null,
+        updateTimeStart: null,
+        updateTimeEnd: null
+      },
+      table: {
+        columns,
+        records: [],
+        loading: false,
+        pagination: {
+          pageNum: 1,
+          pageSize: 10,
+          total: 0,
+          pageSizeOptions: ['10', '20', '30', '40'],
+          showSizeChanger: true,
+          showTotal: (total) => `共 ${total} 条` // 显示总条数和当前数据范围
         },
-        table: {
-          columns,
-          records: [],
-          loading: false,
-          pagination: {
-            pageNum: 1,
-            pageSize: 10,
-            total: 0,
-            pageSizeOptions: ['10', '20', '30', '40'],
-            showSizeChanger: true,
-            showTotal: (total) => `共 ${total} 条` // 显示总条数和当前数据范围
-          },
-          rowSelection: {
-            selectedRowKeys: [],
-            fixed: true,
-            onChange: this.tableSelectedRowKeys
-          }
-        },
-        // 商品类型父级选择框下拉数据
-        searchDataOfProductCate: [],
-        editConfig: {
-          editId: null,
-          visible: false
+        rowSelection: {
+          selectedRowKeys: [],
+          fixed: true, // 锁定左侧复选框
+          onChange: this.tableSelectedRowKeys
         }
-      };
-    },
-    created() {
+      },
+      // 商品类型父级选择框下拉数据
+      searchDataOfProductCate: [],
+      editConfig: {
+        editId: null,
+        visible: false
+      }
+    };
+  },
+  created() {
+    this.getData();
+  },
+  methods: {
+    search(form) {
+      this.searchForm = form;
       this.getData();
     },
-    methods: {
-      search(form) {
-        this.searchForm = form;
-        this.getData();
-      },
-      tableSelectedRowKeys(selectedRowKeys) {
-        console.log('tableSelectedRowKeys', selectedRowKeys);
-        this.table.rowSelection.selectedRowKeys = selectedRowKeys;
-      },
-      tableChange(pagination, log) {
-        this.table.pagination = pagination;
-        this.getData();
-      },
-      async getData() {
-        this.table.loading = true;
-        if (this.table.records.length == 0 && this.table.pagination.pageNum > 1) {
-          this.table.pagination.pageNum = this.table.pagination.pageNum - 1;
-        }
-        let {pageNum, pageSize} = this.table.pagination;
-        let {records, total, current} = await getProductPageList({
-          pageNum: pageNum,
-          pageSize: pageSize,
-          ...this.searchForm
-        });
-        this.table.records = records;
-        this.table.pagination.total = total;
-        this.table.pagination.current = current;
-        this.table.loading = false;
-      },
-
-      // 新增商品分类
-      onAdd() {
-        this.editConfig.editId = null;
-        this.editConfig.visible = true;
-      },
-      // 批量删除商品分类
-      async onBatchDelete() {
-        console.log("onBatchDelete.selectedRowKeys", this.table.rowSelection.selectedRowKeys)
-        await deleteProduct(this.table.rowSelection.selectedRowKeys.join(","));
-        this.$message.success(`批量删除分类成功`);
-        this.table.records = this.table.records.filter((item) => !this.table.rowSelection.selectedRowKeys.includes(item.id))
-        this.table.rowSelection.selectedRowKeys = [];
-        this.getData();
-      },
-      // 商品分类编辑后提交事件
-      onEditSubmit() {
-        this.editConfig.visible = false;
-        this.getData();
-      },
-      // 列表点击删除商品分类
-      async onDelete(record) {
-        await deleteProduct(record.id);
-        this.$message.success(`删除分类${record.name}成功`);
-        this.table.records = this.table.records.filter((item) => item.id != record.id)
-        this.getData();
-      },
-      // 商品分类行编辑
-      onEdit(text, record) {
-        this.editConfig.editId = record.id;
-        this.editConfig.visible = true;
+    tableSelectedRowKeys(selectedRowKeys) {
+      console.log('tableSelectedRowKeys', selectedRowKeys);
+      this.table.rowSelection.selectedRowKeys = selectedRowKeys;
+    },
+    tableChange(pagination, log) {
+      this.table.pagination = pagination;
+      this.getData();
+    },
+    async getData() {
+      this.table.loading = true;
+      if (this.table.records.length == 0 && this.table.pagination.pageNum > 1) {
+        this.table.pagination.pageNum = this.table.pagination.pageNum - 1;
       }
+      let {pageNum, pageSize} = this.table.pagination;
+      let {records, total, current} = await getProductPageList({
+        pageNum: pageNum,
+        pageSize: pageSize,
+        ...this.searchForm
+      });
+      this.table.records = records;
+      this.table.pagination.total = total;
+      this.table.pagination.current = current;
+      this.table.loading = false;
+    },
+
+    // 新增商品分类
+    onAdd() {
+      this.editConfig.editId = null;
+      this.editConfig.visible = true;
+    },
+    // 批量删除商品分类
+    async onBatchDelete() {
+      console.log("onBatchDelete.selectedRowKeys", this.table.rowSelection.selectedRowKeys)
+      await deleteProduct(this.table.rowSelection.selectedRowKeys.join(","));
+      this.$message.success(`批量删除分类成功`);
+      this.table.records = this.table.records.filter((item) => !this.table.rowSelection.selectedRowKeys.includes(item.id))
+      this.table.rowSelection.selectedRowKeys = [];
+      this.getData();
+    },
+    // 商品分类编辑后提交事件
+    onEditSubmit() {
+      this.editConfig.visible = false;
+      this.getData();
+    },
+    // 列表点击删除商品分类
+    async onDelete(record) {
+      await deleteProduct(record.id);
+      this.$message.success(`删除分类${record.name}成功`);
+      this.table.records = this.table.records.filter((item) => item.id != record.id)
+      this.getData();
+    },
+    // 商品分类行编辑
+    onEdit(text, record) {
+      this.editConfig.editId = record.id;
+      this.editConfig.visible = true;
     }
-  };
+  }
+};
 </script>

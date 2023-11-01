@@ -6,6 +6,14 @@ import yProductCategoryTreeSelect from '@/components/yProductCategoryTreeSelect/
 import yAreaSelect from '@/components/yAreaSelect/index.vue';
 import yShopSelect from '@/components/yShopSelect/index.vue';
 import draggable from 'vuedraggable';
+import yPlatCategorySelect from '@/components/yPlatCategorySelect/index.vue';
+import yShopCategorySelect from '@/components/yShopCategorySelect/index.vue';
+import yProductCategorySelect from '@/components/yProductCategorySelect/index.vue';
+
+import yRichEditor from '@/components/yRichEditor/index.vue';
+import yUploadMultiple from '@/components/yUploadMultiple/index.vue';
+import yUploadSingle from '@/components/yUploadSingle/index.vue';
+import {Cascader} from 'element-ui';
 
 export default {
   install(Vue) {
@@ -17,6 +25,14 @@ export default {
     Vue.component('yAreaSelect', yAreaSelect);
     Vue.component('yShopSelect', yShopSelect);
     Vue.component('draggable', draggable);
+    Vue.component('yPlatCategorySelect', yPlatCategorySelect);
+    Vue.component('yShopCategorySelect', yShopCategorySelect);
+    Vue.component('yRichEditor', yRichEditor);
+    Vue.component('yUploadMultiple', yUploadMultiple);
+    Vue.component('yUploadSingle', yUploadSingle);
+    Vue.component('yProductCategorySelect', yProductCategorySelect);
+
+    Vue.component(Cascader.name, Cascader);
 
   }
 };

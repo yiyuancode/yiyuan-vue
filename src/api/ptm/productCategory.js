@@ -31,6 +31,28 @@ export function getProductCategoryTreeList(data) {
   });
 }
 
+
+/**
+ * 获取商品类型 属性结构数据
+ * @param data
+ * @returns {*}
+ */
+export function getProductCategoryTreeListForPlat(data) {
+  return request({
+    url: '/ptm/productCategory/treeListForPlat',
+    params: data
+  });
+}
+
+
+export function getProductCategoryTreeListForShop(data) {
+  return request({
+    url: '/ptm/productCategory/treeListForShop',
+    params: data
+  });
+}
+
+
 /**
  * 获取所有的商品分类信息
  *
@@ -70,14 +92,14 @@ export function getProductCategoryDetail(id) {
  */
 
 export function addProductCategory(data) {
-  const finalData = JSON.parse(JSON.stringify(data));
-  if (finalData.pid) {
-    finalData.pid = finalData.pid = finalData.pid[finalData.pid.length - 1];
-  }
+  // const finalData = JSON.parse(JSON.stringify(data));
+  // if (finalData.pid) {
+  //   finalData.pid = finalData.pid = finalData.pid[finalData.pid.length - 1];
+  // }
   return request({
     url: '/ptm/productCategory/add',
     method: 'post',
-    data: finalData
+    data: data
   });
 }
 
@@ -92,15 +114,15 @@ export function addProductCategory(data) {
  */
 export function editProductCategory(data, id) {
   //对传递的pid 进行 数据处理 程序中使用数组，实际传递参数的时候使用数组最后一位参数 为实际分类参数
-  const finalData = JSON.parse(JSON.stringify(data));
-  if (finalData.pid) {
-    finalData.pid = finalData.pid = finalData.pid[finalData.pid.length - 1];
-  }
+  // const finalData = JSON.parse(JSON.stringify(data));
+  // if (finalData.pid) {
+  //   finalData.pid = finalData.pid = finalData.pid[finalData.pid.length - 1];
+  // }
   return request({
     url: '/ptm/productCategory/edit',
     method: 'post',
     data: {
-      ...finalData,
+      ...data,
       id
     }
   });

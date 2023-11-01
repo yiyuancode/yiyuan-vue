@@ -1,21 +1,14 @@
 <template>
   <div style="width: 100%;">
-    <a-tree-select
+    <el-cascader
       v-model="selectedKeys"
-      style="width: 100%;"
-      :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-      :allowClear="allowClear"
-      :multiple="multiple"
-      :disabled="disabled"
-      :tree-data="treeData"
-      :placeholder="placeholder"
-      :replaceFields="replaceFields"
-      :tree-checkable="multiple"
-      :treeCheckStrictly="multiple"
-      :tree-default-expand-all="treeDefaultExpandAll"
+      :options="treeData"
+      :props="{ checkStrictly: true,children: 'children', label: 'name', value: 'id' }"
+      size="small"
+      :show-all-levels="false"
+      clearable
       @change="change"
-    >
-    </a-tree-select>
+    ></el-cascader>
   </div>
 </template>
 <script>
@@ -30,9 +23,9 @@
         }
       },
       value: {
-        type: Array || String,
+        type: String,
         default: function () {
-          return [];
+          return null;
         }
       },
       allowClear: {
@@ -45,12 +38,6 @@
         type: Boolean,
         default: function () {
           return true;
-        }
-      },
-      disabled:{
-        type: Boolean,
-        default: function () {
-          return false;
         }
       },
       placeholder: {
@@ -82,17 +69,25 @@
     computed: {},
     async created() {
       await this.getData();
-      this.selectedKeys = this.value
+      // this.selectedKeys = this.value
     },
     methods: {
       async getData() {
-        let treeList = await getProductCategoryTreeList({tenantId: this.tenantId});
+        let treeList = await getProductCategoryTreeList();
         this.treeData = treeList;
+        console.log("this.treeData", this.treeData)
+
       },
-      change(value, label, extra) {
-        this.$emit('input', value);
-        this.$emit('change', value);
-      }
+      change(value) {
+        // let idArray = value.map((item) => {
+        //   return item[item.length - 1]
+        // })
+        let id = value[value.length - 1];
+        console.log("change", id)
+        this.$emit('input', id);
+        this.$emit('change', id);
+      },
+
     }
   };
 </script>
@@ -123,6 +118,7 @@
   .y-tools {
     height: 100px;
     width: 100%;
+    background: red;
   }
 
   .y-table {

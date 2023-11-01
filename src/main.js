@@ -20,8 +20,8 @@ import qs from 'qs';
 import hevueImgPreview from 'hevue-img-preview';
 import 'hevue-img-preview/css/theme-light.css';
 import '@/assets/common.less';
-
 import install from '@/components/index.js';
+import './assets/element-variables.scss'
 
 Vue.use(hevueImgPreview, {
   keyboard: true,
