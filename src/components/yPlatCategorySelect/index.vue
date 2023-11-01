@@ -3,6 +3,7 @@
     <el-cascader
       v-model="selectedKeys"
       :options="treeData"
+      :placeholder="placeholder"
       :props="{ multiple,children: 'children', label: 'name', value: 'id' }"
       size="small"
       :show-all-levels="false"
@@ -12,6 +13,7 @@
   </div>
 </template>
 <script>
+// 平台分类选择器
   import {getProductCategoryTreeListForPlat} from "@/api/ptm/productCategory.js";
 
   export default {

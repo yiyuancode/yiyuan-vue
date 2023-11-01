@@ -3,6 +3,7 @@
     <el-cascader
       v-model="selectedKeys"
       :options="treeData"
+      :placeholder="placeholder"
       :props="{ multiple,children: 'children', label: 'name', value: 'id' }"
       size="small"
       :show-all-levels="false"
@@ -12,7 +13,9 @@
   </div>
 </template>
 <script>
+// 店铺分类选择器
   import {getProductCategoryTreeListForShop} from "@/api/ptm/productCategory.js";
+  import placeholder from "lodash/fp/placeholder";
 
   export default {
     props: {
@@ -34,6 +37,12 @@
           return true;
         }
       },
+      placeholder:{
+        type: String,
+        default: function () {
+          return "请选择";
+        }
+      }
 
     },
     data() {

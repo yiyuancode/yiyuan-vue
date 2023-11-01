@@ -3,6 +3,7 @@
     <el-cascader
       v-model="selectedKeys"
       :options="treeData"
+      :placeholder="placeholder"
       :props="{ checkStrictly: true,children: 'children', label: 'name', value: 'id' }"
       size="small"
       :show-all-levels="false"

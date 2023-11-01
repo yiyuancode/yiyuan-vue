@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="src">
 
     <template v-if="src.indexOf(',')==-1">
       <img

@@ -7,11 +7,9 @@
       :label-col="labelCol"
       :wrapper-col="wrapperCol"
     >
-<!--      TODO 需要在此页面处理平台端分类还是商户分类-->
-<!--      <a-form-model-item label="商户">-->
-<!--        <y-shop-select v-model="formData.tenantId"-->
-<!--                       @change="tenantIdChange"></y-shop-select>-->
-<!--      </a-form-model-item>-->
+      <a-form-model-item label="商户" prop="tenantId">
+        <y-shop-select v-model="formData.tenantId" placeholder="商户|不选为平台分类"></y-shop-select>
+      </a-form-model-item>
       <a-form-model-item label="父级分类" prop="pid">
 <!--        <a-cascader-->
 <!--          v-model="formData.pid"-->
@@ -20,7 +18,7 @@
 <!--          placeholder="请选择商品分类"-->
 <!--          @change="onProductCateOptionSelected"-->
 <!--        />-->
-        <y-product-category-select v-model="formData.pid"></y-product-category-select>
+        <y-product-category-select v-model="formData.pid" placeholder="平台分类|不选为根目录"></y-product-category-select>
       </a-form-model-item>
       <a-form-model-item label="分类名称" prop="name">
         <a-input
@@ -75,7 +73,6 @@ export default {
         productCateList: []
       },
       rules: {
-        pid: [{ required: true, message: '请选择父级分类', trigger: 'blur' }],
         name: [{ required: true, message: '请填写分类名称', trigger: 'blur' }],
         icon: [{ required: true, message: '请选择分类图标', trigger: 'blur' }],
         level: [{ required: true, message: '请选择层级', trigger: 'blur' }]
