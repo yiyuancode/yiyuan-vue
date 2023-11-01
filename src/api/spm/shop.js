@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 
 /**
@@ -97,5 +97,20 @@ export function deleteShop(ids) {
     params: {
       ids
     }
+  });
+}
+/**
+ * 店铺类别
+ *
+ * @param {*} 
+ * @return
+ * @author  一源-spring
+ * @date 2023-11-1
+ */
+export function shopTypeList() {
+  return request({
+    url: '/spm/shopType/list',
+    method: 'get',
+    params: {}
   });
 }

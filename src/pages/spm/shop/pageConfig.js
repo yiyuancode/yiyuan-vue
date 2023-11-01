@@ -346,15 +346,24 @@ const columns = [
     noShow: true
   },
 
+  // {
+  //   title: '修改人',
+  //   dataIndex: 'updateUser',
+  //   key: 'updateUser',
+  //   width: 160,
+  //   noEdit: true,
+  //   noAdd: true,
+  //   noSearch: true,
+  //   noShow: true
+  // }
   {
-    title: '修改人',
-    dataIndex: 'updateUser',
-    key: 'updateUser',
-    width: 160,
-    noEdit: true,
-    noAdd: true,
-    noSearch: true,
-    noShow: true
+    title: '操作',
+    dataIndex: 'operation',
+    fixed: 'right',
+    // width: 150,
+    //操作列可以不加宽度，但是必须要要加这个不换行属性
+    ellipsis: true,
+    scopedSlots: {customRender: 'operation'}
   }
 ];
 
