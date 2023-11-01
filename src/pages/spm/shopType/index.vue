@@ -1,9 +1,13 @@
 <template>
   <div>
-    <y-search :scopedSlots="['name','id']" :loading="table.loading" @search="search" :columns="table.columns" >
-    
+    <y-search
+      :scopedSlots="['name', 'id']"
+      :loading="table.loading"
+      :columns="table.columns"
+      @search="search"
+    >
     </y-search>
-    
+
     <y-table
       rowKey="id"
       :columns="table.columns"
@@ -73,8 +77,7 @@ export default {
   components: { edit },
   data() {
     return {
-      form: {
-      },
+      form: {},
       table: {
         loading: false,
         columns,
@@ -113,16 +116,14 @@ export default {
     },
     // 单条删除,批量删除
     async delData(data) {
-     
       if (data == undefined) {
         deleteShopType(this.table.rowSelection.selectedRowKeys.join(','));
-        this.$message.success("批量删除成功")
+        this.$message.success('批量删除成功');
         this.getData();
       } else {
         await deleteShopType(data.id);
         this.$message.success('删除成功');
         this.getData();
-
       }
     },
     onEditSubmit() {
@@ -137,6 +138,7 @@ export default {
     onEdit(text, record) {
       this.editConfig.editId = record.id;
       this.editConfig.visible = true;
+      this.editConfig.title = '修改店铺类型';
     },
     search(form) {
       this.searchForm = form;
