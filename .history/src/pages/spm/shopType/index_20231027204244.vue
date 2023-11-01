@@ -1,13 +1,11 @@
 <template>
   <div>
-    <y-search
-      :scopedSlots="['name', 'id']"
-      :loading="table.loading"
-      :columns="table.columns"
-      @search="search"
-    >
+    <y-search :scopedSlots="['name','id']" :loading="table.loading" @search="search" :columns="table.columns" >
+      <a-form-model-item slot="name" :slot-scope="{ form }" label="店铺ID">
+        <a-input v-model="form.name" placeholder="搜索店铺ID" allowClear />
+      </a-form-model-item>
     </y-search>
-
+    
     <y-table
       rowKey="id"
       :columns="table.columns"
@@ -62,25 +60,23 @@
       <edit
         v-if="editConfig.visible"
         :editId="editConfig.editId"
-        :key="editConfig.editId"
         @onSaveSubmit="onEditSubmit"
         @onCancelSubmit="editConfig.visible = false"
       ></edit>
     </a-drawer>
   </div>
 </template>
+
 <script>
 import { columns } from './pageConfig';
-import { getShopPageList } from '@/api/spm/shop';
+import { getShopTypePageList, deleteShopType } from '@/api/spm/shopType';
 import edit from './edit.vue';
 export default {
-  name: 'Shop',
-  components: {
-    edit
-  },
+  components: { edit },
   data() {
     return {
-      form: {},
+      form: {
+      },
       table: {
         loading: false,
         columns,
@@ -103,37 +99,56 @@ export default {
         editId: null,
         visible: false,
         title: null
-      }
+      },
+      columns
     };
   },
   created() {
     this.getData();
   },
+
   methods: {
+    // 批量选中
+    tableSelectedRowKeys(selectedRowKeys) {
+      console.log('tableSelectedRowKeys', selectedRowKeys);
+      this.table.rowSelection.selectedRowKeys = selectedRowKeys;
+    },
+    // 单条删除,批量删除
+    async delData(data) {
+     
+      if (data == undefined) {
+        deleteShopType(this.table.rowSelection.selectedRowKeys.join(','));
+        this.$message.success("批量删除成功")
+        this.getData();
+      } else {
+        await deleteShopType(data.id);
+        this.$message.success('删除成功');
+        this.getData();
+
+      }
+    },
     onEditSubmit() {
       // emit 触发 重新加载table
       this.getData(this.tableQueryParams);
     },
     tableChange() {},
     addForm() {
-      this.editConfig.editId = null;
       this.editConfig.visible = true;
-      this.editConfig.title = '添加店铺';
+      this.editConfig.title = '添加店铺类型';
     },
     onEdit(text, record) {
       this.editConfig.editId = record.id;
+      this.editConfig.title="修改店铺类型";
       this.editConfig.visible = true;
-      this.editConfig.title = '修改店铺';
     },
     search(form) {
       this.searchForm = form;
+      this.getData();
     },
-
     async getData() {
       this.table.loading = true;
       let { pageNum, pageSize } = this.table.pagination;
-
-      let { records, total, current } = await getShopPageList({
+      let { records, total, current } = await getShopTypePageList({
         pageNum: pageNum,
         pageSize: pageSize,
         ...this.searchForm

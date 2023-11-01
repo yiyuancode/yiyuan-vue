@@ -62,7 +62,6 @@
       <edit
         v-if="editConfig.visible"
         :editId="editConfig.editId"
-        :key="editConfig.editId"
         @onSaveSubmit="onEditSubmit"
         @onCancelSubmit="editConfig.visible = false"
       ></edit>
@@ -116,7 +115,6 @@ export default {
     },
     tableChange() {},
     addForm() {
-      this.editConfig.editId = null;
       this.editConfig.visible = true;
       this.editConfig.title = '添加店铺';
     },

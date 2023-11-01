@@ -84,10 +84,8 @@
           placeholder="请输入资质图片"
           allowClear
         /> -->
-        <y-upload-multiple
-          v-model="formData.qualificationImages"
-          :max="8"
-        ></y-upload-multiple>
+        <y-upload-multiple v-model="formData.qualificationImages" :max="8"  @change="imgsChange"></y-upload-multiple>
+
       </a-form-model-item>
       <a-form-model-item label="店铺名称" prop="shopName">
         <a-input
@@ -102,9 +100,8 @@
           placeholder="请输入店铺背景图"
           allowClear
         /> -->
-        <y-upload-single
-          v-model="formData.shopBackgroundImage"
-        ></y-upload-single>
+        <y-upload-single v-model="formData.shopBackgroundImage" ></y-upload-single>
+
       </a-form-model-item>
       <a-form-model-item
         label="推荐店铺背景图"
@@ -304,7 +301,7 @@ export default {
         sort: 0, //排序
         isShow: false //显示状态
       },
-      shopType: [],
+      shopType:[],
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
       rules: {
@@ -374,13 +371,13 @@ export default {
   created() {
     if (this.editId) {
       this.getDetail();
+    }else{
+      console.log(123);
+      this.$next(()=>{
+        this.resetForm();
+      });
     }
     this.getShopTypeList();
-  },
-  mounted() {
-    if (!this.editId) {
-      this.resetForm();
-    }
   },
   methods: {
     async getDetail() {

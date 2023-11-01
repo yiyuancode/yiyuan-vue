@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <y-search
-      :scopedSlots="['name', 'id']"
-      :loading="table.loading"
-      :columns="table.columns"
-      @search="search"
-    >
-    </y-search>
 
+  <div>
+    <y-search :scopedSlots="3" :loading="table.loading" @search="search">
+      <a-form-model-item slot="scopedSlots" label="店铺ID">
+        <a-input
+          v-model="searchForm.name"
+          placeholder="搜索店铺ID"
+          allowClear
+        />
+      </a-form-model-item>
+    </y-search>
     <y-table
       rowKey="id"
       :columns="table.columns"
@@ -24,7 +26,7 @@
           :title="'确定批量删除选中的分类'"
           ok-text="确定"
           cancel-text="取消"
-          @confirm="() => delData()"
+          @confirm="() => onBatchDelete()"
         >
           <a-button :disabled="table.rowSelection.selectedRowKeys.length <= 0">
             批量删除
@@ -32,55 +34,34 @@
         </a-popconfirm>
         <a-divider type="vertical" />
       </div>
-      <div slot="isShow" slot-scope="{ text, record }" class="y-flex">
-        {{ text ? '显示' : '不显示' }}
-      </div>
-      <div slot="operation" slot-scope="{ text, record }" class="y-flex">
-        <a-button-group>
-          <a-button
-            icon="edit"
-            shape="round"
-            @click="() => onEdit(text, record)"
-          ></a-button>
-          <a-popconfirm
-            :title="'确定删除为【' + record.name + '】的店铺类型吗'"
-            ok-text="确定"
-            cancel-text="取消"
-            @confirm="() => delData(record)"
-          >
-            <a-button icon="delete" type="danger" shape="round"></a-button>
-          </a-popconfirm>
-        </a-button-group>
-      </div>
     </y-table>
     <a-drawer
       :title="editConfig.title"
-      width="700"
+      width="500"
       :visible="editConfig.visible"
       @close="editConfig.visible = false"
     >
       <edit
         v-if="editConfig.visible"
         :editId="editConfig.editId"
-        :key="editConfig.editId"
         @onSaveSubmit="onEditSubmit"
         @onCancelSubmit="editConfig.visible = false"
       ></edit>
     </a-drawer>
   </div>
 </template>
+
 <script>
 import { columns } from './pageConfig';
-import { getShopPageList } from '@/api/spm/shop';
+import { getShopTypePageList } from '@/api/spm/shopType';
 import edit from './edit.vue';
 export default {
-  name: 'Shop',
-  components: {
-    edit
-  },
+  components: {edit},
   data() {
     return {
-      form: {},
+      searchForm: {
+        name: ''
+      },
       table: {
         loading: false,
         columns,
@@ -93,47 +74,36 @@ export default {
           showSizeChanger: true,
           showTotal: (total) => `共 ${total} 条` // 显示总条数和当前数据范围
         },
-
+     
         rowSelection: {
           selectedRowKeys: [],
           onChange: this.tableSelectedRowKeys
         }
       },
       editConfig: {
-        editId: null,
-        visible: false,
-        title: null
-      }
+          editId: null,
+          visible: false,
+          title:null
+        },
+      columns,
     };
   },
   created() {
     this.getData();
   },
+
   methods: {
-    onEditSubmit() {
-      // emit 触发 重新加载table
-      this.getData(this.tableQueryParams);
-    },
-    tableChange() {},
     addForm() {
-      this.editConfig.editId = null;
-      this.editConfig.visible = true;
-      this.editConfig.title = '添加店铺';
-    },
-    onEdit(text, record) {
-      this.editConfig.editId = record.id;
-      this.editConfig.visible = true;
-      this.editConfig.title = '修改店铺';
+      this.editConfig.visible=true;
+      this.editConfig.title="添加店铺类型"
     },
     search(form) {
       this.searchForm = form;
     },
-
     async getData() {
       this.table.loading = true;
       let { pageNum, pageSize } = this.table.pagination;
-
-      let { records, total, current } = await getShopPageList({
+      let { records, total, current } = await getShopTypePageList({
         pageNum: pageNum,
         pageSize: pageSize,
         ...this.searchForm
