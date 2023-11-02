@@ -15,6 +15,7 @@
 <script>
   import {getProductCategoryTreeListForPlat} from "@/api/ptm/productCategory.js";
 
+
   export default {
     props: {
       tenantId: {
@@ -44,7 +45,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择平台分类";
+          return "请选择店铺主营类目";
         }
       },
       treeDefaultExpandAll: {
@@ -72,14 +73,9 @@
       await this.getData();
       // this.selectedKeys = this.value
       if (this.value) {
-        // 之后遍历，获取父节点
-        let ids = this.value.split(",");
-        ids.forEach((element) => {
-          let selectSubsidiaryDepartment = [
-            this.cascadeDisplay(this.treeData, element)
-          ]
-          ids.push(...selectSubsidiaryDepartment)
-        })
+        console.log("22")
+        let arr = this.value.split("|");
+        this.selectedKeys = JSON.parse(arr[arr.length - 1]);
       }
     }
     ,
@@ -93,17 +89,11 @@
       }
       ,
       change(value) {
-
-        // let idArray = value.map((item) => {
-        //   return item[item.length - 1]
-        // })
         let ids = value.map(function (item) {
           return item[item.length - 1]
         }).join(",");
-        this.$emit('input', ids);
-        this.$emit('change', ids);
-        console.log("change", value)
-        console.log("change", ids)
+        this.$emit('input', ids + "|" + JSON.stringify(value));
+        this.$emit('change', ids + "|" + JSON.stringify(value));
       }
       ,
       /**
@@ -128,40 +118,7 @@
           }
         });
       }
-      ,
-      cascadeDisplay(object, value) {
-        for (var key in object) {
-          if (object[key].id == value) return [object[key].id]
-          if (object[key].children && Object.keys(object[key].children).length > 0) {
-            var temp = this.cascadeDisplay(object[key].children, value)
-            if (temp) return [object[key].id, temp].flat()
-          }
-        }
-      }
-      ,
 
-      /**
-       * el-cascader递归获取父级id
-       * @param  list 数据列表
-       * @param  id 后端返回的id
-       * propsCascader 是el-cascader props属性
-       **/
-      getParentsById(list, id) {
-        for (let i in list) {
-          if (list[i][this.propsCascader.value || 'value'] == id) {
-            return [list[i][this.propsCascader.value || 'value']]
-          }
-          if (list[i].children) {
-            let node = this.getParentsById(list[i].children, id)
-            if (node !== undefined) {
-              // 追加父节点
-              node.unshift(list[i][this.propsCascader.value || 'value'])
-              return node
-            }
-          }
-        }
-      }
-      ,
     }
   };
 </script>

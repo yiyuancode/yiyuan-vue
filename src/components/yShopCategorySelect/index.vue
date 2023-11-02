@@ -38,7 +38,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择商户分类";
+          return "请选择店铺类型";
         }
       },
 
@@ -62,11 +62,11 @@
         this.treeData = treeList;
       },
       change(value) {
-        let idArray = value.map(function (item) {
+        let ids = value.map(function (item) {
           return item[item.length - 1]
-        });
-        this.$emit('input', idArray);
-        this.$emit('change', idArray);
+        }).join(",");
+        this.$emit('input', ids + "|" + JSON.stringify(value));
+        this.$emit('change', ids + "|" + JSON.stringify(value));
       },
       /**
        * level: 当前层级

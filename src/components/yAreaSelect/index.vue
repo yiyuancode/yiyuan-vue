@@ -33,7 +33,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择";
+          return "请选择城市区域";
         }
       },
       fieldNames: {

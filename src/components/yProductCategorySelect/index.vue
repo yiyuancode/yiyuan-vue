@@ -43,7 +43,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择";
+          return "请选择商品类型";
         }
       },
       treeDefaultExpandAll: {
@@ -79,13 +79,10 @@
 
       },
       change(value) {
-        // let idArray = value.map((item) => {
-        //   return item[item.length - 1]
-        // })
         let id = value[value.length - 1];
-        console.log("change", id)
-        this.$emit('input', id);
-        this.$emit('change', id);
+        this.$emit('input', id + "|" + JSON.stringify(value));
+        this.$emit('change', id + "|" + JSON.stringify(value));
+
       },
 
     }

@@ -32,7 +32,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择商户";
+          return "请选择店铺";
         }
       },
 
