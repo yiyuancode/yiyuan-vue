@@ -13,7 +13,7 @@
           placeholder="请选择店铺地址"
           allowClear
         /> -->
-        <yAreaSelect></yAreaSelect>
+        <yAreaSelect v-model="formData.sysAreaId"></yAreaSelect>
       </a-form-model-item>
       <a-form-model-item label="店铺详细地址" prop="shopAddress">
         <a-input
@@ -50,19 +50,11 @@
           allowClear
         />
       </a-form-model-item>
-      <a-form-model-item label="商户分类" prop="merchantCategory">
-        <a-input
-          v-model="formData.merchantCategory"
-          placeholder="请输入商户分类"
-          allowClear
-        />
+      <a-form-model-item label="商户主营类目" prop="merchantCategory">
+        <yPlatCategorySelect v-model="formData.merchantCategory" />
       </a-form-model-item>
-      <a-form-model-item label="商户类别" prop="merchantType">
-        <a-input
-          v-model="formData.merchantType"
-          placeholder="请输入商户类别"
-          allowClear
-        />
+      <a-form-model-item label="商户类型" prop="shopType">
+        <yShopTypeSelect v-model="formData.shopType" />
       </a-form-model-item>
       <a-form-model-item label="商户手续费" prop="merchantFee">
         <a-input
@@ -96,6 +88,9 @@
           allowClear
         />
       </a-form-model-item>
+      <a-form-model-item label="店铺主头像" prop="shopOwnerAvatar">
+        <y-upload-single v-model="formData.shopOwnerAvatar"></y-upload-single>
+      </a-form-model-item>
       <a-form-model-item label="店铺背景图" prop="shopBackgroundImage">
         <!-- <a-input
           v-model="formData.shopBackgroundImage"
@@ -110,46 +105,24 @@
         label="推荐店铺背景图"
         prop="recommendedShopBackgroundImage"
       >
-        <a-input
+        <y-upload-single
           v-model="formData.recommendedShopBackgroundImage"
-          placeholder="请输入推荐店铺背景图"
-          allowClear
-        />
+        ></y-upload-single>
       </a-form-model-item>
       <a-form-model-item label="店铺封面图" prop="shopCover">
-        <a-input
-          v-model="formData.shopCover"
-          placeholder="请输入店铺封面图"
-          allowClear
-        />
+        <y-upload-single v-model="formData.shopCover"></y-upload-single>
       </a-form-model-item>
       <a-form-model-item label="店铺logo" prop="shopLogo">
-        <a-input
-          v-model="formData.shopLogo"
-          placeholder="请输入店铺logo"
-          allowClear
-        />
+        <y-upload-single v-model="formData.shopLogo"></y-upload-single>
       </a-form-model-item>
       <a-form-model-item label="店铺简介" prop="shopDescription">
-        <!-- <a-input
-          v-model="formData.shopDescription"
-          placeholder="请输入店铺简介"
-          allowClear
-        /> -->
         <a-textarea
           placeholder="请输入店铺简介"
           v-model="formData.shopDescription"
           allow-clear
         />
       </a-form-model-item>
-      <a-form-model-item label="店铺类型" prop="shopType">
-        <!-- <a-input
-          v-model="formData.shopType"
-          placeholder="请输入店铺类型"
-          allowClear
-        /> -->
-        <yShopSelect v-model="formData.shopType" />
-      </a-form-model-item>
+
       <a-form-model-item label="库存告警阈值" prop="inventoryAlert">
         <a-input
           v-model="formData.inventoryAlert"
@@ -171,63 +144,64 @@
           <a-radio :value="3"> 支付宝 </a-radio>
         </a-radio-group>
       </a-form-model-item>
-      <a-form-model-item label="收款人" prop="bankPayee">
-        <a-input
-          v-model="formData.bankPayee"
-          placeholder="请输入收款人"
-          allowClear
-        />
-      </a-form-model-item>
-      <a-form-model-item label="开户银行" prop="bankNumber">
-        <a-input
-          v-model="formData.bankNumber"
-          placeholder="请输入开户银行"
-          allowClear
-        />
-      </a-form-model-item>
-      <a-form-model-item label="开户行地址" prop="bankAddress">
-        <a-input
-          v-model="formData.bankAddress"
-          placeholder="请输入开户行地址"
-          allowClear
-        />
-      </a-form-model-item>
+      <!-- 银行卡 -->
+      <div v-if="formData.settlementType == 1">
+        <a-form-model-item label="收款人" prop="bankPayee">
+          <a-input
+            v-model="formData.bankPayee"
+            placeholder="请输入收款人"
+            allowClear
+          />
+        </a-form-model-item>
+        <a-form-model-item label="开户银行" prop="bankNumber">
+          <a-input
+            v-model="formData.bankNumber"
+            placeholder="请输入开户银行"
+            allowClear
+          />
+        </a-form-model-item>
+        <a-form-model-item label="开户行地址" prop="bankAddress">
+          <a-input
+            v-model="formData.bankAddress"
+            placeholder="请输入开户行地址"
+            allowClear
+          />
+        </a-form-model-item>
+      </div>
+      <!-- 微信 -->
+      <div v-if="formData.settlementType == 2">
+        <a-form-model-item label="真实姓名" prop="wechatRealName">
+          <a-input
+            v-model="formData.wechatRealName"
+            placeholder="请输入真实姓名"
+            allowClear
+          />
+        </a-form-model-item>
+        <a-form-model-item label="微信号" prop="wechatAccount">
+          <a-input
+            v-model="formData.wechatAccount"
+            placeholder="请输入微信号"
+            allowClear
+          />
+        </a-form-model-item>
+        <a-form-model-item label="收款二维码" prop="wechatQrCode">
+          <y-upload-single v-model="formData.wechatQrCode"></y-upload-single>
+        </a-form-model-item>
+        <a-form-model-item label="真实姓名" prop="alipayRealName">
+          <a-input
+            v-model="formData.alipayRealName"
+            placeholder="请输入真实姓名"
+            allowClear
+          />
+        </a-form-model-item>
+      </div>
+      <!-- 支付宝 -->
+      <div v-if="formData.settlementType == 3">
+        <a-form-model-item label="支付宝二维码" prop="alipayQrCode">
+          <y-upload-single v-model="formData.alipayQrCode"></y-upload-single>
+        </a-form-model-item>
+      </div>
 
-      <a-form-model-item label="真实姓名" prop="wechatRealName">
-        <a-input
-          v-model="formData.wechatRealName"
-          placeholder="请输入真实姓名"
-          allowClear
-        />
-      </a-form-model-item>
-      <a-form-model-item label="微信号" prop="wechatAccount">
-        <a-input
-          v-model="formData.wechatAccount"
-          placeholder="请输入微信号"
-          allowClear
-        />
-      </a-form-model-item>
-      <a-form-model-item label="收款二维码" prop="wechatQrCode">
-        <a-input
-          v-model="formData.wechatQrCode"
-          placeholder="请输入收款二维码"
-          allowClear
-        />
-      </a-form-model-item>
-      <a-form-model-item label="真实姓名" prop="alipayRealName">
-        <a-input
-          v-model="formData.alipayRealName"
-          placeholder="请输入真实姓名"
-          allowClear
-        />
-      </a-form-model-item>
-      <a-form-model-item label="支付宝二维码" prop="alipayAccount">
-        <a-input
-          v-model="formData.alipayAccount"
-          placeholder="请输入支付宝二维码"
-          allowClear
-        />
-      </a-form-model-item>
       <a-form-model-item label="是否加入审核" prop="isAudit">
         <a-radio-group v-model="formData.isAudit">
           <a-radio :value="false"> 否 </a-radio>
@@ -389,6 +363,7 @@ export default {
     },
     // 提交表单
     onSubmit() {
+      console.log(this.formData);
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
           if (this.editId) {
