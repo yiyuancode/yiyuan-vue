@@ -53,8 +53,8 @@
       <a-form-model-item label="商户主营类目" prop="merchantCategory">
         <yPlatCategorySelect v-model="formData.merchantCategory" />
       </a-form-model-item>
-      <a-form-model-item label="商户类型" prop="shopType">
-        <yShopTypeSelect v-model="formData.shopType" />
+      <a-form-model-item label="商户类型" prop="spmShopTypeId">
+        <yShopTypeSelect v-model="formData.spmShopTypeId" />
       </a-form-model-item>
       <a-form-model-item label="商户手续费" prop="merchantFee">
         <a-input
@@ -187,6 +187,9 @@
         <a-form-model-item label="收款二维码" prop="wechatQrCode">
           <y-upload-single v-model="formData.wechatQrCode"></y-upload-single>
         </a-form-model-item>
+      </div>
+      <!-- 支付宝 -->
+      <div v-if="formData.settlementType == 3">
         <a-form-model-item label="真实姓名" prop="alipayRealName">
           <a-input
             v-model="formData.alipayRealName"
@@ -194,9 +197,6 @@
             allowClear
           />
         </a-form-model-item>
-      </div>
-      <!-- 支付宝 -->
-      <div v-if="formData.settlementType == 3">
         <a-form-model-item label="支付宝二维码" prop="alipayQrCode">
           <y-upload-single v-model="formData.alipayQrCode"></y-upload-single>
         </a-form-model-item>
@@ -261,7 +261,6 @@ export default {
         shopCover: '', //店铺封面图
         shopLogo: '', //店铺logo
         shopDescription: '', //店铺简介
-        shopType: '', //店铺类型
         inventoryAlert: 0, //库存告警阈值
         isSupportsSelfPickup: false, //是否支持自提
         settlementType: 2, //结算类型#1=银行卡|2=微信|3=支付宝
@@ -363,7 +362,6 @@ export default {
     },
     // 提交表单
     onSubmit() {
-      console.log(this.formData);
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
           if (this.editId) {
