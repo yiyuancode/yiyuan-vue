@@ -113,7 +113,9 @@ const columns = [
 
 **插槽用法示例**
 
-使用a-form-model-item组件，来传递插槽，并且把插槽提供的对象的form属性里面对应的column列配置的dataIndex进行一个v-model绑定
+使用a-form-model-item组件，来传递插槽，这里传递的插槽的名字实际上就是上面配置的数组的每一项，上面的数组的每一项又对应了columns配置的dataIndex属性
+
+
 
 ```vue
 <y-search

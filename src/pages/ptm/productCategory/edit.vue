@@ -12,7 +12,7 @@
 <!--        <y-shop-select v-model="formData.tenantId"-->
 <!--                       @change="tenantIdChange"></y-shop-select>-->
 <!--      </a-form-model-item>-->
-      <a-form-model-item label="父级分类" prop="pid">
+      <a-form-model-item label="父级分类" >
 <!--        <a-cascader-->
 <!--          v-model="formData.pid"-->
 <!--          :options="forPramsData.productCateList"-->
@@ -75,7 +75,7 @@ export default {
         productCateList: []
       },
       rules: {
-        pid: [{ required: true, message: '请选择父级分类', trigger: 'blur' }],
+        // pid: [{ required: true, message: '请选择父级分类', trigger: 'blur' }],
         name: [{ required: true, message: '请填写分类名称', trigger: 'blur' }],
         icon: [{ required: true, message: '请选择分类图标', trigger: 'blur' }],
         level: [{ required: true, message: '请选择层级', trigger: 'blur' }]

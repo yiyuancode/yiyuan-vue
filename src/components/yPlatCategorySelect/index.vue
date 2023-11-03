@@ -5,6 +5,7 @@
       :options="treeData"
       :props="{ multiple,children: 'children', label: 'name', value: 'id' }"
       size="small"
+      :placeholder="placeholder"
       :show-all-levels="false"
       clearable
       @change="change"
@@ -13,6 +14,7 @@
 </template>
 <script>
   import {getProductCategoryTreeListForPlat} from "@/api/ptm/productCategory.js";
+  import {getCascaderSelectedKeys} from "@/utils/cascaderUtils.js";
 
   export default {
     props: {
@@ -23,9 +25,9 @@
         }
       },
       value: {
-        type: Array || String,
+        type: String,
         default: function () {
-          return [];
+          return null;
         }
       },
       allowClear: {
@@ -43,7 +45,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择";
+          return "请选择店铺主营类目";
         }
       },
       treeDefaultExpandAll: {
@@ -70,26 +72,27 @@
     async created() {
       await this.getData();
       // this.selectedKeys = this.value
-    },
+      if (this.value) {
+        this.selectedKeys = getCascaderSelectedKeys(this.treeData, this.value);
+        console.log("res.arr", this.selectedKeys)
+      }
+    }
+    ,
     methods: {
       async getData() {
-        let treeList = await getProductCategoryTreeListForPlat();
-        this.setDisable(3, treeList)
-        this.treeData = treeList;
-        console.log("this.treeData", this.treeData)
-
-      },
+        this.treeData = await getProductCategoryTreeListForPlat();
+        this.setDisable(3, this.treeData);
+        console.log("yPlatCategorySelect.arr", this.treeData)
+      }
+      ,
       change(value) {
-        console.log("change", value)
-        // let idArray = value.map((item) => {
-        //   return item[item.length - 1]
-        // })
-        let idArray = value.map(function (item) {
+        let ids = value.map(function (item) {
           return item[item.length - 1]
-        });
-        this.$emit('input', idArray);
-        this.$emit('change', idArray);
-      },
+        }).join(",");
+        this.$emit('input', ids);
+        this.$emit('change', ids);
+      }
+      ,
       /**
        * level: 当前层级
        * data: 当前层级的数据
@@ -112,6 +115,8 @@
           }
         });
       },
+
+
     }
   };
 </script>

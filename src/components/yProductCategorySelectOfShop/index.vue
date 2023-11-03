@@ -6,6 +6,7 @@
       :props="{ multiple,children: 'children', label: 'name', value: 'id' }"
       size="small"
       :show-all-levels="false"
+      :placeholder="placeholder"
       clearable
       @change="change"
     ></el-cascader>
@@ -13,6 +14,7 @@
 </template>
 <script>
   import {getProductCategoryTreeListForShop} from "@/api/ptm/productCategory.js";
+  import {getCascaderSelectedKeys} from "@/utils/cascaderUtils.js";
 
   export default {
     props: {
@@ -25,13 +27,19 @@
       value: {
         type: Array || String,
         default: function () {
-          return [];
+          return null;
         }
       },
       multiple: {
         type: Boolean,
         default: function () {
           return true;
+        }
+      },
+      placeholder: {
+        type: String,
+        default: function () {
+          return "请选择店铺类型";
         }
       },
 
@@ -46,20 +54,23 @@
     async created() {
       if (this.tenantId) {
         await this.getData();
+        if (this.value) {
+          this.selectedKeys = getCascaderSelectedKeys(this.treeData, this.value);
+        }
       }
     },
     methods: {
       async getData() {
-        let treeList = await getProductCategoryTreeListForShop({tenantId: this.tenantId});
-        this.setDisable(5, treeList);
-        this.treeData = treeList;
+        this.treeData = await getProductCategoryTreeListForShop({tenantId: this.tenantId});
+        this.setDisable(5, this.treeData);
+        console.log("yProductCategorySelect.arr", this.treeData)
       },
       change(value) {
-        let idArray = value.map(function (item) {
+        let ids = value.map(function (item) {
           return item[item.length - 1]
-        });
-        this.$emit('input', idArray);
-        this.$emit('change', idArray);
+        }).join(",");
+        this.$emit('input', ids);
+        this.$emit('change', ids);
       },
       /**
        * level: 当前层级
@@ -72,8 +83,11 @@
           if (!v.children && v.level.value < level) {
             v.disabled = true;
           }
+          if (v.children && v.level.value < level) {
+            v.disabled = false;
+          }
           if (!v.children && v.level.value == level) {
-            v.disabled = true;
+            v.disabled = false;
           }
           if (v.children) {
             _this.setDisable(level, v.children);
