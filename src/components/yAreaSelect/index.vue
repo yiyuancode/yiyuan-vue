@@ -58,6 +58,7 @@
         this.options = await this.init()
       } else {
         this.options = await this.getData(0);
+        console.log("this.options",this.options)
       }
     },
     methods: {
@@ -68,6 +69,7 @@
       async getData(pid) {
         let treeList = await getCityTreeByPid(pid);
         return treeList;
+
         // this.options = treeList
       },
       onChange() {

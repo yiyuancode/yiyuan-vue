@@ -14,7 +14,7 @@
 </template>
 <script>
   import {getProductCategoryTreeListForPlat} from "@/api/ptm/productCategory.js";
-
+  import {getCascaderSelectedKeys} from "@/utils/cascaderUtils.js";
 
   export default {
     props: {
@@ -73,27 +73,24 @@
       await this.getData();
       // this.selectedKeys = this.value
       if (this.value) {
-        console.log("22")
-        let arr = this.value.split("|");
-        this.selectedKeys = JSON.parse(arr[arr.length - 1]);
+        this.selectedKeys = getCascaderSelectedKeys(this.treeData, this.value);
+        console.log("res.arr", this.selectedKeys)
       }
     }
     ,
     methods: {
       async getData() {
-        let treeList = await getProductCategoryTreeListForPlat();
-        this.setDisable(3, treeList)
-        this.treeData = treeList;
-        console.log("this.treeData", this.treeData)
-
+        this.treeData = await getProductCategoryTreeListForPlat();
+        this.setDisable(3, this.treeData);
+        console.log("yPlatCategorySelect.arr", this.treeData)
       }
       ,
       change(value) {
         let ids = value.map(function (item) {
           return item[item.length - 1]
         }).join(",");
-        this.$emit('input', ids + "|" + JSON.stringify(value));
-        this.$emit('change', ids + "|" + JSON.stringify(value));
+        this.$emit('input', ids);
+        this.$emit('change', ids);
       }
       ,
       /**
@@ -117,7 +114,8 @@
             _this.setDisable(level, v.children);
           }
         });
-      }
+      },
+
 
     }
   };

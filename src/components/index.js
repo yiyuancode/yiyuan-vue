@@ -7,7 +7,7 @@ import yAreaSelect from '@/components/yAreaSelect/index.vue';
 import yShopSelect from '@/components/yShopSelect/index.vue';
 import draggable from 'vuedraggable';
 import yPlatCategorySelect from '@/components/yPlatCategorySelect/index.vue';
-import yShopCategorySelect from '@/components/yShopCategorySelect/index.vue';
+import yProductCategorySelectOfShop from '@/components/yProductCategorySelectOfShop/index.vue';
 import yProductCategorySelect from '@/components/yProductCategorySelect/index.vue';
 
 import yRichEditor from '@/components/yRichEditor/index.vue';
@@ -25,7 +25,7 @@ export default {
     Vue.component('yShopSelect', yShopSelect);
     Vue.component('draggable', draggable);
     Vue.component('yPlatCategorySelect', yPlatCategorySelect);
-    Vue.component('yShopCategorySelect', yShopCategorySelect);
+    Vue.component('yProductCategorySelectOfShop', yProductCategorySelectOfShop);
     Vue.component('yRichEditor', yRichEditor);
     Vue.component('yUploadMultiple', yUploadMultiple);
     Vue.component('yUploadSingle', yUploadSingle);

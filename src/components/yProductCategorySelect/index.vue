@@ -1,18 +1,21 @@
 <template>
   <div style="width: 100%;">
+    <!--checkStrictly: true,-->
     <el-cascader
       v-model="selectedKeys"
       :options="treeData"
-      :props="{ checkStrictly: true,children: 'children', label: 'name', value: 'id' }"
+      :props="{ multiple,children: 'children', label: 'name', value: 'id' }"
       size="small"
       :show-all-levels="false"
       clearable
+      :placeholder="placeholder"
       @change="change"
     ></el-cascader>
   </div>
 </template>
 <script>
-  import {getProductCategoryTreeList} from "@/api/ptm/productCategory.js";
+  import {getProductCategoryTreeListForShop} from "@/api/ptm/productCategory.js";
+  import {getCascaderSelectedKeys} from "@/utils/cascaderUtils.js";
 
   export default {
     props: {
@@ -43,7 +46,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择商品类型";
+          return "请选择店铺内部商品分类";
         }
       },
       treeDefaultExpandAll: {
@@ -69,19 +72,24 @@
     computed: {},
     async created() {
       await this.getData();
-      // this.selectedKeys = this.value
+      if (this.value) {
+        this.selectedKeys = getCascaderSelectedKeys(this.treeData, this.value);
+        console.log("res.arr", this.selectedKeys)
+      }
     },
     methods: {
       async getData() {
-        let treeList = await getProductCategoryTreeList();
-        this.treeData = treeList;
-        console.log("this.treeData", this.treeData)
-
+        this.treeData = await getProductCategoryTreeListForShop();
+        console.log("yProductCategorySelect.arr", this.treeData)
       },
       change(value) {
-        let id = value[value.length - 1];
-        this.$emit('input', id + "|" + JSON.stringify(value));
-        this.$emit('change', id + "|" + JSON.stringify(value));
+        let ids = value.map(function (item) {
+          return item[item.length - 1]
+        }).join(",");
+        this.$emit('input', ids);
+        this.$emit('change', ids);
+        console.log("yProductCategorySelect.ids",ids)
+
 
       },
 
