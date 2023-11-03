@@ -13,23 +13,20 @@
         <a-input v-model="form.phone" allowClear placeholder="请输入手机"/>
       </a-form-model-item>
       <a-form-model-item slot="sex" slot-scope="{ form }" label="商品分类">
-        <!--        <y-product-category-tree-select v-model="form.category"></y-product-category-tree-select>-->
 
-        <!--        <y-product-category-tree-select v-model="form.category"-->
-        <!--                                        :tenantId="233"></y-product-category-tree-select>-->
-        <!--        <y-area-select v-model="form.area"></y-area-select>-->
-        <!--        <y-shop-select v-model="form.tenantId" @change="tenantIdChange"></y-shop-select>-->
-        <y-plat-category-select></y-plat-category-select>
+        <y-area-select v-model="form.area"/>
 
-        <y-shop-select v-model="form.tenantId" :key="form.tenantId" @change="(tenantId)=>form.tenantId=tenantId"></y-shop-select>
+        <y-plat-category-select v-model="plat"/>
 
-        <y-shop-category-select :tenantId="form.tenantId" :key="form.tenantId"></y-shop-category-select>
+        <y-shop-select v-model="form.tenantId"/>
 
-<!--        <y-rich-editor v-model="form.rich"></y-rich-editor>-->
+        <y-product-category-select v-model="category"/>
 
-        <y-upload-multiple v-model="form.imgs"  @change="imgsChange"></y-upload-multiple>
+        <y-product-category-select-of-shop :tenantId="form.tenantId" :key="form.tenantId"/>
 
-        <y-upload-single v-model="form.img2" ></y-upload-single>
+        <y-upload-multiple v-model="form.imgs" @change="imgsChange"/>
+
+        <y-upload-single v-model="form.img2"/>
       </a-form-model-item>
     </y-search>
 
@@ -65,7 +62,9 @@
   export default {
     data() {
       return {
-        imgs:"315ae6f9-8613-411d-a422-212c6cc3288c.png,918e048d-06ab-47b1-9d7b-583450ca582b.webp",
+        category:'335c0770c41c9b77b03bb715232b7e3b,c76edf02d017f91c43d682da2ab8bbe1,bd275208-7739-11ee-9987-0242ac120002,bd2751d5-7739-11ee-9987-0242ac120002,bd2751d9-7739-11ee-9987-0242ac120002,bd2743a5-7739-11ee-9987-0242ac120002,bd274392-7739-11ee-9987-0242ac120002',
+        plat: '481a59172ccf0c037447ae02796d1c93,09f865dc40218bbba2dc5fff8be63b93,828a4e6cb6f2a3fd63bbc8f5957bd28b,f50318da50e28a0d0dd24d3264d4185a,98efff963f1b77e7f6b9953c0d2e8510,bb7deac51ab01bca1f85e333d300d46f|[["086fa3b9376b073e788f5194063c706c","bda27b3e35b138e4679ad1ccb77ebeb0","481a59172ccf0c037447ae02796d1c93"],["7e998daee6765cbee3cccc0a8617fe19","dc9c5f46a8d511ebe4bbf161c4a3119c","09f865dc40218bbba2dc5fff8be63b93"],["7e998daee6765cbee3cccc0a8617fe19","dc9c5f46a8d511ebe4bbf161c4a3119c","54cc767e1f92bd51d903811dc76f4020","828a4e6cb6f2a3fd63bbc8f5957bd28b"],["7e998daee6765cbee3cccc0a8617fe19","dc9c5f46a8d511ebe4bbf161c4a3119c","54cc767e1f92bd51d903811dc76f4020","f50318da50e28a0d0dd24d3264d4185a"],["7e998daee6765cbee3cccc0a8617fe19","dc9c5f46a8d511ebe4bbf161c4a3119c","54cc767e1f92bd51d903811dc76f4020","98efff963f1b77e7f6b9953c0d2e8510"],["7e998daee6765cbee3cccc0a8617fe19","dc9c5f46a8d511ebe4bbf161c4a3119c","54cc767e1f92bd51d903811dc76f4020","bb7deac51ab01bca1f85e333d300d46f"]]',
+        imgs: "315ae6f9-8613-411d-a422-212c6cc3288c.png,918e048d-06ab-47b1-9d7b-583450ca582b.webp",
         area: "11, 1101,110101",
         searchForm: {},
         c: ["1", "58"],
@@ -92,7 +91,7 @@
       this.getData();
     },
     methods: {
-      imgsChange(imgs){
+      imgsChange(imgs) {
         console.log("imgsChange", imgs)
       },
       tenantIdChange(tenantId) {
