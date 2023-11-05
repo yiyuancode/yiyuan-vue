@@ -1,0 +1,114 @@
+<template>
+  <a-drawer
+    :title="editConfig.title"
+    :width="1200"
+    :visible="editConfig.visible"
+    @close="onCancel"
+  >
+    <y-edit-form
+      ref="editForm"
+      :key="editId"
+      :columns="editConfig.columns"
+      :scopedSlots="['tenantId','priceList']"
+      :rules="rules"
+      @onSubmit="onSubmit"
+      @onCancel="onCancel"
+    >
+      <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户" prop="tenantId">
+        <y-shop-select v-model="form.tenantId"/>
+      </a-form-model-item>
+      <a-form-model-item v-if="form.packageType=='1'" slot="priceList" slot-scope="{ form }"
+                         label="运费设置"
+                         prop="priceList">
+        <y-freight-temp-price-table v-model="form.priceList"/>
+      </a-form-model-item>
+    </y-edit-form>
+  </a-drawer>
+</template>
+
+<script>
+  import {
+    addFreightTemp as addPost,
+    editFreightTemp as editPost,
+    getFreightTempDetail as detailGet
+  } from '@/api/ftm/freightTemp.js';
+
+  export default {
+    name: 'edit',
+    // components: {UploadSngle},
+    props: {
+      editConfigProps: {
+        type: Object,
+        default: function () {
+          return {};
+        }
+      },
+      editId: {
+        // 待编辑数据
+        type: String,
+        require: false
+      }
+    },
+    data() {
+      return {
+        editConfig: {},
+        rules: {
+          tenantId: [{required: true, message: "请选择商户"}],
+        },
+
+
+      };
+    },
+    created() {
+      this.editConfig = this.editConfigProps
+      this.init();
+    },
+    mounted() {
+    },
+    methods: {
+      // 如果是编辑操作
+      async init() {
+        if (this.editId) {
+          this.formData = await detailGet(this.editId);
+          this.formData.packageType = this.formData.packageType.value;
+          this.formData.chargeType = this.formData.chargeType.value;
+          this.$refs.editForm.setFields(this.formData);
+          // this.formData.categoryIds = [this.formData.categoryIds];
+        }
+      },
+      async onSubmit(formData) {
+        console.log("onSubmit", formData)
+        this.editConfig.visible = false;
+        if (this.editId) {
+          await editPost(formData, this.editId);
+        } else {
+          await addPost(formData);
+        }
+        this.$emit("ok")
+
+      },
+      onCancel() {
+        this.editConfig.visible = false;
+        this.$refs.editForm.resetFields();
+      },
+      UploadSngle(fileUrl, item) {
+        item.icon = fileUrl;
+      }
+    }
+  };
+</script>
+
+<style scoped lang="less">
+  .manage-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content-container {
+    flex: 1 1 auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+</style>

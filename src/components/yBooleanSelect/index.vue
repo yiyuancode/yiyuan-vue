@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%;">
 
-    <a-select v-if="!isSpan" v-model="selectedKeys"
+    <a-select v-model="selectedKeys"
               :placeholder="placeholder"
               :allowClear="allowClear"
               @change="change">
@@ -9,14 +9,11 @@
         {{ item.shopName }}
       </a-select-option>
     </a-select>
-    <span v-else>
-      {{optionsMap[value]}}
-    </span>
 
   </div>
 </template>
 <script>
-  import {getShopList as listPage} from "@/api/spm/shop.js";
+  import {getShopList} from "@/api/spm/shop.js";
 
   export default {
     props: {
@@ -38,12 +35,6 @@
           return "请选择店铺";
         }
       },
-      isSpan: {
-        type: Boolean,
-        default: function () {
-          return false;
-        }
-      },
 
 
     },
@@ -51,45 +42,24 @@
       return {
         selectedKeys: undefined,
         options: [],
-        optionsMap: {},
       };
-    },
-    watch: {
-      value(newValue, oldValue) {
-        if (!newValue) {
-          this.selectedKeys = undefined;
-        }
-      }
     },
     computed: {},
     async created() {
-      if (!this.isSpan) {
-        await this.getData();
-        if (this.value) {
-          this.selectedKeys = this.value
-        }
-      } else {
-        this.getCache()
+      await this.getData();
+      if (this.value) {
+        this.selectedKeys = this.value
       }
+      //
     },
     methods: {
       async getData() {
-        this.options = await listPage();
-        this.setCache();
+        this.options = await getShopList();
+        console.log("this.options", this.options)
       },
       change(value, label, extra) {
         this.$emit('input', value);
         this.$emit('change', value);
-      },
-      setCache() {
-        this.optionsMap = this.options.reduce((acc, obj) => {
-          acc[obj.id] = obj.shopName;
-          return acc;
-        }, {});
-        localStorage.setItem("yShopSelect", JSON.stringify(this.optionsMap))
-      },
-      getCache() {
-        this.optionsMap = JSON.parse(localStorage.getItem("yShopSelect"))
       }
     }
   };
