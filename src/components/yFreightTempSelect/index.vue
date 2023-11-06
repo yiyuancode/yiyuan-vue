@@ -1,22 +1,19 @@
 <template>
   <div style="width: 100%;">
 
-    <a-select v-if="!isSpan" v-model="selectedKeys"
+    <a-select v-model="selectedKeys"
               :placeholder="placeholder"
               :allowClear="allowClear"
               @change="change">
       <a-select-option v-for="(item) in options" :value="item.id" :key="item.id">
-        {{ item.shopName }}
+        {{ item.name }}
       </a-select-option>
     </a-select>
-    <span v-else>
-      {{optionsMap[value]}}
-    </span>
 
   </div>
 </template>
 <script>
-  import {getShopList as listPage} from "@/api/spm/shop.js";
+  import {getFreightTempList as listGet} from "@/api/ftm/freightTemp.js";
 
   export default {
     props: {
@@ -35,13 +32,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择店铺";
-        }
-      },
-      isSpan: {
-        type: Boolean,
-        default: function () {
-          return false;
+          return "请选择运费模板";
         }
       },
 
@@ -51,45 +42,24 @@
       return {
         selectedKeys: undefined,
         options: [],
-        optionsMap: {},
       };
-    },
-    watch: {
-      value(newValue, oldValue) {
-        if (!newValue) {
-          this.selectedKeys = undefined;
-        }
-      }
     },
     computed: {},
     async created() {
-      if (!this.isSpan) {
-        await this.getData();
-        if (this.value) {
-          this.selectedKeys = this.value
-        }
-      } else {
-        this.getCache()
+      await this.getData();
+      if (this.value) {
+        this.selectedKeys = this.value
       }
+      //
     },
     methods: {
       async getData() {
-        this.options = await listPage();
-        this.setCache();
+        this.options = await listGet();
+        console.log("this.options", this.options)
       },
       change(value, label, extra) {
         this.$emit('input', value);
         this.$emit('change', value);
-      },
-      setCache() {
-        this.optionsMap = this.options.reduce((acc, obj) => {
-          acc[obj.id] = obj.shopName;
-          return acc;
-        }, {});
-        localStorage.setItem("yShopSelect", JSON.stringify(this.optionsMap))
-      },
-      getCache() {
-        this.optionsMap = JSON.parse(localStorage.getItem("yShopSelect"))
       }
     }
   };

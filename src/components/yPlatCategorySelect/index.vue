@@ -15,6 +15,7 @@
 <script>
 // 平台分类选择器
   import {getProductCategoryTreeListForPlat} from "@/api/ptm/productCategory.js";
+  import {getCascaderSelectedKeys} from "@/utils/cascaderUtils.js";
 
   export default {
     props: {
@@ -25,9 +26,9 @@
         }
       },
       value: {
-        type: Array || String,
+        type: String,
         default: function () {
-          return [];
+          return null;
         }
       },
       allowClear: {
@@ -45,7 +46,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择";
+          return "请选择店铺主营类目";
         }
       },
       treeDefaultExpandAll: {
@@ -72,25 +73,27 @@
     async created() {
       await this.getData();
       // this.selectedKeys = this.value
-    },
+      if (this.value) {
+        this.selectedKeys = getCascaderSelectedKeys(this.treeData, this.value);
+        console.log("res.arr", this.selectedKeys)
+      }
+    }
+    ,
     methods: {
       async getData() {
-        let treeList = await getProductCategoryTreeListForPlat();
-        // this.setDisable(3, treeList)
-        this.treeData = treeList;
-        console.log("this.treeData", this.treeData);
-      },
+        this.treeData = await getProductCategoryTreeListForPlat();
+        this.setDisable(3, this.treeData);
+        console.log("yPlatCategorySelect.arr", this.treeData)
+      }
+      ,
       change(value) {
-        console.log("change", value)
-        // let idArray = value.map((item) => {
-        //   return item[item.length - 1]
-        // })
-        let idArray = value.map(function (item) {
+        let ids = value.map(function (item) {
           return item[item.length - 1]
-        });
-        this.$emit('input', idArray);
-        this.$emit('change', idArray);
-      },
+        }).join(",");
+        this.$emit('input', ids);
+        this.$emit('change', ids);
+      }
+      ,
       /**
        * level: 当前层级
        * data: 当前层级的数据
@@ -99,7 +102,7 @@
         let _this = this;
         data.forEach((v) => {
           //此处判断可根据你后台返回的数据类型适当变换，原理就是将不符合条件的项给禁掉
-          if (!v.children && v.level.value < level && v.level.value > 1) {
+          if (!v.children && v.level.value < level) {
             v.disabled = true;
           }
           if (v.children && v.level.value < level) {
@@ -113,6 +116,8 @@
           }
         });
       },
+
+
     }
   };
 </script>

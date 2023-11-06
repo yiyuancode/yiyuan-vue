@@ -1,22 +1,22 @@
 <template>
   <div style="width: 100%;">
-    <!--checkStrictly: true,-->
     <el-cascader
       v-model="selectedKeys"
       :options="treeData"
-      :props="{ multiple,children: 'children', label: 'name', value: 'id' }"
+      :props="{ multiple,checkStrictly:true, children: 'children', label: 'name', value: 'id',lazy:true, lazyLoad }"
       size="small"
-      :show-all-levels="false"
-      clearable
       :placeholder="placeholder"
-      @change="change"
+      :show-all-levels="true"
+
+      @change="onChange"
+      clearable
     ></el-cascader>
   </div>
 </template>
 <script>
-  import {getProductCategoryTreeListForShop} from "@/api/ptm/productCategory.js";
-  import {getCascaderSelectedKeys} from "@/utils/cascaderUtils.js";
 
+  import {getCityTreeByPid} from '@/api/sys/area.js';
+  import {getCascaderSelectedKeys} from "@/utils/cascaderUtils.js";
   export default {
     props: {
       tenantId: {
@@ -46,7 +46,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择店铺内部商品分类";
+          return "请选择城市";
         }
       },
       treeDefaultExpandAll: {
@@ -71,27 +71,56 @@
     },
     computed: {},
     async created() {
-      await this.getData();
+      this.init();
       if (this.value) {
         this.selectedKeys = getCascaderSelectedKeys(this.treeData, this.value);
         console.log("res.arr", this.selectedKeys)
       }
-    },
+    }
+    ,
     methods: {
-      async getData() {
-        this.treeData = await getProductCategoryTreeListForShop();
-        console.log("yProductCategorySelect.arr", this.treeData)
+      async lazyLoad(node, resolve) {
+        let nodeList = await this.getData(node.data?node.data.id:0);
+        nodeList.forEach((item) => {
+          item.leaf = item.level > 4;
+        })
+        resolve(nodeList);
       },
-      change(value) {
-        let ids = value.map(function (item) {
-          return item[item.length - 1]
-        }).join(",");
-        this.$emit('input', ids);
-        this.$emit('change', ids);
-        console.log("yProductCategorySelect.ids",ids)
 
-
+      async init() {
+        this.treeData = await this.getData(0);
       },
+      async getData(pid) {
+        let treeList = await getCityTreeByPid(pid);
+        return treeList;
+      },
+      onChange() {
+        console.log("onChange.this.selectedKeys.", this.selectedKeys)
+        this.$emit('input', this.selectedKeys.join(","));
+      },
+      /**
+       * level: 当前层级
+       * data: 当前层级的数据
+       */
+      setDisable(level, data) {
+        let _this = this;
+        data.forEach((v) => {
+          //此处判断可根据你后台返回的数据类型适当变换，原理就是将不符合条件的项给禁掉
+          if (!v.children && v.level.value < level) {
+            v.disabled = true;
+          }
+          if (v.children && v.level.value < level) {
+            v.disabled = false;
+          }
+          if (!v.children && v.level.value == level) {
+            v.disabled = false;
+          }
+          if (v.children) {
+            _this.setDisable(level, v.children);
+          }
+        });
+      },
+
 
     }
   };
