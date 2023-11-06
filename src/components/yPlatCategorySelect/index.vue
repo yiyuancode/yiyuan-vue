@@ -76,10 +76,9 @@
     methods: {
       async getData() {
         let treeList = await getProductCategoryTreeListForPlat();
-        this.setDisable(3, treeList)
+        // this.setDisable(3, treeList)
         this.treeData = treeList;
-        console.log("this.treeData", this.treeData)
-
+        console.log("this.treeData", this.treeData);
       },
       change(value) {
         console.log("change", value)
@@ -100,7 +99,7 @@
         let _this = this;
         data.forEach((v) => {
           //此处判断可根据你后台返回的数据类型适当变换，原理就是将不符合条件的项给禁掉
-          if (!v.children && v.level.value < level) {
+          if (!v.children && v.level.value < level && v.level.value > 1) {
             v.disabled = true;
           }
           if (v.children && v.level.value < level) {

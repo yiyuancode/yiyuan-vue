@@ -13,13 +13,8 @@
           allowClear
         />
       </a-form-model-item>
-<!--      TODO 商户选择器-->
       <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户">
-        <a-input
-          v-model="form.tenantId"
-          placeholder="请选择商户信息"
-          allowClear
-        />
+        <y-shop-select v-model="form.tenantId"></y-shop-select>
       </a-form-model-item>
       <a-form-model-item slot="name" slot-scope="{ form }" label="品牌名称">
         <a-input

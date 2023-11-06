@@ -39,10 +39,15 @@ export function getProductDetail(id) {
  */
 
 export function addProduct(data) {
+  // TODO 参数可以优化
+  let finalData = JSON.parse(JSON.stringify(data));
+  if(finalData.platCategoryIds && finalData.platCategoryIds.length > 0) {
+    finalData.platCategoryIds = finalData.platCategoryIds.join(",");
+  }
   return request({
     url: '/ptm/product/add',
     method: 'post',
-    data
+    data: finalData
   });
 }
 

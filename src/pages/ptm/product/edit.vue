@@ -10,10 +10,6 @@
                        @change="tenantIdChange"></y-shop-select>
       </a-form-model-item>
       <a-form-model-item label="平台分类">
-<!--        todo 需要有商户参数的传递-->
-<!--        <y-product-category-tree-select-->
-<!--          v-model="formData.platCategoryIds"-->
-<!--        @change="cateIdChange"/>-->
         <y-plat-category-select
           :key="forPramsData.tenantId"
           v-model="formData.platCategoryIds"
@@ -28,13 +24,13 @@
 <!--          :tenantId="forPramsData.tenantId"-->
 <!--          :key="forPramsData.tenantId"-->
 <!--          v-model="formData.platCategoryIds" />-->
-        <y-plat-category-select
+        <y-shop-category-select
           :disabled="formData.tenantId == 0"
           :tenantId="forPramsData.tenantId"
           :key="forPramsData.tenantId"
           v-model="formData.platCategoryIds">
 
-        </y-plat-category-select>
+        </y-shop-category-select>
       </a-form-model-item>
       <a-form-model-item label="品牌">
 <!--        todo 根据当前平台id加载对应品牌列表 此字为非必填-->
@@ -218,7 +214,6 @@ export default {
   methods:{
     // 商品维护表单提交方法，编辑和创建
     async onSubmitHandle(){
-      this.formData.tenantId = 0; // 平台创建商户id为0
       if (this.editId) {
         await editProduct(this.formData, this.formData.id);
         this.$emit('onSubmitHandleSuccess');
@@ -262,8 +257,7 @@ export default {
     async handleSkuList(){
       let attrKey = [this.formData.attrKey.label.trim()];
       let attrValue =[this.formData.attrValue.map(obj => obj.label.trim())];
-      const skuList = await makeSkuTempList({attrKeyList:attrKey, attrValList:attrValue});
-      console.log('skuList:', skuList);
+      this.formData.skuList = await makeSkuTempList({attrKeyList:attrKey, attrValList:attrValue});
     }
   }
 }

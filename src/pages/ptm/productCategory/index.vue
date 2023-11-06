@@ -102,7 +102,7 @@
 
     <a-drawer
       title="商品分类"
-      width="500"
+      width="800"
       :visible="editConfig.visible"
       @close="editConfig.visible = false"
     >

@@ -10,7 +10,7 @@
       <a-form-model-item label="商户" prop="tenantId">
         <y-shop-select v-model="formData.tenantId" placeholder="商户|不选为平台分类"></y-shop-select>
       </a-form-model-item>
-      <a-form-model-item label="父级分类" prop="pid">
+      <a-form-model-item label="平台父级分类" prop="pid">
 <!--        <a-cascader-->
 <!--          v-model="formData.pid"-->
 <!--          :options="forPramsData.productCateList"-->
@@ -18,12 +18,13 @@
 <!--          placeholder="请选择商品分类"-->
 <!--          @change="onProductCateOptionSelected"-->
 <!--        />-->
-        <y-product-category-select v-model="formData.pid" placeholder="平台分类|不选为根目录"></y-product-category-select>
+<!--        <y-product-category-select v-model="formData.pid" placeholder="平台分类|不选为根目录"></y-product-category-select>-->
+        <y-plat-category-select v-model="formData.pid" placeholder="平台分类|不选为根目录"></y-plat-category-select>
       </a-form-model-item>
-      <a-form-model-item label="分类名称" prop="name">
+      <a-form-model-item label="平台分类名称" prop="name">
         <a-input
           v-model="formData.name"
-          placeholder="请输入分类名称"
+          placeholder="请输入平台分类名称"
           allowClear
         />
       </a-form-model-item>
@@ -129,6 +130,9 @@ export default {
     onSubmitHandle() {
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
+          if(this.formData.pid.length > 0){
+            this.formData.pid = this.formData.pid[0];
+          }
           if (this.formData.id) {
             await editProductCategory(this.formData, this.formData.id);
             this.$emit('onSaveSubmit');

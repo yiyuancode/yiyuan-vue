@@ -221,6 +221,20 @@ export default {
     //获取父级树结构
     async getProductCategoryTree() {
       this.searchDataOfProductCate = await getProductCategoryTreeList();
+      // 一个去掉前端 因为children = null 的警告
+      // this.searchDataOfProductCate = this.formatData(await getProductCategoryTreeList());
+      // console.log('this.searchDataOfProductCate:',this.searchDataOfProductCate);
+    },
+    formatData(data) {
+      const that = this
+      data.forEach((element) => {
+        if (element.children && element.children.length > 0) {
+          that.formatData(element.children)
+        } else {
+          element.children = undefined
+        }
+      })
+      return data
     }
   }
 };
