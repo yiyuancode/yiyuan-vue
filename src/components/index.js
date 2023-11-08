@@ -9,7 +9,7 @@ import draggable from 'vuedraggable';
 import yPlatCategorySelect from '@/components/yPlatCategorySelect/index.vue';
 import yProductCategorySelectOfShop from '@/components/yProductCategorySelectOfShop/index.vue';
 import yProductCategorySelect from '@/components/yProductCategorySelect/index.vue';
-
+import yShopTypeSelect from '@/components/yShopTypeSelect/index.vue';
 import yRichEditor from '@/components/yRichEditor/index.vue';
 import yDateRingePicker from '@/components/yDateRingePicker/index.vue';
 import yUploadMultiple from '@/components/yUploadMultiple/index.vue';
@@ -45,7 +45,7 @@ export default {
     Vue.component('yBooleanSpan', yBooleanSpan);
     Vue.component('yFreightTempSelect', yFreightTempSelect);
     Vue.component('yEnumSpan', yEnumSpan);
-
+    Vue.component('yShopTypeSelect', yShopTypeSelect);
     Vue.component(Cascader.name, Cascader);
 
   }

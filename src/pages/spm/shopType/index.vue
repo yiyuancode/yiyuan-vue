@@ -132,16 +132,19 @@ export default {
     },
     tableChange() {},
     addForm() {
+      this.editConfig.editId = null;
       this.editConfig.visible = true;
       this.editConfig.title = '添加店铺类型';
     },
     onEdit(text, record) {
       this.editConfig.editId = record.id;
+      this.editConfig.title="修改店铺类型";
       this.editConfig.visible = true;
       this.editConfig.title = '修改店铺类型';
     },
     search(form) {
       this.searchForm = form;
+      this.getData();
     },
     async getData() {
       this.table.loading = true;

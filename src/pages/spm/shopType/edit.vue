@@ -1,12 +1,11 @@
 <template>
   <div class="manage-container">
     <a-form-model
-    ref="ruleForm"
-    :model="formData"
-    :rules="rules"
+      ref="ruleForm"
+      :model="formData"
+      :rules="rules"
       :label-col="labelCol"
       :wrapper-col="wrapperCol"
-
     >
       <a-form-model-item label="店铺类型名称" prop="name">
         <a-input
@@ -110,17 +109,16 @@ export default {
             await editShopType(this.formData, this.editId);
             this.$message.success('修改成功');
             this.$emit('onSaveSubmit');
-
           } else {
             // 添加
             await addShopType(this.formData);
-            this.$message.success('添加成功')
+            this.$message.success('添加成功');
             this.$emit('onSaveSubmit');
           }
 
           this.onCancelHandle();
         } else {
-          this.$message.error("校验未通过");
+          this.$message.error('校验未通过');
           return false;
         }
       });
