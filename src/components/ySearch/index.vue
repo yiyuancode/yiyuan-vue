@@ -8,7 +8,6 @@
           :span="span"
           :style="{ display: index < count ? 'block' : 'none' }"
         >
-
           <template v-if="item.dataIndex">
             <a-form-model-item :label="`${item.title}`">
               <a-range-picker
@@ -18,6 +17,27 @@
                 showTime
                 :placeholder="[`开始时间`, `结束时间`]"
               />
+
+              <a-select
+                v-else-if="item.formType == `radioGroup`"
+                v-model="form[item.dataIndex]"
+                allowClear
+                :placeholder="`请选择${
+                    item.placeholder ? item.placeholder : item.title
+                  }`"
+                :default-active-first-option="false"
+                :filter-option="false"
+              >
+                <a-select-option
+                  v-for="(im3, ix3) in item.props.options"
+                  :key="ix3"
+                  :value="im3.value"
+                >
+                  {{ im3.label }}
+                </a-select-option>
+              </a-select>
+
+
               <a-input
                 v-if="!item.formType"
                 v-model="form[item.dataIndex]"
@@ -69,7 +89,6 @@
 </template>
 <script>
   import _ from 'lodash';
-
   export default {
     props: {
       props: {
@@ -109,7 +128,7 @@
         let columnsTemp = this.columns.filter((item) => {
           return !item.noSearch;
         });
-        columnsTemp = [...columnsTemp, ...this.scopedSlots];
+        columnsTemp = [...this.scopedSlots , ...columnsTemp];
         return columnsTemp;
       },
       count() {
