@@ -23,6 +23,7 @@ import yFreightTempSelect from '@/components/yFreightTempSelect/index.vue';
 import yEnumSpan from '@/components/yEnumSpan/index.vue';
 
 
+
 export default {
   install(Vue) {
     //注册全局组件
@@ -45,6 +46,7 @@ export default {
     Vue.component('yBooleanSpan', yBooleanSpan);
     Vue.component('yFreightTempSelect', yFreightTempSelect);
     Vue.component('yEnumSpan', yEnumSpan);
+    // Vue.component('elCascaderPlus', elCascaderPlus);
 
     Vue.component(Cascader.name, Cascader);
 

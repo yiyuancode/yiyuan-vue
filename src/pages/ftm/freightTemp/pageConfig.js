@@ -5,6 +5,7 @@
  * @date 2023-11-05
  */
 import * as freightTemp from "@/api/ftm/freightTemp";
+import {getEnumsMap} from "@/utils/enumsUtils.js";
 
 const columns = [
   {
@@ -207,34 +208,6 @@ const columns = [
     scopedSlots: {customRender: "action"}
 
   },
-
-  // {
-  //   title: '创建人',
-  //   dataIndex: 'createUser',
-  //   key: 'createUser',
-  //   width: 160,
-  //   ellipsis: true,
-  //   noEdit: true,
-  //   noAdd: true,
-  //   noSearch: true,
-  //   noShow: true,
-  //
-  // },
-  //
-  // {
-  //   title: '修改人',
-  //   dataIndex: 'updateUser',
-  //   key: 'updateUser',
-  //   width: 160,
-  //   ellipsis: true,
-  //   noEdit: true,
-  //   noAdd: true,
-  //   noSearch: true,
-  //   noShow: true,
-  //
-  // },
-
-
 ]
 
 
@@ -257,8 +230,12 @@ const permissionObj = {
   deleteBtn: 'ftm:freightTemp:delete'
 };
 
+//转化map
+const enumsMap = getEnumsMap(columns);
+console.log("enumsMap",enumsMap)
 export {
   columns,
   moduleConfig,
-  permissionObj
+  permissionObj,
+  enumsMap
 };

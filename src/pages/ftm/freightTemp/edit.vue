@@ -24,7 +24,7 @@
           <y-freight-temp-price-table v-model="form.priceList"/>
         </a-form-model-item>
       </y-edit-form>
-      </a-spin>
+    </a-spin>
   </a-drawer>
 </template>
 
@@ -72,12 +72,10 @@
       // 如果是编辑操作
       async init() {
         if (this.editId) {
-          this.spinning=true;
+          this.spinning = true;
           this.formData = await detailGet(this.editId);
-          this.formData.packageType = this.formData.packageType.value;
-          this.formData.chargeType = this.formData.chargeType.value;
           this.$refs.editForm.setFields(this.formData);
-          this.spinning=false;
+          this.spinning = false;
           // this.formData.categoryIds = [this.formData.categoryIds];
         }
       },

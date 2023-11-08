@@ -31,13 +31,16 @@
         <y-shop-select v-model="record.tenantId" isSpan></y-shop-select>
       </span>
       <span slot="packageType" slot-scope="{ text, record }">
-      {{enumsMap['packageType'+text]}}
+        <y-enum-span v-model="record.packageType"></y-enum-span>
       </span>
       <span slot="chargeType" slot-scope="{ text, record }">
-       {{enumsMap['chargeType'+text]}}
+        <y-enum-span v-model="record.chargeType"></y-enum-span>
       </span>
       <span slot="isShow" slot-scope="{ text, record }">
-        {{enumsMap['isShow'+text]}}
+        <y-boolean-span v-model="record.isShow"></y-boolean-span>
+      </span>
+      <span slot="isShow" slot-scope="{ text, record }">
+        <y-boolean-span v-model="record.isShow"></y-boolean-span>
       </span>
       <div class="y-flex" slot="action" slot-scope="{ text, record }">
         <a-button icon="edit" @click="onEdit(record)"></a-button>
@@ -59,7 +62,7 @@
   </div>
 </template>
 <script>
-  import {columns, enumsMap} from './pageConfig.js';
+  import {columns} from './pageConfig.js';
   import {
     deleteFreightTemp as deletePost,
     getFreightTempPageList as pageGet
@@ -70,7 +73,8 @@
     components: {edit},
     data() {
       return {
-        enumsMap,
+        searchForm: {},
+        c: ["1", "58"],
         table: {
           columns,
           records: [],

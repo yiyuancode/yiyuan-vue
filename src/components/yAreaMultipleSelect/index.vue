@@ -11,13 +11,32 @@
       @change="onChange"
       clearable
     ></el-cascader>
+
+
+    <el-cascader-plus
+
+      style="width: 400px"
+
+      ref="cascader"
+
+      v-model="selectedKeys"
+
+      :props="{ ...{ multiple, children: 'children', label: 'name', value: 'id',lazy:true, lazyLoad }, multiple: true }"
+
+      @change="onChange"
+
+    ></el-cascader-plus>
   </div>
 </template>
 <script>
-
+  import elCascaderPlus from "el-cascader-plus";
   import {getCityTreeByPid} from '@/api/sys/area.js';
   import {getCascaderSelectedKeys} from "@/utils/cascaderUtils.js";
+
   export default {
+    components: {
+      elCascaderPlus
+    },
     props: {
       tenantId: {
         type: String,
@@ -80,7 +99,7 @@
     ,
     methods: {
       async lazyLoad(node, resolve) {
-        let nodeList = await this.getData(node.data?node.data.id:0);
+        let nodeList = await this.getData(node.data ? node.data.id : 0);
         nodeList.forEach((item) => {
           item.leaf = item.level > 4;
         })
