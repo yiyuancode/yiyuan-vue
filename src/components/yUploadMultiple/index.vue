@@ -68,6 +68,7 @@
             name: item,
             status: 'done',
             url: this.globalConfig.imgBaseUrl + item,
+            
             response: {
               data: item
             }
