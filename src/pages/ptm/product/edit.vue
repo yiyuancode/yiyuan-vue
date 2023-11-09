@@ -26,12 +26,11 @@
 
       </a-form-model-item>
       <a-form-model-item label="品牌">
-<!--        todo 根据当前平台id加载对应品牌列表 此字为非必填-->
-<!--        <a-cascader-->
-<!--          v-model="formData.shopCategoryId"-->
-<!--          :options="forPramsData.productCateList"-->
-<!--          placeholder="请选择商户分类"-->
-<!--        />-->
+        <a-cascader
+          v-model="formData.shopCategoryId"
+          :options="forPramsData.productCateList"
+          placeholder="请选择商户分类"
+        />
       </a-form-model-item>
       <a-form-model-item label="保障服务">
 <!--        TODO 保障服务 非必填，维护服务保障需要后补-->
@@ -222,8 +221,7 @@ export default {
       this.handleAttrKeyChange({tenantId:this.forPramsData.tenantId});
     },
     cateIdChange(cid){
-      console.log('CID:', cid);
-      this.formData.platCategoryIds=cid[0].value
+      this.formData.platCategoryIds=cid
       this.getProductBrandListByCid();
     },
     // 根据分类id获取品牌
