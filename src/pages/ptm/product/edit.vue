@@ -11,26 +11,19 @@
       </a-form-model-item>
       <a-form-model-item label="平台分类">
         <y-plat-category-select
-          :key="forPramsData.tenantId"
+          :key="formData.tenantId"
           v-model="formData.platCategoryIds"
           @change="cateIdChange">
 
         </y-plat-category-select>
       </a-form-model-item>
       <a-form-model-item label="店铺分类">
-        <!--        todo 根据商户id查询对应店铺分类-->
-<!--        <y-product-category-tree-select-->
-<!--          :disabled="formData.tenantId == 0"-->
-<!--          :tenantId="forPramsData.tenantId"-->
-<!--          :key="forPramsData.tenantId"-->
-<!--          v-model="formData.platCategoryIds" />-->
-        <y-shop-category-select
+        <y-product-category-select
           :disabled="formData.tenantId == 0"
-          :tenantId="forPramsData.tenantId"
+          :tenantId="formData.tenantId"
           :key="forPramsData.tenantId"
-          v-model="formData.platCategoryIds">
+          v-model="formData.platCategoryIds"></y-product-category-select>
 
-        </y-shop-category-select>
       </a-form-model-item>
       <a-form-model-item label="品牌">
 <!--        todo 根据当前平台id加载对应品牌列表 此字为非必填-->
@@ -55,6 +48,7 @@
 <!--          :options="forPramsData.productCateList"-->
 <!--          placeholder="请选择品牌"-->
 <!--        />-->
+        <y-freight-temp-select v-model="formData.tempId"></y-freight-temp-select>
       </a-form-model-item>
       <a-form-model-item label="主图">
         <y-img
