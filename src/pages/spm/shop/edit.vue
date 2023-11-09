@@ -7,7 +7,7 @@
           placeholder="请选择店铺地址"
           allowClear
         /> -->
-        <yAreaSelect v-model="formData.sysAreaId"></yAreaSelect>
+        <yAreaSelect v-model="formData.sysAreaId" :key="formData.sysAreaId"></yAreaSelect>
       </a-form-model-item>
       <a-form-model-item label="店铺详细地址" prop="shopAddress">
         <a-input v-model="formData.shopAddress" placeholder="请输入店铺地址" allowClear />
@@ -42,7 +42,8 @@
           placeholder="请输入资质图片"
           allowClear
         /> -->
-        <y-upload-multiple v-model="formData.qualificationImages" :max="1"></y-upload-multiple>
+        <y-upload-multiple v-model="formData.qualificationImages"
+          :key="formData.qualificationImages"></y-upload-multiple>
       </a-form-model-item>
       <a-form-model-item label="店铺名称" prop="shopName">
         <a-input v-model="formData.shopName" placeholder="请输入店铺名称" allowClear />
@@ -81,7 +82,7 @@
         </a-radio-group>
       </a-form-model-item>
       <a-form-model-item label="结算类型" prop="settlementType">
-        <a-radio-group v-model="formData.settlementType" >
+        <a-radio-group v-model="formData.settlementType">
           <a-radio :value="1">
             银行卡
           </a-radio>
@@ -336,7 +337,6 @@
       },
       // 提交表单
       onSubmit() {
-        console.log(this.formData.settlementType)
         this.$refs.ruleForm.validate(async (valid) => {
           if (valid) {
             if (this.editId) {
@@ -350,13 +350,18 @@
               this.$message.success('添加成功');
               this.$emit('onSaveSubmit');
             }
+            this.onCancelHandle();
           } else {
             console.log('error submit!!');
             return false;
           }
         });
       },
-      // 重置表单
+      // emit 关闭
+      onCancelHandle() {
+        this.$emit('onCancelSubmit');
+      },
+      // 重置
       resetForm() {
         this.$refs.ruleForm.resetFields();
       },

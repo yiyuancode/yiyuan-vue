@@ -9,19 +9,19 @@ import {
   getEnumsMap
 } from "@/utils/enumsUtils.js";
 const columns = [{
-    title: '店铺id',
-    dataIndex: 'id',
-    key: 'id',
-    width: 160,
-    rules: [{
-      required: true,
-      message: '请输入店铺id',
-      trigger: 'blur'
-    }, ],
-    noEdit: true,
-    noAdd: true,
+  title: '店铺id',
+  dataIndex: 'id',
+  key: 'id',
+  width: 160,
+  rules: [{
+    required: true,
+    message: '请输入店铺id',
+    trigger: 'blur'
+  }, ],
+  noEdit: true,
+  noAdd: true,
 
-  },
+},
 
   {
     title: '店铺类型id',
@@ -256,9 +256,9 @@ const columns = [{
     width: 160,
     props: {
       options: [{
-          label: '否',
-          value: false,
-        },
+        label: '否',
+        value: false,
+      },
         {
           label: '是',
           value: true,
@@ -297,9 +297,9 @@ const columns = [{
     formType: "radioGroup",
     props: {
       options: [{
-          label: '银行卡',
-          value: 1,
-        },
+        label: '银行卡',
+        value: 1,
+      },
         {
           label: '微信',
           value: 2,
@@ -415,12 +415,12 @@ const columns = [{
     width: 160,
     props: {
       options: [{
-          label: '否',
-          value: 0,
-        },
+        label: '否',
+        value: false,
+      },
         {
           label: '是',
-          value: 1,
+          value: true,
         },
 
       ],
@@ -440,12 +440,12 @@ const columns = [{
     width: 160,
     props: {
       options: [{
-          label: '不显示',
-          value: 0,
-        },
+        label: '不显示',
+        value: false,
+      },
         {
           label: '显示',
-          value: 1,
+          value: true,
         },
 
       ],
