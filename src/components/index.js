@@ -21,7 +21,7 @@ import yAreaMultipleSelect from '@/components/yAreaMultipleSelect/index.vue';
 import yBooleanSpan from '@/components/yBooleanSpan/index.vue';
 import yFreightTempSelect from '@/components/yFreightTempSelect/index.vue';
 import yEnumSpan from '@/components/yEnumSpan/index.vue';
-
+import yProductGuaranteeSelect from '@/components/yProductGuaranteeSelect/index.vue';
 
 
 export default {
@@ -47,6 +47,7 @@ export default {
     Vue.component('yFreightTempSelect', yFreightTempSelect);
     Vue.component('yEnumSpan', yEnumSpan);
     Vue.component('yShopTypeSelect', yShopTypeSelect);
+    Vue.component('yProductGuaranteeSelect', yProductGuaranteeSelect);
     Vue.component(Cascader.name, Cascader);
 
   }
