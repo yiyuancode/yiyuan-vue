@@ -2,9 +2,10 @@
  * 物流模板价格页面组件配置配置
  *
  * @author  一源团队-花和尚
- * @date 2023-11-05
+ * @date 2023-11-09
  */
 import * as freightTempPrice from "@/api/ftm/freightTempPrice";
+import {getEnumsMap} from "@/utils/enumsUtils.js";
 
 const columns = [
   {
@@ -13,9 +14,15 @@ const columns = [
     key: 'id',
     width: 160,
     ellipsis: true,
+
+
     rules: [{required: true, message: '请输入物流模板价格id', trigger: 'blur'},],
     noEdit: true,
     noAdd: true,
+
+    noSearch: true,
+    noShow: true,
+    noTable: true,
 
   },
 
@@ -25,6 +32,8 @@ const columns = [
     key: 'tenantId',
     width: 160,
     ellipsis: true,
+
+
     rules: [{required: true, message: '请输入商户id', trigger: 'blur'},],
 
   },
@@ -35,6 +44,8 @@ const columns = [
     key: 'ftmFreightTempId',
     width: 160,
     ellipsis: true,
+
+
     rules: [{required: true, message: '请输入运费模板id', trigger: 'blur'},],
 
   },
@@ -45,6 +56,8 @@ const columns = [
     key: 'sysAreaIds',
     width: 160,
     ellipsis: true,
+
+
     rules: [{required: true, message: '请输入城市区域ids(区域最后一级,多个逗号分割)', trigger: 'blur'},],
 
   },
@@ -56,6 +69,7 @@ const columns = [
     width: 160,
     ellipsis: true,
 
+
   },
 
   {
@@ -64,6 +78,7 @@ const columns = [
     key: 'firstPrice',
     width: 160,
     ellipsis: true,
+
 
   },
 
@@ -74,6 +89,7 @@ const columns = [
     width: 160,
     ellipsis: true,
 
+
   },
 
   {
@@ -82,6 +98,8 @@ const columns = [
     key: 'nextPrice',
     width: 160,
     ellipsis: true,
+
+
   },
 
   {
@@ -90,6 +108,8 @@ const columns = [
     key: 'fullPackageNum',
     width: 160,
     ellipsis: true,
+
+
   },
 
   {
@@ -98,6 +118,8 @@ const columns = [
     key: 'fullPackagePrice',
     width: 160,
     ellipsis: true,
+
+
   },
 
   {
@@ -106,6 +128,9 @@ const columns = [
     key: 'isPackage',
     width: 160,
     ellipsis: true,
+
+
+    scopedSlots: {customRender: 'isPackage'},
     formType: "radioGroup",
     props: {
       options: [
@@ -132,6 +157,8 @@ const columns = [
     key: 'sort',
     width: 160,
     ellipsis: true,
+
+
   },
 
   {
@@ -140,16 +167,19 @@ const columns = [
     key: 'isShow',
     width: 160,
     ellipsis: true,
+
+
+    scopedSlots: {customRender: 'isShow'},
     formType: "radioGroup",
     props: {
       options: [
         {
           label: '否',
-          value: 0,
+          value: false,
         },
         {
           label: '是',
-          value: 1,
+          value: true,
         },
       ],
       style:
@@ -166,6 +196,8 @@ const columns = [
     key: 'createTime',
     width: 160,
     ellipsis: true,
+
+
     props: {
       showTime: true,
       style: {width: '100%'}
@@ -179,6 +211,7 @@ const columns = [
     noEdit: true,
     noAdd: true,
 
+
   },
 
   {
@@ -187,6 +220,8 @@ const columns = [
     key: 'updateTime',
     width: 160,
     ellipsis: true,
+
+
     props: {
       showTime: true,
       style: {width: '100%'}
@@ -199,6 +234,7 @@ const columns = [
     },
     noEdit: true,
     noAdd: true,
+
     noSearch: true,
 
   },
@@ -209,10 +245,14 @@ const columns = [
     key: 'createUser',
     width: 160,
     ellipsis: true,
+
+
     noEdit: true,
     noAdd: true,
+
     noSearch: true,
     noShow: true,
+    noTable: true,
 
   },
 
@@ -222,14 +262,30 @@ const columns = [
     key: 'updateUser',
     width: 160,
     ellipsis: true,
+
+
     noEdit: true,
     noAdd: true,
+
     noSearch: true,
     noShow: true,
+    noTable: true,
 
   },
 
+  {
+    title: '操作',
+    dataIndex: 'action',
+    key: 'action',
+    width: 110,
+    ellipsis: true,
+    noEdit: true,
+    noAdd: true,
+    noSearch: true,
+    fixed: "right",
+    scopedSlots: {customRender: "action"}
 
+  },
 ]
 
 
@@ -251,9 +307,11 @@ const permissionObj = {
   editBtn: 'ftm:freightTempPrice:edit',
   deleteBtn: 'ftm:freightTempPrice:delete'
 };
-
+//转化map
+const enumsMap = getEnumsMap(columns);
 export {
   columns,
   moduleConfig,
-  permissionObj
+  permissionObj,
+  enumsMap
 };

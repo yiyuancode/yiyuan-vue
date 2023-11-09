@@ -43,19 +43,6 @@
         </template>
 
       </a-col>
-      <!--        <a-col-->
-      <!--          v-for="index in scopedSlots"-->
-      <!--          :key="index"-->
-      <!--          :span="span"-->
-      <!--          :style="{-->
-      <!--            display:-->
-      <!--              expand || (uColumns.length == 0 && scopedSlots > 0)||index < count-->
-      <!--                ? 'block'-->
-      <!--                : 'none'-->
-      <!--          }"-->
-      <!--        >-->
-      <!--          <slot :name="`scopedSlots-${index}`" v-bind="{ form }"></slot>-->
-      <!--        </a-col>-->
     </a-row>
     <a-row>
       <a-col :span="24" :style="{ textAlign: 'right' }">
@@ -121,9 +108,14 @@
     computed: {
       uColumns() {
         let columnsTemp = this.columns.filter((item) => {
-          return !item.noAdd;
+          // return !item.noAdd;
+          return !item.noAdd || !item.noEdit;
         });
-        columnsTemp = [...columnsTemp, ...this.scopedSlots];
+        columnsTemp= columnsTemp.filter((item) => {
+          // return !item.noAdd;
+          return !this.scopedSlots.includes(item.dataIndex);
+        });
+        columnsTemp = [...this.scopedSlots,...columnsTemp ];
         return columnsTemp;
       },
       uRules() {

@@ -28,6 +28,7 @@
     "core-js": "^3.6.5",
     "date-fns": "^2.14.0",
     "echarts": "^5.4.3",
+    "el-cascader-plus": "^1.1.11",
     "element-ui": "^2.15.14",
     "enquire.js": "^2.1.6",
     "hevue-img-preview": "^6.1.0",

@@ -6,19 +6,19 @@
               :allowClear="allowClear"
               @change="change">
       <a-select-option v-for="(item) in options" :value="item.id" :key="item.id">
-        {{ item.shopName }}
+        {{ item.name }}
       </a-select-option>
     </a-select>
 
   </div>
 </template>
 <script>
-  import {getShopList} from "@/api/spm/shop.js";
+  import {shopTypeList} from "@/api/spm/shop.js";
 
   export default {
     props: {
       value: {
-        type: Boolean,
+        type: String,
         default: function () {
           return null;
         }
@@ -32,7 +32,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择店铺";
+          return "请选择";
         }
       },
 
@@ -40,7 +40,7 @@
     },
     data() {
       return {
-        selectedKeys: undefined,
+        selectedKeys: "",
         options: [],
       };
     },
@@ -54,7 +54,8 @@
     },
     methods: {
       async getData() {
-        this.options = await getShopList();
+      
+        this.options = await shopTypeList();
         console.log("this.options", this.options)
       },
       change(value, label, extra) {
