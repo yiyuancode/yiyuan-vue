@@ -10,7 +10,7 @@
         ref="editForm"
         :key="editId"
         :columns="editConfig.columns"
-        :scopedSlots="['tenantId','priceList']"
+        :scopedSlots="['tenantId','priceList','imgs']"
         :rules="rules"
         @onSubmit="onSubmit"
         @onCancel="onCancel"
@@ -22,6 +22,11 @@
                            label="运费设置"
                            prop="priceList">
           <y-freight-temp-price-table v-model="form.priceList"/>
+        </a-form-model-item>
+
+        <a-form-model-item slot="imgs" slot-scope="{ form }"
+                           label="多图上传">
+          <y-upload-multiple v-model="imgs"/>
         </a-form-model-item>
       </y-edit-form>
     </a-spin>
@@ -53,6 +58,7 @@
     },
     data() {
       return {
+        imgs:"c48c0c94-140a-41c4-89aa-17e7970789b3.png,f663ffb0-e73e-4b4e-ae63-d1d75d155f75.png",
         editConfig: {},
         rules: {
           tenantId: [{required: true, message: "请选择商户"}],
