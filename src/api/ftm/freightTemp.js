@@ -6,7 +6,7 @@ import {request} from '@/utils/request';
  * @param {*} data 物流模板信息
  * @return
  * @author  一源团队-花和尚
- * @date 2023-11-05
+ * @date 2023-11-09
  */
 export function getFreightTempList(data) {
   return request({
@@ -22,7 +22,7 @@ export function getFreightTempList(data) {
  * @param {*} data 物流模板信息
  * @return
  * @author  一源团队-花和尚
- * @date 2023-11-05
+ * @date 2023-11-09
  */
 export function getFreightTempPageList(data) {
   return request({
@@ -39,7 +39,7 @@ export function getFreightTempPageList(data) {
  * @param {*} id
  * @return
  * @author  一源团队-花和尚
- * @date 2023-11-05
+ * @date 2023-11-09
  */
 export function getFreightTempDetail(id) {
   return request({
@@ -54,7 +54,7 @@ export function getFreightTempDetail(id) {
  * @param {*} data 物流模板信息
  * @return
  * @author  一源团队-花和尚
- * @date 2023-11-05
+ * @date 2023-11-09
  */
 
 export function addFreightTemp(data) {
@@ -73,7 +73,7 @@ export function addFreightTemp(data) {
  * @param {*} id 物流模板id
  * @return
  * @author  一源团队-花和尚
- * @date 2023-11-05
+ * @date 2023-11-09
  */
 export function editFreightTemp(data, id) {
   return request({
@@ -94,7 +94,7 @@ export function editFreightTemp(data, id) {
  * @param {*} ids
  * @return
  * @author  一源团队-花和尚
- * @date 2023-11-05
+ * @date 2023-11-09
  */
 export function deleteFreightTemp(ids) {
   return request({

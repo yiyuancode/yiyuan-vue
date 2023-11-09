@@ -3,17 +3,13 @@
     <y-search
       :columns="table.columns"
       :loading="table.loading"
-      :scopedSlots="['tenantId','tempId']"
+      :scopedSlots="['tenantId']"
       @search="search"
     >
-      <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户">
-        <y-shop-select v-model="form.tenantId"/>
-      </a-form-model-item>
-      <a-form-model-item slot="tempId" slot-scope="{ form }" label="运费模板">
-        <y-freight-temp-select v-model="form.tempId"/>
+      <a-form-model-item label="商户" prop="tenantId" slot="tenantId" slot-scope="{ form }">
+        <y-shop-select :key="form.tenantId" v-model="form.tenantId"/>
       </a-form-model-item>
     </y-search>
-
     <y-table
       :columns="table.columns"
       :loading="table.loading"
@@ -24,36 +20,57 @@
       rowKey="id"
     >
       <div class="y-flex" slot="operations">
-        <a-button type="primary" icon="plus" @click="onAdd"> 新建</a-button>
-        <a-divider type="vertical"/>
-      </div>
-      <span slot="tenantId" slot-scope="{ text, record }">
-        <y-shop-select v-model="record.tenantId" isSpan></y-shop-select>
-      </span>
-      <span slot="packageType" slot-scope="{ text, record }">
-      {{enumsMap['packageType'+text]}}
-      </span>
-      <span slot="chargeType" slot-scope="{ text, record }">
-       {{enumsMap['chargeType'+text]}}
-      </span>
-      <span slot="isShow" slot-scope="{ text, record }">
-        {{enumsMap['isShow'+text]}}
-      </span>
-      <div class="y-flex" slot="action" slot-scope="{ text, record }">
-        <a-button icon="edit" @click="onEdit(record)"></a-button>
+        <a-button @click="onAdd" icon="plus" type="primary"> 新建</a-button>
         <a-divider type="vertical"/>
         <a-popconfirm
-          :title="'确定删除名称为【' + record.name + '】的分类'"
-          ok-text="确定"
+          @confirm="onBatchDelete"
           cancel-text="取消"
+          ok-text="确认"
+          title="是否要批量删除这些信息?"
+        >
+          <a-button :disabled="uBatchDisabled" icon="delete" type="danger">
+            批量删除
+          </a-button>
+        </a-popconfirm>
+        <a-divider type="vertical"/>
+      </div>
+
+
+      <a-form-model-item label="商户" prop="tenantId" slot="tenantId" slot-scope="{ form }">
+        <y-shop-select isSpan v-model="form.tenantId"/>
+      </a-form-model-item>
+
+
+      <div class="y-flex" slot="packageType" slot-scope="{ text, record }">
+        {{enumsMap['packageType'+text]}}
+      </div>
+
+
+      <div class="y-flex" slot="chargeType" slot-scope="{ text, record }">
+        {{enumsMap['chargeType'+text]}}
+      </div>
+
+
+      <div class="y-flex" slot="isShow" slot-scope="{ text, record }">
+        {{enumsMap['isShow'+text]}}
+      </div>
+
+
+      <div class="y-flex" slot="action" slot-scope="{ text, record }">
+        <a-button @click="onEdit(record)" icon="edit"></a-button>
+        <a-divider type="vertical"/>
+        <a-popconfirm
+          :title="'确定删除此条数据吗?'"
           @confirm="() => onDelete(record)"
+          cancel-text="取消"
+          ok-text="确定"
         >
           <a-button icon="delete" type="danger"></a-button>
         </a-popconfirm>
       </div>
     </y-table>
 
-    <edit :columns="table.columns" :editId="editId" :key="editId" :editConfigProps="editConfigProps"
+    <edit :columns="table.columns" :editConfigProps="editConfigProps" :editId="editId" :key="editId"
           @ok="getData">
     </edit>
   </div>
@@ -90,31 +107,29 @@
         },
         editConfigProps: {
           visible: false,
-          title: "物流模板",
+          title: '物流模板管理',
           columns
         },
         editId: null
       };
     },
+    computed: {
+      uBatchDisabled() {
+        return this.table.rowSelection.selectedRowKeys.length == 0;
+      }
+    },
     created() {
       this.getData();
     },
     methods: {
-      imgsChange(imgs) {
-        console.log("imgsChange", imgs)
-      },
-      tenantIdChange(tenantId) {
-        console.log("tenantIdChange", tenantId)
-      },
       search(form) {
         this.searchForm = form;
         this.getData();
       },
       tableSelectedRowKeys(selectedRowKeys) {
-        console.log('tableSelectedRowKeys', selectedRowKeys);
         this.table.rowSelection.selectedRowKeys = selectedRowKeys;
       },
-      tableChange(pagination, log) {
+      tableChange(pagination) {
         this.table.pagination = pagination;
         this.getData();
       },
@@ -132,7 +147,6 @@
         this.table.loading = false;
       },
       async onRowChange(record) {
-        // await editActivitiy(record, record.id);
         await this.getData();
       },
       onAdd() {
@@ -140,9 +154,27 @@
         this.editConfigProps.visible = true;
       },
       async onDelete(record) {
-        await deletePost(record.id)
+        let ids = record.id;
+        await deletePost(ids)
+        await this.beforeDelete(ids);
         await this.getData();
       },
+      async onBatchDelete() {
+        let ids = this.table.rowSelection.selectedRowKeys.join(",");
+        this.table.rowSelection.selectedRowKeys = []
+        await deletePost(ids)
+        await this.beforeDelete(ids);
+        await this.getData();
+      },
+      async beforeDelete(ids) {
+        this.table.records = this.table.records.filter((item) => {
+          return ids.indexOf(item.id) == -1
+        })
+        if (this.table.records.length == 0 && this.table.pagination.pageNum > 1) {
+          this.table.pagination.pageNum = this.table.pagination.pageNum - 1;
+        }
+      },
+
       onEdit(record) {
         this.editId = record.id;
         this.editConfigProps.visible = true;

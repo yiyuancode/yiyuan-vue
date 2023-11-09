@@ -1,12 +1,28 @@
 import {request} from '@/utils/request';
 
 /**
+ * 获取所有的物流模板价格信息(全部)
+ *
+ * @param {*} data 物流模板价格信息
+ * @return
+ * @author  一源团队-花和尚
+ * @date 2023-11-09
+ */
+export function getFreightTempPriceList(data) {
+  return request({
+    url: "/ftm/freightTempPrice/list",
+    params: data
+  });
+
+}
+
+/**
  * 获取所有的物流模板价格信息(分页)
  *
  * @param {*} data 物流模板价格信息
  * @return
  * @author  一源团队-花和尚
- * @date 2023-11-05
+ * @date 2023-11-09
  */
 export function getFreightTempPricePageList(data) {
   return request({
@@ -23,7 +39,7 @@ export function getFreightTempPricePageList(data) {
  * @param {*} id
  * @return
  * @author  一源团队-花和尚
- * @date 2023-11-05
+ * @date 2023-11-09
  */
 export function getFreightTempPriceDetail(id) {
   return request({
@@ -38,7 +54,7 @@ export function getFreightTempPriceDetail(id) {
  * @param {*} data 物流模板价格信息
  * @return
  * @author  一源团队-花和尚
- * @date 2023-11-05
+ * @date 2023-11-09
  */
 
 export function addFreightTempPrice(data) {
@@ -57,7 +73,7 @@ export function addFreightTempPrice(data) {
  * @param {*} id 物流模板价格id
  * @return
  * @author  一源团队-花和尚
- * @date 2023-11-05
+ * @date 2023-11-09
  */
 export function editFreightTempPrice(data, id) {
   return request({
@@ -78,7 +94,7 @@ export function editFreightTempPrice(data, id) {
  * @param {*} ids
  * @return
  * @author  一源团队-花和尚
- * @date 2023-11-05
+ * @date 2023-11-09
  */
 export function deleteFreightTempPrice(ids) {
   return request({

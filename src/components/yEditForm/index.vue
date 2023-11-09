@@ -108,9 +108,14 @@
     computed: {
       uColumns() {
         let columnsTemp = this.columns.filter((item) => {
-          return !item.noAdd;
+          // return !item.noAdd;
+          return !item.noAdd || !item.noEdit;
         });
-        columnsTemp = [...columnsTemp, ...this.scopedSlots];
+        columnsTemp= columnsTemp.filter((item) => {
+          // return !item.noAdd;
+          return !this.scopedSlots.includes(item.dataIndex);
+        });
+        columnsTemp = [...this.scopedSlots,...columnsTemp ];
         return columnsTemp;
       },
       uRules() {

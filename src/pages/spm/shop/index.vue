@@ -93,7 +93,8 @@
 </template>
 <script>
   import {
-    columns
+    columns,
+    enumsMap
   } from './pageConfig';
   import {
     getShopPageList
@@ -106,6 +107,7 @@
     },
     data() {
       return {
+        enumsMap,
         form: {},
         table: {
           loading: false,

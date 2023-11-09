@@ -89,6 +89,7 @@
 </template>
 <script>
   import _ from 'lodash';
+
   export default {
     props: {
       props: {
@@ -128,7 +129,10 @@
         let columnsTemp = this.columns.filter((item) => {
           return !item.noSearch;
         });
-        columnsTemp = [...this.scopedSlots , ...columnsTemp];
+        columnsTemp= columnsTemp.filter((item) => {
+          return !this.scopedSlots.includes(item.dataIndex);
+        });
+        columnsTemp = [...this.scopedSlots,...columnsTemp ];
         return columnsTemp;
       },
       count() {
