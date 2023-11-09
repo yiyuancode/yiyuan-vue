@@ -68,7 +68,6 @@
             name: item,
             status: 'done',
             url: this.globalConfig.imgBaseUrl + item,
-            
             response: {
               data: item
             }
@@ -96,7 +95,7 @@
         this.previewVisible = true;
       },
       handleChange({file, fileList, event}) {
-        this.fileList = fileList;
+         this.fileList = fileList;
         if (file.status == 'removed') {
           this.fileIdList = fileList.map(function (item) {
             return item.response ? item.response.data : item.uid;
@@ -120,7 +119,6 @@
         }
         this.$emit("input", this.fileIdList.join(","))
         this.$emit("change", this.fileIdList.join(","))
-        console.log("imgs", this.fileIdList.join(","))
       },
     },
   };

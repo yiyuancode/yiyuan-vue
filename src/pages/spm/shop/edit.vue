@@ -42,7 +42,7 @@
           placeholder="请输入资质图片"
           allowClear
         /> -->
-        <y-upload-multiple v-model="formData.qualificationImages" :max="8"></y-upload-multiple>
+        <y-upload-multiple v-model="formData.qualificationImages" :max="1"></y-upload-multiple>
       </a-form-model-item>
       <a-form-model-item label="店铺名称" prop="shopName">
         <a-input v-model="formData.shopName" placeholder="请输入店铺名称" allowClear />
@@ -80,14 +80,21 @@
           <a-radio :value="false"> 否 </a-radio>
         </a-radio-group>
       </a-form-model-item>
-      <a-form-model-item label="结算类型" prop="settlementType" >
-        <a-radio-group v-model="formData.settlementType" @change="onType">
-          <a-radio v-for="option in settlementOptions" :key="option.value" :value="option"> {{ option.desc }} </a-radio>
-
+      <a-form-model-item label="结算类型" prop="settlementType">
+        <a-radio-group v-model="formData.settlementType" >
+          <a-radio :value="1">
+            银行卡
+          </a-radio>
+          <a-radio :value="2">
+            微信
+          </a-radio>
+          <a-radio :value="3">
+            支付宝
+          </a-radio>
         </a-radio-group>
       </a-form-model-item>
       <!-- 银行卡 -->
-      <div v-if="formData.settlementType.value == 1">
+      <div v-if="formData.settlementType == 1">
         <a-form-model-item label="收款人" prop="bankPayee">
           <a-input v-model="formData.bankPayee" placeholder="请输入收款人" allowClear />
         </a-form-model-item>
@@ -99,7 +106,7 @@
         </a-form-model-item>
       </div>
       <!-- 微信 -->
-      <div v-if="formData.settlementType.value == 2">
+      <div v-if="formData.settlementType == 2">
         <a-form-model-item label="真实姓名" prop="wechatRealName">
           <a-input v-model="formData.wechatRealName" placeholder="请输入真实姓名" allowClear />
         </a-form-model-item>
@@ -111,7 +118,7 @@
         </a-form-model-item>
       </div>
       <!-- 支付宝 -->
-      <div v-if="formData.settlementType.value == 3">
+      <div v-if="formData.settlementType == 3">
         <a-form-model-item label="真实姓名" prop="alipayRealName">
           <a-input v-model="formData.alipayRealName" placeholder="请输入真实姓名" allowClear />
         </a-form-model-item>
@@ -182,9 +189,7 @@
           shopDescription: '', //店铺简介
           inventoryAlert: 0, //库存告警阈值
           isSupportsSelfPickup: false, //是否支持自提
-          settlementType: {
-
-          }, //结算类型#1=银行卡|2=微信|3=支付宝
+          settlementType: 1, //结算类型#1=银行卡|2=微信|3=支付宝
           bankPayee: '', //银行卡结算-收款人
           bankNumber: '', //银行卡结算-开户银行
           bankAddress: '', //银行卡结算-开户行地址
@@ -198,20 +203,7 @@
           sort: 0, //排序
           isShow: false //显示状态
         },
-        // 结算类型
-        settlementOptions: [{
-            value: 1,
-            desc: '银行卡'
-          },
-          {
-            value: 2,
-            desc: '微信'
-          },
-          {
-            value: 3,
-            desc: '支付宝'
-          }
-        ],
+
         shopType: [],
         labelCol: {
           span: 4
@@ -335,12 +327,12 @@
       }
     },
     methods: {
-      onType(e){
-        this.settlementType=e.target.value.value
-      },
+
       async getDetail() {
         let data = await getShopDetail(this.editId);
+
         this.formData = data;
+        console.log(this.formData);
       },
       // 提交表单
       onSubmit() {
