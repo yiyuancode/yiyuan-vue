@@ -5,7 +5,9 @@
  * @date 2023-11-03
  */
 import * as shop from "@/api/spm/shop";
-
+import {
+  getEnumsMap
+} from "@/utils/enumsUtils.js";
 const columns = [{
     title: '店铺id',
     dataIndex: 'id',
@@ -252,6 +254,21 @@ const columns = [{
     dataIndex: 'isSupportsSelfPickup',
     key: 'isSupportsSelfPickup',
     width: 160,
+    props: {
+      options: [{
+          label: '否',
+          value: false,
+        },
+        {
+          label: '是',
+          value: true,
+        },
+
+      ],
+      style: {
+        width: '100%'
+      }
+    },
     scopedSlots: {
       customRender: 'isSupportsSelfPickup'
     }
@@ -278,7 +295,24 @@ const columns = [{
     //值类型
     valType: "object",
     formType: "radioGroup",
-
+    props: {
+      options: [{
+          label: '银行卡',
+          value: 1,
+        },
+        {
+          label: '微信',
+          value: 2,
+        },
+        {
+          label: '支付宝',
+          value: 3,
+        },
+      ],
+      style: {
+        width: '100%'
+      }
+    },
     rules: [{
       required: true,
       message: '请选择结算类型',
@@ -379,6 +413,21 @@ const columns = [{
     dataIndex: 'isAudit',
     key: 'isAudit',
     width: 160,
+    props: {
+      options: [{
+          label: '否',
+          value: false,
+        },
+        {
+          label: '是',
+          value: true,
+        },
+
+      ],
+      style: {
+        width: '100%'
+      }
+    },
     scopedSlots: {
       customRender: 'isAudit'
     }
@@ -389,6 +438,21 @@ const columns = [{
     dataIndex: 'isShow',
     key: 'isShow',
     width: 160,
+    props: {
+      options: [{
+          label: '不显示',
+          value: false,
+        },
+        {
+          label: '显示',
+          value: true,
+        },
+
+      ],
+      style: {
+        width: '100%'
+      }
+    },
     scopedSlots: {
       customRender: 'isShow'
     }
@@ -500,8 +564,11 @@ const permissionObj = {
   deleteBtn: 'spm:shop:delete'
 };
 
+// 转化map
+const enumsMap = getEnumsMap(columns);
 export {
   columns,
   moduleConfig,
-  permissionObj
+  permissionObj,
+  enumsMap
 };
