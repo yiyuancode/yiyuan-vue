@@ -35,6 +35,7 @@ const columns = [
 
 
     rules: [{required: true, message: '请输入商户id', trigger: 'blur'},],
+    scopedSlots: {customRender: 'tenantId'},
 
   },
 

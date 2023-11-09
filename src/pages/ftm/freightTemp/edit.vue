@@ -1,26 +1,26 @@
 <template>
   <a-drawer
     :title="editConfig.title"
-    :width="1200"
     :visible="editConfig.visible"
+    :width="1200"
     @close="onCancel"
   >
     <a-spin :spinning="spinning">
       <y-edit-form
-        ref="editForm"
-        :key="editId"
         :columns="editConfig.columns"
-        :scopedSlots="['tenantId','priceList','imgs']"
+        :key="editId"
         :rules="rules"
-        @onSubmit="onSubmit"
+        :scopedSlots="['tenantId','priceList','imgs']"
         @onCancel="onCancel"
+        @onSubmit="onSubmit"
+        ref="editForm"
       >
-        <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户" prop="tenantId">
+        <a-form-model-item label="商户" prop="tenantId" slot="tenantId" slot-scope="{ form }">
           <y-shop-select v-model="form.tenantId"/>
         </a-form-model-item>
-        <a-form-model-item v-if="form.packageType=='1'" slot="priceList" slot-scope="{ form }"
-                           label="运费设置"
-                           prop="priceList">
+        <a-form-model-item label="运费设置" prop="priceList" slot="priceList"
+                           slot-scope="{ form }"
+                           v-if="form.packageType=='1'">
           <y-freight-temp-price-table v-model="form.priceList"/>
         </a-form-model-item>
 
@@ -103,7 +103,7 @@
   };
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
   .manage-container {
     height: 100%;
     display: flex;

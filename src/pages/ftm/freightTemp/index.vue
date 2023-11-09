@@ -6,7 +6,8 @@
       :scopedSlots="['tenantId']"
       @search="search"
     >
-      <a-form-model-item label="商户" prop="tenantId" slot="tenantId" slot-scope="{ form }">
+      <a-form-model-item label="商户" prop="tenantId" slot="tenantId"
+                         slot-scope="{ form }">
         <y-shop-select :key="form.tenantId" v-model="form.tenantId"/>
       </a-form-model-item>
     </y-search>
@@ -36,9 +37,9 @@
       </div>
 
 
-      <a-form-model-item label="商户" prop="tenantId" slot="tenantId" slot-scope="{ form }">
-        <y-shop-select isSpan v-model="form.tenantId"/>
-      </a-form-model-item>
+      <div class="y-flex" slot="tenantId" slot-scope="{ text, record }">
+        <y-shop-select isSpan v-model="record.tenantId"/>
+      </div>
 
 
       <div class="y-flex" slot="packageType" slot-scope="{ text, record }">
@@ -77,11 +78,11 @@
 </template>
 <script>
   import {columns, enumsMap} from './pageConfig.js';
+  import edit from './edit.vue';
   import {
     deleteFreightTemp as deletePost,
     getFreightTempPageList as pageGet
   } from '@/api/ftm/freightTemp.js';
-  import edit from './edit.vue';
 
   export default {
     components: {edit},
