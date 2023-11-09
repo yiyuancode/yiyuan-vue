@@ -1,6 +1,5 @@
 <template>
   <div>
-<!--    TODO scopedSlots 属性限制使用见文档: 这里是官网的使用链接-->
     <y-search
       :scopedSlots="['id','tenantId','name','isShow','categoryIds']"
       :loading="table.loading"
@@ -24,7 +23,7 @@
         />
       </a-form-model-item>
       <a-form-model-item slot="categoryIds" slot-scope="{ form }" label="商品分类">
-        <y-product-category-tree-select v-model="form.categoryIds" />
+        <y-plat-category-select v-model="form.categoryIds"></y-plat-category-select>
       </a-form-model-item>
       <a-form-model-item slot="isShow" slot-scope="{ form }" label="显示状态">
         <a-select

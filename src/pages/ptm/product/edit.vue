@@ -14,7 +14,6 @@
           :key="formData.tenantId"
           v-model="formData.platCategoryIds"
           @change="cateIdChange">
-
         </y-plat-category-select>
       </a-form-model-item>
       <a-form-model-item label="店铺分类">
@@ -33,12 +32,9 @@
         />
       </a-form-model-item>
       <a-form-model-item label="保障服务">
-<!--        TODO 保障服务 非必填，维护服务保障需要后补-->
-<!--        <a-cascader-->
-<!--          v-model="formData.guaranteeIds"-->
-<!--          :options="forPramsData.productCateList"-->
-<!--          placeholder="请选择品牌"-->
-<!--        />-->
+        <y-product-guarantee-select v-model="formData.guaranteeIds" :key="formData.tenantId"
+                                    :tenantId="formData.tenantId"
+          ></y-product-guarantee-select>
       </a-form-model-item>
       <a-form-model-item label="运费">
 <!--        todo 运费模版还需要维护 -->
