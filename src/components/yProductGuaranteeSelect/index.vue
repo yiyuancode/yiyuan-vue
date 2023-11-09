@@ -36,7 +36,12 @@
           return "请选择保障服务";
         }
       },
-
+      tenantId: {
+        type: String,
+        default: function () {
+          return null;
+        }
+      },
 
     },
     data() {
@@ -47,7 +52,9 @@
     },
     computed: {},
     async created() {
-      await this.getData();
+      if (this.tenantId) {
+        await this.getData();
+      }
       if (this.value) {
         this.selectedKeys = this.value.split(",")
       }
@@ -55,7 +62,7 @@
     },
     methods: {
       async getData() {
-        this.options = await listGet();
+        this.options = await listGet({tenantId: this.tenantId});
         console.log("this.options", this.options)
       },
       change(value, label, extra) {

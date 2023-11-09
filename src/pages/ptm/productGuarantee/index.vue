@@ -1,6 +1,8 @@
 <template>
   <div>
-    <yProductGuaranteeSelect/>
+    <yProductGuaranteeSelect v-model="form.productGuarantee"
+                             :tenantId="form.tenantId"
+                             :key="form.tenantId"/>
     <y-search
       :columns="table.columns"
       :loading="table.loading"
