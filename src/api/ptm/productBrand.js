@@ -1,4 +1,4 @@
-import { request } from '@/utils/request';
+import {request} from '@/utils/request';
 
 /**
  * 获取所有的品牌信息(分页)
@@ -10,7 +10,7 @@ import { request } from '@/utils/request';
  */
 export function getProductBrandPageList(data) {
   let finalData = JSON.parse(JSON.stringify(data));
-  if(finalData.categoryIds && finalData.categoryIds.length > 0) {
+  if (finalData.categoryIds && finalData.categoryIds.length > 0) {
     finalData.categoryIds = finalData.categoryIds.map(item => item.value).join(",");
   }
   finalData.name = finalData.name ? encodeURI(finalData.name) : null;
@@ -45,13 +45,13 @@ export function getProductBrandDetail(id) {
 
 export function addProductBrand(data) {
   let finalData = JSON.parse(JSON.stringify(data));
-  if(finalData.categoryIds && finalData.categoryIds.length > 0) {
+  if (finalData.categoryIds && finalData.categoryIds.length > 0) {
     finalData.categoryIds = finalData.categoryIds.map(item => item.value).join(",");
   }
   return request({
     url: '/ptm/productBrand/add',
     method: 'post',
-    data:finalData
+    data: finalData
   });
 }
 
@@ -66,7 +66,7 @@ export function addProductBrand(data) {
  */
 export function editProductBrand(data, id) {
   let finalData = JSON.parse(JSON.stringify(data));
-  if(finalData.categoryIds && finalData.categoryIds.length > 0) {
+  if (finalData.categoryIds && finalData.categoryIds.length > 0) {
     finalData.categoryIds = finalData.categoryIds.map(item => item.value).join(",");
   }
   return request({
@@ -78,6 +78,7 @@ export function editProductBrand(data, id) {
     }
   });
 }
+
 /**
  * 删除品牌（可支持批量删除）
  *

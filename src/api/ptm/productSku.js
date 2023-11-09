@@ -1,4 +1,4 @@
-import { request } from '@/utils/request';
+import {request} from '@/utils/request';
 
 /**
  * 获取所有的商品sku信息(分页)
@@ -65,6 +65,7 @@ export function editProductSku(data, id) {
     }
   });
 }
+
 /**
  * 删除商品sku（可支持批量删除）
  *

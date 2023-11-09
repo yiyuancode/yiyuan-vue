@@ -1,4 +1,4 @@
-import { request } from '@/utils/request';
+import {request} from '@/utils/request';
 
 /**
  * 获取所有的商品详情信息(分页)
@@ -65,6 +65,7 @@ export function editProductDetails(data, id) {
     }
   });
 }
+
 /**
  * 删除商品详情（可支持批量删除）
  *

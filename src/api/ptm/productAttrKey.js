@@ -1,4 +1,4 @@
-import { request } from '@/utils/request';
+import {request} from '@/utils/request';
 
 /**
  * 获取所有的商品属性key信息(分页)
@@ -76,6 +76,7 @@ export function editProductAttrKey(data, id) {
     }
   });
 }
+
 /**
  * 删除商品属性key（可支持批量删除）
  *
