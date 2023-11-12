@@ -1,42 +1,24 @@
 <template>
   <div style="width: 100%;">
     <el-cascader
+      ref="yAreaMultipleCascader"
       v-model="selectedKeys"
-      :options="treeData"
-      :props="{ multiple,checkStrictly:true, children: 'children', label: 'name', value: 'id',lazy:true, lazyLoad }"
+      :props="{ multiple, checkStrictly:false, children: 'children', label: 'name', value: 'id',lazy:true, lazyLoad }"
       size="small"
       :placeholder="placeholder"
-      :show-all-levels="true"
-
+      :show-all-levels="false"
       @change="onChange"
       clearable
     ></el-cascader>
 
-
-    <el-cascader-plus
-
-      style="width: 400px"
-
-      ref="cascader"
-
-      v-model="selectedKeys"
-
-      :props="{ ...{ multiple, children: 'children', label: 'name', value: 'id',lazy:true, lazyLoad }, multiple: true }"
-
-      @change="onChange"
-
-    ></el-cascader-plus>
   </div>
 </template>
 <script>
-  import elCascaderPlus from "el-cascader-plus";
   import {getCityTreeByPid} from '@/api/sys/area.js';
   import {getCascaderSelectedKeys} from "@/utils/cascaderUtils.js";
 
   export default {
-    components: {
-      elCascaderPlus
-    },
+
     props: {
       tenantId: {
         type: String,
@@ -98,12 +80,23 @@
     }
     ,
     methods: {
-      async lazyLoad(node, resolve) {
-        let nodeList = await this.getData(node.data ? node.data.id : 0);
-        nodeList.forEach((item) => {
-          item.leaf = item.level > 4;
-        })
-        resolve(nodeList);
+      lazyLoad(node, resolve) {
+        this.getData(node.data ? node.data.id : 0).then((res)=>{
+          let nodeList =res
+          nodeList.forEach((item) => {
+            item.leaf = item.level > 4;
+            // item.checked = true;
+            if(item.level>1){
+              this.selectedKeys.push(item.id)
+            }
+
+
+
+          })
+          // this.selectedKeys.push(node.data.id)
+          resolve(nodeList);
+        });
+
       },
 
       async init() {
@@ -113,7 +106,8 @@
         let treeList = await getCityTreeByPid(pid);
         return treeList;
       },
-      onChange() {
+      onChange(val) {
+        console.log("onChange.this.val.", this.$refs.yAreaMultipleCascader.getCheckedNodes())
         console.log("onChange.this.selectedKeys.", this.selectedKeys)
         this.$emit('input', this.selectedKeys.join(","));
       },

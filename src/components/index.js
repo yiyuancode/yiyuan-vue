@@ -14,10 +14,10 @@ import yRichEditor from '@/components/yRichEditor/index.vue';
 import yDateRingePicker from '@/components/yDateRingePicker/index.vue';
 import yUploadMultiple from '@/components/yUploadMultiple/index.vue';
 import yUploadSingle from '@/components/yUploadSingle/index.vue';
-import {Cascader} from 'element-ui';
+import {Cascader, Select} from 'element-ui';
 import yEditForm from '@/components/yEditForm/index.vue';
 import yFreightTempPriceTable from '@/components/yFreightTempPriceTable/index.vue';
-import yAreaMultipleSelect from '@/components/yAreaMultipleSelect/index.vue';
+import yAreaMultipleCascader from '@/components/yAreaMultipleCascader/index.vue';
 import yBooleanSpan from '@/components/yBooleanSpan/index.vue';
 import yFreightTempSelect from '@/components/yFreightTempSelect/index.vue';
 import yEnumSpan from '@/components/yEnumSpan/index.vue';
@@ -42,13 +42,14 @@ export default {
     Vue.component('yDateRingePicker', yDateRingePicker);
     Vue.component('yEditForm', yEditForm);
     Vue.component('yFreightTempPriceTable', yFreightTempPriceTable);
-    Vue.component('yAreaMultipleSelect', yAreaMultipleSelect);
+    Vue.component('yAreaMultipleCascader', yAreaMultipleCascader);
     Vue.component('yBooleanSpan', yBooleanSpan);
     Vue.component('yFreightTempSelect', yFreightTempSelect);
     Vue.component('yEnumSpan', yEnumSpan);
     Vue.component('yShopTypeSelect', yShopTypeSelect);
     Vue.component('yProductGuaranteeSelect', yProductGuaranteeSelect);
     Vue.component(Cascader.name, Cascader);
+    Vue.component(Select.name, Select);
 
   }
 };
