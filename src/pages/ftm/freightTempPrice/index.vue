@@ -75,7 +75,7 @@
   import {
     deleteFreightTempPrice as deletePost,
     getFreightTempPricePageList as pageGet
-  } from '@/api/ftm/freightTemp.js';
+  } from '@/api/ftm/freightTempPrice.js';
   import edit from './edit.vue';
 
   export default {
