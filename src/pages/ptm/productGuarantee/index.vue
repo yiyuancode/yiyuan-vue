@@ -1,19 +1,17 @@
 <template>
   <div>
-    <yProductGuaranteeSelect v-model="form.productGuarantee"
-                             :tenantId="form.tenantId"
-                             :key="form.tenantId"/>
     <y-search
       :columns="table.columns"
       :loading="table.loading"
       :scopedSlots="['tenantId']"
       @search="search"
     >
-      <a-form-model-item label="商户" prop="tenantId" slot="tenantId"
-                         slot-scope="{ form }">
-        <y-shop-select :key="form.tenantId" v-model="form.tenantId"/>
+      <a-form-model-item label="商户" prop="tenantId" slot="tenantId" slot-scope="{ form }">
+        <y-area-multiple-cascader />
+        <!--        <y-shop-select :key="form.tenantId" v-model="form.tenantId"/>-->
       </a-form-model-item>
     </y-search>
+
 
     <y-table
       :columns="table.columns"
@@ -177,3 +175,11 @@
     }
   };
 </script>
+<style lang="less" scoped>
+.areaMultipleCascader{
+  /deep/ .ant-select-dropdown {
+    display: none !important;
+  }
+}
+
+</style>

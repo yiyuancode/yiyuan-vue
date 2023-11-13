@@ -9,13 +9,11 @@ import {getEnumsMap} from "@/utils/enumsUtils.js";
 
 const columns = [
   {
-    title: '保障服务id',
+    title: 'id',
     dataIndex: 'id',
     key: 'id',
     width: 160,
     ellipsis: true,
-
-
     rules: [{required: true, message: '请输入保障服务id', trigger: 'blur'},],
     noEdit: true,
     noAdd: true,
@@ -27,20 +25,20 @@ const columns = [
   },
 
   {
-    title: '商户id',
+    title: '商户',
     dataIndex: 'tenantId',
     key: 'tenantId',
     width: 160,
     ellipsis: true,
 
 
-    rules: [{required: true, message: '请输入商户id', trigger: 'blur'},],
+    rules: [{required: true, message: '请输入商户', trigger: 'blur'},],
     scopedSlots: {customRender: 'tenantId'},
 
   },
 
   {
-    title: '保障服务名称',
+    title: '名称',
     dataIndex: 'name',
     key: 'name',
     width: 160,
