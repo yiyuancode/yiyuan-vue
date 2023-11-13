@@ -28,7 +28,7 @@
     addFreightTempPrice as addPost,
     editFreightTempPrice as editPost,
     getFreightTempPriceDetail as detailGet
-  } from '@/api/ftm/freightTemp.js';
+  } from '@/api/ftm/freightTempPrice.js';
 
   export default {
     name: 'edit',
