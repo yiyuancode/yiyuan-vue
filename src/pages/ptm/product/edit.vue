@@ -76,7 +76,9 @@
           @UploadSngle="(fileUrl) => UploadSngleSliderImage(fileUrl, formData)"
         ></UploadSngle>
       </a-form-model-item>
-
+      <a-form-model-item label="保障服务">
+        <y-product-guarantee-select v-model="formData.guaranteeIds"></y-product-guarantee-select>
+      </a-form-model-item>
       <a-form-model-item label="视频">
         <a-input v-model="formData.videoLink" placeholder="请输入商视频链接" allowClear/>
       </a-form-model-item>
