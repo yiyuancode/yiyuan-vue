@@ -8,7 +8,7 @@
       :wrapper-col="wrapperCol"
     >
       <a-form-model-item label="商户id" prop="name">
-        <y-shop-select v-model="formData.tenantId"></y-shop-select>
+        <y-shop-select :key="formData.tenantId" v-model="formData.tenantId"></y-shop-select>
       </a-form-model-item>
       <a-form-model-item label="关联分类" prop="categoryIds">
         <y-plat-category-select v-model="formData.categoryIds" />
@@ -58,7 +58,7 @@ export default {
     return {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
-      formData: { tenantId: 0 },
+      formData: { tenantId: '' },
       forPramsData: {
         // 当前商品属性业务中用到的整体参数对象
         productCateList: []
@@ -78,7 +78,6 @@ export default {
     async genDataForEdit() {
       if (this.editId) {
         this.formData = await this.getProductCateDetail();
-        this.formData.categoryIds = [this.formData.categoryIds];
       }
     },
     async getProductCateDetail() {
