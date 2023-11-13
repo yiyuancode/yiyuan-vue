@@ -21,15 +21,22 @@
           :disabled="formData.tenantId == 0"
           :tenantId="formData.tenantId"
           :key="forPramsData.tenantId"
-          v-model="formData.platCategoryIds"></y-product-category-select>
+          v-model="formData.shopCategoryId"></y-product-category-select>
 
       </a-form-model-item>
       <a-form-model-item label="品牌">
-        <a-cascader
-          v-model="formData.shopCategoryId"
-          :options="forPramsData.productCateList"
-          placeholder="请选择商户分类"
-        />
+<!--        <a-cascader-->
+<!--          v-model="formData.shopCategoryId"-->
+<!--          :options="forPramsData.productCateList"-->
+<!--          :fieldNames="{ label: 'name', value: 'id' }"-->
+<!--          placeholder="请选择商户分类"-->
+<!--        />-->
+        <a-select
+          v-model="formData.brandId">
+          <a-select-option v-for="(item, index) in forPramsData.brandIdList" :key="index" :value="item.id">
+            {{ item.name }}
+          </a-select-option>
+        </a-select>
       </a-form-model-item>
       <a-form-model-item label="保障服务">
         <y-product-guarantee-select v-model="formData.guaranteeIds" :key="formData.tenantId"
@@ -94,8 +101,9 @@
       <a-form-model-item label="商品二维码">
         <a-input v-model="formData.codePath" placeholder="商品二维码"/>
       </a-form-model-item>
-      <a-form-model-item label="商户排序">
-        <a-input-number v-model="formData.tenantSort" :min="0" :max="999999" />
+      <a-form-model-item label="平台排序">
+        <a-input-number v-model="formData.sort" :min="0" :max="999999" />
+<!--        <a-input-number v-model="formData.tenantSort" :min="0" :max="999999" />-->
       </a-form-model-item>
       <a-form-model-item label="单独分佣">
         <a-radio-group v-model="formData.isSub">
@@ -157,7 +165,7 @@ export default {
         tenantId: null,            // 商户id
         platCategoryIds: null,   // 平台分类id
         shopCategoryId: null,     // 商户分类id
-        brandId: null,            // 品牌 TODO 检查品牌和分类的关联
+        brandId: null,            // 品牌
         guaranteeIds: null,       // 保障服务
         tempId: null,             // 运费模版
         image: null,              // 主图
@@ -168,7 +176,8 @@ export default {
         unitName: null,           // 单位名称
         sales: 0,                 // 实际销量
         fictiSales: 0,            // 虚拟销量
-        tenantSort: 0,            // 排序
+        tenantSort: 0,            // 商户排序
+        sort: 0,            // 平台排序
         isSub: 0,              // 分佣模式 是否单独分佣0=否|1=是
         goodsDesc: null,          // 商品富文本描述
         // codePath: null,           // 商品二维码/小程序码
@@ -194,6 +203,7 @@ export default {
         tenantId: null, // 此处为选择商户后的id
         productAttrKeyList: [], // 商品属性key列表
         productAttrValueList: [], // 商品属性Value列表
+        brandIdList:[], // 商品品牌集合
       }
     }
   },
@@ -222,8 +232,8 @@ export default {
     },
     // 根据分类id获取品牌
     async getProductBrandListByCid(){
-      let currentBandList = await listOfProductBrandByCid(this.formData.platCategoryIds);
-      console.log('currentBandList:', currentBandList);
+      this.forPramsData.brandIdList = await listOfProductBrandByCid(this.formData.platCategoryIds);
+      console.log('this.forPramsData.brandIdList:', this.forPramsData.brandIdList);
     },
     UploadSngle(fileUrl, item) {
       console.log('item:', item);

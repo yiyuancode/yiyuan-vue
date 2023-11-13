@@ -18,8 +18,8 @@
 <!--          placeholder="请选择商品分类"-->
 <!--          @change="onProductCateOptionSelected"-->
 <!--        />-->
-<!--        <y-product-category-select v-model="formData.pid" placeholder="平台分类|不选为根目录"></y-product-category-select>-->
-        <y-plat-category-select v-model="formData.pid" placeholder="平台分类|不选为根目录"></y-plat-category-select>
+        <y-product-category-select v-model="formData.pid" placeholder="平台分类|不选为根目录"></y-product-category-select>
+<!--        <y-plat-category-select v-model="formData.pid" placeholder="平台分类|不选为根目录"></y-plat-category-select>-->
       </a-form-model-item>
       <a-form-model-item label="平台分类名称" prop="name">
         <a-input
