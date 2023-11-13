@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-  import {getProductCategoryTreeListForShop} from "@/api/ptm/productCategory.js";
+  import {getProductCategoryTreeList} from "@/api/ptm/productCategory.js";
   import {getCascaderSelectedKeys} from "@/utils/cascaderUtils.js";
 
   export default {
@@ -79,7 +79,7 @@
     },
     methods: {
       async getData() {
-        this.treeData = await getProductCategoryTreeListForShop();
+        this.treeData = await getProductCategoryTreeList();
         console.log("yProductCategorySelect.arr", this.treeData)
       },
       change(value) {
