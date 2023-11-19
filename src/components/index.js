@@ -24,6 +24,10 @@ import yEnumSpan from '@/components/yEnumSpan/index.vue';
 import yProductGuaranteeSelect from '@/components/yProductGuaranteeSelect/index.vue';
 
 
+import yProductCategoryPlatSelect from '@/components/business/yProductCategoryPlatSelect/index.vue';
+import yProductCategoryShopSelect from '@/components/business/yProductCategoryShopSelect/index.vue';
+
+
 export default {
   install(Vue) {
     //注册全局组件
@@ -48,6 +52,11 @@ export default {
     Vue.component('yEnumSpan', yEnumSpan);
     Vue.component('yShopTypeSelect', yShopTypeSelect);
     Vue.component('yProductGuaranteeSelect', yProductGuaranteeSelect);
+
+    //平台商品分类选择组件
+    Vue.component('yProductCategoryPlatSelect', yProductCategoryPlatSelect);
+    //店铺商品分类选择组件
+    Vue.component('yProductCategoryShopSelect', yProductCategoryShopSelect);
     Vue.component(Cascader.name, Cascader);
     Vue.component(Select.name, Select);
 
