@@ -5,6 +5,7 @@
  * @date 2023-10-10
  */
 import * as product from '@/api/ptm/product';
+import {getEnumsMap} from "@/utils/enumsUtils.js";
 
 const columns = [
   {
@@ -27,9 +28,9 @@ const columns = [
   },
 
   {
-    title: '平台分类',
-    dataIndex: 'tenantCategoryId',
-    key: 'tenantCategoryId',
+    title: '平台分类',  // TODO 需要每次登录后缓存平台分类后再通过vue过滤器显示实际商家分类名称
+    dataIndex: 'platCategoryIds',
+    key: 'platCategoryIds',
     width: 160,
     rules: [
       {
@@ -41,9 +42,9 @@ const columns = [
   },
 
   {
-    title: '商家分类',
-    dataIndex: 'shopCategoryId',
-    key: 'shopCategoryId',
+    title: '商家分类', // TODO 需要每次登录后缓存商家分类后再通过vue过滤器显示实际商家分类名称
+    dataIndex: 'shopCategoryIds',
+    key: 'shopCategoryIds',
     width: 160,
     rules: [
       {
@@ -215,12 +216,12 @@ const columns = [
     width: 160
   },
 
-  // { todo 此条件会用上面的tab区分，并非选项实现
-  //   title: '是否放入回收站0=否|1=是',
-  //   dataIndex: 'isRecycle',
-  //   key: 'isRecycle',
-  //   width: 160
-  // },
+  {
+    title: '回收站',
+    dataIndex: 'isRecycle',
+    key: 'isRecycle',
+    width: 160
+  },
 
   {
     title: '单独分佣',
@@ -271,7 +272,7 @@ const columns = [
     defaultValue: 1,
     formSort: 1
   },
-  {
+  { // todo 拒绝信息后面用弹窗处理
     title: '拒绝原因',
     dataIndex: 'reasonContent',
     key: 'reasonContent',
@@ -289,8 +290,21 @@ const columns = [
   {
     title: '上架',
     dataIndex: 'isShow',
+    scopedSlots: {customRender: 'isShow'},
     key: 'isShow',
-    width: 160
+    width: 160,
+    props: {
+      options: [
+        {
+          label: '下架',
+          value: false
+        },
+        {
+          label: '上架',
+          value: true
+        }
+      ]
+    },
   },
 
   {
@@ -378,5 +392,5 @@ const permissionObj = {
   editBtn: 'ptm:product:edit',
   deleteBtn: 'ptm:product:delete'
 };
-
-export { columns, moduleConfig, permissionObj };
+const enumsMap = getEnumsMap(columns);
+export { columns, moduleConfig, permissionObj, enumsMap };

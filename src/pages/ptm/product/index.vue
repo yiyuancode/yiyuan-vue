@@ -109,11 +109,11 @@
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
       </div>
       <!--          slot-scope(当前数据，当前行)-->
-      <div class="y-flex" slot="level" slot-scope="{ text, record }">
-        {{ text.desc }}
+      <div slot="isShow" slot-scope="{ text, record }">
+        {{enumsMap['isShow'+text]}}
       </div>
-      <div class="y-flex" slot="isShow" slot-scope="{ text, record }">
-        {{ text ? '显示' : '不显示' }}
+      <div slot="isSub" slot-scope="{ text, record }" class="y-flex">
+        {{ text ? '是' : '否' }}
       </div>
       <div class="y-flex" slot="operation" slot-scope="{ text, record }">
         <a-button-group>
@@ -153,7 +153,7 @@
   </div>
 </template>
 <script>
-import {columns} from './pageConfig.js';
+import {columns, enumsMap} from './pageConfig.js';
 import {deleteProduct, getProductPageList} from '@/api/ptm/product.js';
 import edit from './edit.vue';
 
@@ -161,6 +161,7 @@ export default {
   components: {edit},
   data() {
     return {
+      enumsMap,
       searchForm: {
         // 表单查询对象
         id: null,
