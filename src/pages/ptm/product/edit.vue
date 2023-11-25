@@ -15,10 +15,10 @@
       </a-form-model-item>
       <a-form-model-item label="店铺分类">
         <y-product-category-shop-select
-          :disabled="formData.tenantId == 0"
-          :tenantId="formData.tenantId"
           :key="forPramsData.tenantId"
-          v-model="formData.shopCategoryIds"></y-product-category-shop-select>
+          v-model="formData.shopCategoryIds"
+          :disabled="formData.tenantId === 0"
+          :tenantId="formData.tenantId"></y-product-category-shop-select>
       </a-form-model-item>
       <a-form-model-item label="品牌">
         <a-select
@@ -29,7 +29,7 @@
         </a-select>
       </a-form-model-item>
       <a-form-model-item label="保障服务">
-        <y-product-guarantee-select v-model="formData.guaranteeIds" :key="formData.tenantId"
+        <y-product-guarantee-select :key="formData.tenantId" v-model="formData.guaranteeIds"
                                     :tenantId="formData.tenantId"
           ></y-product-guarantee-select>
       </a-form-model-item>
@@ -49,16 +49,8 @@
         ></UploadSngle>
       </a-form-model-item>
       <a-form-model-item label="轮播图">
-<!--        todo 多图上传 组件后补-->
-        <y-img
-          v-if="formData.sliderImage"
-          :src="formData.sliderImage"
-          style="height: 100px; width: 100px;"
-        ></y-img>
-        <UploadSngle
-          v-model="formData.sliderImage"
-          @UploadSngle="(fileUrl) => UploadSngleSliderImage(fileUrl, formData)"
-        ></UploadSngle>
+        <y-upload-multiple :key="formData.sliderImage"
+                           v-model="formData.sliderImage"></y-upload-multiple>
       </a-form-model-item>
       <a-form-model-item label="视频">
         <a-input v-model="formData.videoLink" placeholder="请输入商视频链接" allowClear/>
