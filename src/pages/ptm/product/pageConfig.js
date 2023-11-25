@@ -213,7 +213,20 @@ const columns = [
     title: '规格',
     dataIndex: 'isSpecType',
     key: 'isSpecType',
-    width: 160
+    width: 160,
+    scopedSlots: {customRender: 'isSpecType'},
+    props: {
+      options: [
+        {
+          label: '单',
+          value: false
+        },
+        {
+          label: '多',
+          value: true
+        }
+      ]
+    },
   },
 
   {
@@ -227,14 +240,28 @@ const columns = [
     title: '单独分佣',
     dataIndex: 'isSub',
     key: 'isSub',
-    width: 160
+    width: 160,
+    scopedSlots: {customRender: 'isSub'},
+    props: {
+      options: [
+        {
+          label: '否',
+          value: false
+        },
+        {
+          label: '是',
+          value: true
+        }
+      ]
+    },
   },
 
   {
     title: '审核',
     dataIndex: 'isAudit',
     key: 'isAudit',
-    width: 160
+    width: 160,
+    noShow: true
   },
 
   {
@@ -245,6 +272,7 @@ const columns = [
     //值类型
     valType: 'object',
     formType: 'radioGroup',
+    scopedSlots: {customRender: 'auditStatus'},
     props: {
       options: [
         {
@@ -272,12 +300,13 @@ const columns = [
     defaultValue: 1,
     formSort: 1
   },
-  { // todo 拒绝信息后面用弹窗处理
+  {
     title: '拒绝原因',
     dataIndex: 'reasonContent',
     key: 'reasonContent',
     width: 160,
-    rules: [{ required: true, message: '请输入拒绝原因', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入拒绝原因', trigger: 'blur' }],
+    noShow: false
   },
 
   {

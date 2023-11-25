@@ -108,12 +108,17 @@
       <div class="y-flex" slot="icon" slot-scope="{ text, record }">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
       </div>
-      <!--          slot-scope(当前数据，当前行)-->
+      <!--   上下架 -->
       <div slot="isShow" slot-scope="{ text, record }">
-        {{enumsMap['isShow'+text]}}
+        {{ enumsMap['isShow'+text] }}
       </div>
+<!--      是否单独分拥-->
       <div slot="isSub" slot-scope="{ text, record }" class="y-flex">
-        {{ text ? '是' : '否' }}
+        {{ enumsMap['isSub'+text] }}
+      </div>
+<!--      审核状态-->
+      <div slot="auditStatus" slot-scope="{ text, record }" class="y-flex">
+        {{ enumsMap['auditStatus'+text] }}
       </div>
       <div class="y-flex" slot="operation" slot-scope="{ text, record }">
         <a-button-group>
