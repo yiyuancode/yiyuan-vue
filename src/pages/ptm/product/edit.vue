@@ -215,10 +215,6 @@ export default {
       console.log('item:', item);
       item.image = fileUrl;
     },
-    UploadSngleSliderImage(fileUrl, item) {
-      console.log('item:', item.image);
-      item.sliderImage.add(fileUrl);
-    },
     // 选择属性key
     async handleAttrKeyChange(params){
       this.forPramsData.productAttrKeyList = await getProductAttrKeyList(params);
