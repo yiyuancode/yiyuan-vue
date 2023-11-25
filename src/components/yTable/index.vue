@@ -311,8 +311,8 @@
         });
       },
       uColumns() {
-        console.log('this.columnsCheckboxValue', this.columnsCheckboxValue);
-        let noFixedColumns = this.noFixedColumns.filter((item) => {
+        let noFixedColumnsAndShow = this.noFixedColumns.filter((item) => !item.noShow)
+        let noFixedColumns = noFixedColumnsAndShow.filter((item) => {
           return item.checked;
         });
         let fixedLeftColumns = this.fixedLeftColumns.filter((item) => {
@@ -338,7 +338,7 @@
 
           return item.checked;
         });
-
+        console.log('noFixedColumns:',noFixedColumns);
         return [...fixedLeftColumns, ...noFixedColumns, ...fixedRightColumns];
       },
       uPagination() {

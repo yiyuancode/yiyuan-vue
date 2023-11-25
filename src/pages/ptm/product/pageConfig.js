@@ -233,7 +233,20 @@ const columns = [
     title: '回收站',
     dataIndex: 'isRecycle',
     key: 'isRecycle',
-    width: 160
+    width: 160,
+    scopedSlots: {customRender: 'isRecycle'},
+    props: {
+      options: [
+        {
+          label: '否',
+          value: false
+        },
+        {
+          label: '是',
+          value: true
+        }
+      ]
+    },
   },
 
   {
@@ -306,7 +319,7 @@ const columns = [
     key: 'reasonContent',
     width: 160,
     rules: [{ required: true, message: '请输入拒绝原因', trigger: 'blur' }],
-    noShow: false
+    noShow: true
   },
 
   {
@@ -350,7 +363,8 @@ const columns = [
       return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
-    noAdd: true
+    noAdd: true,
+    noShow: true,
   },
 
   {
@@ -372,7 +386,7 @@ const columns = [
   },
 
   {
-    title: '创建人',
+    title: '创建人s',
     dataIndex: 'createUser',
     key: 'createUser',
     width: 160,
@@ -399,7 +413,8 @@ const columns = [
     dataIndex: 'operation',
     scopedSlots: {customRender: 'operation'},
     fixed: 'right',
-    ellipsis: true
+    ellipsis: true,
+    noShow: true
   }
 ];
 

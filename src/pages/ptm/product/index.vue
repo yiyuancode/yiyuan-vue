@@ -120,6 +120,14 @@
       <div slot="auditStatus" slot-scope="{ text, record }" class="y-flex">
         {{ enumsMap['auditStatus'+text] }}
       </div>
+<!--      规格-->
+      <div slot="isSpecType" slot-scope="{ text, record }" class="y-flex">
+        {{ enumsMap['isSpecType'+text] }}
+      </div>
+      回收站
+      <div slot="isRecycle" slot-scope="{ text, record }" class="y-flex">
+        {{ enumsMap['isRecycle'+text] }}
+      </div>
       <div class="y-flex" slot="operation" slot-scope="{ text, record }">
         <a-button-group>
           <!--            编辑分类-->
