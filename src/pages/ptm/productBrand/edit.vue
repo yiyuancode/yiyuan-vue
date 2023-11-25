@@ -11,7 +11,7 @@
         <y-shop-select :key="formData.tenantId" v-model="formData.tenantId"></y-shop-select>
       </a-form-model-item>
       <a-form-model-item label="关联分类" prop="categoryIds">
-        <y-plat-category-select v-model="formData.categoryIds" />
+        <y-product-category-plat-select v-model="formData.categoryIds"></y-product-category-plat-select>
       </a-form-model-item>
       <a-form-model-item label="品牌名称" prop="name">
         <a-input

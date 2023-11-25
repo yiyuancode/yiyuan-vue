@@ -10,29 +10,19 @@
                        @change="tenantIdChange"></y-shop-select>
       </a-form-model-item>
       <a-form-model-item label="平台分类">
-        <y-plat-category-select
-          :key="formData.tenantId"
-          v-model="formData.platCategoryIds"
-          @change="cateIdChange">
-        </y-plat-category-select>
+        <y-product-category-plat-select v-model="formData.platCategoryIds" @change="cateIdChange">
+        </y-product-category-plat-select>
       </a-form-model-item>
       <a-form-model-item label="店铺分类">
-        <y-product-category-select
+        <y-product-category-shop-select
           :disabled="formData.tenantId == 0"
           :tenantId="formData.tenantId"
           :key="forPramsData.tenantId"
-          v-model="formData.shopCategoryId"></y-product-category-select>
-
+          v-model="formData.shopCategoryIds"></y-product-category-shop-select>
       </a-form-model-item>
       <a-form-model-item label="品牌">
-<!--        <a-cascader-->
-<!--          v-model="formData.shopCategoryId"-->
-<!--          :options="forPramsData.productCateList"-->
-<!--          :fieldNames="{ label: 'name', value: 'id' }"-->
-<!--          placeholder="请选择商户分类"-->
-<!--        />-->
         <a-select
-          v-model="formData.brandId">
+          v-model="formData.brandId" placeholder="选择平台分类后再选择关联品牌">
           <a-select-option v-for="(item, index) in forPramsData.brandIdList" :key="index" :value="item.id">
             {{ item.name }}
           </a-select-option>
@@ -44,12 +34,6 @@
           ></y-product-guarantee-select>
       </a-form-model-item>
       <a-form-model-item label="运费">
-<!--        todo 运费模版还需要维护 -->
-<!--        <a-cascader-->
-<!--          v-model="formData.brandId"-->
-<!--          :options="forPramsData.productCateList"-->
-<!--          placeholder="请选择品牌"-->
-<!--        />-->
         <y-freight-temp-select v-model="formData.tempId"></y-freight-temp-select>
       </a-form-model-item>
       <a-form-model-item label="主图">
@@ -75,9 +59,6 @@
           v-model="formData.sliderImage"
           @UploadSngle="(fileUrl) => UploadSngleSliderImage(fileUrl, formData)"
         ></UploadSngle>
-      </a-form-model-item>
-      <a-form-model-item label="保障服务">
-        <y-product-guarantee-select v-model="formData.guaranteeIds"></y-product-guarantee-select>
       </a-form-model-item>
       <a-form-model-item label="视频">
         <a-input v-model="formData.videoLink" placeholder="请输入商视频链接" allowClear/>
@@ -166,7 +147,7 @@ export default {
       formData: {
         tenantId: null,            // 商户id
         platCategoryIds: null,   // 平台分类id
-        shopCategoryId: null,     // 商户分类id
+        shopCategoryIds: null,     // 商户分类id
         brandId: null,            // 品牌
         guaranteeIds: null,       // 保障服务
         tempId: null,             // 运费模版
@@ -234,6 +215,7 @@ export default {
     },
     // 根据分类id获取品牌
     async getProductBrandListByCid(){
+      this.formData.shopCategoryIds = null;
       this.forPramsData.brandIdList = await listOfProductBrandByCid(this.formData.platCategoryIds);
       console.log('this.forPramsData.brandIdList:', this.forPramsData.brandIdList);
     },

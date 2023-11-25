@@ -29,6 +29,8 @@
 
             </a-radio-group>
 
+            <a-input-number v-else-if="item.formType == `inputNumber`" v-model="form[item.dataIndex]" :min="1" :max="99999" />
+
 
             <a-input
               v-if="!item.formType"

@@ -14,16 +14,12 @@ const columns = [
     key: 'id',
     width: 160,
     ellipsis: true,
-
-
     rules: [{required: true, message: '请输入店铺商品分类id', trigger: 'blur'},],
     noEdit: true,
     noAdd: true,
-
     noSearch: true,
     noShow: true,
     noTable: true,
-
   },
 
   {
@@ -32,10 +28,7 @@ const columns = [
     key: 'pid',
     width: 160,
     ellipsis: true,
-
-
     rules: [{required: true, message: '请输入父id', trigger: 'blur'},],
-
   },
 
   {
@@ -44,10 +37,7 @@ const columns = [
     key: 'name',
     width: 160,
     ellipsis: true,
-
-
     rules: [{required: true, message: '请输入分类名称', trigger: 'blur'},],
-
   },
 
   {
@@ -56,8 +46,7 @@ const columns = [
     key: 'icon',
     width: 160,
     ellipsis: true,
-
-
+    rules: [{required: true, message: '请上传图标', trigger: 'blur'},],
   },
 
   {
@@ -66,8 +55,6 @@ const columns = [
     key: 'level',
     width: 160,
     ellipsis: true,
-
-
     scopedSlots: {customRender: 'level'},
     //值类型
     valType: "object",
@@ -102,6 +89,7 @@ const columns = [
     key: 'sort',
     width: 160,
     ellipsis: true,
+    formType: "inputNumber",
 
 
   },
@@ -112,8 +100,6 @@ const columns = [
     key: 'isShow',
     width: 160,
     ellipsis: true,
-
-
     scopedSlots: {customRender: 'isShow'},
     formType: "radioGroup",
     props: {
@@ -132,7 +118,6 @@ const columns = [
           width: '100%'
         }
     },
-
   },
 
   {
