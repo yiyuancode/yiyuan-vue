@@ -1,5 +1,6 @@
 <template>
   <div style="width: 100%;">
+    <span>value:{{value}}</span>
     <el-cascader
       v-model="selectedKeys"
       :options="treeData"
@@ -71,10 +72,9 @@
     computed: {},
     async created() {
       await this.getData();
-      // this.selectedKeys = this.value
       if (this.value) {
-        this.selectedKeys = getCascaderSelectedKeys(this.treeData, this.value);
-        console.log("res.arr", this.selectedKeys)
+        this.selectedKeys = this.value;
+        console.log("res.arr", this.selectedKeys);
       }
     }
     ,

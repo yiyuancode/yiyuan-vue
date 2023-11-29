@@ -159,7 +159,7 @@
       <edit
         v-if="editConfig.visible"
         :editId="editConfig.editId"
-        @onSaveSubmit="onEditSubmit"
+        @onSubmitHandleSuccess="onEditSubmit"
         @onCancelSubmit="editConfig.visible = false"
       ></edit>
     </a-drawer>
