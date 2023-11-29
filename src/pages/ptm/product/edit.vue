@@ -104,7 +104,8 @@
         </a-button>
       </a-form-model-item>
       <a-form-model-item label="商品详情">
-        <rich-editor v-model="formData.goodsDesc"></rich-editor>
+        <a-input v-model="formData.goodsDesc"></a-input>
+        <rich-editor v-model="formData.goodsDesc" :value="formData.goodsDesc"></rich-editor>
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmitHandle"> 创建 </a-button>
@@ -115,7 +116,7 @@
 </template>
 
 <script>
-import { addProduct, editProduct } from '@/api/ptm/product.js';
+import { addProduct, editProduct, getProductDetail } from '@/api/ptm/product.js';
 import { listOfProductBrandByCid } from "@/api/ptm/productBrand.js"
 import UploadSngle from '@/components/uploadSngle';
 import richEditor from "../../../components/RichEditor/index.vue";
@@ -183,9 +184,18 @@ export default {
     }
   },
   created(){
-
+    this.initProductEditData();
   },
   methods:{
+    async initProductEditData(){
+      console.log('this.editId:',this.editId)
+      if(this.editId){
+        const editData = await getProductDetail(this.editId);
+        this.formData = {...editData};
+        this.formData.goodsDesc = '1111111';
+        console.log('this.edit:',editData)
+      }
+    },
     // 商品维护表单提交方法，编辑和创建
     async onSubmitHandle(){
       if (this.editId) {
