@@ -82,8 +82,8 @@
       </a-form-model-item>
       <a-form-model-item label="单独分佣">
         <a-radio-group v-model="formData.isSub">
-          <a-radio :value="0">否</a-radio>
-          <a-radio :value="1">是</a-radio>
+          <a-radio :value="false">否</a-radio>
+          <a-radio :value="true">是</a-radio>
         </a-radio-group>
       </a-form-model-item>
       <a-form-model-item label="商品属性名">
@@ -104,8 +104,7 @@
         </a-button>
       </a-form-model-item>
       <a-form-model-item label="商品详情">
-        <a-input v-model="formData.goodsDesc"></a-input>
-        <rich-editor v-model="formData.goodsDesc" :value="formData.goodsDesc"></rich-editor>
+        <rich-editor v-if="!editId || formData.goodsDesc" v-model="formData.goodsDesc" :value="formData.goodsDesc" ></rich-editor>
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmitHandle"> 创建 </a-button>

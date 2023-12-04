@@ -90,7 +90,8 @@ const columns = [
     dataIndex: 'image',
     key: 'image',
     width: 160,
-    rules: [{ required: true, message: '请输入商品橱窗图片', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入商品橱窗图片', trigger: 'blur' }],
+    scopedSlots: {customRender: 'image'},
   },
 
   {
@@ -107,7 +108,8 @@ const columns = [
     width: 160,
     rules: [
       { required: true, message: '请输入详情图(多个逗号分割)', trigger: 'blur' }
-    ]
+    ],
+    scopedSlots: {customRender: 'sliderImage'},
   },
 
   {
@@ -386,7 +388,7 @@ const columns = [
   },
 
   {
-    title: '创建人s',
+    title: '创建人',
     dataIndex: 'createUser',
     key: 'createUser',
     width: 160,

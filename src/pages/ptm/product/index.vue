@@ -105,7 +105,12 @@
         </a-popconfirm>
         <a-divider type="vertical"/>
       </div>
-      <div class="y-flex" slot="icon" slot-scope="{ text, record }">
+      <!--      主图image-->
+      <div slot="image" slot-scope="{ text, record }" class="y-flex">
+        <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
+      </div>
+      <!--      详情图sliderImage-->
+      <div slot="sliderImage" slot-scope="{ text, record }" class="y-flex">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
       </div>
       <!--   上下架 -->
@@ -124,7 +129,6 @@
       <div slot="isSpecType" slot-scope="{ text, record }" class="y-flex">
         {{ enumsMap['isSpecType'+text] }}
       </div>
-      回收站
       <div slot="isRecycle" slot-scope="{ text, record }" class="y-flex">
         {{ enumsMap['isRecycle'+text] }}
       </div>
