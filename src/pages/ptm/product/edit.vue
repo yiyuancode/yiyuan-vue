@@ -10,7 +10,6 @@
                        @change="tenantIdChange"></y-shop-select>
       </a-form-model-item>
       <a-form-model-item label="平台分类">
-        <span>formData.platCategoryIds:{{formData.platCategoryIds}}</span>
         <y-product-category-plat-select v-model="formData.platCategoryIds" @change="cateIdChange">
         </y-product-category-plat-select>
       </a-form-model-item>

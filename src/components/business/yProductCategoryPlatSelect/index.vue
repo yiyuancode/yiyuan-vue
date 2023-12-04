@@ -1,6 +1,5 @@
 <template>
   <div style="width: 100%;">
-    <span>value:{{value}}</span>
     <el-cascader
       v-model="selectedKeys"
       :options="treeData"
@@ -74,7 +73,6 @@
       await this.getData();
       if (this.value) {
         this.selectedKeys = this.value;
-        console.log("res.arr", this.selectedKeys);
       }
     }
     ,
@@ -82,7 +80,6 @@
       async getData() {
         this.treeData = await getProductCategoryPlatTree();
         this.setDisable(3, this.treeData);
-        console.log("yPlatCategorySelect.arr", this.treeData)
       }
       ,
       change(value) {

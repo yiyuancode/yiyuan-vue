@@ -70,11 +70,9 @@
     },
     computed: {},
     async created() {
-      this.getData();
-      // this.selectedKeys = this.value
+      await this.getData();
       if (this.value) {
-        this.selectedKeys = getCascaderSelectedKeys(this.treeData, this.value);
-        console.log("res.arr", this.selectedKeys)
+        this.selectedKeys = this.value;
       }
     }
     ,
