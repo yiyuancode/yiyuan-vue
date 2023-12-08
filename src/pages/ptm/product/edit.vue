@@ -103,6 +103,11 @@
           确认生成sku
         </a-button>
       </a-form-model-item>
+      <a-form-model-item label="商品SKU列表">
+        <a-table v-if="formData.skuList" :columns="skuListColumns" :data-source="formData.skuList">
+
+        </a-table>
+      </a-form-model-item>
       <a-form-model-item label="商品详情">
         <rich-editor v-if="!editId || formData.goodsDesc" v-model="formData.goodsDesc" :value="formData.goodsDesc" ></rich-editor>
       </a-form-model-item>
@@ -179,7 +184,55 @@ export default {
         productAttrKeyList: [], // 商品属性key列表
         productAttrValueList: [], // 商品属性Value列表
         brandIdList:[], // 商品品牌集合
-      }
+      },
+      // SKU 列表 label
+      skuListColumns:[
+        // {
+        //   dataIndex:'id',
+        //   key:'id',
+        //   title:'ID'
+        // },
+        {
+          dataIndex:'sku',
+          key:'sku',
+          title:'SKU'
+        },
+        {
+          dataIndex:'costPrice',
+          key:'costPrice',
+          title:'成本价'
+        },
+        {
+          dataIndex:'crossedPrice',
+          key:'crossedPrice',
+          title:'划线价'
+        },
+        {
+          dataIndex:'isShow',
+          key:'isShow',
+          title:'isShow'
+        },
+        {
+          dataIndex:'ptmProductId',
+          key:'ptmProductId',
+          title:'平台ID'
+        },
+        {
+          dataIndex:'salePrice',
+          key:'salePrice',
+          title:'售价'
+        },
+        {
+          dataIndex:'stock',
+          key:'stock',
+          title:'库存'
+        },
+        // {
+        //   dataIndex:'createTime',
+        //   key:'createTime',
+        //   title:'创建时间'
+        // },
+      ]
     }
   },
   created(){

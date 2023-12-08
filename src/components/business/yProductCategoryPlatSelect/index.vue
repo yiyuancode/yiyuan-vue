@@ -70,6 +70,7 @@
     },
     computed: {},
     async created() {
+      //console.log('平台分类-this.value:', this.value);
       await this.getData();
       if (this.value) {
         this.selectedKeys = this.value;
