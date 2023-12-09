@@ -6,6 +6,7 @@
       :wrapper-col="wrapperCol"
     >
       <a-form-model-item label="商户">
+        {{ formData.tenantId }}
         <y-shop-select v-model="formData.tenantId"
                        @change="tenantIdChange"></y-shop-select>
       </a-form-model-item>
@@ -274,7 +275,10 @@ export default {
     async initProductEditData(){
       if(this.editId){
         const editData = await getProductDetail(this.editId);
-        this.formData = {...editData};
+        this.$nextTick(()=>{ // TODO For 渲染问题
+          this.formData = {...editData};
+          console.log("formData.tenantId:", this.formData.tenantId);
+        });
       }
     },
     // 商品维护表单提交方法，编辑和创建

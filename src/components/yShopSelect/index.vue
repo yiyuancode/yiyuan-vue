@@ -55,7 +55,9 @@
       };
     },
     watch: {
+      // TODO 重复打开编辑商品偶尔几次才能渲染成功，此问题出现在商品分类和店铺分类 有时间一起确认
       value(newValue, oldValue) {
+        console.log('newValue:', newValue);
         if (!newValue) {
           this.selectedKeys = undefined;
         }
