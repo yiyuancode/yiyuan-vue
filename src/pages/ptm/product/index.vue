@@ -1,44 +1,42 @@
 <template>
   <div>
-<!--    <y-search-->
-<!--      :scopedSlots="3"-->
-<!--      :loading="table.loading"-->
-<!--      @search="search"-->
-<!--    >-->
-<!--      <a-form-model-item slot="scopedSlots-1" label="ID">-->
-<!--        <a-input v-model="searchForm.id"  allowClear/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-2" label="NAME">-->
-<!--        <a-input v-model="searchForm.name"  allowClear/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-3" label="平台分类">-->
-<!--        <a-cascader-->
-<!--          v-model="searchForm.tenantCategoryId"-->
-<!--          :options="searchForm.productCateList"-->
-<!--          placeholder="请选择平台分类"-->
-<!--        />-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-4" label="商户分类">-->
-<!--        <a-cascader-->
-<!--          v-model="searchForm.shopCategoryId"-->
-<!--          :options="searchForm.productCateList"-->
-<!--          placeholder="请选择商户分类"-->
-<!--        />-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-5" label="品牌">-->
-<!--        <a-cascader-->
-<!--          v-model="searchForm.brandId"-->
-<!--          :options="searchForm.productCateList"-->
-<!--          placeholder="请选择品牌"-->
-<!--        />-->
-<!--      </a-form-model-item>-->
-      <!--      <a-form-model-item label="保障服务"> TO DO 保障服务待维护后-->
-      <!--        <a-cascader-->
-      <!--          v-model="formData.guaranteeIds"-->
-      <!--          :options="forPramsData.productCateList"-->
-      <!--          placeholder="请选择品牌"-->
-      <!--        />-->
-      <!--      </a-form-model-item>-->
+    <y-search
+      :scopedSlots="['id','tenantId','platCategoryId','shopCategoryId','brandId','guaranteeIds']"
+      :loading="table.loading"
+      @search="search"
+    >
+      <a-form-model-item slot="id" slot-scope="{ form }" label="ID">
+        <a-input v-model="form.id"  allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户">
+        <y-shop-select v-model="form.tenantId"
+                       @change="tenantIdChange"></y-shop-select>
+      </a-form-model-item>
+      <a-form-model-item slot="platCategoryId" slot-scope="{ form }" label="平台分类">
+        <y-product-category-plat-select v-model="form.platCategoryId" @change="platCateIdChange">
+        </y-product-category-plat-select>
+      </a-form-model-item>
+      <a-form-model-item slot="shopCategoryId" slot-scope="{ form }" label="店铺分类">
+        <y-product-category-shop-select
+          :key="form.tenantId"
+          v-model="form.shopCategoryId"
+          :tenantId="form.tenantId"></y-product-category-shop-select>
+      </a-form-model-item>
+      <a-form-model-item slot="brandId" slot-scope="{ form }" label="品牌">
+        <a-select
+          v-model="form.brandId" placeholder="选择平台分类后再选择关联品牌">
+          <a-select-option v-for="(item, index) in searchOption.brandIdList" :key="index" :value="item.id">
+            {{ item.name }}
+          </a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item slot="guaranteeIds" slot-scope="{ form }" label="保障服务">
+        <y-product-guarantee-select :key="form.tenantId"
+                                    v-model="form.guaranteeIds"
+                                    :disabled="form.tenantId === 0"
+                                    :tenantId="form.tenantId"
+        ></y-product-guarantee-select>
+      </a-form-model-item>
 <!--      <a-form-model-item slot="scopedSlots-6" label="运费模版">-->
 <!--        <a-cascader-->
 <!--          v-model="searchForm.tempId"-->
@@ -79,7 +77,7 @@
 
 
 
-<!--    </y-search>-->
+    </y-search>
     <y-table
       rowKey="id"
       :columns="table.columns"
@@ -171,6 +169,7 @@
 </template>
 <script>
 import {columns, enumsMap} from './pageConfig.js';
+import { listOfProductBrandByCid } from "@/api/ptm/productBrand.js"
 import {deleteProduct, getProductPageList} from '@/api/ptm/product.js';
 import edit from './edit.vue';
 
@@ -205,6 +204,9 @@ export default {
         updateTimeStart: null,
         updateTimeEnd: null
       },
+      searchOption:{ // 搜索表单用到的备选数据
+        brandIdList:[]
+      },
       table: {
         columns,
         records: [],
@@ -235,9 +237,10 @@ export default {
     this.getData();
   },
   methods: {
-    search(form) {
+    async search(form) {
       this.searchForm = form;
-      this.getData();
+      console.log('this.searchForm:', this.searchForm);
+      await this.getData();
     },
     tableSelectedRowKeys(selectedRowKeys) {
       console.log('tableSelectedRowKeys', selectedRowKeys);
@@ -294,7 +297,23 @@ export default {
     onEdit(text, record) {
       this.editConfig.editId = record.id;
       this.editConfig.visible = true;
-    }
+    },
+    // 搜索选项方法 START
+    tenantIdChange(tenantId) {
+      this.searchForm.tenantId = tenantId;
+      // 根据当前商户获取对应属性名称
+      // this.handleAttrKeyChange({tenantId:this.searchForm.tenantId});
+    },
+    platCateIdChange(cid){
+      this.searchForm.platCategoryIds=cid
+      this.getProductBrandListByCid();
+    },
+    async getProductBrandListByCid(){
+      this.searchForm.shopCategoryIds = null;
+      this.searchForm.brandIdList = await listOfProductBrandByCid(this.formData.platCategoryIds);
+      console.log('this.forPramsData.brandIdList:', this.forPramsData.brandIdList);
+    },
+    // 搜索选项方法 END
   }
 };
 </script>

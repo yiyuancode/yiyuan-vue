@@ -7,6 +7,7 @@
       size="small"
       :placeholder="placeholder"
       :show-all-levels="false"
+      :disabled="!tenantId"
       clearable
       @change="change"
     ></el-cascader>
