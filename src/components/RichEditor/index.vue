@@ -52,9 +52,7 @@ export default {
     };
   },
   created() {
-    console.log('this.value:',this.value);
     this.html = this.value;
-    console.log('this.html:',this.html);
   },
   methods: {
     async customUpload(file, insertFn) {

@@ -104,15 +104,32 @@
         </a-button>
       </a-form-model-item>
       <a-form-model-item label="商品SKU列表">
-        <a-table v-if="formData.skuList" :columns="skuListColumns" :data-source="formData.skuList">
-
+        <a-table v-if="formData.skuList"
+                 :rowKey="
+                    (record, index) => {
+                      return index;
+                    }
+                  "
+                 :columns="skuListColumns" :data-source="formData.skuList">
+          <span slot="sku" slot-scope="record">{{record}}</span>
+<!--          价格批量处理-因为都是input-->
+          <template
+            v-for="col in ['costPrice','crossedPrice','salePrice','stock']" :slot="col" slot-scope="text, record, index">
+            <div :key="col">
+              <a-input :value="text"></a-input>
+            </div>
+          </template>
+<!--          SKU右侧操作按钮-->
+          <template slot="operation" slot-scope="text, record, index">
+            <a-button icon="delete" type="danger" shape="round" @click="handleSkuDelete(text, record, index)"></a-button>
+          </template>
         </a-table>
       </a-form-model-item>
       <a-form-model-item label="商品详情">
         <rich-editor v-if="!editId || formData.goodsDesc" v-model="formData.goodsDesc" :value="formData.goodsDesc" ></rich-editor>
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-        <a-button type="primary" @click="onSubmitHandle"> 创建 </a-button>
+        <a-button type="primary" @click="onSubmitHandle"> {{editId?"编辑":"创建"}} </a-button>
         <a-button style="margin-left: 10px"> 取消 </a-button>
       </a-form-model-item>
     </a-form-model>
@@ -195,43 +212,58 @@ export default {
         {
           dataIndex:'sku',
           key:'sku',
-          title:'SKU'
+          title:'SKU',
+          width: 160,
+          scopedSlots: { customRender: 'sku' },
         },
         {
           dataIndex:'costPrice',
           key:'costPrice',
-          title:'成本价'
+          title:'成本价',
+          width: 80,
+          scopedSlots: { customRender: 'costPrice' },
         },
         {
           dataIndex:'crossedPrice',
           key:'crossedPrice',
-          title:'划线价'
+          title:'划线价',
+          width: 80,
+          scopedSlots: { customRender: 'crossedPrice' },
         },
-        {
-          dataIndex:'isShow',
-          key:'isShow',
-          title:'isShow'
-        },
-        {
-          dataIndex:'ptmProductId',
-          key:'ptmProductId',
-          title:'平台ID'
-        },
+        // {
+        //   dataIndex:'isShow',
+        //   key:'isShow',
+        //   title:'isShow'
+        // },
+        // {
+        //   dataIndex:'ptmProductId',
+        //   key:'ptmProductId',
+        //   title:'平台ID'
+        // },
         {
           dataIndex:'salePrice',
           key:'salePrice',
-          title:'售价'
+          title:'售价',
+          width: 80,
+          scopedSlots: { customRender: 'salePrice' },
         },
         {
           dataIndex:'stock',
           key:'stock',
-          title:'库存'
+          title:'库存',
+          width: 80,
+          scopedSlots: { customRender: 'stock' },
         },
         // {
         //   dataIndex:'createTime',
         //   key:'createTime',
         //   title:'创建时间'
         // },
+        {
+          title: 'operation',
+          dataIndex: 'operation',
+          scopedSlots: { customRender: 'operation' },
+        },
       ]
     }
   },
@@ -240,12 +272,9 @@ export default {
   },
   methods:{
     async initProductEditData(){
-      console.log('this.editId:',this.editId)
       if(this.editId){
         const editData = await getProductDetail(this.editId);
         this.formData = {...editData};
-        this.formData.goodsDesc = '1111111';
-        console.log('this.edit:',editData)
       }
     },
     // 商品维护表单提交方法，编辑和创建
@@ -290,6 +319,9 @@ export default {
       let attrKey = [this.formData.attrKey.label.trim()];
       let attrValue =[this.formData.attrValue.map(obj => obj.label.trim())];
       this.formData.skuList = await makeSkuTempList({attrKeyList:attrKey, attrValList:attrValue});
+    },
+    handleSkuDelete(text, record, index){
+      this.formData.skuList = this.formData.skuList.filter(item => item.id !== record.id);
     }
   }
 }
