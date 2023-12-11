@@ -1,8 +1,8 @@
 <template>
   <div style="width: 100%;">
-
     <a-select :allowClear="allowClear"
               :placeholder="placeholder"
+              :disabled="!tenantId"
               @change="change"
               mode="multiple"
               v-model="selectedKeys">

@@ -23,7 +23,7 @@
           :tenantId="form.tenantId"></y-product-category-shop-select>
       </a-form-model-item>
       <a-form-model-item slot="brandId" slot-scope="{ form }" label="品牌">
-        <a-select
+        <a-select :disabled="!form.platCategoryIds"
           v-model="form.brandId" placeholder="选择平台分类后再选择关联品牌">
           <a-select-option v-for="(item, index) in searchOption.brandIdList" :key="index" :value="item.id">
             {{ item.name }}
@@ -33,7 +33,6 @@
       <a-form-model-item slot="guaranteeIds" slot-scope="{ form }" label="保障服务">
         <y-product-guarantee-select :key="form.tenantId"
                                     v-model="form.guaranteeIds"
-                                    :disabled="form.tenantId === 0"
                                     :tenantId="form.tenantId"
         ></y-product-guarantee-select>
       </a-form-model-item>
