@@ -1,7 +1,9 @@
 <template>
   <div>
     <y-search
-      :scopedSlots="['id','tenantId','platCategoryId','shopCategoryId','brandId','guaranteeIds']"
+      :scopedSlots="['id','tenantId','platCategoryId','shopCategoryId','brandId','guaranteeIds','name','title','keyword',
+      'stockStart','stockEnd','browseStart','browseEnd','isSpecType','isRecycle','isAudit','auditStatus','isShow','createTimeStart',
+      'createTimeEnd','tempId']"
       :loading="table.loading"
       @search="search"
     >
@@ -36,46 +38,69 @@
                                     :tenantId="form.tenantId"
         ></y-product-guarantee-select>
       </a-form-model-item>
-<!--      <a-form-model-item slot="scopedSlots-6" label="运费模版">-->
-<!--        <a-cascader-->
-<!--          v-model="searchForm.tempId"-->
-<!--          :options="searchForm.productCateList"-->
-<!--          placeholder="请选择品牌"-->
-<!--        />-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-7" label="主图">-->
-<!--        <y-img-->
-<!--          :src="globalConfig.imgBaseUrl + image"-->
-<!--          style="height: 30px; width: 30px"-->
-<!--        ></y-img>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-8" label="轮播图">-->
-<!--        <y-img-->
-<!--          :src="globalConfig.imgBaseUrl + sliderImage"-->
-<!--          style="height: 30px; width: 30px"-->
-<!--        ></y-img>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-3" label="商品名">-->
-<!--        <a-input v-model="searchForm.name" placeholder="请输入商品名" allowClear/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-10" label="商品简介">-->
-<!--        <a-input v-model="searchForm.title" placeholder="请输入商品简介" allowClear/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-11" label="关键字">-->
-<!--        <a-input v-model="searchForm.keyword" placeholder="请输入关键字" allowClear/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-13" label="虚拟销量">-->
-<!--        <a-input v-model="searchForm.fictiSales" placeholder="根据情况输入虚拟销量" allowClear/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-14" label="排序">-->
-<!--        <a-input v-model="searchForm.tenantSort" placeholder="排序"/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-15" label="分佣">-->
-<!--        <a-input v-model="searchForm.isSub" placeholder="分佣"/>-->
-<!--      </a-form-model-item>-->
-
-
-
+      <a-form-model-item slot="name" slot-scope="{ form }" label="商品名">
+        <a-input v-model="form.name" placeholder="请输入商品名" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="title" slot-scope="{ form }" label="商品简介">
+        <a-input v-model="form.title" placeholder="请输入商品简介" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="keyword" slot-scope="{ form }" label="关键字">
+        <a-input v-model="form.keyword" placeholder="请输入关键字" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="stockStart" slot-scope="{ form }" label="库存S">
+        <a-input v-model="form.stockStart" placeholder="库存数量S" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="stockEnd" slot-scope="{ form }" label="库存E">
+        <a-input v-model="form.stockEnd" placeholder="库存数量E" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="browseStart" slot-scope="{ form }" label="浏览量S">
+        <a-input v-model="form.browseStart" placeholder="浏览量S" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="browseEnd" slot-scope="{ form }" label="浏览量E">
+        <a-input v-model="form.browseEnd" placeholder="浏览量E" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="isSpecType" slot-scope="{ form }" label="商品规格">
+        <a-select v-model="form.isSpecType" placeholder="商品规格" allowClear>
+          <a-select-option :key="0" :value="0">单</a-select-option>
+          <a-select-option :key="1" :value="1">多</a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item slot="isRecycle" slot-scope="{ form }" label="删除状态">
+        <a-select v-model="form.isRecycle" placeholder="删除状态" allowClear>
+          <a-select-option :key="0" :value="0">否</a-select-option>
+          <a-select-option :key="1" :value="1">是</a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item slot="isAudit" slot-scope="{ form }" label="是否审核">
+        <a-select v-model="form.isAudit" placeholder="是否状态" allowClear>
+          <a-select-option :key="0" :value="0">否</a-select-option>
+          <a-select-option :key="1" :value="1">是</a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item slot="auditStatus" slot-scope="{ form }" label="审核状态">
+        <a-select v-model="form.auditStatus" placeholder="审核状态" allowClear>
+          <a-select-option :key="0" :value="0">无需审核</a-select-option>
+          <a-select-option :key="1" :value="1">待审核</a-select-option>
+          <a-select-option :key="2" :value="2">待审成功</a-select-option>
+          <a-select-option :key="3" :value="3">审核拒绝</a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item slot="isShow" slot-scope="{ form }" label="上架状态">
+        <a-select v-model="form.isShow" placeholder="上架状态" allowClear>
+          <a-select-option :key="0" :value="0">否</a-select-option>
+          <a-select-option :key="1" :value="1">是</a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item slot="createTimeStart" slot-scope="{ form }" label="创建时间S">
+        <a-input v-model="form.createTimeStart" placeholder="创建时间S"/>
+      </a-form-model-item>
+      <a-form-model-item slot="createTimeEnd" slot-scope="{ form }" label="创建时间E">
+        <a-input v-model="form.createTimeEnd" placeholder="创建时间E"/>
+      </a-form-model-item>
+<!--      根据商户的运费模版加载运费列表用于筛选商品-->
+      <a-form-model-item slot="tempId" slot-scope="{ form }" label="运费">
+        <y-freight-temp-select v-model="form.tempId"></y-freight-temp-select>
+      </a-form-model-item>
     </y-search>
     <y-table
       rowKey="id"
