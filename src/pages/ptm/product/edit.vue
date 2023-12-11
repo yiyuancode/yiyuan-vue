@@ -279,6 +279,7 @@ export default {
           this.formData = {...editData};
           console.log("formData.tenantId:", this.formData.tenantId);
         });
+        await this.tenantIdChange(this.formData.tenantId); // 根据商户加载对应属性key和value
       }
     },
     // 商品维护表单提交方法，编辑和创建
