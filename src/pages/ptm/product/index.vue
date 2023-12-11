@@ -23,7 +23,7 @@
           :tenantId="form.tenantId"></y-product-category-shop-select>
       </a-form-model-item>
       <a-form-model-item slot="brandId" slot-scope="{ form }" label="品牌">
-        <a-select :disabled="!form.platCategoryIds"
+        <a-select :disabled="searchOption.brandIdList.length === 0"
           v-model="form.brandId" placeholder="选择平台分类后再选择关联品牌">
           <a-select-option v-for="(item, index) in searchOption.brandIdList" :key="index" :value="item.id">
             {{ item.name }}
@@ -304,13 +304,11 @@ export default {
       // this.handleAttrKeyChange({tenantId:this.searchForm.tenantId});
     },
     platCateIdChange(cid){
-      this.searchForm.platCategoryIds=cid
+      this.searchForm.platCategoryId=cid
       this.getProductBrandListByCid();
     },
     async getProductBrandListByCid(){
-      this.searchForm.shopCategoryIds = null;
-      this.searchForm.brandIdList = await listOfProductBrandByCid(this.formData.platCategoryIds);
-      console.log('this.forPramsData.brandIdList:', this.forPramsData.brandIdList);
+      this.searchOption.brandIdList = await listOfProductBrandByCid(this.searchForm.platCategoryId);
     },
     // 搜索选项方法 END
   }
