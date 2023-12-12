@@ -28,7 +28,7 @@ const columns = [
   },
 
   {
-    title: '平台分类',  // TODO 需要每次登录后缓存平台分类后再通过vue过滤器显示实际商家分类名称
+    title: '平台分类',
     dataIndex: 'platCategoryIds',
     key: 'platCategoryIds',
     width: 160,
@@ -38,7 +38,8 @@ const columns = [
         message: '请选择 平台分类',
         trigger: 'blur'
       }
-    ]
+    ],
+    scopedSlots: {customRender: 'platCategoryIds'},
   },
 
   {

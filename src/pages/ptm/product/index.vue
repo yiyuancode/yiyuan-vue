@@ -127,6 +127,9 @@
         </a-popconfirm>
         <a-divider type="vertical"/>
       </div>
+      <div slot="platCategoryIds" slot-scope="{ form }" label="平台分类">
+        {{ filteredData(form.platCategoryIds) }}
+      </div>
       <!--      主图image-->
       <div slot="image" slot-scope="{ text, record }" class="y-flex">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
@@ -196,6 +199,7 @@ import {columns, enumsMap} from './pageConfig.js';
 import { listOfProductBrandByCid } from "@/api/ptm/productBrand.js"
 import {deleteProduct, getProductPageList} from '@/api/ptm/product.js';
 import edit from './edit.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {edit},
@@ -256,6 +260,11 @@ export default {
         visible: false
       }
     };
+  },
+  computed: {
+    filteredData(id) {
+      return this.$store.getters['product/platCateById'](id);
+    }
   },
   created() {
     this.getData();
