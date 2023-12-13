@@ -22,6 +22,8 @@ import 'hevue-img-preview/css/theme-light.css';
 import '@/assets/common.less';
 import install from '@/components/index.js';
 import './assets/element-variables.scss'
+// 全局过滤器
+import * as filters from './filters';
 
 Vue.use(hevueImgPreview, {
   keyboard: true,
@@ -50,6 +52,11 @@ Vue.use(Plugins);
 
 // bootstrap({ router, store, i18n, message: Vue.prototype.$message });
 Vue.use(install);
+
+// 注册全局过滤器 根据已经配置好的过滤器方法
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key]);
+});
 export default new Vue({
   router,
   store,

@@ -127,8 +127,8 @@
         </a-popconfirm>
         <a-divider type="vertical"/>
       </div>
-      <div slot="platCategoryIds" slot-scope="{ form }" label="平台分类">
-        {{ filteredData(form.platCategoryIds) }}
+      <div slot="platCategoryIds" slot-scope="{ text, record }" class="y-flex">
+        {{ text | getPlatCateNameById }}
       </div>
       <!--      主图image-->
       <div slot="image" slot-scope="{ text, record }" class="y-flex">
@@ -203,6 +203,11 @@ import { mapGetters } from 'vuex';
 
 export default {
   components: {edit},
+  filters: {
+    // getPlatCateNameById(id, store) {
+    //   return store.getters['product/platCateById'](id);
+    // }
+  },
   data() {
     return {
       enumsMap,
@@ -211,7 +216,6 @@ export default {
         id: null,
         tenantId: null, //商户id
         platCategoryId: null, // 平台分类id
-        ptmProductCategoryId: null,// TODO 待修改为平台属性
         shopCategoryId: null, // 商户分类id
         brandId: null, // 品牌
         guaranteeIds: null, // 保障服务 多个逗号分隔
@@ -260,11 +264,6 @@ export default {
         visible: false
       }
     };
-  },
-  computed: {
-    filteredData(id) {
-      return this.$store.getters['product/platCateById'](id);
-    }
   },
   created() {
     this.getData();

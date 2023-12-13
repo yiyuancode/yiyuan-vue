@@ -8,11 +8,14 @@ export default {
   },
   getters: {
     platCategoryList: (state) => {
+      console.log('1:', state);
       return getObj(state, 'platCategoryList');
     },
+    // 配合过滤器使用
     platCateById:(state) => (id) => {
-      console.log('state.platCategoryList:', state.platCategoryList);
-      return state.platCategoryList.find(item => item.id === id);
+      let platCateList = getObj(state, 'platCategoryList');
+      let currentPlatCate = platCateList.find(item => item.id === id);
+      return currentPlatCate.name;
     }
   },
   mutations: {

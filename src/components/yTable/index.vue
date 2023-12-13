@@ -338,7 +338,6 @@
 
           return item.checked;
         });
-        console.log('noFixedColumns:',noFixedColumns);
         return [...fixedLeftColumns, ...noFixedColumns, ...fixedRightColumns];
       },
       uPagination() {
