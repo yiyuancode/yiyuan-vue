@@ -9,6 +9,8 @@
         {{ formData.tenantId }}
         <y-shop-select v-model="formData.tenantId"
                        @change="tenantIdChange"></y-shop-select>
+
+        <y-api-select v-model="formData.tenantId"  :apiConfig="tenantIdApiConfig"/>
       </a-form-model-item>
       <a-form-model-item label="平台分类">
         <y-product-category-plat-select v-model="formData.platCategoryIds" @change="cateIdChange">
@@ -33,6 +35,8 @@
         <y-product-guarantee-select :key="formData.tenantId" v-model="formData.guaranteeIds"
                                     :tenantId="formData.tenantId"
           ></y-product-guarantee-select>
+
+        <y-api-select mode="multiple" v-model="formData.guaranteeIds"  :apiConfig="guaranteeIdsApiConfig"/>
       </a-form-model-item>
       <a-form-model-item label="运费">
         <y-freight-temp-select v-model="formData.tempId"></y-freight-temp-select>
@@ -138,7 +142,10 @@
 </template>
 
 <script>
-import { addProduct, editProduct, getProductDetail } from '@/api/ptm/product.js';
+  import {getShopList } from "@/api/spm/shop.js";
+  import {getProductGuaranteeList } from "@/api/ptm/productGuarantee.js";
+
+  import { addProduct, editProduct, getProductDetail } from '@/api/ptm/product.js';
 import { listOfProductBrandByCid } from "@/api/ptm/productBrand.js"
 import UploadSngle from '@/components/uploadSngle';
 import richEditor from "../../../components/RichEditor/index.vue";
@@ -157,6 +164,16 @@ export default {
   },
   data(){
     return{
+      tenantIdApiConfig:{
+        apiFun: getShopList,
+        parms: {},
+        objMap: {value: 'id', label: 'shopName'}
+      },
+      guaranteeIdsApiConfig:{
+        apiFun: getProductGuaranteeList,
+        parms: {},
+        objMap: {value: 'id', label: 'name'}
+      },
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
       formData: {
