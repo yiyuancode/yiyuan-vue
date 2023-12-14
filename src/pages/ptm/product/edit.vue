@@ -356,6 +356,7 @@ export default {
     },
     handleSKUChange (value, sku, column) {
       const newData = [...this.formData.skuList];
+
       const target = newData.find(item => sku === item.sku);
       if (target) {
         target[column] = value;
