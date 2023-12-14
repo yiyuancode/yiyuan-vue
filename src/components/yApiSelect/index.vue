@@ -78,6 +78,20 @@
           console.log("this.options", this.options)
         }
       },
+
+      apiConfig:{
+        // 执行方法 深度 监听如果apiConfig 的parm有更改也会再次执行
+        async handler(newVal,oldVal) {
+          if (newVal) {
+            console.log("valueIdVal.valueIdVal", newVal)
+            this.options = await this.apiConfig.apiFun({...this.apiConfig.parms, key: 234});
+            this.selectedKeys =  this.mode=="multiple" ? this.value.split(",") : this.value
+            console.log("this.options", this.options)
+          }
+        },
+        deep: true, // 深度监听
+        immediate: true  // 第一次改变就执行
+      }
     },
     //用watch 代替creatd  不用写key了
     // async created() {
