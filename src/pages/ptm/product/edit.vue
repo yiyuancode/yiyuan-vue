@@ -6,22 +6,14 @@
       :wrapper-col="wrapperCol"
     >
       <a-form-model-item label="商户">
-        {{ formData.tenantId }}
-        <y-shop-select v-model="formData.tenantId"
-                       @change="tenantIdChange"></y-shop-select>
-
-        <y-api-select v-model="formData.tenantId"  :apiConfig="tenantIdApiConfig"/>
+        <y-api-select v-model="formData.tenantId"  :apiConfig="tenantIdApiConfig" @change="tenantIdChange"/>
       </a-form-model-item>
       <a-form-model-item label="平台分类">
-        <y-product-category-plat-select v-model="formData.platCategoryIds" @change="cateIdChange">
-        </y-product-category-plat-select>
+        <y-api-select v-model="formData.platCategoryIds" :apiConfig="platCategoryIdsApiConfig" @change="cateIdChange"/>
       </a-form-model-item>
       <a-form-model-item label="店铺分类">
-        <y-product-category-shop-select
-          :key="forPramsData.tenantId"
-          v-model="formData.shopCategoryIds"
-          :disabled="formData.tenantId === 0"
-          :tenantId="formData.tenantId"></y-product-category-shop-select>
+<!--      TODO 这里的参数调用和结果需要确认下-->
+        <y-api-select v-model="formData.shopCategoryIds" :apiConfig="tenantCategoryIdsApiConfig"/>
       </a-form-model-item>
       <a-form-model-item label="品牌">
         <a-select
@@ -32,11 +24,7 @@
         </a-select>
       </a-form-model-item>
       <a-form-model-item label="保障服务">
-        <y-product-guarantee-select :key="formData.tenantId" v-model="formData.guaranteeIds"
-                                    :tenantId="formData.tenantId"
-          ></y-product-guarantee-select>
-
-        <y-api-select mode="multiple" v-model="formData.guaranteeIds"  :apiConfig="guaranteeIdsApiConfig"/>
+        <y-api-select v-model="formData.guaranteeIds" mode="multiple"  :apiConfig="guaranteeIdsApiConfig"/>
       </a-form-model-item>
       <a-form-model-item label="运费">
         <y-freight-temp-select v-model="formData.tempId"></y-freight-temp-select>
@@ -109,6 +97,7 @@
         </a-button>
       </a-form-model-item>
       <a-form-model-item label="商品SKU列表">
+        {{ formData.skuList }}
         <a-table v-if="formData.skuList"
                  :rowKey="
                     (record, index) => {
@@ -121,7 +110,7 @@
           <template
             v-for="col in ['costPrice','crossedPrice','salePrice','stock']" :slot="col" slot-scope="text, record, index">
             <div :key="col">
-              <a-input :value="text"></a-input>
+              <a-input :value="text" @change="e => handleSKUChange(e.target.value, record.sku, col)" ></a-input>
             </div>
           </template>
 <!--          SKU右侧操作按钮-->
@@ -142,10 +131,11 @@
 </template>
 
 <script>
-  import {getShopList } from "@/api/spm/shop.js";
-  import {getProductGuaranteeList } from "@/api/ptm/productGuarantee.js";
-
-  import { addProduct, editProduct, getProductDetail } from '@/api/ptm/product.js';
+import {getShopList } from "@/api/spm/shop.js";
+import {getProductGuaranteeList } from "@/api/ptm/productGuarantee.js";
+import { getProductCategoryPlatList } from "@/api/ptm/productCategoryPlat.js"
+import { getProductCategoryShopList } from "@/api/ptm/productCategoryShop.js"
+import { addProduct, editProduct, getProductDetail } from '@/api/ptm/product.js';
 import { listOfProductBrandByCid } from "@/api/ptm/productBrand.js"
 import UploadSngle from '@/components/uploadSngle';
 import richEditor from "../../../components/RichEditor/index.vue";
@@ -164,18 +154,6 @@ export default {
   },
   data(){
     return{
-      tenantIdApiConfig:{
-        apiFun: getShopList,
-        parms: {},
-        objMap: {value: 'id', label: 'shopName'}
-      },
-      guaranteeIdsApiConfig:{
-        apiFun: getProductGuaranteeList,
-        parms: {},
-        objMap: {value: 'id', label: 'name'}
-      },
-      labelCol: { span: 4 },
-      wrapperCol: { span: 14 },
       formData: {
         tenantId: null,            // 商户id
         platCategoryIds: null,   // 平台分类id
@@ -200,19 +178,42 @@ export default {
         attrKey:[],                // 临时用到的属性名 不当作参数
         attrValue:[],                // 临时用到的属性值 不当作参数
         skuList: [
-            {
-              updateUser: null,
-              sku: null,
-              salePrice: 0,       // 售价
-              id: null,
-              costPrice: 0,       // 成本价
-              stock: 0,
-              tenantId: 0,
-              crossedPrice: 0,    // 划线价
-              isShow: true        // 上下架状态
-            }
+          {
+            updateUser: null,
+            sku: null,
+            salePrice: 0,       // 售价
+            id: null,
+            costPrice: 0,       // 成本价
+            stock: 0,
+            tenantId: 0,
+            crossedPrice: 0,    // 划线价
+            isShow: true        // 上下架状态
+          }
         ]
       },
+      tenantIdApiConfig:{   // 商户列表
+        apiFun: getShopList,
+        parms: {},
+        objMap: {value: 'id', label: 'shopName'}
+      },
+      guaranteeIdsApiConfig:{  // 服务条款
+        apiFun: getProductGuaranteeList,
+        parms: {},
+        objMap: {value: 'id', label: 'name'}
+      },
+      platCategoryIdsApiConfig:{    // 平台分类
+        apiFun: getProductCategoryPlatList,
+        parms: {},
+        objMap: {value: 'id', label: 'name'}
+      },
+      tenantCategoryIdsApiConfig:{  // 店铺分类
+        apiFun: getProductCategoryShopList,
+        parms: { },
+        objMap: {value: 'id', label: 'name'}
+      },
+      labelCol: { span: 4 },
+      wrapperCol: { span: 14 },
+
       forPramsData: {
         productCateList: [],
         tenantId: null, // 此处为选择商户后的id
@@ -287,6 +288,7 @@ export default {
   },
   created(){
     this.initProductEditData();
+    this.tenantIdChange(this.formData.tenantId); // 根据商户加载对应属性key和value
   },
   methods:{
     async initProductEditData(){
@@ -296,7 +298,6 @@ export default {
           this.formData = {...editData};
           console.log("formData.tenantId:", this.formData.tenantId);
         });
-        await this.tenantIdChange(this.formData.tenantId); // 根据商户加载对应属性key和value
       }
     },
     // 商品维护表单提交方法，编辑和创建
@@ -309,10 +310,18 @@ export default {
         this.$emit('onSubmitHandleSuccess');
       }
     },
-    tenantIdChange(tenantId) {
+    async tenantIdChange(tenantId) {
       this.forPramsData.tenantId = tenantId;
       // 根据当前商户获取对应属性名称
-      this.handleAttrKeyChange({tenantId:this.forPramsData.tenantId});
+      await this.handleAttrKeyChange({tenantId:this.forPramsData.tenantId});
+      // 设置商户id获取商户分类
+      this.tenantCategoryIdsApiConfig.parms = { tenantId:this.forPramsData.tenantId };
+      // 或者商户对应的服务条款
+      this.guaranteeIdsApiConfig.parms = { tenantId:this.forPramsData.tenantId };
+      // 切换商户后所有商户相关的基础属性手动清空
+      this.formData.shopCategoryIds = '';
+      this.formData.brandId = '';
+      this.formData.guaranteeIds = '';
     },
     cateIdChange(cid){
       this.formData.platCategoryIds=cid
@@ -344,6 +353,14 @@ export default {
     },
     handleSkuDelete(text, record, index){
       this.formData.skuList = this.formData.skuList.filter(item => item.id !== record.id);
+    },
+    handleSKUChange (value, sku, column) {
+      const newData = [...this.formData.skuList];
+      const target = newData.find(item => sku === item.sku);
+      if (target) {
+        target[column] = value;
+        this.formData.skuList = newData;
+      }
     }
   }
 }

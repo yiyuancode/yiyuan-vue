@@ -52,7 +52,7 @@
       placeholder: {
         type: String,
         default: function () {
-          return "请选择店铺";
+          return "请选择";
         }
       },
 
@@ -73,8 +73,12 @@
       value: async function (newVal) {
         if (newVal) {
           console.log("valueIdVal.valueIdVal", newVal)
-          this.options = await this.apiConfig.apiFun({...this.apiConfig.parms, key: 234});
-          this.selectedKeys =  this.mode=="multiple" ? this.value.split(",") : this.value
+          this.options = await this.apiConfig.apiFun({...this.apiConfig.parms});
+          if(this.value) {
+            this.selectedKeys = this.mode == "multiple" ? this.value.split(",") : this.value;
+          }else{
+            this.selectedKeys = undefined;
+          }
           console.log("this.options", this.options)
         }
       },
@@ -83,10 +87,15 @@
         // 执行方法 深度 监听如果apiConfig 的parm有更改也会再次执行
         async handler(newVal,oldVal) {
           if (newVal) {
-            
+
             console.log("valueIdVal.valueIdVal", newVal)
-            this.options = await this.apiConfig.apiFun({...this.apiConfig.parms, key: 234});
-            this.selectedKeys =  this.mode=="multiple" ? this.value.split(",") : this.value
+            this.options = await this.apiConfig.apiFun({...this.apiConfig.parms});
+            if(this.value){
+              this.selectedKeys =  this.mode=="multiple" ? this.value.split(",") : this.value
+            }else{
+              this.selectedKeys = undefined;
+            }
+
             console.log("this.options", this.options)
           }
         },
@@ -104,7 +113,7 @@
     // },
     methods: {
       async getData() {
-        this.options = await this.apiConfig.apiFun({...this.apiConfig.parms, key: 234});
+        this.options = await this.apiConfig.apiFun({...this.apiConfig.parms});
         console.log("this.options", this.options)
       },
       change(value, label, extra) {
