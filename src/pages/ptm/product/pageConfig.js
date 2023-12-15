@@ -12,11 +12,12 @@ const columns = [
     title: 'id',
     dataIndex: 'id',
     key: 'id',
-    width: 160,
+    width: 50,
     rules: [{ required: true, message: '请输入商品id', trigger: 'blur' }],
     noEdit: true,
     noAdd: true,
-    ellipsis: true
+    ellipsis: true,
+    scopedSlots: {customRender: 'id'},
   },
   {
     title: '商户',
@@ -31,7 +32,7 @@ const columns = [
     title: '平台分类',
     dataIndex: 'platCategoryIds',
     key: 'platCategoryIds',
-    width: 160,
+    width: 200,
     rules: [
       {
         required: true,

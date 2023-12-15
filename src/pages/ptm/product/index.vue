@@ -127,6 +127,9 @@
         </a-popconfirm>
         <a-divider type="vertical"/>
       </div>
+      <div slot="id" slot-scope="{ text, record }" class="y-flex">
+        <a-icon type="copy" @click="handlerCopyText(text)"/>
+      </div>
       <div slot="platCategoryIds" slot-scope="{ text, record }" class="y-flex">
         {{ text | getPlatCateNameById }}
       </div>
@@ -339,6 +342,15 @@ export default {
       this.searchOption.brandIdList = await listOfProductBrandByCid(this.searchForm.platCategoryId);
     },
     // 搜索选项方法 END
+    handlerCopyText(productId) {
+      this.$copyText(productId).then(() => {
+        // 复制成功回调
+        console.log('文本已复制到剪贴板');
+      }).catch(() => {
+        // 复制失败回调
+        console.error('复制失败');
+      });
+    }
   }
 };
 </script>

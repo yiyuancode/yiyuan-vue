@@ -18,6 +18,7 @@ import mixin from '@/mixins/index.js';
 import qs from 'qs';
 /*引入图片预览组件,api得方式*/
 import hevueImgPreview from 'hevue-img-preview';
+import VueClipboard from 'vue-clipboard2';
 import 'hevue-img-preview/css/theme-light.css';
 import '@/assets/common.less';
 import install from '@/components/index.js';
@@ -57,6 +58,10 @@ Vue.use(install);
 Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key]);
 });
+
+// 注册全局复制组件
+VueClipboard.config.autoSetContainer = true;
+Vue.use(VueClipboard);
 export default new Vue({
   router,
   store,
