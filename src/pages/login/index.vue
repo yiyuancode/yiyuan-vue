@@ -143,6 +143,7 @@ export default {
               this.$store.commit('tags/openMenuKeys', ['sys']);
               // 缓存平台分类
               this.$store.dispatch('product/platCategoryList');
+              this.$store.dispatch('product/brandList');
               this.$store.dispatch('tenantShop/shopList');
               this.$store.dispatch('tenantShop/shopCategoryIds');
             });

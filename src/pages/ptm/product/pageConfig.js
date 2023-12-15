@@ -64,7 +64,8 @@ const columns = [
     dataIndex: 'brandId',
     key: 'brandId',
     width: 160,
-    rules: [{ required: true, message: '请输入品牌id', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入品牌id', trigger: 'blur' }],
+    scopedSlots: {customRender: 'brandId'},
   },
 
   {

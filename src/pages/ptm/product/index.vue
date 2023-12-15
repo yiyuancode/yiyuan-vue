@@ -139,6 +139,9 @@
       <div slot="shopCategoryIds" slot-scope="{ text, record }" class="y-flex">
         {{ text | getShopCateById }}
       </div>
+      <div slot="brandId" slot-scope="{ text, record }" class="y-flex">
+        {{ text | getBrandNameById }}
+      </div>
       <!--      主图image-->
       <div slot="image" slot-scope="{ text, record }" class="y-flex">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
@@ -209,7 +212,7 @@ import { listOfProductBrandByCid } from "@/api/ptm/productBrand.js"
 import {deleteProduct, getProductPageList} from '@/api/ptm/product.js';
 import edit from './edit.vue';
 import { mapGetters } from 'vuex';
-import {getShopCateById} from "../../../filters";
+import {getBrandNameById, getShopCateById} from "../../../filters";
 
 export default {
   components: {edit},
@@ -274,6 +277,7 @@ export default {
     this.getData();
   },
   methods: {
+    getBrandNameById,
     getShopCateById,
     async search(form) {
       this.searchForm = form;
