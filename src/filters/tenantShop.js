@@ -13,3 +13,7 @@ import store from '../store';
 export function getShopNameById(id) {
   return store.getters['tenantShop/getShopById'](id);
 }
+
+export function getShopCateById(id){
+  return store.getters['tenantShop/getShopCateById'](id);
+}

@@ -34,6 +34,7 @@ export default {
         this.$store.dispatch('tags/loginout');
         this.$store.dispatch('product/clearPlatCategoryList');
         this.$store.dispatch('tenantShop/clearShopList');
+        this.$store.dispatch('tenantShop/clearShopCateList');
       }, 50);
     }
   }

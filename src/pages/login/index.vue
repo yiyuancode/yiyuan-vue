@@ -144,6 +144,7 @@ export default {
               // 缓存平台分类
               this.$store.dispatch('product/platCategoryList');
               this.$store.dispatch('tenantShop/shopList');
+              this.$store.dispatch('tenantShop/shopCategoryIds');
             });
         }
       });

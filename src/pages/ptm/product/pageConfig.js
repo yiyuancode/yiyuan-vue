@@ -45,7 +45,7 @@ const columns = [
   },
 
   {
-    title: '商家分类', // TODO 需要每次登录后缓存商家分类后再通过vue过滤器显示实际商家分类名称
+    title: '商家分类',
     dataIndex: 'shopCategoryIds',
     key: 'shopCategoryIds',
     width: 160,
@@ -55,7 +55,8 @@ const columns = [
         message: '请选择商家id(商品分类3级)',
         trigger: 'blur'
       }
-    ]
+    ],
+    scopedSlots: {customRender: 'shopCategoryIds'},
   },
 
   {
