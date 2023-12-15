@@ -3,12 +3,12 @@ import { getProductCategoryPlatList } from '@/api/ptm/productCategoryPlat.js'
 export default {
   namespaced: true,
   state: {
-    platCategoryList: null,
+    platCategoryList: null, // 平台分类集合
+    brandIds: null // 品牌集合
 
   },
   getters: {
     platCategoryList: (state) => {
-      console.log('1:', state);
       return getObj(state, 'platCategoryList');
     },
     // 配合过滤器使用

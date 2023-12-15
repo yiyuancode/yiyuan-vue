@@ -25,7 +25,8 @@ const columns = [
     key: 'tenantId',
     width: 160,
     rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }],
-    ellipsis: true
+    ellipsis: true,
+    scopedSlots: {customRender: 'tenantId'},
   },
 
   {

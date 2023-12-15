@@ -33,6 +33,7 @@ export default {
         this.$store.dispatch('user/loginout');
         this.$store.dispatch('tags/loginout');
         this.$store.dispatch('product/clearPlatCategoryList');
+        this.$store.dispatch('tenantShop/clearShopList');
       }, 50);
     }
   }
