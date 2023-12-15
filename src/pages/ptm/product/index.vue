@@ -181,7 +181,7 @@
     <!--    商品属性编辑-->
     <a-drawer
       title="商品属性"
-      width="1000"
+      width="90%"
       :visible="editConfig.visible"
       @close="editConfig.visible = false"
     >
@@ -203,11 +203,6 @@ import { mapGetters } from 'vuex';
 
 export default {
   components: {edit},
-  filters: {
-    // getPlatCateNameById(id, store) {
-    //   return store.getters['product/platCateById'](id);
-    // }
-  },
   data() {
     return {
       enumsMap,

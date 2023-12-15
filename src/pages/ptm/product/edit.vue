@@ -1,21 +1,23 @@
 <template>
   <div class="manage-container">
     <a-form-model
+      ref="ruleForm"
       :model="formData"
       :label-col="labelCol"
+      :rules="rules"
       :wrapper-col="wrapperCol"
     >
-      <a-form-model-item label="商户">
-        <y-api-select v-model="formData.tenantId"  :apiConfig="tenantIdApiConfig" @change="tenantIdChange"/>
+      <a-form-model-item ref="tenantId" label="商户" prop="tenantId">
+        <y-api-select
+          v-model="formData.tenantId"  :apiConfig="tenantIdApiConfig" @change="tenantIdChange"/>
       </a-form-model-item>
-      <a-form-model-item label="平台分类">
+      <a-form-model-item ref="platCategoryIds" label="平台分类" prop="platCategoryIds">
         <y-api-select v-model="formData.platCategoryIds" :apiConfig="platCategoryIdsApiConfig" @change="cateIdChange"/>
       </a-form-model-item>
-      <a-form-model-item label="店铺分类">
-<!--      TODO 这里的参数调用和结果需要确认下-->
+      <a-form-model-item ref="shopCategoryIds" label="店铺分类" prop="shopCategoryIds">
         <y-api-select v-model="formData.shopCategoryIds" :apiConfig="tenantCategoryIdsApiConfig"/>
       </a-form-model-item>
-      <a-form-model-item label="品牌">
+      <a-form-model-item ref="brandId" label="品牌" prop="brandId">
         <a-select
           v-model="formData.brandId" placeholder="选择平台分类后再选择关联品牌">
           <a-select-option v-for="(item, index) in forPramsData.brandIdList" :key="index" :value="item.id">
@@ -26,10 +28,10 @@
       <a-form-model-item label="保障服务">
         <y-api-select v-model="formData.guaranteeIds" mode="multiple"  :apiConfig="guaranteeIdsApiConfig"/>
       </a-form-model-item>
-      <a-form-model-item label="运费">
+      <a-form-model-item ref="tempId" label="运费" prop="tempId">
         <y-freight-temp-select v-model="formData.tempId"></y-freight-temp-select>
       </a-form-model-item>
-      <a-form-model-item label="主图">
+      <a-form-model-item ref="image" label="主图" prop="image">
         <y-img
           v-if="formData.image"
           :src="formData.image"
@@ -41,23 +43,23 @@
           @UploadSngle="(fileUrl) => UploadSngle(fileUrl, formData)"
         ></UploadSngle>
       </a-form-model-item>
-      <a-form-model-item label="轮播图">
+      <a-form-model-item ref="sliderImage" label="轮播图" prop="sliderImage">
         <y-upload-multiple :key="formData.sliderImage"
                            v-model="formData.sliderImage"></y-upload-multiple>
       </a-form-model-item>
       <a-form-model-item label="视频">
         <a-input v-model="formData.videoLink" placeholder="请输入商视频链接" allowClear/>
       </a-form-model-item>
-      <a-form-model-item label="商品名">
+      <a-form-model-item ref="name" label="商品名" prop="name">
         <a-input v-model="formData.name" placeholder="请输入商品名" allowClear/>
       </a-form-model-item>
-      <a-form-model-item label="商品简介">
+      <a-form-model-item ref="title" label="商品简介" prop="title">
         <a-input v-model="formData.title" placeholder="请输入商品简介" allowClear/>
       </a-form-model-item>
       <a-form-model-item label="关键字">
         <a-input v-model="formData.keyword" placeholder="请输入关键字" allowClear/>
       </a-form-model-item>
-      <a-form-model-item label="单位">
+      <a-form-model-item ref="unitName" label="单位" prop="unitName">
         <a-input v-model="formData.unitName" placeholder="请输入单位" allowClear/>
       </a-form-model-item>
       <a-form-model-item label="销量">
@@ -142,6 +144,7 @@ import richEditor from "../../../components/RichEditor/index.vue";
 import {getProductAttrKeyList} from "@/api/ptm/productAttrKey";
 import {getProductAttrValueList} from "../../../api/ptm/productAttrValue";
 import {makeSkuTempList} from "../../../api/ptm/productSku";
+import {columns, enumsMap} from './pageConfig.js';
 export default {
   name: "EditProduct",
   components:{ UploadSngle, richEditor },
@@ -190,6 +193,18 @@ export default {
             isShow: true        // 上下架状态
           }
         ]
+      },
+      rules:{ // 表单验证
+        tenantId: [ { required: true, message: '请选择对应商户', trigger: 'blur' } ],
+        platCategoryIds: [ { required: true, message: '请选择平台分类', trigger: 'blur' } ],
+        shopCategoryIds: [ { required: true, message: '请选择商户分类', trigger: 'blur' } ],
+        brandId: [ { required: true, message: '请选择品牌', trigger: 'blur' } ],
+        tempId: [ { required: true, message: '请选择运费模版', trigger: 'blur' } ],
+        image: [ { required: true, message: '请上传产品主图', trigger: 'blur' } ],
+        sliderImage: [ { required: true, message: '请上传轮播图', trigger: 'blur' } ],
+        name: [ { required: true, message: '商品名称不能为空', trigger: 'blur' } ],
+        title: [ { required: true, message: '商品简介不能为空', trigger: 'blur' } ],
+        unitName: [ { required: true, message: '单位不能为空', trigger: 'blur' } ],
       },
       tenantIdApiConfig:{   // 商户列表
         apiFun: getShopList,
@@ -302,13 +317,19 @@ export default {
     },
     // 商品维护表单提交方法，编辑和创建
     async onSubmitHandle(){
-      if (this.editId) {
-        await editProduct(this.formData, this.formData.id);
-        this.$emit('onSubmitHandleSuccess');
-      } else {
-        await addProduct(this.formData);
-        this.$emit('onSubmitHandleSuccess');
-      }
+      this.$refs.ruleForm.validate(async valid => {
+        if (valid) {
+          if (this.editId) {
+            await editProduct(this.formData, this.formData.id);
+            this.$emit('onSubmitHandleSuccess');
+          } else {
+            await addProduct(this.formData);
+            this.$emit('onSubmitHandleSuccess');
+          }
+        } else {
+          return false;
+        }
+      });
     },
     async tenantIdChange(tenantId) {
       this.forPramsData.tenantId = tenantId;
@@ -356,7 +377,6 @@ export default {
     },
     handleSKUChange (value, sku, column) {
       const newData = [...this.formData.skuList];
-
       const target = newData.find(item => sku === item.sku);
       if (target) {
         target[column] = value;

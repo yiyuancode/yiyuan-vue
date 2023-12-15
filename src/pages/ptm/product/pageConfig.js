@@ -19,7 +19,7 @@ const columns = [
     ellipsis: true
   },
   {
-    title: '商户', // todo 这里后面根据缓存的商户信息显示对应商户名称
+    title: '商户',
     dataIndex: 'tenantId',
     key: 'tenantId',
     width: 160,
