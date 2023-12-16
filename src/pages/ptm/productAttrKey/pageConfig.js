@@ -5,7 +5,7 @@ const columns = [
     dataIndex: 'id',
     key: 'id',
     width: 70,
-    ellipsis: true,
+    fixed: 'left',
     scopedSlots: {customRender: 'id'},
   },
   {
@@ -62,26 +62,12 @@ const columns = [
     width: 180
   },
   {
-    title: '创建人',
-    key: 'createUser',
-    dataIndex: 'createUser',
-    width: 160,
-    ellipsis: true
-  },
-  {
-    title: '修改人',
-    key: 'updateUser',
-    dataIndex: 'updateUser',
-    width: 160,
-    ellipsis: true
-  },
-  {
     title: '操作',
     key: 'operation',
     dataIndex: 'operation',
+    width: 130,
     scopedSlots: { customRender: 'operation' },
-    fixed: 'right',
-    ellipsis: true
+    fixed: 'right'
   }
 ];
 const enumsMap = getEnumsMap(columns);
