@@ -47,6 +47,19 @@
       :loading="table.loading"
       @change="tableChange"
     >
+      <div slot="id" slot-scope="{ text, record }" class="y-flex">
+        <a-icon type="copy" @click="handlerCopyText(text)"/>
+      </div>
+
+      <div slot="tenantId" slot-scope="{ text, record }" class="y-flex">
+        {{ text | getShopNameById }}
+      </div>
+
+      <div slot="ptmProductCategoryId" slot-scope="{ text, record }" class="y-flex">
+       {{ text }}
+
+      </div>
+
       <div slot="operations">
         <a-button type="primary" icon="plus" @click="onAdd"> 新建</a-button>
         <a-divider type="vertical" />
@@ -70,7 +83,7 @@
         {{ text.desc }}
       </div>
       <div slot="isShow" slot-scope="{ text, record }" class="y-flex">
-        {{ text ? '显示' : '不显示' }}
+        {{ enumsMap['isShow'+text] }}
       </div>
       <div slot="operation" slot-scope="{ text, record }" class="y-flex">
         <a-button-group>
@@ -110,7 +123,7 @@
   </div>
 </template>
 <script>
-import { columns } from './pageConfig.js';
+import { columns, enumsMap } from './pageConfig.js';
 import {
   deleteProductAttrKey,
   getProductAttrKeyPageList
@@ -122,6 +135,7 @@ export default {
   components: { edit },
   data() {
     return {
+      enumsMap,
       searchForm: {},
       table: {
         columns,
@@ -235,6 +249,15 @@ export default {
         }
       })
       return data
+    },
+    handlerCopyText(id) {
+      this.$copyText(id).then(() => {
+        // 复制成功回调
+        console.log('文本已复制到剪贴板');
+      }).catch(() => {
+        // 复制失败回调
+        console.error('复制失败');
+      });
     }
   }
 };

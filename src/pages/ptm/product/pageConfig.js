@@ -45,7 +45,7 @@ const columns = [
   },
 
   {
-    title: '商家分类',
+    title: '商户分类',
     dataIndex: 'shopCategoryIds',
     key: 'shopCategoryIds',
     width: 160,

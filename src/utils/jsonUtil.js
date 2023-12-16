@@ -6,13 +6,11 @@ export function getStr(obj, key) {
 }
 
 export function getObj(obj, key) {
-  console.log('key:', key);
   if (!obj[key]) {
     obj[key] = !localStorage.getItem(key)
       ? {}
       : JSON.parse(localStorage.getItem(key));
   }
-  console.log('obj[key]:', obj[key]);
   return obj[key];
 }
 

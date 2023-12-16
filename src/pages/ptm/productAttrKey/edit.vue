@@ -6,8 +6,8 @@
       :wrapper-col="wrapperCol"
     >
       <a-form-model-item label="商户">
-<!--        这里的key必须指定，要么编辑是数据回显会有问题，添加key就可以让differnt 算法继续执行-->
-        <y-shop-select :key="formData.tenantId" v-model="formData.tenantId"></y-shop-select>
+        <y-api-select
+          v-model="formData.tenantId"  :apiConfig="tenantIdApiConfig" @change="tenantIdChange"/>
       </a-form-model-item>
       <a-form-model-item label="商品分类">
         <a-cascader
@@ -33,6 +33,7 @@
 
 <script>
 import { getProductCategoryList } from '@/api/ptm/productCategory.js';
+import {getShopList } from "@/api/spm/shop.js";
 import {
   addProductAttrKey,
   getProductAttrKeyDetail,
@@ -49,6 +50,11 @@ export default {
   },
   data() {
     return {
+      tenantIdApiConfig:{   // 商户列表
+        apiFun: getShopList,
+        parms: {},
+        objMap: {value: 'id', label: 'shopName'}
+      },
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
       formData: {
@@ -90,11 +96,12 @@ export default {
       return tree;
     },
 
-    async genDataForEdit() {
+    genDataForEdit: async function () {
       if (this.editId) {
         // setTimeout(async () => {
           this.formData = await getProductAttrKeyDetail(this.editId);
-          this.formData.productCateId = [this.formData.ptmProductCategoryId];
+          this.formData.productCateId = this.formData.ptmProductCategoryId;
+          console.log('this.formData.productCateId:',this.formData.productCateId);
         // }, 800);
       }
     },
@@ -109,7 +116,10 @@ export default {
     },
     onCancel(){
       this.$emit("onCancel")
-    }
+    },
+    async tenantIdChange(tenantId) {
+      this.forPramsData.tenantId = tenantId;
+    },
   }
 };
 </script>

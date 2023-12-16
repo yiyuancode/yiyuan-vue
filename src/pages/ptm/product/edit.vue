@@ -82,7 +82,7 @@
         </a-radio-group>
       </a-form-model-item>
       <a-form-model-item label="商品属性名">
-        <a-select label-in-value v-model="formData.attrKey" placeholder="请选择商品属性" @change="handleAttrValueChange">
+        <a-select label-in-value v-model="formData.attrKey" mode="multiple" placeholder="请选择商品属性" @change="handleAttrValueChange">
           <a-select-option v-for="(item, index) in forPramsData.productAttrKeyList" :key="index" :value="item.id">
             {{ item.attrKey }}
           </a-select-option>
