@@ -11,8 +11,8 @@
         <a-input v-model="form.id"  allowClear/>
       </a-form-model-item>
       <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户">
-        <y-shop-select v-model="form.tenantId"
-                       @change="tenantIdChange"></y-shop-select>
+        <y-api-select
+          v-model="form.tenantId"  :apiConfig="tenantIdApiConfig" @change="tenantIdChange"/>
       </a-form-model-item>
       <a-form-model-item slot="platCategoryId" slot-scope="{ form }" label="平台分类">
         <y-product-category-plat-select v-model="form.platCategoryId" @change="platCateIdChange">
@@ -207,6 +207,7 @@
   </div>
 </template>
 <script>
+import {getShopList } from "@/api/spm/shop.js";
 import {columns, enumsMap} from './pageConfig.js';
 import { listOfProductBrandByCid } from "@/api/ptm/productBrand.js"
 import {deleteProduct, getProductPageList} from '@/api/ptm/product.js';
@@ -219,6 +220,11 @@ export default {
   data() {
     return {
       enumsMap,
+      tenantIdApiConfig:{   // 商户列表
+        apiFun: getShopList,
+        parms: {},
+        objMap: {value: 'id', label: 'shopName'}
+      },
       searchForm: {
         // 表单查询对象
         id: null,

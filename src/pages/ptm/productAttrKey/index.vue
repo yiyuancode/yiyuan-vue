@@ -6,22 +6,23 @@
       :loading="table.loading"
       @search="search"
     >
+      <a-form-model-item slot="id" slot-scope="{ form }" label="ID">
+        <a-input v-model="form.id" allowClear placeholder="ID"></a-input>
+      </a-form-model-item>
       <a-form-model-item slot="isShow" slot-scope="{ form }" label="状态">
         <a-select v-model="form.isShow" allowClear placeholder="选择显示状态">
           <a-select-option :value="0"> 不显示</a-select-option>
           <a-select-option :value="1"> 显示</a-select-option>
         </a-select>
       </a-form-model-item>
-      <a-form-model-item slot="id" slot-scope="{ form }" label="ID">
-        <a-input v-model="form.id" allowClear placeholder="ID"></a-input>
-      </a-form-model-item>
+
       <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户">
         <y-shop-select v-model="form.tenantId" placeholder="请选择商户"></y-shop-select>
       </a-form-model-item>
       <a-form-model-item
         slot="ptmProductCategoryId"
         slot-scope="{ form }"
-        label="父级分类"
+        label="平台分类"
       >
         <a-cascader
           v-model="form.ptmProductCategoryId"
@@ -47,19 +48,6 @@
       :loading="table.loading"
       @change="tableChange"
     >
-      <div slot="id" slot-scope="{ text, record }" class="y-flex">
-        <a-icon type="copy" @click="handlerCopyText(text)"/>
-      </div>
-
-      <div slot="tenantId" slot-scope="{ text, record }" class="y-flex">
-        {{ text | getShopNameById }}
-      </div>
-
-      <div slot="ptmProductCategoryId" slot-scope="{ text, record }" class="y-flex">
-       {{ text }}
-
-      </div>
-
       <div slot="operations">
         <a-button type="primary" icon="plus" @click="onAdd"> 新建</a-button>
         <a-divider type="vertical" />
@@ -75,9 +63,22 @@
         </a-popconfirm>
         <a-divider type="vertical" />
       </div>
+      <div slot="id" slot-scope="{ text, record }" class="y-flex">
+        <a-icon type="copy" @click="handlerCopyText(text)"/>
+      </div>
+
+      <div slot="tenantId" slot-scope="{ text, record }" class="y-flex">
+        {{ text | getShopNameById }}
+      </div>
+
+      <div slot="ptmProductCategoryId" slot-scope="{ text, record }" class="y-flex">
+        {{ text }}
+      </div>
+
       <div slot="icon" slot-scope="{ text, record }" class="y-flex">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
       </div>
+
       <!--          slot-scope(当前数据，当前行)-->
       <div slot="level" slot-scope="{ text, record }" class="y-flex">
         {{ text.desc }}
