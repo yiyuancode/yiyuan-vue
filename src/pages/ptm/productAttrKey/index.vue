@@ -254,6 +254,7 @@ export default {
     handlerCopyText(id) {
       this.$copyText(id).then(() => {
         // 复制成功回调
+        this.$message.success('复制属性id成功')
         console.log('文本已复制到剪贴板');
       }).catch(() => {
         // 复制失败回调

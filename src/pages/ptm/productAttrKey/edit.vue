@@ -11,7 +11,7 @@
       </a-form-model-item>
       <a-form-model-item label="商品分类">
         <a-cascader
-          v-model="formData.productCateId"
+          v-model="formData.ptmProductCategoryId"
           :options="forPramsData.productCateList"
           placeholder="请选择商品分类"
         />
@@ -98,11 +98,9 @@ export default {
 
     genDataForEdit: async function () {
       if (this.editId) {
-        // setTimeout(async () => {
           this.formData = await getProductAttrKeyDetail(this.editId);
           this.formData.productCateId = this.formData.ptmProductCategoryId;
           console.log('this.formData.productCateId:',this.formData.productCateId);
-        // }, 800);
       }
     },
     async onSubmitHandle() {

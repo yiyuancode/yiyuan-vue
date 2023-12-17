@@ -363,6 +363,7 @@ export default {
     handlerCopyText(productId) {
       this.$copyText(productId).then(() => {
         // 复制成功回调
+        this.$message.success('复制商品id成功')
         console.log('文本已复制到剪贴板');
       }).catch(() => {
         // 复制失败回调
