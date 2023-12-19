@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div style="width: 100%">
     <a-select
       v-model="selectedKeys"
@@ -8,6 +9,16 @@
       @change="change"
     >
       <a-select-option v-for="item in options" :key="item.id" :value="item.id">
+=======
+  <div style="width: 100%;">
+    <a-select :allowClear="allowClear"
+              :placeholder="placeholder"
+              :disabled="!tenantId"
+              @change="change"
+              mode="multiple"
+              v-model="selectedKeys">
+      <a-select-option :key="item.id" :value="item.id" v-for="(item) in options">
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
         {{ item.name }}
       </a-select-option>
     </a-select>

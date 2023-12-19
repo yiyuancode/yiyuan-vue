@@ -13,6 +13,7 @@
       size="small"
       :placeholder="placeholder"
       :show-all-levels="false"
+      :disabled="!tenantId"
       clearable
       @change="change"
     ></el-cascader>
@@ -36,6 +37,7 @@ export default {
         return null;
       }
     },
+<<<<<<< HEAD
     allowClear: {
       type: Boolean,
       default: function () {
@@ -64,6 +66,13 @@ export default {
       type: Object,
       default: function () {
         return { children: 'children', title: 'name', key: 'id', value: 'id' };
+=======
+    computed: {},
+    async created() {
+      await this.getData();
+      if (this.value) {
+        this.selectedKeys = this.value;
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
       }
     }
   },

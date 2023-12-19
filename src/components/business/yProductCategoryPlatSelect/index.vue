@@ -1,6 +1,10 @@
 <template>
+<<<<<<< HEAD
   <div style="width: 100%">
     <span>value:{{ value }}</span>
+=======
+  <div style="width: 100%;">
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
     <el-cascader
       v-model="selectedKeys"
       :options="treeData"
@@ -37,6 +41,7 @@ export default {
         return null;
       }
     },
+<<<<<<< HEAD
     allowClear: {
       type: Boolean,
       default: function () {
@@ -80,6 +85,61 @@ export default {
     if (this.value) {
       this.selectedKeys = this.value;
       console.log('res.arr', this.selectedKeys);
+=======
+    computed: {},
+    async created() {
+      //console.log('平台分类-this.value:', this.value);
+      await this.getData();
+      if (this.value) {
+        this.selectedKeys = this.value;
+      }
+    }
+    ,
+    methods: {
+      async getData() {
+        this.treeData = await getProductCategoryPlatTree();
+        this.setDisable(3, this.treeData);
+      }
+      ,
+      change(value) {
+        let ids = null;
+        if (this.multiple) {
+          ids = value.map(function (item) {
+            return item[item.length - 1]
+          }).join(",");
+        } else {
+          ids = value[value.length - 1];
+        }
+
+        this.$emit('input', ids);
+        this.$emit('change', ids);
+      }
+      ,
+      /**
+       * level: 当前层级
+       * data: 当前层级的数据
+       */
+      setDisable(level, data) {
+        let _this = this;
+        data.forEach((v) => {
+          //此处判断可根据你后台返回的数据类型适当变换，原理就是将不符合条件的项给禁掉
+          if (!v.children && v.level.value < level) {
+            v.disabled = true;
+          }
+          if (v.children && v.level.value < level) {
+            v.disabled = false;
+          }
+          if (!v.children && v.level.value == level) {
+            v.disabled = false;
+          }
+          if (v.children) {
+            _this.setDisable(level, v.children);
+          }
+        });
+      },
+
+
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
     }
   },
   methods: {

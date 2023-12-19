@@ -5,54 +5,75 @@
  * @date 2023-10-10
  */
 import * as productAttrValue from '@/api/ptm/productAttrValue';
+import {getEnumsMap} from "@/utils/enumsUtils.js";
 
 const columns = [
   {
     title: '主键',
     dataIndex: 'id',
     key: 'id',
-    width: 160,
+    width: 60,
     rules: [
       { required: true, message: '请输入商品属性值主键', trigger: 'blur' }
     ],
     noEdit: true,
     noAdd: true,
-    ellipsis: true
+    scopedSlots: { customRender: 'id' },
   },
 
   {
-    title: '商户id',
+    title: '商户',
     dataIndex: 'tenantId',
     key: 'tenantId',
-    width: 280,
+    width: 180,
     rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }],
-    ellipsis: true
+    scopedSlots: { customRender: 'tenantId' },
   },
 
   {
-    title: '属性id',
+    title: '属性',
     dataIndex: 'ptmProductAttrKeyId',
     key: 'ptmProductAttrKeyId',
     width: 280,
     rules: [
       { required: true, message: '请输入商品属性key表id', trigger: 'blur' }
-    ]
+    ],
+    scopedSlots: { customRender: 'ptmProductAttrKeyId' },
   },
 
   {
     title: '属性值',
     dataIndex: 'attrValue',
     key: 'attrValue',
+<<<<<<< HEAD
     width: 160,
     rules: [{ required: true, message: '请输入商品属性值', trigger: 'blur' }]
+=======
+    width: 200,
+    rules: [
+      { required: true, message: '请输入商品属性值', trigger: 'blur' }
+    ]
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
   },
 
   {
     title: '状态',
     dataIndex: 'isShow',
     key: 'isShow',
-    width: 160,
-    scopedSlots: { customRender: 'isShow' }
+    width: 80,
+    scopedSlots: { customRender: 'isShow' },
+    props: {
+      options: [
+        {
+          label: '隐藏',
+          value: false
+        },
+        {
+          label: '显示',
+          value: true
+        }
+      ]
+    },
   },
 
   {
@@ -131,5 +152,5 @@ const permissionObj = {
   editBtn: 'ptm:productAttrValue:edit',
   deleteBtn: 'ptm:productAttrValue:delete'
 };
-
-export { columns, moduleConfig, permissionObj };
+const enumsMap = getEnumsMap(columns);
+export { columns, moduleConfig, permissionObj, enumsMap };

@@ -261,6 +261,71 @@ export default {
           pageSizeOptions: ['10', '20', '30', '40'],
           showSizeChanger: true,
           showTotal: (total) => `共 ${total} 条` // 显示总条数和当前数据范围
+<<<<<<< HEAD
+=======
+        },
+        dSelectedRowKeys: [],
+        iconStyle: {
+          fontSize: '16px'
+        },
+        drag: false,
+        columnsCheckboxValue: [],
+        indeterminate: false,
+        selectedKeys: ['default'],
+        sourceColumns: [],
+        noFixedColumns: [],
+        fixedRightColumns: [],
+        fixedLeftColumns: []
+      };
+    },
+    computed: {
+      uTableSize() {
+        return this.selectedKeys[0];
+      },
+      uScopedSlots() {
+        return this.columns.filter((item) => {
+          return item.scopedSlots;
+        });
+      },
+      uColumns() {
+        let noFixedColumnsAndShow = this.noFixedColumns.filter((item) => !item.noShow)
+        let noFixedColumns = noFixedColumnsAndShow.filter((item) => {
+          return item.checked;
+        });
+        let fixedLeftColumns = this.fixedLeftColumns.filter((item) => {
+          if (
+            this.fixedLeftColumns.some((item2) => {
+              return item2.key == item.key;
+            })
+          ) {
+            item.fixed = 'left';
+            console.log('fixedLeftColumns-1', item);
+          }
+          return item.checked;
+        });
+        let fixedRightColumns = this.fixedRightColumns.filter((item) => {
+          if (
+            this.fixedRightColumns.some((item2) => {
+              return item2.key == item.key;
+            })
+          ) {
+            item.fixed = 'right';
+            console.log('fixedRightColumns-2', item);
+          }
+
+          return item.checked;
+        });
+        return [...fixedLeftColumns, ...noFixedColumns, ...fixedRightColumns];
+      },
+      uPagination() {
+        return {
+          current: this.pagination.pageNum,
+          pageSize: this.pagination.pageSize,
+          total: this.pagination.total,
+          pageSizeOptions: this.pagination.pageSizeOptions,
+          showSizeChanger: this.pagination.showSizeChanger,
+          showTotal: this.pagination.showTotal // 显示总条数和当前数据范围
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
         };
       }
     },

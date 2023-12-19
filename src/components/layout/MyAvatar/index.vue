@@ -32,6 +32,10 @@ export default {
       setTimeout(() => {
         this.$store.dispatch('user/loginout');
         this.$store.dispatch('tags/loginout');
+        this.$store.dispatch('product/clearPlatCategoryList');
+        this.$store.dispatch('product/clearBrandList');
+        this.$store.dispatch('tenantShop/clearShopList');
+        this.$store.dispatch('tenantShop/clearShopCateList');
       }, 50);
     }
   }

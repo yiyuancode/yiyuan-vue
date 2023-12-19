@@ -12,37 +12,44 @@ const columns = [
     title: 'id',
     dataIndex: 'id',
     key: 'id',
-    width: 160,
+    width: 50,
     rules: [{ required: true, message: '请输入商品id', trigger: 'blur' }],
     noEdit: true,
     noAdd: true,
-    ellipsis: true
+    ellipsis: true,
+    scopedSlots: {customRender: 'id'},
   },
   {
-    title: '商户', // todo 这里后面根据缓存的商户信息显示对应商户名称
+    title: '商户',
     dataIndex: 'tenantId',
     key: 'tenantId',
     width: 160,
     rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }],
-    ellipsis: true
+    ellipsis: true,
+    scopedSlots: {customRender: 'tenantId'},
   },
 
   {
+<<<<<<< HEAD
     title: '平台分类', // TODO 需要每次登录后缓存平台分类后再通过vue过滤器显示实际商家分类名称
+=======
+    title: '平台分类',
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
     dataIndex: 'platCategoryIds',
     key: 'platCategoryIds',
-    width: 160,
+    width: 200,
     rules: [
       {
         required: true,
         message: '请选择 平台分类',
         trigger: 'blur'
       }
-    ]
+    ],
+    scopedSlots: {customRender: 'platCategoryIds'},
   },
 
   {
-    title: '商家分类', // TODO 需要每次登录后缓存商家分类后再通过vue过滤器显示实际商家分类名称
+    title: '商户分类',
     dataIndex: 'shopCategoryIds',
     key: 'shopCategoryIds',
     width: 160,
@@ -52,7 +59,8 @@ const columns = [
         message: '请选择商家id(商品分类3级)',
         trigger: 'blur'
       }
-    ]
+    ],
+    scopedSlots: {customRender: 'shopCategoryIds'},
   },
 
   {
@@ -60,7 +68,8 @@ const columns = [
     dataIndex: 'brandId',
     key: 'brandId',
     width: 160,
-    rules: [{ required: true, message: '请输入品牌id', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入品牌id', trigger: 'blur' }],
+    scopedSlots: {customRender: 'brandId'},
   },
 
   {
@@ -90,7 +99,8 @@ const columns = [
     dataIndex: 'image',
     key: 'image',
     width: 160,
-    rules: [{ required: true, message: '请输入商品橱窗图片', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入商品橱窗图片', trigger: 'blur' }],
+    scopedSlots: {customRender: 'image'},
   },
 
   {
@@ -107,7 +117,8 @@ const columns = [
     width: 160,
     rules: [
       { required: true, message: '请输入详情图(多个逗号分割)', trigger: 'blur' }
-    ]
+    ],
+    scopedSlots: {customRender: 'sliderImage'},
   },
 
   {
@@ -386,7 +397,7 @@ const columns = [
   },
 
   {
-    title: '创建人s',
+    title: '创建人',
     dataIndex: 'createUser',
     key: 'createUser',
     width: 160,

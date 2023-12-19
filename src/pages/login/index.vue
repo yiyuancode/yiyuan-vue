@@ -139,7 +139,13 @@ export default {
             .dispatch('user/login', { ...values, platform: 0 })
             .then(() => {
               this.$router.push({ name: 'host' });
+              // 设置登录否默认打开的模块
               this.$store.commit('tags/openMenuKeys', ['sys']);
+              // 缓存平台分类
+              this.$store.dispatch('product/platCategoryList');
+              this.$store.dispatch('product/brandList');
+              this.$store.dispatch('tenantShop/shopList');
+              this.$store.dispatch('tenantShop/shopCategoryIds');
             });
         }
       });

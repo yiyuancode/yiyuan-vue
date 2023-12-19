@@ -1,37 +1,53 @@
+import {getEnumsMap} from "@/utils/enumsUtils.js";
 const columns = [
   {
     title: '主键',
     dataIndex: 'id',
     key: 'id',
-    width: 100,
-    ellipsis: true
+    width: 70,
+    fixed: 'left',
+    scopedSlots: {customRender: 'id'},
   },
   {
     title: '商户id',
     dataIndex: 'tenantId',
     key: 'tenantId',
-    width: 110,
-    ellipsis: true
+    width: 150,
+    ellipsis: true,
+    scopedSlots: {customRender: 'tenantId'},
   },
   {
-    title: '商品分类',
+    title: '平台分类',
     dataIndex: 'ptmProductCategoryId',
     key: 'ptmProductCategoryId',
     width: 100,
-    ellipsis: true
+    ellipsis: true,
+    scopedSlots: {customRender: 'ptmProductCategoryId'},
   },
   {
     title: '属性',
     key: 'attrKey',
     dataIndex: 'attrKey',
-    width: 200
+    width: 180
   },
   {
     title: '显示',
     key: 'isShow',
     dataIndex: 'isShow',
     width: 70,
-    scopedSlots: { customRender: 'isShow' }
+    scopedSlots: { customRender: 'isShow' },
+    props: {
+      options: [
+        {
+          label: '隐藏',
+          value: false
+        },
+        {
+          label: '显示',
+          value: true
+        }
+      ]
+    },
   },
   {
     title: '创建时间',
@@ -46,27 +62,13 @@ const columns = [
     width: 180
   },
   {
-    title: '创建人',
-    key: 'createUser',
-    dataIndex: 'createUser',
-    width: 160,
-    ellipsis: true
-  },
-  {
-    title: '修改人',
-    key: 'updateUser',
-    dataIndex: 'updateUser',
-    width: 160,
-    ellipsis: true
-  },
-  {
     title: '操作',
     key: 'operation',
     dataIndex: 'operation',
+    width: 130,
     scopedSlots: { customRender: 'operation' },
-    fixed: 'right',
-    ellipsis: true
+    fixed: 'right'
   }
 ];
-
-export { columns };
+const enumsMap = getEnumsMap(columns);
+export { columns, enumsMap };

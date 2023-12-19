@@ -12,15 +12,16 @@
       :loading="table.loading"
       @search="search"
     >
+      <a-form-model-item slot="id" slot-scope="{ form }" label="ID">
+        <a-input v-model="form.id" allowClear placeholder="ID"></a-input>
+      </a-form-model-item>
       <a-form-model-item slot="isShow" slot-scope="{ form }" label="状态">
         <a-select v-model="form.isShow" allowClear placeholder="选择显示状态">
           <a-select-option :value="0"> 不显示</a-select-option>
           <a-select-option :value="1"> 显示</a-select-option>
         </a-select>
       </a-form-model-item>
-      <a-form-model-item slot="id" slot-scope="{ form }" label="ID">
-        <a-input v-model="form.id" allowClear placeholder="ID"></a-input>
-      </a-form-model-item>
+
       <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户">
         <y-shop-select
           v-model="form.tenantId"
@@ -30,7 +31,7 @@
       <a-form-model-item
         slot="ptmProductCategoryId"
         slot-scope="{ form }"
-        label="父级分类"
+        label="平台分类"
       >
         <a-cascader
           v-model="form.ptmProductCategoryId"
@@ -71,15 +72,28 @@
         </a-popconfirm>
         <a-divider type="vertical" />
       </div>
+      <div slot="id" slot-scope="{ text, record }" class="y-flex">
+        <a-icon type="copy" @click="handlerCopyText(text)"/>
+      </div>
+
+      <div slot="tenantId" slot-scope="{ text, record }" class="y-flex">
+        {{ text | getShopNameById }}
+      </div>
+
+      <div slot="ptmProductCategoryId" slot-scope="{ text, record }" class="y-flex">
+        {{ text }}
+      </div>
+
       <div slot="icon" slot-scope="{ text, record }" class="y-flex">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
       </div>
+
       <!--          slot-scope(当前数据，当前行)-->
       <div slot="level" slot-scope="{ text, record }" class="y-flex">
         {{ text.desc }}
       </div>
       <div slot="isShow" slot-scope="{ text, record }" class="y-flex">
-        {{ text ? '显示' : '不显示' }}
+        {{ enumsMap['isShow'+text] }}
       </div>
       <div slot="operation" slot-scope="{ text, record }" class="y-flex">
         <a-button-group>
@@ -119,7 +133,7 @@
   </div>
 </template>
 <script>
-import { columns } from './pageConfig.js';
+import { columns, enumsMap } from './pageConfig.js';
 import {
   deleteProductAttrKey,
   getProductAttrKeyPageList
@@ -131,6 +145,7 @@ export default {
   components: { edit },
   data() {
     return {
+      enumsMap,
       searchForm: {},
       table: {
         columns,
@@ -242,8 +257,23 @@ export default {
         } else {
           element.children = undefined;
         }
+<<<<<<< HEAD
       });
       return data;
+=======
+      })
+      return data
+    },
+    handlerCopyText(id) {
+      this.$copyText(id).then(() => {
+        // 复制成功回调
+        this.$message.success('复制属性id成功')
+        console.log('文本已复制到剪贴板');
+      }).catch(() => {
+        // 复制失败回调
+        console.error('复制失败');
+      });
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
     }
   }
 };

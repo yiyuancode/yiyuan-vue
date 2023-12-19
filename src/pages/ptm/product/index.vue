@@ -1,5 +1,6 @@
 <template>
   <div>
+<<<<<<< HEAD
     <!--    <y-search-->
     <!--      :scopedSlots="3"-->
     <!--      :loading="table.loading"-->
@@ -78,6 +79,110 @@
     <!--      </a-form-model-item>-->
 
     <!--    </y-search>-->
+=======
+    <y-search
+      :scopedSlots="['id','tenantId','platCategoryId','shopCategoryId','brandId','guaranteeIds','name','title','keyword',
+      'stockStart','stockEnd','browseStart','browseEnd','isSpecType','isRecycle','isAudit','auditStatus','isShow','createTimeStart',
+      'createTimeEnd','tempId']"
+      :loading="table.loading"
+      @search="search"
+    >
+      <a-form-model-item slot="id" slot-scope="{ form }" label="ID">
+        <a-input v-model="form.id"  allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户">
+        <y-api-select
+          v-model="form.tenantId"  :apiConfig="tenantIdApiConfig" @change="tenantIdChange"/>
+      </a-form-model-item>
+      <a-form-model-item slot="platCategoryId" slot-scope="{ form }" label="平台分类">
+        <y-product-category-plat-select v-model="form.platCategoryId" @change="platCateIdChange">
+        </y-product-category-plat-select>
+      </a-form-model-item>
+      <a-form-model-item slot="shopCategoryId" slot-scope="{ form }" label="店铺分类">
+        <y-product-category-shop-select
+          :key="form.tenantId"
+          v-model="form.shopCategoryId"
+          :tenantId="form.tenantId"></y-product-category-shop-select>
+      </a-form-model-item>
+      <a-form-model-item slot="brandId" slot-scope="{ form }" label="品牌">
+        <a-select :disabled="searchOption.brandIdList.length === 0"
+          v-model="form.brandId" placeholder="选择平台分类后再选择关联品牌">
+          <a-select-option v-for="(item, index) in searchOption.brandIdList" :key="index" :value="item.id">
+            {{ item.name }}
+          </a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item slot="guaranteeIds" slot-scope="{ form }" label="保障服务">
+        <y-product-guarantee-select :key="form.tenantId"
+                                    v-model="form.guaranteeIds"
+                                    :tenantId="form.tenantId"
+        ></y-product-guarantee-select>
+      </a-form-model-item>
+      <a-form-model-item slot="name" slot-scope="{ form }" label="商品名">
+        <a-input v-model="form.name" placeholder="请输入商品名" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="title" slot-scope="{ form }" label="商品简介">
+        <a-input v-model="form.title" placeholder="请输入商品简介" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="keyword" slot-scope="{ form }" label="关键字">
+        <a-input v-model="form.keyword" placeholder="请输入关键字" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="stockStart" slot-scope="{ form }" label="库存S">
+        <a-input v-model="form.stockStart" placeholder="库存数量S" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="stockEnd" slot-scope="{ form }" label="库存E">
+        <a-input v-model="form.stockEnd" placeholder="库存数量E" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="browseStart" slot-scope="{ form }" label="浏览量S">
+        <a-input v-model="form.browseStart" placeholder="浏览量S" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="browseEnd" slot-scope="{ form }" label="浏览量E">
+        <a-input v-model="form.browseEnd" placeholder="浏览量E" allowClear/>
+      </a-form-model-item>
+      <a-form-model-item slot="isSpecType" slot-scope="{ form }" label="商品规格">
+        <a-select v-model="form.isSpecType" placeholder="商品规格" allowClear>
+          <a-select-option :key="0" :value="0">单</a-select-option>
+          <a-select-option :key="1" :value="1">多</a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item slot="isRecycle" slot-scope="{ form }" label="删除状态">
+        <a-select v-model="form.isRecycle" placeholder="删除状态" allowClear>
+          <a-select-option :key="0" :value="0">否</a-select-option>
+          <a-select-option :key="1" :value="1">是</a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item slot="isAudit" slot-scope="{ form }" label="是否审核">
+        <a-select v-model="form.isAudit" placeholder="是否状态" allowClear>
+          <a-select-option :key="0" :value="0">否</a-select-option>
+          <a-select-option :key="1" :value="1">是</a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item slot="auditStatus" slot-scope="{ form }" label="审核状态">
+        <a-select v-model="form.auditStatus" placeholder="审核状态" allowClear>
+          <a-select-option :key="0" :value="0">无需审核</a-select-option>
+          <a-select-option :key="1" :value="1">待审核</a-select-option>
+          <a-select-option :key="2" :value="2">待审成功</a-select-option>
+          <a-select-option :key="3" :value="3">审核拒绝</a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item slot="isShow" slot-scope="{ form }" label="上架状态">
+        <a-select v-model="form.isShow" placeholder="上架状态" allowClear>
+          <a-select-option :key="0" :value="0">否</a-select-option>
+          <a-select-option :key="1" :value="1">是</a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item slot="createTimeStart" slot-scope="{ form }" label="创建时间S">
+        <a-input v-model="form.createTimeStart" placeholder="创建时间S"/>
+      </a-form-model-item>
+      <a-form-model-item slot="createTimeEnd" slot-scope="{ form }" label="创建时间E">
+        <a-input v-model="form.createTimeEnd" placeholder="创建时间E"/>
+      </a-form-model-item>
+<!--      根据商户的运费模版加载运费列表用于筛选商品-->
+      <a-form-model-item slot="tempId" slot-scope="{ form }" label="运费">
+        <y-freight-temp-select v-model="form.tempId"></y-freight-temp-select>
+      </a-form-model-item>
+    </y-search>
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
     <y-table
       rowKey="id"
       :columns="table.columns"
@@ -102,7 +207,31 @@
         </a-popconfirm>
         <a-divider type="vertical" />
       </div>
+<<<<<<< HEAD
       <div slot="icon" slot-scope="{ text, record }" class="y-flex">
+=======
+      <div slot="id" slot-scope="{ text, record }" class="y-flex">
+        <a-icon type="copy" @click="handlerCopyText(text)"/>
+      </div>
+      <div slot="platCategoryIds" slot-scope="{ text, record }" class="y-flex">
+        {{ text | getPlatCateNameById }}
+      </div>
+      <div slot="tenantId" slot-scope="{ text, record }" class="y-flex">
+        {{ text | getShopNameById }}
+      </div>
+      <div slot="shopCategoryIds" slot-scope="{ text, record }" class="y-flex">
+        {{ text | getShopCateById }}
+      </div>
+      <div slot="brandId" slot-scope="{ text, record }" class="y-flex">
+        {{ text | getBrandNameById }}
+      </div>
+      <!--      主图image-->
+      <div slot="image" slot-scope="{ text, record }" class="y-flex">
+        <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
+      </div>
+      <!--      详情图sliderImage-->
+      <div slot="sliderImage" slot-scope="{ text, record }" class="y-flex">
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
       </div>
       <!--   上下架 -->
@@ -121,7 +250,6 @@
       <div slot="isSpecType" slot-scope="{ text, record }" class="y-flex">
         {{ enumsMap['isSpecType' + text] }}
       </div>
-      回收站
       <div slot="isRecycle" slot-scope="{ text, record }" class="y-flex">
         {{ enumsMap['isRecycle' + text] }}
       </div>
@@ -149,7 +277,7 @@
     <!--    商品属性编辑-->
     <a-drawer
       title="商品属性"
-      width="1000"
+      width="90%"
       :visible="editConfig.visible"
       @close="editConfig.visible = false"
     >
@@ -163,21 +291,38 @@
   </div>
 </template>
 <script>
+<<<<<<< HEAD
 import { columns, enumsMap } from './pageConfig.js';
 import { deleteProduct, getProductPageList } from '@/api/ptm/product.js';
+=======
+import {getShopList } from "@/api/spm/shop.js";
+import {columns, enumsMap} from './pageConfig.js';
+import { listOfProductBrandByCid } from "@/api/ptm/productBrand.js"
+import {deleteProduct, getProductPageList} from '@/api/ptm/product.js';
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
 import edit from './edit.vue';
+import { mapGetters } from 'vuex';
+import {getBrandNameById, getShopCateById} from "../../../filters";
 
 export default {
   components: { edit },
   data() {
     return {
       enumsMap,
+      tenantIdApiConfig:{   // 商户列表
+        apiFun: getShopList,
+        parms: {},
+        objMap: {value: 'id', label: 'shopName'}
+      },
       searchForm: {
         // 表单查询对象
         id: null,
         tenantId: null, //商户id
         platCategoryId: null, // 平台分类id
+<<<<<<< HEAD
         ptmProductCategoryId: null, // TODO 待修改为平台属性
+=======
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
         shopCategoryId: null, // 商户分类id
         brandId: null, // 品牌
         guaranteeIds: null, // 保障服务 多个逗号分隔
@@ -197,6 +342,9 @@ export default {
         createTimeEnd: null,
         updateTimeStart: null,
         updateTimeEnd: null
+      },
+      searchOption:{ // 搜索表单用到的备选数据
+        brandIdList:[]
       },
       table: {
         columns,
@@ -228,9 +376,12 @@ export default {
     this.getData();
   },
   methods: {
-    search(form) {
+    getBrandNameById,
+    getShopCateById,
+    async search(form) {
       this.searchForm = form;
-      this.getData();
+      console.log('this.searchForm:', this.searchForm);
+      await this.getData();
     },
     tableSelectedRowKeys(selectedRowKeys) {
       console.log('tableSelectedRowKeys', selectedRowKeys);
@@ -294,6 +445,30 @@ export default {
     onEdit(text, record) {
       this.editConfig.editId = record.id;
       this.editConfig.visible = true;
+    },
+    // 搜索选项方法 START
+    tenantIdChange(tenantId) {
+      this.searchForm.tenantId = tenantId;
+      // 根据当前商户获取对应属性名称
+      // this.handleAttrKeyChange({tenantId:this.searchForm.tenantId});
+    },
+    platCateIdChange(cid){
+      this.searchForm.platCategoryId=cid
+      this.getProductBrandListByCid();
+    },
+    async getProductBrandListByCid(){
+      this.searchOption.brandIdList = await listOfProductBrandByCid(this.searchForm.platCategoryId);
+    },
+    // 搜索选项方法 END
+    handlerCopyText(productId) {
+      this.$copyText(productId).then(() => {
+        // 复制成功回调
+        this.$message.success('复制商品id成功')
+        console.log('文本已复制到剪贴板');
+      }).catch(() => {
+        // 复制失败回调
+        console.error('复制失败');
+      });
     }
   }
 };

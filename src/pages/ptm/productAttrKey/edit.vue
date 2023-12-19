@@ -6,15 +6,20 @@
       :wrapper-col="wrapperCol"
     >
       <a-form-model-item label="商户">
+<<<<<<< HEAD
         <!--        这里的key必须指定，要么编辑是数据回显会有问题，添加key就可以让differnt 算法继续执行-->
         <y-shop-select
           :key="formData.tenantId"
           v-model="formData.tenantId"
         ></y-shop-select>
+=======
+        <y-api-select
+          v-model="formData.tenantId"  :apiConfig="tenantIdApiConfig" @change="tenantIdChange"/>
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
       </a-form-model-item>
       <a-form-model-item label="商品分类">
         <a-cascader
-          v-model="formData.productCateId"
+          v-model="formData.ptmProductCategoryId"
           :options="forPramsData.productCateList"
           placeholder="请选择商品分类"
         />
@@ -38,6 +43,7 @@
 
 <script>
 import { getProductCategoryList } from '@/api/ptm/productCategory.js';
+import {getShopList } from "@/api/spm/shop.js";
 import {
   addProductAttrKey,
   getProductAttrKeyDetail,
@@ -54,6 +60,11 @@ export default {
   },
   data() {
     return {
+      tenantIdApiConfig:{   // 商户列表
+        apiFun: getShopList,
+        parms: {},
+        objMap: {value: 'id', label: 'shopName'}
+      },
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
       formData: {
@@ -95,12 +106,18 @@ export default {
       return tree;
     },
 
-    async genDataForEdit() {
+    genDataForEdit: async function () {
       if (this.editId) {
+<<<<<<< HEAD
         // setTimeout(async () => {
         this.formData = await getProductAttrKeyDetail(this.editId);
         this.formData.productCateId = [this.formData.ptmProductCategoryId];
         // }, 800);
+=======
+          this.formData = await getProductAttrKeyDetail(this.editId);
+          this.formData.productCateId = this.formData.ptmProductCategoryId;
+          console.log('this.formData.productCateId:',this.formData.productCateId);
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
       }
     },
     async onSubmitHandle() {
@@ -112,9 +129,18 @@ export default {
         this.$emit('onSaveSubmit');
       }
     },
+<<<<<<< HEAD
     onCancel() {
       this.$emit('onCancel');
     }
+=======
+    onCancel(){
+      this.$emit("onCancel")
+    },
+    async tenantIdChange(tenantId) {
+      this.forPramsData.tenantId = tenantId;
+    },
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
   }
 };
 </script>

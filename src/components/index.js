@@ -25,6 +25,7 @@ import yProductGuaranteeSelect from '@/components/yProductGuaranteeSelect/index.
 
 import yProductCategoryPlatSelect from '@/components/business/yProductCategoryPlatSelect/index.vue';
 import yProductCategoryShopSelect from '@/components/business/yProductCategoryShopSelect/index.vue';
+import yApiSelect from '@/components/yApiSelect/index.vue';
 
 export default {
   install(Vue) {
@@ -55,6 +56,8 @@ export default {
     Vue.component('yProductCategoryPlatSelect', yProductCategoryPlatSelect);
     //店铺商品分类选择组件
     Vue.component('yProductCategoryShopSelect', yProductCategoryShopSelect);
+    //店铺商品分类选择组件
+    Vue.component('yApiSelect', yApiSelect);
     Vue.component(Cascader.name, Cascader);
     Vue.component(Select.name, Select);
   }

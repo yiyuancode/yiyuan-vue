@@ -18,10 +18,17 @@ import mixin from '@/mixins/index.js';
 import qs from 'qs';
 /*引入图片预览组件,api得方式*/
 import hevueImgPreview from 'hevue-img-preview';
+import VueClipboard from 'vue-clipboard2';
 import 'hevue-img-preview/css/theme-light.css';
 import '@/assets/common.less';
 import install from '@/components/index.js';
+<<<<<<< HEAD
 import './assets/element-variables.scss';
+=======
+import './assets/element-variables.scss'
+// 全局过滤器
+import * as filters from './filters';
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
 
 Vue.use(hevueImgPreview, {
   keyboard: true,
@@ -50,6 +57,15 @@ Vue.use(Plugins);
 
 // bootstrap({ router, store, i18n, message: Vue.prototype.$message });
 Vue.use(install);
+
+// 注册全局过滤器 根据已经配置好的过滤器方法
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key]);
+});
+
+// 注册全局复制组件
+VueClipboard.config.autoSetContainer = true;
+Vue.use(VueClipboard);
 export default new Vue({
   router,
   store,

@@ -20,6 +20,18 @@ export function getProductBrandPageList(data) {
 }
 
 /**
+ * 获取全部品牌数据
+ * @param data 查询参数
+ * @returns {*}
+ */
+export function getProductBrandAllList(data) {
+  return request({
+    url: '/ptm/productBrand/list',
+    params: data
+  });
+}
+
+/**
  * 获取品牌详情
  *
  * @param {*} id

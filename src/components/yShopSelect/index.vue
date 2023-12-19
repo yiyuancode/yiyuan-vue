@@ -19,12 +19,58 @@
 <script>
 import { getShopList as listPage } from '@/api/spm/shop.js';
 
+<<<<<<< HEAD
 export default {
   props: {
     value: {
       type: String,
       default: function () {
         return null;
+=======
+  export default {
+    props: {
+      value: {
+        type: String,
+        default: function () {
+          return null;
+        }
+      },
+      allowClear: {
+        type: Boolean,
+        default: function () {
+          return true;
+        }
+      },
+      placeholder: {
+        type: String,
+        default: function () {
+          return "请选择店铺";
+        }
+      },
+      isSpan: {
+        type: Boolean,
+        default: function () {
+          return false;
+        }
+      },
+
+
+    },
+    data() {
+      return {
+        selectedKeys: undefined,
+        options: [],
+        optionsMap: {},
+      };
+    },
+    watch: {
+      // TODO 重复打开编辑商品偶尔几次才能渲染成功，此问题出现在商品分类和店铺分类 有时间一起确认
+      value(newValue, oldValue) {
+        console.log('newValue:', newValue);
+        if (!newValue) {
+          this.selectedKeys = undefined;
+        }
+>>>>>>> b3435e7cf411550fc4ad4b1d3fe84fc8abb1ab31
       }
     },
     allowClear: {
