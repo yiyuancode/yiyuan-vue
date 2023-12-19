@@ -2,12 +2,14 @@ import { getBoolen, getObj, getStr, setObj, setStr } from '@/utils/jsonUtil.js';
 import { getProductCategoryPlatList } from '@/api/ptm/productCategoryPlat.js'
 import { getProductBrandAllList } from '@/api/ptm/productBrand.js'
 import { getProductGuaranteeList } from "@/api/ptm/productGuarantee";
+import {getFreightTempList} from "@/api/ftm/freightTemp";
 export default {
   namespaced: true,
   state: {
     platCategoryList: null, // 平台分类集合
     brandList: null, // 品牌集合
     productGuaranteeList: null, // 保障服务
+    freightTempList: null,  // 运费模版
 
   },
   getters: {
@@ -20,6 +22,9 @@ export default {
     productGuaranteeList:(state) => {
       return getObj(state, 'productGuaranteeList');
     },
+    freightTempList:(state) => {
+      return getObj(state, 'freightTempList');
+    },
     // 配合过滤器使用
     platCateById:(state) => (id) => {
       let platCateList = getObj(state, 'platCategoryList');
@@ -31,6 +36,7 @@ export default {
       let currentBrand = brandList.find(item => item.id === id);
       return currentBrand.name;
     },
+    // 服务条款
     getProductGuaranteeById:(state) => (ids) => {
       let productGuaranteeList = getObj(state, 'productGuaranteeList');
       let idsList = ids.includes(",") ? ids.split(",") : [ids];
@@ -40,7 +46,13 @@ export default {
         guaranteeNames.push(currentGuarantee.name);
       });
       return guaranteeNames.join(", ");
-    }
+    },
+    // 运费模版
+    freightTempById:(state) => (id) => {
+      let freightTempList = getObj(state, 'freightTempList');
+      let currentTemp = freightTempList.find(item => item.id === id);
+      return currentTemp.name;
+    },
   },
   mutations: {
     platCategoryList(state, data){
@@ -51,6 +63,9 @@ export default {
     },
     productGuaranteeList(state, data){
       setObj(state, 'productGuaranteeList', data);
+    },
+    freightTempList(state, data){
+      setObj(state, 'freightTempList', data);
     },
   },
   actions: {
@@ -66,6 +81,10 @@ export default {
       let productGuaranteeList = await getProductGuaranteeList(null);
       commit('productGuaranteeList', productGuaranteeList);
     },
+    freightTempList: async ({commit}, data) => {
+      let freightTempList = await getFreightTempList(null);
+      commit('freightTempList', freightTempList);
+    },
     clearPlatCategoryList:({commit}, data ) =>{
       commit('platCategoryList', null);
     },
@@ -74,6 +93,9 @@ export default {
     },
     clearProductGuaranteeList:({commit}, data ) =>{
       commit('productGuaranteeList', null);
+    },
+    clearFreightTempList:({commit}, data ) =>{
+      commit('freightTempList', null);
     }
   }
 }

@@ -145,6 +145,7 @@ export default {
               this.$store.dispatch('product/platCategoryList');
               this.$store.dispatch('product/brandList');
               this.$store.dispatch('product/productGuaranteeList');
+              this.$store.dispatch('product/freightTempList');
               this.$store.dispatch('tenantShop/shopList');
               this.$store.dispatch('tenantShop/shopCategoryIds');
             });
