@@ -6,20 +6,18 @@
 </template>
 
 <script>
-  export default {
-    props: ['value'],
-    data() {
-      return {};
-    },
-    created() {
-
-    },
-    methods: {}
-  };
+export default {
+  props: ['value'],
+  data() {
+    return {};
+  },
+  created() {},
+  methods: {}
+};
 </script>
 <style lang="less">
-  .yImg {
-    width: 100%;
-    height: 100%;
-  }
+.yImg {
+  width: 100%;
+  height: 100%;
+}
 </style>

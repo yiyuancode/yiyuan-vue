@@ -4,8 +4,8 @@
  * @author  一源团队-花和尚
  * @date 2023-11-09
  */
-import * as productGuarantee from "@/api/ptm/productGuarantee";
-import {getEnumsMap} from "@/utils/enumsUtils.js";
+import * as productGuarantee from '@/api/ptm/productGuarantee';
+import { getEnumsMap } from '@/utils/enumsUtils.js';
 
 const columns = [
   {
@@ -14,14 +14,13 @@ const columns = [
     key: 'id',
     width: 160,
     ellipsis: true,
-    rules: [{required: true, message: '请输入保障服务id', trigger: 'blur'},],
+    rules: [{ required: true, message: '请输入保障服务id', trigger: 'blur' }],
     noEdit: true,
     noAdd: true,
 
     noSearch: true,
     noShow: true,
-    noTable: true,
-
+    noTable: true
   },
 
   {
@@ -31,10 +30,8 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    rules: [{required: true, message: '请输入商户', trigger: 'blur'},],
-    scopedSlots: {customRender: 'tenantId'},
-
+    rules: [{ required: true, message: '请输入商户', trigger: 'blur' }],
+    scopedSlots: { customRender: 'tenantId' }
   },
 
   {
@@ -44,9 +41,7 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    rules: [{required: true, message: '请输入保障服务名称', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入保障服务名称', trigger: 'blur' }]
   },
 
   {
@@ -54,9 +49,7 @@ const columns = [
     dataIndex: 'sort',
     key: 'sort',
     width: 160,
-    ellipsis: true,
-
-
+    ellipsis: true
   },
 
   {
@@ -66,26 +59,23 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    scopedSlots: {customRender: 'isShow'},
-    formType: "radioGroup",
+    scopedSlots: { customRender: 'isShow' },
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '否',
-          value: false,
+          value: false
         },
         {
           label: '是',
-          value: true,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: true
         }
-    },
-
+      ],
+      style: {
+        width: '100%'
+      }
+    }
   },
 
   {
@@ -95,21 +85,16 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择创建时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
-    noAdd: true,
-
-
+    noAdd: true
   },
 
   {
@@ -119,22 +104,18 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择修改时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
 
-    noSearch: true,
-
+    noSearch: true
   },
 
   {
@@ -144,14 +125,12 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     noEdit: true,
     noAdd: true,
 
     noSearch: true,
     noShow: true,
-    noTable: true,
-
+    noTable: true
   },
 
   {
@@ -161,14 +140,12 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     noEdit: true,
     noAdd: true,
 
     noSearch: true,
     noShow: true,
-    noTable: true,
-
+    noTable: true
   },
 
   {
@@ -180,23 +157,21 @@ const columns = [
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    fixed: "right",
-    scopedSlots: {customRender: "action"}
-
-  },
-]
-
+    fixed: 'right',
+    scopedSlots: { customRender: 'action' }
+  }
+];
 
 // 模块配置
 const moduleConfig = {
   module: productGuarantee,
-  moduleAdd: "addProductGuarantee",
-  moduleEdit: "editProductGuarantee",
-  moduleDelete: "deleteProductGuarantee",
-  moduleGetList: "getProductGuaranteePageList",
-  moduleGetDetail: "getProductGuaranteeDetail",
-  moduleName: "保障服务",
-}
+  moduleAdd: 'addProductGuarantee',
+  moduleEdit: 'editProductGuarantee',
+  moduleDelete: 'deleteProductGuarantee',
+  moduleGetList: 'getProductGuaranteePageList',
+  moduleGetDetail: 'getProductGuaranteeDetail',
+  moduleName: '保障服务'
+};
 
 // 权限对象
 const permissionObj = {
@@ -207,9 +182,4 @@ const permissionObj = {
 };
 //转化map
 const enumsMap = getEnumsMap(columns);
-export {
-  columns,
-  moduleConfig,
-  permissionObj,
-  enumsMap
-};
+export { columns, moduleConfig, permissionObj, enumsMap };

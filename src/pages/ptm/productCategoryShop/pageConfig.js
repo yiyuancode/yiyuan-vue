@@ -4,8 +4,8 @@
  * @author  一源团队-花和尚
  * @date 2023-11-19
  */
-import * as productCategoryShop from "@/api/ptm/productCategoryShop";
-import {getEnumsMap} from "@/utils/enumsUtils.js";
+import * as productCategoryShop from '@/api/ptm/productCategoryShop';
+import { getEnumsMap } from '@/utils/enumsUtils.js';
 
 const columns = [
   {
@@ -14,12 +14,14 @@ const columns = [
     key: 'id',
     width: 160,
     ellipsis: true,
-    rules: [{required: true, message: '请输入店铺商品分类id', trigger: 'blur'},],
+    rules: [
+      { required: true, message: '请输入店铺商品分类id', trigger: 'blur' }
+    ],
     noEdit: true,
     noAdd: true,
     noSearch: true,
     noShow: true,
-    noTable: true,
+    noTable: true
   },
 
   {
@@ -28,7 +30,7 @@ const columns = [
     key: 'pid',
     width: 160,
     ellipsis: true,
-    rules: [{required: true, message: '请输入父id', trigger: 'blur'},],
+    rules: [{ required: true, message: '请输入父id', trigger: 'blur' }]
   },
 
   {
@@ -37,7 +39,7 @@ const columns = [
     key: 'name',
     width: 160,
     ellipsis: true,
-    rules: [{required: true, message: '请输入分类名称', trigger: 'blur'},],
+    rules: [{ required: true, message: '请输入分类名称', trigger: 'blur' }]
   },
 
   {
@@ -46,7 +48,7 @@ const columns = [
     key: 'icon',
     width: 160,
     ellipsis: true,
-    rules: [{required: true, message: '请上传图标', trigger: 'blur'},],
+    rules: [{ required: true, message: '请上传图标', trigger: 'blur' }]
   },
 
   {
@@ -55,32 +57,29 @@ const columns = [
     key: 'level',
     width: 160,
     ellipsis: true,
-    scopedSlots: {customRender: 'level'},
+    scopedSlots: { customRender: 'level' },
     //值类型
-    valType: "object",
-    formType: "radioGroup",
+    valType: 'object',
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '一级分类',
-          value: 1,
+          value: 1
         },
         {
           label: '二级分类',
-          value: 2,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: 2
         }
+      ],
+      style: {
+        width: '100%'
+      }
     },
-    rules: [
-      {required: true, message: '请选择分类级别', trigger: 'change'},
-    ],
+    rules: [{ required: true, message: '请选择分类级别', trigger: 'change' }],
     formSort: 1,
     noEdit: true,
-    noAdd: true,
+    noAdd: true
   },
 
   {
@@ -89,9 +88,7 @@ const columns = [
     key: 'sort',
     width: 160,
     ellipsis: true,
-    formType: "inputNumber",
-
-
+    formType: 'inputNumber'
   },
 
   {
@@ -100,24 +97,23 @@ const columns = [
     key: 'isShow',
     width: 160,
     ellipsis: true,
-    scopedSlots: {customRender: 'isShow'},
-    formType: "radioGroup",
+    scopedSlots: { customRender: 'isShow' },
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '否',
-          value: false,
+          value: false
         },
         {
           label: '是',
-          value: true,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: true
         }
-    },
+      ],
+      style: {
+        width: '100%'
+      }
+    }
   },
 
   {
@@ -127,21 +123,16 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择创建时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
-    noAdd: true,
-
-
+    noAdd: true
   },
 
   {
@@ -151,22 +142,18 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择修改时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
 
-    noSearch: true,
-
+    noSearch: true
   },
 
   {
@@ -176,14 +163,12 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     noEdit: true,
     noAdd: true,
 
     noSearch: true,
     noShow: true,
-    noTable: true,
-
+    noTable: true
   },
 
   {
@@ -193,14 +178,12 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     noEdit: true,
     noAdd: true,
 
     noSearch: true,
     noShow: true,
-    noTable: true,
-
+    noTable: true
   },
 
   {
@@ -212,23 +195,21 @@ const columns = [
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    fixed: "right",
-    scopedSlots: {customRender: "action"}
-
-  },
-]
-
+    fixed: 'right',
+    scopedSlots: { customRender: 'action' }
+  }
+];
 
 // 模块配置
 const moduleConfig = {
   module: productCategoryShop,
-  moduleAdd: "addProductCategoryShop",
-  moduleEdit: "editProductCategoryShop",
-  moduleDelete: "deleteProductCategoryShop",
-  moduleGetList: "getProductCategoryShopPageList",
-  moduleGetDetail: "getProductCategoryShopDetail",
-  moduleName: "店铺商品分类",
-}
+  moduleAdd: 'addProductCategoryShop',
+  moduleEdit: 'editProductCategoryShop',
+  moduleDelete: 'deleteProductCategoryShop',
+  moduleGetList: 'getProductCategoryShopPageList',
+  moduleGetDetail: 'getProductCategoryShopDetail',
+  moduleName: '店铺商品分类'
+};
 
 // 权限对象
 const permissionObj = {
@@ -239,9 +220,4 @@ const permissionObj = {
 };
 //转化map
 const enumsMap = getEnumsMap(columns);
-export {
-  columns,
-  moduleConfig,
-  permissionObj,
-  enumsMap
-};
+export { columns, moduleConfig, permissionObj, enumsMap };

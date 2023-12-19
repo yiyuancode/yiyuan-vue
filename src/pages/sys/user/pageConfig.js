@@ -1,10 +1,9 @@
 const columns = [
-
   {
     title: '用户名',
     dataIndex: 'username',
     key: 'username',
-    width: 160,
+    width: 160
   },
 
   {

@@ -37,13 +37,12 @@ export function doMatch(treeData, key) {
  */
 export function getCascaderSelectedKeys(treeData, ids) {
   let result = [];
-  let idArray = ids.split(",");
+  let idArray = ids.split(',');
   for (let i = 0; i < idArray.length; i++) {
     result.push(doMatch(treeData, idArray[i]));
   }
   return result;
 }
-
 
 /**
  * level: 当前层级

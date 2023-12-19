@@ -23,8 +23,8 @@
                 v-model="form[item.dataIndex]"
                 allowClear
                 :placeholder="`请选择${
-                    item.placeholder ? item.placeholder : item.title
-                  }`"
+                  item.placeholder ? item.placeholder : item.title
+                }`"
                 :default-active-first-option="false"
                 :filter-option="false"
               >
@@ -37,7 +37,6 @@
                 </a-select-option>
               </a-select>
 
-
               <a-input
                 v-if="!item.formType"
                 v-model="form[item.dataIndex]"
@@ -49,7 +48,6 @@
           <template v-else>
             <slot :name="item" v-bind="{ form }"></slot>
           </template>
-
         </a-col>
         <!--        <a-col-->
         <!--          v-for="index in scopedSlots"-->
@@ -80,7 +78,7 @@
           </a-button>
           <a :style="{ marginLeft: '8px', fontSize: '12px' }" @click="toggle">
             {{ expand ? '收起' : '展开' }}
-            <a-icon :type="expand ? 'up' : 'down'"/>
+            <a-icon :type="expand ? 'up' : 'down'" />
           </a>
         </a-col>
       </a-row>
@@ -88,128 +86,128 @@
   </a-card>
 </template>
 <script>
-  import _ from 'lodash';
+import _ from 'lodash';
 
-  export default {
+export default {
+  props: {
     props: {
-      props: {
-        type: Array,
-        default: function () {
-          return [];
-        }
-      },
-      scopedSlots: {
-        type: Array,
-        default: function () {
-          return [];
-        }
-      },
-      columns: {
-        type: Array,
-        default: function () {
-          return [];
-        }
-      },
-      loading: {
-        type: Boolean,
-        default: function () {
-          return false;
-        }
+      type: Array,
+      default: function () {
+        return [];
       }
     },
-    data() {
-      return {
-        form: {},
-        expand: false,
-        span: 6
-      };
-    },
-    computed: {
-      uColumns() {
-        let columnsTemp = this.columns.filter((item) => {
-          return !item.noSearch;
-        });
-        columnsTemp= columnsTemp.filter((item) => {
-          return !this.scopedSlots.includes(item.dataIndex);
-        });
-        columnsTemp = [...this.scopedSlots,...columnsTemp ];
-        return columnsTemp;
-      },
-      count() {
-        return this.expand ? this.uColumns.length : 4;
+    scopedSlots: {
+      type: Array,
+      default: function () {
+        return [];
       }
     },
-    created() {
-      // setTimeout(() => {
-      //   this.columns = this.convertTo2DArray(this.props, this.groupSize);
-      //   this.loadCascaderOps();
-      // }, 150);
+    columns: {
+      type: Array,
+      default: function () {
+        return [];
+      }
     },
-    methods: {
-      searchClick() {
-        console.log('this.form', this.form);
-        let formTemp = _.cloneDeep(this.form);
-        this.uColumns.forEach((item) => {
-          if (item.formType == 'datePicker' && formTemp[item.dataIndex]) {
-            console.log('let formTemp ', formTemp);
-            formTemp[item.dataIndex + 'Start'] = this.form[
-              item.dataIndex
-              ][0].format('YYYY-MM-DD HH:mm:ss');
-            formTemp[item.dataIndex + 'End'] = this.form[
-              item.dataIndex
-              ][1].format('YYYY-MM-DD HH:mm:ss');
-            delete formTemp[item.dataIndex];
-          }
-        });
-
-        console.log(formTemp);
-        this.$emit('search', formTemp);
-      },
-
-      handleReset() {
-        // this.$refs.form.resetFields();
-        this.form = {};
-        console.log('this.form', this.form);
-        this.$emit('search', this.form);
-      },
-
-      toggle() {
-        this.expand = !this.expand;
+    loading: {
+      type: Boolean,
+      default: function () {
+        return false;
       }
     }
-  };
+  },
+  data() {
+    return {
+      form: {},
+      expand: false,
+      span: 6
+    };
+  },
+  computed: {
+    uColumns() {
+      let columnsTemp = this.columns.filter((item) => {
+        return !item.noSearch;
+      });
+      columnsTemp = columnsTemp.filter((item) => {
+        return !this.scopedSlots.includes(item.dataIndex);
+      });
+      columnsTemp = [...this.scopedSlots, ...columnsTemp];
+      return columnsTemp;
+    },
+    count() {
+      return this.expand ? this.uColumns.length : 4;
+    }
+  },
+  created() {
+    // setTimeout(() => {
+    //   this.columns = this.convertTo2DArray(this.props, this.groupSize);
+    //   this.loadCascaderOps();
+    // }, 150);
+  },
+  methods: {
+    searchClick() {
+      console.log('this.form', this.form);
+      let formTemp = _.cloneDeep(this.form);
+      this.uColumns.forEach((item) => {
+        if (item.formType == 'datePicker' && formTemp[item.dataIndex]) {
+          console.log('let formTemp ', formTemp);
+          formTemp[item.dataIndex + 'Start'] = this.form[
+            item.dataIndex
+          ][0].format('YYYY-MM-DD HH:mm:ss');
+          formTemp[item.dataIndex + 'End'] = this.form[
+            item.dataIndex
+          ][1].format('YYYY-MM-DD HH:mm:ss');
+          delete formTemp[item.dataIndex];
+        }
+      });
+
+      console.log(formTemp);
+      this.$emit('search', formTemp);
+    },
+
+    handleReset() {
+      // this.$refs.form.resetFields();
+      this.form = {};
+      console.log('this.form', this.form);
+      this.$emit('search', this.form);
+    },
+
+    toggle() {
+      this.expand = !this.expand;
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
-  .ant-advanced-search-form {
-    padding: 10px;
+.ant-advanced-search-form {
+  padding: 10px;
 
-    /deep/ .ant-form-item {
-      display: flex;
+  /deep/ .ant-form-item {
+    display: flex;
 
-      .ant-form-item-label {
-        width: 100px;
-        white-space: nowrap; /* 防止文本换行 */
-        overflow: hidden; /* 超出部分隐藏 */
-        text-overflow: ellipsis; /* 显示省略符号 */
-      }
+    .ant-form-item-label {
+      width: 100px;
+      white-space: nowrap; /* 防止文本换行 */
+      overflow: hidden; /* 超出部分隐藏 */
+      text-overflow: ellipsis; /* 显示省略符号 */
+    }
 
-      .ant-form-item-control-wrapper {
-        flex: 1;
+    .ant-form-item-control-wrapper {
+      flex: 1;
 
-        .ant-calendar-picker {
-          width: 100% !important;
-        }
+      .ant-calendar-picker {
+        width: 100% !important;
       }
     }
   }
+}
 
-  .y-tools {
-    height: 100px;
-    width: 100%;
-    background: red;
-  }
+.y-tools {
+  height: 100px;
+  width: 100%;
+  background: red;
+}
 
-  .y-table {
-    margin: 20px;
-  }
+.y-table {
+  margin: 20px;
+}
 </style>

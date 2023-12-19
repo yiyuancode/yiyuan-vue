@@ -44,9 +44,7 @@ const columns = [
     dataIndex: 'attrValue',
     key: 'attrValue',
     width: 160,
-    rules: [
-      { required: true, message: '请输入商品属性值', trigger: 'blur' }
-    ]
+    rules: [{ required: true, message: '请输入商品属性值', trigger: 'blur' }]
   },
 
   {

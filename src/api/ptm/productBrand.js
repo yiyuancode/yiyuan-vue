@@ -46,7 +46,7 @@ export function addProductBrand(data) {
   return request({
     url: '/ptm/productBrand/add',
     method: 'post',
-    data:data
+    data: data
   });
 }
 

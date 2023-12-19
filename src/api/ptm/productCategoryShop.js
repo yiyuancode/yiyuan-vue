@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的店铺商品分类信息(全部)
@@ -9,11 +9,10 @@ import {request} from '@/utils/request';
  * @date 2023-11-19
  */
 export function getProductCategoryShopList(data) {
-    return request({
-        url: "/ptm/productCategoryShop/list",
-        params: data
-    });
-
+  return request({
+    url: '/ptm/productCategoryShop/list',
+    params: data
+  });
 }
 /**
  * 获取所有的店铺商品分类信息(分页)
@@ -24,13 +23,11 @@ export function getProductCategoryShopList(data) {
  * @date 2023-11-19
  */
 export function getProductCategoryShopPageList(data) {
-    return request({
-        url: "/ptm/productCategoryShop/page",
-        params: data
-    });
-
+  return request({
+    url: '/ptm/productCategoryShop/page',
+    params: data
+  });
 }
-
 
 /**
  * 获取店铺商品分类详情
@@ -41,10 +38,9 @@ export function getProductCategoryShopPageList(data) {
  * @date 2023-11-19
  */
 export function getProductCategoryShopDetail(id) {
-    return request({
-        url: `/ptm/productCategoryShop/details/${id}`,
-    });
-
+  return request({
+    url: `/ptm/productCategoryShop/details/${id}`
+  });
 }
 
 /**
@@ -57,12 +53,11 @@ export function getProductCategoryShopDetail(id) {
  */
 
 export function addProductCategoryShop(data) {
-    return request({
-        url: "/ptm/productCategoryShop/add",
-        method: "post",
-        data
-    });
-
+  return request({
+    url: '/ptm/productCategoryShop/add',
+    method: 'post',
+    data
+  });
 }
 
 /**
@@ -75,16 +70,14 @@ export function addProductCategoryShop(data) {
  * @date 2023-11-19
  */
 export function editProductCategoryShop(data, id) {
-    return request({
-        url: "/ptm/productCategoryShop/edit",
-        method: "post",
-        data: {
-...
-    data, id
-}
-})
-    ;
-
+  return request({
+    url: '/ptm/productCategoryShop/edit',
+    method: 'post',
+    data: {
+      ...data,
+      id
+    }
+  });
 }
 /**
  * 删除店铺商品分类（可支持批量删除）
@@ -95,16 +88,14 @@ export function editProductCategoryShop(data, id) {
  * @date 2023-11-19
  */
 export function deleteProductCategoryShop(ids) {
-    return request({
-        url: "/ptm/productCategoryShop/delete",
-        method: "post",
-        params: {
-            ids
-        }
-    });
-
+  return request({
+    url: '/ptm/productCategoryShop/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
 }
-
 
 /**
  * 查询店铺商品分类树结构
@@ -116,8 +107,7 @@ export function deleteProductCategoryShop(ids) {
  */
 export function getProductCategoryShopTree(data) {
   return request({
-    url: "/ptm/productCategoryShop/tree",
+    url: '/ptm/productCategoryShop/tree',
     params: data
   });
-
 }

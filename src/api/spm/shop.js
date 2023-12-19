@@ -1,6 +1,5 @@
 import { request } from '@/utils/request';
 
-
 /**
  * 获取所有的店铺信息(分页)
  *
@@ -102,7 +101,7 @@ export function deleteShop(ids) {
 /**
  * 店铺类别
  *
- * @param {*} 
+ * @param {*}
  * @return
  * @author  一源-spring
  * @date 2023-11-1

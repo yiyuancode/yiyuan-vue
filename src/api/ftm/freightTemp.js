@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的物流模板信息(全部)
@@ -10,10 +10,9 @@ import {request} from '@/utils/request';
  */
 export function getFreightTempList(data) {
   return request({
-    url: "/ftm/freightTemp/list",
+    url: '/ftm/freightTemp/list',
     params: data
   });
-
 }
 
 /**
@@ -26,12 +25,10 @@ export function getFreightTempList(data) {
  */
 export function getFreightTempPageList(data) {
   return request({
-    url: "/ftm/freightTemp/page",
+    url: '/ftm/freightTemp/page',
     params: data
   });
-
 }
-
 
 /**
  * 获取物流模板详情
@@ -43,9 +40,8 @@ export function getFreightTempPageList(data) {
  */
 export function getFreightTempDetail(id) {
   return request({
-    url: `/ftm/freightTemp/details/${id}`,
+    url: `/ftm/freightTemp/details/${id}`
   });
-
 }
 
 /**
@@ -59,11 +55,10 @@ export function getFreightTempDetail(id) {
 
 export function addFreightTemp(data) {
   return request({
-    url: "/ftm/freightTemp/add",
-    method: "post",
+    url: '/ftm/freightTemp/add',
+    method: 'post',
     data
   });
-
 }
 
 /**
@@ -77,15 +72,13 @@ export function addFreightTemp(data) {
  */
 export function editFreightTemp(data, id) {
   return request({
-    url: "/ftm/freightTemp/edit",
-    method: "post",
+    url: '/ftm/freightTemp/edit',
+    method: 'post',
     data: {
-      ...
-        data, id
+      ...data,
+      id
     }
-  })
-    ;
-
+  });
 }
 
 /**
@@ -98,12 +91,10 @@ export function editFreightTemp(data, id) {
  */
 export function deleteFreightTemp(ids) {
   return request({
-    url: "/ftm/freightTemp/delete",
-    method: "post",
+    url: '/ftm/freightTemp/delete',
+    method: 'post',
     params: {
       ids
     }
   });
-
 }
-

@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的商品属性key信息(分页)
@@ -42,7 +42,6 @@ export function getProductAttrKeyList(data) {
     params: finalData
   });
 }
-
 
 /**
  * 获取商品属性key详情

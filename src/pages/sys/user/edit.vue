@@ -22,13 +22,16 @@
       </a-form-model-item>
 
       <a-form-model-item label="平台类型">
-        <a-select v-model="formData.platform" allowClear placeholder="选择平台类型">
+        <a-select
+          v-model="formData.platform"
+          allowClear
+          placeholder="选择平台类型"
+        >
           <a-select-option :value="0"> 平台端</a-select-option>
           <a-select-option :value="1"> 租户端</a-select-option>
           <a-select-option :value="2"> 移动端</a-select-option>
         </a-select>
       </a-form-model-item>
-  
 
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmitHandle"> 创建 </a-button>

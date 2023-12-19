@@ -1,36 +1,30 @@
 <template>
   <div>
     <y-search
-      :scopedSlots="['id','tenantId','name','isShow','categoryIds']"
+      :scopedSlots="['id', 'tenantId', 'name', 'isShow', 'categoryIds']"
       :loading="table.loading"
       @search="search"
     >
       <a-form-model-item slot="id" slot-scope="{ form }" label="ID">
-        <a-input
-          v-model="form.id"
-          placeholder="ID"
-          allowClear
-        />
+        <a-input v-model="form.id" placeholder="ID" allowClear />
       </a-form-model-item>
       <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户">
         <y-shop-select v-model="form.tenantId"></y-shop-select>
       </a-form-model-item>
       <a-form-model-item slot="name" slot-scope="{ form }" label="品牌名称">
-        <a-input
-          v-model="form.name"
-          placeholder="搜索品牌名称"
-          allowClear
-        />
+        <a-input v-model="form.name" placeholder="搜索品牌名称" allowClear />
       </a-form-model-item>
-      <a-form-model-item slot="categoryIds" slot-scope="{ form }" label="商品分类">
-        <y-plat-category-select v-model="form.categoryIds"></y-plat-category-select>
+      <a-form-model-item
+        slot="categoryIds"
+        slot-scope="{ form }"
+        label="商品分类"
+      >
+        <y-plat-category-select
+          v-model="form.categoryIds"
+        ></y-plat-category-select>
       </a-form-model-item>
       <a-form-model-item slot="isShow" slot-scope="{ form }" label="显示状态">
-        <a-select
-          v-model="form.isShow"
-          placeholder="选择显示状态"
-          allowClear
-        >
+        <a-select v-model="form.isShow" placeholder="选择显示状态" allowClear>
           <a-select-option value="0"> 不显示</a-select-option>
           <a-select-option value="1"> 显示</a-select-option>
         </a-select>
@@ -47,7 +41,7 @@
     >
       <div slot="operations">
         <a-button type="primary" icon="plus" @click="onAdd"> 新建</a-button>
-        <a-divider type="vertical"/>
+        <a-divider type="vertical" />
         <a-popconfirm
           :title="'确定批量删除选中的分类'"
           ok-text="确定"
@@ -58,19 +52,19 @@
             批量删除
           </a-button>
         </a-popconfirm>
-        <a-divider type="vertical"/>
+        <a-divider type="vertical" />
       </div>
-      <div class="y-flex" slot="icon" slot-scope="{ text, record }">
+      <div slot="icon" slot-scope="{ text, record }" class="y-flex">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
       </div>
       <!--          slot-scope(当前数据，当前行)-->
-      <div class="y-flex" slot="level" slot-scope="{ text, record }">
+      <div slot="level" slot-scope="{ text, record }" class="y-flex">
         {{ text.desc }}
       </div>
-      <div class="y-flex" slot="isShow" slot-scope="{ text, record }">
+      <div slot="isShow" slot-scope="{ text, record }" class="y-flex">
         {{ text ? '显示' : '不显示' }}
       </div>
-      <div class="y-flex" slot="operation" slot-scope="{ text, record }">
+      <div slot="operation" slot-scope="{ text, record }" class="y-flex">
         <a-button-group>
           <!--            编辑分类-->
           <a-button
@@ -107,9 +101,10 @@
   </div>
 </template>
 <script>
-import {columns} from './pageConfig.js';
+import { columns } from './pageConfig.js';
 import {
-  getProductBrandPageList, deleteProductBrand
+  getProductBrandPageList,
+  deleteProductBrand
 } from '@/api/ptm/productBrand';
 import edit from './edit.vue';
 
@@ -164,8 +159,8 @@ export default {
       if (this.table.records.length == 0 && this.table.pagination.pageNum > 1) {
         this.table.pagination.pageNum = this.table.pagination.pageNum - 1;
       }
-      let {pageNum, pageSize} = this.table.pagination;
-      let {records, total, current} = await getProductBrandPageList({
+      let { pageNum, pageSize } = this.table.pagination;
+      let { records, total, current } = await getProductBrandPageList({
         pageNum: pageNum,
         pageSize: pageSize,
         ...this.searchForm
@@ -183,9 +178,13 @@ export default {
     },
     // 批量删除商品标签
     async onBatchDelete() {
-      await deleteProductBrand(this.table.rowSelection.selectedRowKeys.join(","));
+      await deleteProductBrand(
+        this.table.rowSelection.selectedRowKeys.join(',')
+      );
       this.$message.success(`批量删除分类成功`);
-      this.table.records = this.table.records.filter((item) => !this.table.rowSelection.selectedRowKeys.includes(item.id))
+      this.table.records = this.table.records.filter(
+        (item) => !this.table.rowSelection.selectedRowKeys.includes(item.id)
+      );
       this.table.rowSelection.selectedRowKeys = [];
       this.getData();
     },
@@ -198,7 +197,9 @@ export default {
     async onDelete(record) {
       await deleteProductBrand(record.id);
       this.$message.success(`删除品牌${record.name}成功`);
-      this.table.records = this.table.records.filter((item) => item.id != record.id)
+      this.table.records = this.table.records.filter(
+        (item) => item.id != record.id
+      );
       this.getData();
     },
     // 商品标签行编辑

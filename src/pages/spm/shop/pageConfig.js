@@ -4,44 +4,44 @@
  * @author  一源-花和尚
  * @date 2023-11-03
  */
-import * as shop from "@/api/spm/shop";
-import {
-  getEnumsMap
-} from "@/utils/enumsUtils.js";
-const columns = [{
-  title: '店铺id',
-  dataIndex: 'id',
-  key: 'id',
-  width: 160,
-  rules: [{
-    required: true,
-    message: '请输入店铺id',
-    trigger: 'blur'
-  }, ],
-  noEdit: true,
-  noAdd: true,
-
-},
+import * as shop from '@/api/spm/shop';
+import { getEnumsMap } from '@/utils/enumsUtils.js';
+const columns = [
+  {
+    title: '店铺id',
+    dataIndex: 'id',
+    key: 'id',
+    width: 160,
+    rules: [
+      {
+        required: true,
+        message: '请输入店铺id',
+        trigger: 'blur'
+      }
+    ],
+    noEdit: true,
+    noAdd: true
+  },
 
   {
     title: '店铺类型id',
     dataIndex: 'spmShopTypeId',
     key: 'spmShopTypeId',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入店铺类型id',
-      trigger: 'blur'
-    }, ],
-
+    rules: [
+      {
+        required: true,
+        message: '请输入店铺类型id',
+        trigger: 'blur'
+      }
+    ]
   },
 
   {
     title: '店铺主营类目ids(多个用逗号分割,对应商品分类中-平台分类)',
     dataIndex: 'mainCategoryIds',
     key: 'mainCategoryIds',
-    width: 160,
-
+    width: 160
   },
 
   {
@@ -49,12 +49,13 @@ const columns = [{
     dataIndex: 'sysAreaId',
     key: 'sysAreaId',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入地址id',
-      trigger: 'blur'
-    }, ],
-
+    rules: [
+      {
+        required: true,
+        message: '请输入地址id',
+        trigger: 'blur'
+      }
+    ]
   },
 
   {
@@ -62,12 +63,13 @@ const columns = [{
     dataIndex: 'merchantName',
     key: 'merchantName',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入商户名称',
-      trigger: 'blur'
-    }, ],
-
+    rules: [
+      {
+        required: true,
+        message: '请输入商户名称',
+        trigger: 'blur'
+      }
+    ]
   },
 
   {
@@ -75,12 +77,13 @@ const columns = [{
     dataIndex: 'merchantEmail',
     key: 'merchantEmail',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入商户邮箱',
-      trigger: 'blur'
-    }, ],
-
+    rules: [
+      {
+        required: true,
+        message: '请输入商户邮箱',
+        trigger: 'blur'
+      }
+    ]
   },
 
   {
@@ -88,12 +91,13 @@ const columns = [{
     dataIndex: 'merchantPhone',
     key: 'merchantPhone',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入商户手机号',
-      trigger: 'blur'
-    }, ],
-
+    rules: [
+      {
+        required: true,
+        message: '请输入商户手机号',
+        trigger: 'blur'
+      }
+    ]
   },
 
   {
@@ -101,28 +105,27 @@ const columns = [{
     dataIndex: 'merchantLegalRepresentative',
     key: 'merchantLegalRepresentative',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入商户法人',
-      trigger: 'blur'
-    }, ],
-
+    rules: [
+      {
+        required: true,
+        message: '请输入商户法人',
+        trigger: 'blur'
+      }
+    ]
   },
 
   {
     title: '商户手续费',
     dataIndex: 'merchantFee',
     key: 'merchantFee',
-    width: 160,
-
+    width: 160
   },
 
   {
     title: '商户星级',
     dataIndex: 'merchantRating',
     key: 'merchantRating',
-    width: 160,
-
+    width: 160
   },
 
   {
@@ -130,11 +133,13 @@ const columns = [{
     dataIndex: 'qualificationImages',
     key: 'qualificationImages',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入资质图片',
-      trigger: 'blur'
-    }, ],
+    rules: [
+      {
+        required: true,
+        message: '请输入资质图片',
+        trigger: 'blur'
+      }
+    ],
     scopedSlots: {
       customRender: 'qualificationImages'
     }
@@ -145,12 +150,13 @@ const columns = [{
     dataIndex: 'shopName',
     key: 'shopName',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入店铺名称',
-      trigger: 'blur'
-    }, ],
-
+    rules: [
+      {
+        required: true,
+        message: '请输入店铺名称',
+        trigger: 'blur'
+      }
+    ]
   },
 
   {
@@ -158,11 +164,13 @@ const columns = [{
     dataIndex: 'shopOwnerAvatar',
     key: 'shopOwnerAvatar',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入店铺主头像',
-      trigger: 'blur'
-    }, ],
+    rules: [
+      {
+        required: true,
+        message: '请输入店铺主头像',
+        trigger: 'blur'
+      }
+    ],
     scopedSlots: {
       customRender: 'shopOwnerAvatar'
     }
@@ -173,11 +181,13 @@ const columns = [{
     dataIndex: 'shopBackgroundImage',
     key: 'shopBackgroundImage',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入店铺背景图',
-      trigger: 'blur'
-    }, ],
+    rules: [
+      {
+        required: true,
+        message: '请输入店铺背景图',
+        trigger: 'blur'
+      }
+    ],
     scopedSlots: {
       customRender: 'shopBackgroundImage'
     }
@@ -188,11 +198,13 @@ const columns = [{
     dataIndex: 'recommendedShopBackgroundImage',
     key: 'recommendedShopBackgroundImage',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入推荐店铺背景图',
-      trigger: 'blur'
-    }, ],
+    rules: [
+      {
+        required: true,
+        message: '请输入推荐店铺背景图',
+        trigger: 'blur'
+      }
+    ],
     scopedSlots: {
       customRender: 'recommendedShopBackgroundImage'
     }
@@ -203,11 +215,13 @@ const columns = [{
     dataIndex: 'shopCover',
     key: 'shopCover',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入店铺封面图',
-      trigger: 'blur'
-    }, ],
+    rules: [
+      {
+        required: true,
+        message: '请输入店铺封面图',
+        trigger: 'blur'
+      }
+    ],
     scopedSlots: {
       customRender: 'shopCover'
     }
@@ -218,11 +232,13 @@ const columns = [{
     dataIndex: 'shopLogo',
     key: 'shopLogo',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入店铺logo',
-      trigger: 'blur'
-    }, ],
+    rules: [
+      {
+        required: true,
+        message: '请输入店铺logo',
+        trigger: 'blur'
+      }
+    ],
     scopedSlots: {
       customRender: 'shopLogo'
     }
@@ -233,20 +249,20 @@ const columns = [{
     dataIndex: 'shopDescription',
     key: 'shopDescription',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入店铺简介',
-      trigger: 'blur'
-    }, ],
-
+    rules: [
+      {
+        required: true,
+        message: '请输入店铺简介',
+        trigger: 'blur'
+      }
+    ]
   },
 
   {
     title: '库存告警阈值',
     dataIndex: 'inventoryAlert',
     key: 'inventoryAlert',
-    width: 160,
-
+    width: 160
   },
 
   {
@@ -255,15 +271,15 @@ const columns = [{
     key: 'isSupportsSelfPickup',
     width: 160,
     props: {
-      options: [{
-        label: '否',
-        value: false,
-      },
+      options: [
+        {
+          label: '否',
+          value: false
+        },
         {
           label: '是',
-          value: true,
-        },
-
+          value: true
+        }
       ],
       style: {
         width: '100%'
@@ -279,12 +295,13 @@ const columns = [{
     dataIndex: 'shopAddress',
     key: 'shopAddress',
     width: 160,
-    rules: [{
-      required: true,
-      message: '请输入店铺地址',
-      trigger: 'blur'
-    }, ],
-
+    rules: [
+      {
+        required: true,
+        message: '请输入店铺地址',
+        trigger: 'blur'
+      }
+    ]
   },
 
   {
@@ -293,31 +310,34 @@ const columns = [{
     key: 'settlementType',
     width: 160,
     //值类型
-    valType: "object",
-    formType: "radioGroup",
+    valType: 'object',
+    formType: 'radioGroup',
     props: {
-      options: [{
-        label: '银行卡',
-        value: 1,
-      },
+      options: [
+        {
+          label: '银行卡',
+          value: 1
+        },
         {
           label: '微信',
-          value: 2,
+          value: 2
         },
         {
           label: '支付宝',
-          value: 3,
-        },
+          value: 3
+        }
       ],
       style: {
         width: '100%'
       }
     },
-    rules: [{
-      required: true,
-      message: '请选择结算类型',
-      trigger: 'change'
-    }, ],
+    rules: [
+      {
+        required: true,
+        message: '请选择结算类型',
+        trigger: 'change'
+      }
+    ],
     formSort: 1,
     scopedSlots: {
       customRender: 'settlementType'
@@ -328,40 +348,35 @@ const columns = [{
     title: '银行卡结算-收款人',
     dataIndex: 'bankPayee',
     key: 'bankPayee',
-    width: 160,
-
+    width: 160
   },
 
   {
     title: '银行卡结算-开户银行',
     dataIndex: 'bankNumber',
     key: 'bankNumber',
-    width: 160,
-
+    width: 160
   },
 
   {
     title: '银行卡结算-开户行地址',
     dataIndex: 'bankAddress',
     key: 'bankAddress',
-    width: 160,
-
+    width: 160
   },
 
   {
     title: '微信结算-真实姓名',
     dataIndex: 'wechatRealName',
     key: 'wechatRealName',
-    width: 160,
-
+    width: 160
   },
 
   {
     title: '微信结算-微信号',
     dataIndex: 'wechatAccount',
     key: 'wechatAccount',
-    width: 160,
-
+    width: 160
   },
 
   {
@@ -378,16 +393,14 @@ const columns = [{
     title: '支付宝结算-真实姓名',
     dataIndex: 'alipayRealName',
     key: 'alipayRealName',
-    width: 160,
-
+    width: 160
   },
 
   {
     title: '支付宝结算-微信号',
     dataIndex: 'alipayAccount',
     key: 'alipayAccount',
-    width: 160,
-
+    width: 160
   },
 
   {
@@ -404,8 +417,7 @@ const columns = [{
     title: '排序',
     dataIndex: 'sort',
     key: 'sort',
-    width: 160,
-
+    width: 160
   },
 
   {
@@ -414,15 +426,15 @@ const columns = [{
     key: 'isAudit',
     width: 160,
     props: {
-      options: [{
-        label: '否',
-        value: false,
-      },
+      options: [
+        {
+          label: '否',
+          value: false
+        },
         {
           label: '是',
-          value: true,
-        },
-
+          value: true
+        }
       ],
       style: {
         width: '100%'
@@ -439,15 +451,15 @@ const columns = [{
     key: 'isShow',
     width: 160,
     props: {
-      options: [{
-        label: '不显示',
-        value: false,
-      },
+      options: [
+        {
+          label: '不显示',
+          value: false
+        },
         {
           label: '显示',
-          value: true,
-        },
-
+          value: true
+        }
       ],
       style: {
         width: '100%'
@@ -469,17 +481,18 @@ const columns = [{
         width: '100%'
       }
     },
-    formType: "datePicker",
-    rules: function() {
-      return [{
-        required: true,
-        message: '请选择创建时间',
-        trigger: 'change'
-      }, ]
+    formType: 'datePicker',
+    rules: function () {
+      return [
+        {
+          required: true,
+          message: '请选择创建时间',
+          trigger: 'change'
+        }
+      ];
     },
     noEdit: true,
-    noAdd: true,
-
+    noAdd: true
   },
 
   {
@@ -493,18 +506,19 @@ const columns = [{
         width: '100%'
       }
     },
-    formType: "datePicker",
-    rules: function() {
-      return [{
-        required: true,
-        message: '请选择修改时间',
-        trigger: 'change'
-      }, ]
+    formType: 'datePicker',
+    rules: function () {
+      return [
+        {
+          required: true,
+          message: '请选择修改时间',
+          trigger: 'change'
+        }
+      ];
     },
     noEdit: true,
     noAdd: true,
-    noSearch: true,
-
+    noSearch: true
   },
 
   // {
@@ -541,20 +555,18 @@ const columns = [{
       customRender: 'operation'
     }
   }
-
-]
-
+];
 
 // 模块配置
 const moduleConfig = {
   module: shop,
-  moduleAdd: "addShop",
-  moduleEdit: "editShop",
-  moduleDelete: "deleteShop",
-  moduleGetList: "getShopPageList",
-  moduleGetDetail: "getShopDetail",
-  moduleName: "店铺",
-}
+  moduleAdd: 'addShop',
+  moduleEdit: 'editShop',
+  moduleDelete: 'deleteShop',
+  moduleGetList: 'getShopPageList',
+  moduleGetDetail: 'getShopDetail',
+  moduleName: '店铺'
+};
 
 // 权限对象
 const permissionObj = {
@@ -566,9 +578,4 @@ const permissionObj = {
 
 // 转化map
 const enumsMap = getEnumsMap(columns);
-export {
-  columns,
-  moduleConfig,
-  permissionObj,
-  enumsMap
-};
+export { columns, moduleConfig, permissionObj, enumsMap };

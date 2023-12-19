@@ -1,85 +1,83 @@
 <template>
   <div>
-<!--    <y-search-->
-<!--      :scopedSlots="3"-->
-<!--      :loading="table.loading"-->
-<!--      @search="search"-->
-<!--    >-->
-<!--      <a-form-model-item slot="scopedSlots-1" label="ID">-->
-<!--        <a-input v-model="searchForm.id"  allowClear/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-2" label="NAME">-->
-<!--        <a-input v-model="searchForm.name"  allowClear/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-3" label="平台分类">-->
-<!--        <a-cascader-->
-<!--          v-model="searchForm.tenantCategoryId"-->
-<!--          :options="searchForm.productCateList"-->
-<!--          placeholder="请选择平台分类"-->
-<!--        />-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-4" label="商户分类">-->
-<!--        <a-cascader-->
-<!--          v-model="searchForm.shopCategoryId"-->
-<!--          :options="searchForm.productCateList"-->
-<!--          placeholder="请选择商户分类"-->
-<!--        />-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-5" label="品牌">-->
-<!--        <a-cascader-->
-<!--          v-model="searchForm.brandId"-->
-<!--          :options="searchForm.productCateList"-->
-<!--          placeholder="请选择品牌"-->
-<!--        />-->
-<!--      </a-form-model-item>-->
-      <!--      <a-form-model-item label="保障服务"> TO DO 保障服务待维护后-->
-      <!--        <a-cascader-->
-      <!--          v-model="formData.guaranteeIds"-->
-      <!--          :options="forPramsData.productCateList"-->
-      <!--          placeholder="请选择品牌"-->
-      <!--        />-->
-      <!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-6" label="运费模版">-->
-<!--        <a-cascader-->
-<!--          v-model="searchForm.tempId"-->
-<!--          :options="searchForm.productCateList"-->
-<!--          placeholder="请选择品牌"-->
-<!--        />-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-7" label="主图">-->
-<!--        <y-img-->
-<!--          :src="globalConfig.imgBaseUrl + image"-->
-<!--          style="height: 30px; width: 30px"-->
-<!--        ></y-img>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-8" label="轮播图">-->
-<!--        <y-img-->
-<!--          :src="globalConfig.imgBaseUrl + sliderImage"-->
-<!--          style="height: 30px; width: 30px"-->
-<!--        ></y-img>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-3" label="商品名">-->
-<!--        <a-input v-model="searchForm.name" placeholder="请输入商品名" allowClear/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-10" label="商品简介">-->
-<!--        <a-input v-model="searchForm.title" placeholder="请输入商品简介" allowClear/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-11" label="关键字">-->
-<!--        <a-input v-model="searchForm.keyword" placeholder="请输入关键字" allowClear/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-13" label="虚拟销量">-->
-<!--        <a-input v-model="searchForm.fictiSales" placeholder="根据情况输入虚拟销量" allowClear/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-14" label="排序">-->
-<!--        <a-input v-model="searchForm.tenantSort" placeholder="排序"/>-->
-<!--      </a-form-model-item>-->
-<!--      <a-form-model-item slot="scopedSlots-15" label="分佣">-->
-<!--        <a-input v-model="searchForm.isSub" placeholder="分佣"/>-->
-<!--      </a-form-model-item>-->
+    <!--    <y-search-->
+    <!--      :scopedSlots="3"-->
+    <!--      :loading="table.loading"-->
+    <!--      @search="search"-->
+    <!--    >-->
+    <!--      <a-form-model-item slot="scopedSlots-1" label="ID">-->
+    <!--        <a-input v-model="searchForm.id"  allowClear/>-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-2" label="NAME">-->
+    <!--        <a-input v-model="searchForm.name"  allowClear/>-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-3" label="平台分类">-->
+    <!--        <a-cascader-->
+    <!--          v-model="searchForm.tenantCategoryId"-->
+    <!--          :options="searchForm.productCateList"-->
+    <!--          placeholder="请选择平台分类"-->
+    <!--        />-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-4" label="商户分类">-->
+    <!--        <a-cascader-->
+    <!--          v-model="searchForm.shopCategoryId"-->
+    <!--          :options="searchForm.productCateList"-->
+    <!--          placeholder="请选择商户分类"-->
+    <!--        />-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-5" label="品牌">-->
+    <!--        <a-cascader-->
+    <!--          v-model="searchForm.brandId"-->
+    <!--          :options="searchForm.productCateList"-->
+    <!--          placeholder="请选择品牌"-->
+    <!--        />-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item label="保障服务"> TO DO 保障服务待维护后-->
+    <!--        <a-cascader-->
+    <!--          v-model="formData.guaranteeIds"-->
+    <!--          :options="forPramsData.productCateList"-->
+    <!--          placeholder="请选择品牌"-->
+    <!--        />-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-6" label="运费模版">-->
+    <!--        <a-cascader-->
+    <!--          v-model="searchForm.tempId"-->
+    <!--          :options="searchForm.productCateList"-->
+    <!--          placeholder="请选择品牌"-->
+    <!--        />-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-7" label="主图">-->
+    <!--        <y-img-->
+    <!--          :src="globalConfig.imgBaseUrl + image"-->
+    <!--          style="height: 30px; width: 30px"-->
+    <!--        ></y-img>-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-8" label="轮播图">-->
+    <!--        <y-img-->
+    <!--          :src="globalConfig.imgBaseUrl + sliderImage"-->
+    <!--          style="height: 30px; width: 30px"-->
+    <!--        ></y-img>-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-3" label="商品名">-->
+    <!--        <a-input v-model="searchForm.name" placeholder="请输入商品名" allowClear/>-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-10" label="商品简介">-->
+    <!--        <a-input v-model="searchForm.title" placeholder="请输入商品简介" allowClear/>-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-11" label="关键字">-->
+    <!--        <a-input v-model="searchForm.keyword" placeholder="请输入关键字" allowClear/>-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-13" label="虚拟销量">-->
+    <!--        <a-input v-model="searchForm.fictiSales" placeholder="根据情况输入虚拟销量" allowClear/>-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-14" label="排序">-->
+    <!--        <a-input v-model="searchForm.tenantSort" placeholder="排序"/>-->
+    <!--      </a-form-model-item>-->
+    <!--      <a-form-model-item slot="scopedSlots-15" label="分佣">-->
+    <!--        <a-input v-model="searchForm.isSub" placeholder="分佣"/>-->
+    <!--      </a-form-model-item>-->
 
-
-
-<!--    </y-search>-->
+    <!--    </y-search>-->
     <y-table
       rowKey="id"
       :columns="table.columns"
@@ -89,10 +87,9 @@
       :loading="table.loading"
       @change="tableChange"
     >
-
       <div slot="operations">
         <a-button type="primary" icon="plus" @click="onAdd"> 新建</a-button>
-        <a-divider type="vertical"/>
+        <a-divider type="vertical" />
         <a-popconfirm
           :title="'确定批量删除选中的分类'"
           ok-text="确定"
@@ -103,32 +100,32 @@
             批量删除
           </a-button>
         </a-popconfirm>
-        <a-divider type="vertical"/>
+        <a-divider type="vertical" />
       </div>
-      <div class="y-flex" slot="icon" slot-scope="{ text, record }">
+      <div slot="icon" slot-scope="{ text, record }" class="y-flex">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>
       </div>
       <!--   上下架 -->
       <div slot="isShow" slot-scope="{ text, record }">
-        {{ enumsMap['isShow'+text] }}
+        {{ enumsMap['isShow' + text] }}
       </div>
-<!--      是否单独分拥-->
+      <!--      是否单独分拥-->
       <div slot="isSub" slot-scope="{ text, record }" class="y-flex">
-        {{ enumsMap['isSub'+text] }}
+        {{ enumsMap['isSub' + text] }}
       </div>
-<!--      审核状态-->
+      <!--      审核状态-->
       <div slot="auditStatus" slot-scope="{ text, record }" class="y-flex">
-        {{ enumsMap['auditStatus'+text] }}
+        {{ enumsMap['auditStatus' + text] }}
       </div>
-<!--      规格-->
+      <!--      规格-->
       <div slot="isSpecType" slot-scope="{ text, record }" class="y-flex">
-        {{ enumsMap['isSpecType'+text] }}
+        {{ enumsMap['isSpecType' + text] }}
       </div>
       回收站
       <div slot="isRecycle" slot-scope="{ text, record }" class="y-flex">
-        {{ enumsMap['isRecycle'+text] }}
+        {{ enumsMap['isRecycle' + text] }}
       </div>
-      <div class="y-flex" slot="operation" slot-scope="{ text, record }">
+      <div slot="operation" slot-scope="{ text, record }" class="y-flex">
         <a-button-group>
           <!--            编辑分类-->
           <a-button
@@ -166,12 +163,12 @@
   </div>
 </template>
 <script>
-import {columns, enumsMap} from './pageConfig.js';
-import {deleteProduct, getProductPageList} from '@/api/ptm/product.js';
+import { columns, enumsMap } from './pageConfig.js';
+import { deleteProduct, getProductPageList } from '@/api/ptm/product.js';
 import edit from './edit.vue';
 
 export default {
-  components: {edit},
+  components: { edit },
   data() {
     return {
       enumsMap,
@@ -180,7 +177,7 @@ export default {
         id: null,
         tenantId: null, //商户id
         platCategoryId: null, // 平台分类id
-        ptmProductCategoryId: null,// TODO 待修改为平台属性
+        ptmProductCategoryId: null, // TODO 待修改为平台属性
         shopCategoryId: null, // 商户分类id
         brandId: null, // 品牌
         guaranteeIds: null, // 保障服务 多个逗号分隔
@@ -248,8 +245,8 @@ export default {
       if (this.table.records.length == 0 && this.table.pagination.pageNum > 1) {
         this.table.pagination.pageNum = this.table.pagination.pageNum - 1;
       }
-      let {pageNum, pageSize} = this.table.pagination;
-      let {records, total, current} = await getProductPageList({
+      let { pageNum, pageSize } = this.table.pagination;
+      let { records, total, current } = await getProductPageList({
         pageNum: pageNum,
         pageSize: pageSize,
         ...this.searchForm
@@ -267,10 +264,15 @@ export default {
     },
     // 批量删除商品分类
     async onBatchDelete() {
-      console.log("onBatchDelete.selectedRowKeys", this.table.rowSelection.selectedRowKeys)
-      await deleteProduct(this.table.rowSelection.selectedRowKeys.join(","));
+      console.log(
+        'onBatchDelete.selectedRowKeys',
+        this.table.rowSelection.selectedRowKeys
+      );
+      await deleteProduct(this.table.rowSelection.selectedRowKeys.join(','));
       this.$message.success(`批量删除分类成功`);
-      this.table.records = this.table.records.filter((item) => !this.table.rowSelection.selectedRowKeys.includes(item.id))
+      this.table.records = this.table.records.filter(
+        (item) => !this.table.rowSelection.selectedRowKeys.includes(item.id)
+      );
       this.table.rowSelection.selectedRowKeys = [];
       this.getData();
     },
@@ -283,7 +285,9 @@ export default {
     async onDelete(record) {
       await deleteProduct(record.id);
       this.$message.success(`删除分类${record.name}成功`);
-      this.table.records = this.table.records.filter((item) => item.id != record.id)
+      this.table.records = this.table.records.filter(
+        (item) => item.id != record.id
+      );
       this.getData();
     },
     // 商品分类行编辑

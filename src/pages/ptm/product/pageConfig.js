@@ -5,7 +5,7 @@
  * @date 2023-10-10
  */
 import * as product from '@/api/ptm/product';
-import {getEnumsMap} from "@/utils/enumsUtils.js";
+import { getEnumsMap } from '@/utils/enumsUtils.js';
 
 const columns = [
   {
@@ -28,7 +28,7 @@ const columns = [
   },
 
   {
-    title: '平台分类',  // TODO 需要每次登录后缓存平台分类后再通过vue过滤器显示实际商家分类名称
+    title: '平台分类', // TODO 需要每次登录后缓存平台分类后再通过vue过滤器显示实际商家分类名称
     dataIndex: 'platCategoryIds',
     key: 'platCategoryIds',
     width: 160,
@@ -214,7 +214,7 @@ const columns = [
     dataIndex: 'isSpecType',
     key: 'isSpecType',
     width: 160,
-    scopedSlots: {customRender: 'isSpecType'},
+    scopedSlots: { customRender: 'isSpecType' },
     props: {
       options: [
         {
@@ -226,7 +226,7 @@ const columns = [
           value: true
         }
       ]
-    },
+    }
   },
 
   {
@@ -234,7 +234,7 @@ const columns = [
     dataIndex: 'isRecycle',
     key: 'isRecycle',
     width: 160,
-    scopedSlots: {customRender: 'isRecycle'},
+    scopedSlots: { customRender: 'isRecycle' },
     props: {
       options: [
         {
@@ -246,7 +246,7 @@ const columns = [
           value: true
         }
       ]
-    },
+    }
   },
 
   {
@@ -254,7 +254,7 @@ const columns = [
     dataIndex: 'isSub',
     key: 'isSub',
     width: 160,
-    scopedSlots: {customRender: 'isSub'},
+    scopedSlots: { customRender: 'isSub' },
     props: {
       options: [
         {
@@ -266,7 +266,7 @@ const columns = [
           value: true
         }
       ]
-    },
+    }
   },
 
   {
@@ -285,7 +285,7 @@ const columns = [
     //值类型
     valType: 'object',
     formType: 'radioGroup',
-    scopedSlots: {customRender: 'auditStatus'},
+    scopedSlots: { customRender: 'auditStatus' },
     props: {
       options: [
         {
@@ -332,7 +332,7 @@ const columns = [
   {
     title: '上架',
     dataIndex: 'isShow',
-    scopedSlots: {customRender: 'isShow'},
+    scopedSlots: { customRender: 'isShow' },
     key: 'isShow',
     width: 160,
     props: {
@@ -346,7 +346,7 @@ const columns = [
           value: true
         }
       ]
-    },
+    }
   },
 
   {
@@ -364,7 +364,7 @@ const columns = [
     },
     noEdit: true,
     noAdd: true,
-    noShow: true,
+    noShow: true
   },
 
   {
@@ -411,7 +411,7 @@ const columns = [
     title: '操作',
     key: 'operation',
     dataIndex: 'operation',
-    scopedSlots: {customRender: 'operation'},
+    scopedSlots: { customRender: 'operation' },
     fixed: 'right',
     ellipsis: true,
     noShow: true

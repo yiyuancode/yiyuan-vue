@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的平台商品分类信息(全部)
@@ -9,11 +9,10 @@ import {request} from '@/utils/request';
  * @date 2023-11-19
  */
 export function getProductCategoryPlatList(data) {
-    return request({
-        url: "/ptm/productCategoryPlat/list",
-        params: data
-    });
-
+  return request({
+    url: '/ptm/productCategoryPlat/list',
+    params: data
+  });
 }
 /**
  * 获取所有的平台商品分类信息(分页)
@@ -24,13 +23,11 @@ export function getProductCategoryPlatList(data) {
  * @date 2023-11-19
  */
 export function getProductCategoryPlatPageList(data) {
-    return request({
-        url: "/ptm/productCategoryPlat/page",
-        params: data
-    });
-
+  return request({
+    url: '/ptm/productCategoryPlat/page',
+    params: data
+  });
 }
-
 
 /**
  * 获取平台商品分类详情
@@ -41,10 +38,9 @@ export function getProductCategoryPlatPageList(data) {
  * @date 2023-11-19
  */
 export function getProductCategoryPlatDetail(id) {
-    return request({
-        url: `/ptm/productCategoryPlat/details/${id}`,
-    });
-
+  return request({
+    url: `/ptm/productCategoryPlat/details/${id}`
+  });
 }
 
 /**
@@ -57,12 +53,11 @@ export function getProductCategoryPlatDetail(id) {
  */
 
 export function addProductCategoryPlat(data) {
-    return request({
-        url: "/ptm/productCategoryPlat/add",
-        method: "post",
-        data
-    });
-
+  return request({
+    url: '/ptm/productCategoryPlat/add',
+    method: 'post',
+    data
+  });
 }
 
 /**
@@ -75,16 +70,14 @@ export function addProductCategoryPlat(data) {
  * @date 2023-11-19
  */
 export function editProductCategoryPlat(data, id) {
-    return request({
-        url: "/ptm/productCategoryPlat/edit",
-        method: "post",
-        data: {
-...
-    data, id
-}
-})
-    ;
-
+  return request({
+    url: '/ptm/productCategoryPlat/edit',
+    method: 'post',
+    data: {
+      ...data,
+      id
+    }
+  });
 }
 /**
  * 删除平台商品分类（可支持批量删除）
@@ -95,16 +88,14 @@ export function editProductCategoryPlat(data, id) {
  * @date 2023-11-19
  */
 export function deleteProductCategoryPlat(ids) {
-    return request({
-        url: "/ptm/productCategoryPlat/delete",
-        method: "post",
-        params: {
-            ids
-        }
-    });
-
+  return request({
+    url: '/ptm/productCategoryPlat/delete',
+    method: 'post',
+    params: {
+      ids
+    }
+  });
 }
-
 
 /**
  * 查询平台商品分类树结构
@@ -116,8 +107,7 @@ export function deleteProductCategoryPlat(ids) {
  */
 export function getProductCategoryPlatTree(data) {
   return request({
-    url: "/ptm/productCategoryPlat/tree",
+    url: '/ptm/productCategoryPlat/tree',
     params: data
   });
-
 }

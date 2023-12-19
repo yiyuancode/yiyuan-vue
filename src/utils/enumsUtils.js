@@ -3,12 +3,11 @@ export function getEnumsMap(columns) {
   columns.forEach((column) => {
     if (column.props && column.props.options) {
       const options = column.props.options;
-      options.forEach(prop => {
+      options.forEach((prop) => {
         const key = `${column.dataIndex}${prop.value}`;
         nestedMap[key] = prop.label;
       });
     }
-
-  })
+  });
   return nestedMap;
 }

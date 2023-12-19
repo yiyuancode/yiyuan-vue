@@ -8,9 +8,9 @@
         <slot name="operations"></slot>
 
         <a-tooltip placement="top" title="刷新">
-          <a-icon :style="iconStyle" type="reload" @click="reload"/>
+          <a-icon :style="iconStyle" type="reload" @click="reload" />
         </a-tooltip>
-        <a-divider type="vertical"/>
+        <a-divider type="vertical" />
         <a-tooltip placement="top" title="密度">
           <a-dropdown :trigger="['click']">
             <a-icon
@@ -34,7 +34,7 @@
             </a-menu>
           </a-dropdown>
         </a-tooltip>
-        <a-divider type="vertical"/>
+        <a-divider type="vertical" />
         <a-tooltip placement="top" title="列设置">
           <a-popover placement="bottomLeft" trigger="click">
             <template slot="content">
@@ -59,7 +59,7 @@
                     >
                       <span class="drag-icon">
                         <a-icon type="more" :style="{ color: '#8E989D' }"
-                        /></span>
+                      /></span>
 
                       <div class="item-right">
                         <a-checkbox
@@ -101,7 +101,7 @@
                     >
                       <span class="drag-icon">
                         <a-icon type="more" :style="{ color: '#8E989D' }"
-                        /></span>
+                      /></span>
                       <div class="item-right">
                         <a-checkbox
                           :checked="item['checked']"
@@ -149,7 +149,7 @@
                     >
                       <span class="drag-icon">
                         <a-icon type="more" :style="{ color: '#8E989D' }"
-                        /></span>
+                      /></span>
                       <div class="item-right">
                         <a-checkbox
                           :checked="item['checked']"
@@ -185,11 +185,11 @@
                   列设置
                 </div>
                 <a class="setting-title-btn" @click="resetColumnsSetting"
-                >重置</a
+                  >重置</a
                 >
               </div>
             </template>
-            <a-icon :style="iconStyle" type="setting"/>
+            <a-icon :style="iconStyle" type="setting" />
           </a-popover>
         </a-tooltip>
       </div>
@@ -223,377 +223,376 @@
   </a-card>
 </template>
 <script>
-  import _ from 'lodash';
+import _ from 'lodash';
 
-  export default {
-    props: {
-      rowKey: {
-        type: String,
-        default: function () {
-          return '';
-        }
-      },
-      props: {
-        type: Array,
-        default: function () {
-          return [];
-        }
-      },
-      columns: {
-        type: Array,
-        default: function () {
-          return [];
-        }
-      },
-      records: {
-        type: Array,
-        default: function () {
-          return [];
-        }
-      },
-      pagination: {
-        type: Object,
-        default: function () {
-          return {
-            pageNum: 1,
-            pageSize: 10,
-            total: 0,
-            pageSizeOptions: ['10', '20', '30', '40'],
-            showSizeChanger: true,
-            showTotal: (total) => `共 ${total} 条` // 显示总条数和当前数据范围
-          };
-        }
-      },
-      rowSelection: {
-        type: Object,
-        default: function () {
-          return {};
-        }
-      },
-      loading: {
-        type: Boolean,
-        default: function () {
-          return false;
-        }
+export default {
+  props: {
+    rowKey: {
+      type: String,
+      default: function () {
+        return '';
       }
     },
-    data() {
-      return {
-        dPagination: {
-          current: 1,
+    props: {
+      type: Array,
+      default: function () {
+        return [];
+      }
+    },
+    columns: {
+      type: Array,
+      default: function () {
+        return [];
+      }
+    },
+    records: {
+      type: Array,
+      default: function () {
+        return [];
+      }
+    },
+    pagination: {
+      type: Object,
+      default: function () {
+        return {
+          pageNum: 1,
           pageSize: 10,
           total: 0,
           pageSizeOptions: ['10', '20', '30', '40'],
           showSizeChanger: true,
           showTotal: (total) => `共 ${total} 条` // 显示总条数和当前数据范围
-        },
-        dSelectedRowKeys: [],
-        iconStyle: {
-          fontSize: '16px'
-        },
-        drag: false,
-        columnsCheckboxValue: [],
-        indeterminate: false,
-        selectedKeys: ['default'],
-        sourceColumns: [],
-        noFixedColumns: [],
-        fixedRightColumns: [],
-        fixedLeftColumns: []
-      };
-    },
-    computed: {
-      uTableSize() {
-        return this.selectedKeys[0];
-      },
-      uScopedSlots() {
-        return this.columns.filter((item) => {
-          return item.scopedSlots;
-        });
-      },
-      uColumns() {
-        let noFixedColumnsAndShow = this.noFixedColumns.filter((item) => !item.noShow)
-        let noFixedColumns = noFixedColumnsAndShow.filter((item) => {
-          return item.checked;
-        });
-        let fixedLeftColumns = this.fixedLeftColumns.filter((item) => {
-          if (
-            this.fixedLeftColumns.some((item2) => {
-              return item2.key == item.key;
-            })
-          ) {
-            item.fixed = 'left';
-            console.log('fixedLeftColumns-1', item);
-          }
-          return item.checked;
-        });
-        let fixedRightColumns = this.fixedRightColumns.filter((item) => {
-          if (
-            this.fixedRightColumns.some((item2) => {
-              return item2.key == item.key;
-            })
-          ) {
-            item.fixed = 'right';
-            console.log('fixedRightColumns-2', item);
-          }
-
-          return item.checked;
-        });
-        console.log('noFixedColumns:',noFixedColumns);
-        return [...fixedLeftColumns, ...noFixedColumns, ...fixedRightColumns];
-      },
-      uPagination() {
-        return {
-          current: this.pagination.pageNum,
-          pageSize: this.pagination.pageSize,
-          total: this.pagination.total,
-          pageSizeOptions: this.pagination.pageSizeOptions,
-          showSizeChanger: this.pagination.showSizeChanger,
-          showTotal: this.pagination.showTotal // 显示总条数和当前数据范围
         };
-      },
-      uCheckAlll() {
-        return !(
-          this.noFixedColumns.some((item) => !item.checked) ||
-          this.fixedLeftColumns.some((item) => !item.checked) ||
-          this.fixedRightColumns.some((item) => !item.checked)
-        );
-      },
-      uIndeterminate() {
-        if (
-          (this.noFixedColumns.some((item) => !item.checked) ||
-            this.fixedLeftColumns.some((item) => !item.checked) ||
-            this.fixedRightColumns.some((item) => !item.checked)) &&
-          (this.noFixedColumns.some((item) => item.checked) ||
-            this.fixedLeftColumns.some((item) => item.checked) ||
-            this.fixedRightColumns.some((item) => item.checked))
-        ) {
-          return true;
-        }
+      }
+    },
+    rowSelection: {
+      type: Object,
+      default: function () {
+        return {};
+      }
+    },
+    loading: {
+      type: Boolean,
+      default: function () {
         return false;
       }
-    },
-    created() {
-      this.resetColumnsSetting();
-    },
-    methods: {
-      change(pagination) {
-        console.log('change.pagination', pagination);
-        //{...pagination, pageNum: pagination.current}
-        this.$emit('change', {
-          pageNum: pagination.current,
-          pageSize: pagination.pageSize,
-          total: pagination.total,
-          pageSizeOptions: pagination.pageSizeOptions,
-          showSizeChanger: pagination.showSizeChanger,
-          showTotal: pagination.showTotal // 显示总条数和当前数据范围
-        });
-      },
-      reload() {
-        this.change(this.pagination);
-      },
-      //开始拖拽事件
-      onStart() {
-        this.drag = true;
-      },
-      //拖拽结束事件
-      onEnd() {
-        this.drag = false;
-      },
-      onCheckAllChange(e) {
-        console.log('onCheckAllChange', e);
-        // return [...fixedLeftColumns, ...noFixedColumns, ...fixedRightColumns];
-
-        if (e.target.checked) {
-          this.fixedLeftColumns.filter((item) => {
-            item.checked = true;
-          });
-          this.noFixedColumns.filter((item) => {
-            item.checked = true;
-          });
-          this.fixedRightColumns.filter((item) => {
-            item.checked = true;
-          });
-        } else {
-          this.fixedLeftColumns.filter((item) => {
-            item.checked = false;
-          });
-          this.noFixedColumns.filter((item) => {
-            item.checked = false;
-          });
-          this.fixedRightColumns.filter((item) => {
-            item.checked = false;
-          });
-        }
-      },
-      resetColumnsSetting() {
-        this.sourceColumns = _.cloneDeep(this.columns);
-        this.sourceColumns.forEach((item) => {
-          // item.checked = true;
-          this.$set(item, 'checked', true);
-        });
-        //最后再过滤一遍为写死的 noTable
-        this.sourceColumns = this.sourceColumns.filter((item) => {
-          return !item.noTable;
-        });
-
-        this.fixedRightColumns = this.sourceColumns.filter((item) => {
-          return item.fixed && item.fixed == 'right';
-        });
-        this.fixedLeftColumns = this.sourceColumns.filter((item) => {
-          return item.fixed && item.fixed == 'left';
-        });
-        this.noFixedColumns = this.sourceColumns.filter((item) => {
-          return !item.fixed;
-        });
-        // this.columnsCheckboxValue = this.sourceColumns.map(obj => obj.key)
-      },
-      addRightClick(item) {
-        if (!this.fixedRightColumns.some((item2) => item.key == item2.key)) {
-          this.fixedRightColumns.unshift(item);
-          this.noFixedColumns = this.noFixedColumns.filter(
-            (item3) => item3.key != item.key
-          );
-        }
-      },
-      addLeftClick(item) {
-        if (!this.fixedLeftColumns.some((item2) => item.key == item2.key)) {
-          this.fixedLeftColumns.push(item);
-          this.noFixedColumns = this.noFixedColumns.filter(
-            (item3) => item3.key != item.key
-          );
-        }
-      },
-      rmRightClick(item) {
-        this.fixedRightColumns = this.fixedRightColumns.filter((item3) => {
-          if (item3.key == item.key) {
-            this.$set(item3, 'fixed', false);
-          }
-          return item3.key != item.key;
-        });
-        this.noFixedColumns.push(item);
-      },
-      rmLeftClick(item) {
-        this.fixedLeftColumns = this.fixedLeftColumns.filter((item3) => {
-          if (item3.key == item.key) {
-            this.$set(item3, 'fixed', false);
-          }
-          return item3.key != item.key;
-        });
-        console.log('rmLeftClick.fixedLeftColumns', this.fixedLeftColumns);
-        this.noFixedColumns.unshift(item);
-      },
-      checkedChneg(e, item) {
-        // e.stopPropagation();
-        // console.log("checkedChneg",item)
-        this.$set(item, 'checked', e.target.checked);
-      }
     }
-  };
+  },
+  data() {
+    return {
+      dPagination: {
+        current: 1,
+        pageSize: 10,
+        total: 0,
+        pageSizeOptions: ['10', '20', '30', '40'],
+        showSizeChanger: true,
+        showTotal: (total) => `共 ${total} 条` // 显示总条数和当前数据范围
+      },
+      dSelectedRowKeys: [],
+      iconStyle: {
+        fontSize: '16px'
+      },
+      drag: false,
+      columnsCheckboxValue: [],
+      indeterminate: false,
+      selectedKeys: ['default'],
+      sourceColumns: [],
+      noFixedColumns: [],
+      fixedRightColumns: [],
+      fixedLeftColumns: []
+    };
+  },
+  computed: {
+    uTableSize() {
+      return this.selectedKeys[0];
+    },
+    uScopedSlots() {
+      return this.columns.filter((item) => {
+        return item.scopedSlots;
+      });
+    },
+    uColumns() {
+      let noFixedColumnsAndShow = this.noFixedColumns.filter(
+        (item) => !item.noShow
+      );
+      let noFixedColumns = noFixedColumnsAndShow.filter((item) => {
+        return item.checked;
+      });
+      let fixedLeftColumns = this.fixedLeftColumns.filter((item) => {
+        if (
+          this.fixedLeftColumns.some((item2) => {
+            return item2.key == item.key;
+          })
+        ) {
+          item.fixed = 'left';
+          console.log('fixedLeftColumns-1', item);
+        }
+        return item.checked;
+      });
+      let fixedRightColumns = this.fixedRightColumns.filter((item) => {
+        if (
+          this.fixedRightColumns.some((item2) => {
+            return item2.key == item.key;
+          })
+        ) {
+          item.fixed = 'right';
+          console.log('fixedRightColumns-2', item);
+        }
+
+        return item.checked;
+      });
+      console.log('noFixedColumns:', noFixedColumns);
+      return [...fixedLeftColumns, ...noFixedColumns, ...fixedRightColumns];
+    },
+    uPagination() {
+      return {
+        current: this.pagination.pageNum,
+        pageSize: this.pagination.pageSize,
+        total: this.pagination.total,
+        pageSizeOptions: this.pagination.pageSizeOptions,
+        showSizeChanger: this.pagination.showSizeChanger,
+        showTotal: this.pagination.showTotal // 显示总条数和当前数据范围
+      };
+    },
+    uCheckAlll() {
+      return !(
+        this.noFixedColumns.some((item) => !item.checked) ||
+        this.fixedLeftColumns.some((item) => !item.checked) ||
+        this.fixedRightColumns.some((item) => !item.checked)
+      );
+    },
+    uIndeterminate() {
+      if (
+        (this.noFixedColumns.some((item) => !item.checked) ||
+          this.fixedLeftColumns.some((item) => !item.checked) ||
+          this.fixedRightColumns.some((item) => !item.checked)) &&
+        (this.noFixedColumns.some((item) => item.checked) ||
+          this.fixedLeftColumns.some((item) => item.checked) ||
+          this.fixedRightColumns.some((item) => item.checked))
+      ) {
+        return true;
+      }
+      return false;
+    }
+  },
+  created() {
+    this.resetColumnsSetting();
+  },
+  methods: {
+    change(pagination) {
+      console.log('change.pagination', pagination);
+      //{...pagination, pageNum: pagination.current}
+      this.$emit('change', {
+        pageNum: pagination.current,
+        pageSize: pagination.pageSize,
+        total: pagination.total,
+        pageSizeOptions: pagination.pageSizeOptions,
+        showSizeChanger: pagination.showSizeChanger,
+        showTotal: pagination.showTotal // 显示总条数和当前数据范围
+      });
+    },
+    reload() {
+      this.change(this.pagination);
+    },
+    //开始拖拽事件
+    onStart() {
+      this.drag = true;
+    },
+    //拖拽结束事件
+    onEnd() {
+      this.drag = false;
+    },
+    onCheckAllChange(e) {
+      console.log('onCheckAllChange', e);
+      // return [...fixedLeftColumns, ...noFixedColumns, ...fixedRightColumns];
+
+      if (e.target.checked) {
+        this.fixedLeftColumns.filter((item) => {
+          item.checked = true;
+        });
+        this.noFixedColumns.filter((item) => {
+          item.checked = true;
+        });
+        this.fixedRightColumns.filter((item) => {
+          item.checked = true;
+        });
+      } else {
+        this.fixedLeftColumns.filter((item) => {
+          item.checked = false;
+        });
+        this.noFixedColumns.filter((item) => {
+          item.checked = false;
+        });
+        this.fixedRightColumns.filter((item) => {
+          item.checked = false;
+        });
+      }
+    },
+    resetColumnsSetting() {
+      this.sourceColumns = _.cloneDeep(this.columns);
+      this.sourceColumns.forEach((item) => {
+        // item.checked = true;
+        this.$set(item, 'checked', true);
+      });
+      //最后再过滤一遍为写死的 noTable
+      this.sourceColumns = this.sourceColumns.filter((item) => {
+        return !item.noTable;
+      });
+
+      this.fixedRightColumns = this.sourceColumns.filter((item) => {
+        return item.fixed && item.fixed == 'right';
+      });
+      this.fixedLeftColumns = this.sourceColumns.filter((item) => {
+        return item.fixed && item.fixed == 'left';
+      });
+      this.noFixedColumns = this.sourceColumns.filter((item) => {
+        return !item.fixed;
+      });
+      // this.columnsCheckboxValue = this.sourceColumns.map(obj => obj.key)
+    },
+    addRightClick(item) {
+      if (!this.fixedRightColumns.some((item2) => item.key == item2.key)) {
+        this.fixedRightColumns.unshift(item);
+        this.noFixedColumns = this.noFixedColumns.filter(
+          (item3) => item3.key != item.key
+        );
+      }
+    },
+    addLeftClick(item) {
+      if (!this.fixedLeftColumns.some((item2) => item.key == item2.key)) {
+        this.fixedLeftColumns.push(item);
+        this.noFixedColumns = this.noFixedColumns.filter(
+          (item3) => item3.key != item.key
+        );
+      }
+    },
+    rmRightClick(item) {
+      this.fixedRightColumns = this.fixedRightColumns.filter((item3) => {
+        if (item3.key == item.key) {
+          this.$set(item3, 'fixed', false);
+        }
+        return item3.key != item.key;
+      });
+      this.noFixedColumns.push(item);
+    },
+    rmLeftClick(item) {
+      this.fixedLeftColumns = this.fixedLeftColumns.filter((item3) => {
+        if (item3.key == item.key) {
+          this.$set(item3, 'fixed', false);
+        }
+        return item3.key != item.key;
+      });
+      console.log('rmLeftClick.fixedLeftColumns', this.fixedLeftColumns);
+      this.noFixedColumns.unshift(item);
+    },
+    checkedChneg(e, item) {
+      // e.stopPropagation();
+      // console.log("checkedChneg",item)
+      this.$set(item, 'checked', e.target.checked);
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
-  .y-tools {
-    height: 40px;
-    width: 100%;
+.y-tools {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .y-tools-title {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-
-    .y-tools-title {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      color: rgba(0, 0, 0, 0.85);
-      font-weight: 500;
-      font-size: 16px;
-      flex: 1;
-    }
-
-    .y-tools-action {
-      width: auto;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-
-    }
+    justify-content: flex-start;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    font-size: 16px;
+    flex: 1;
   }
 
-  .y-table {
-    margin: 20px;
-  }
-
-  /*被拖拽对象的样式*/
-  .item {
-    padding: 6px;
-    background-color: #fdfdfd;
-    /*border: solid 1px #eee;*/
-    margin-bottom: 10px;
-    cursor: move;
-    display: flex;
-    align-items: center;
-
-    .item-right {
-      margin-left: 5px;
-      display: flex;
-      flex: 1;
-      justify-content: space-between;
-
-      .item-right-icon {
-        display: none;
-      }
-    }
-  }
-
-
-  .item:hover .item-right-icon {
-    /*display: inline-block;*/
+  .y-tools-action {
     width: auto;
     display: flex;
-    flex: 1;
     align-items: center;
     justify-content: flex-end;
   }
+}
 
+.y-table {
+  margin: 20px;
+}
 
-  /*选中样式*/
-  .chosen {
-    border: solid 1px #3089dc !important;
-  }
+/*被拖拽对象的样式*/
+.item {
+  padding: 6px;
+  background-color: #fdfdfd;
+  /*border: solid 1px #eee;*/
+  margin-bottom: 10px;
+  cursor: move;
+  display: flex;
+  align-items: center;
 
-  .setting-content {
-    max-height: 400px;
-    overflow-y: auto;
-  }
-
-  .setting-content::-webkit-scrollbar {
-    background-color: #e8eaec;
-    width: 0 !important;
-  }
-
-  .setting-title {
-    width: 100%;
+  .item-right {
+    margin-left: 5px;
     display: flex;
-    align-items: center;
+    flex: 1;
     justify-content: space-between;
+
+    .item-right-icon {
+      display: none;
+    }
   }
+}
 
-  .setting-title-name {
-  }
+.item:hover .item-right-icon {
+  /*display: inline-block;*/
+  width: auto;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-end;
+}
 
-  /*.ant-table-tbody > tr > td {*/
-  /*   padding: 0px !important;*/
-  /* }*/
+/*选中样式*/
+.chosen {
+  border: solid 1px #3089dc !important;
+}
 
-  /*.ant-table-tbody > tr > th {*/
-  /*  padding: 0px !important;*/
-  /*}*/
+.setting-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
 
-  /*/deep/ .ant-table-thead > tr > th {*/
-  /*  padding: 12px 15px !important;*/
-  /*  !*line-height: 0px!important;*!*/
-  /*}*/
+.setting-content::-webkit-scrollbar {
+  background-color: #e8eaec;
+  width: 0 !important;
+}
 
-  /*/deep/ .ant-table-tbody > tr > td {*/
-  /*  padding: 12px 15px !important;*/
+.setting-title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  /*}*/
+.setting-title-name {
+}
+
+/*.ant-table-tbody > tr > td {*/
+/*   padding: 0px !important;*/
+/* }*/
+
+/*.ant-table-tbody > tr > th {*/
+/*  padding: 0px !important;*/
+/*}*/
+
+/*/deep/ .ant-table-thead > tr > th {*/
+/*  padding: 12px 15px !important;*/
+/*  !*line-height: 0px!important;*!*/
+/*}*/
+
+/*/deep/ .ant-table-tbody > tr > td {*/
+/*  padding: 12px 15px !important;*/
+
+/*}*/
 </style>

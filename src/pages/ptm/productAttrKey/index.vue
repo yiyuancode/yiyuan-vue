@@ -1,8 +1,14 @@
 <template>
   <div>
-<!--    注意scopedSlots数字定义的item序列需要和下面的实际form-item 对应-->
+    <!--    注意scopedSlots数字定义的item序列需要和下面的实际form-item 对应-->
     <y-search
-      :scopedSlots="['isShow', 'id','tenantId', 'ptmProductCategoryId', 'attrKey']"
+      :scopedSlots="[
+        'isShow',
+        'id',
+        'tenantId',
+        'ptmProductCategoryId',
+        'attrKey'
+      ]"
       :loading="table.loading"
       @search="search"
     >
@@ -16,7 +22,10 @@
         <a-input v-model="form.id" allowClear placeholder="ID"></a-input>
       </a-form-model-item>
       <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户">
-        <y-shop-select v-model="form.tenantId" placeholder="请选择商户"></y-shop-select>
+        <y-shop-select
+          v-model="form.tenantId"
+          placeholder="请选择商户"
+        ></y-shop-select>
       </a-form-model-item>
       <a-form-model-item
         slot="ptmProductCategoryId"
@@ -226,15 +235,15 @@ export default {
       // console.log('this.searchDataOfProductCate:',this.searchDataOfProductCate);
     },
     formatData(data) {
-      const that = this
+      const that = this;
       data.forEach((element) => {
         if (element.children && element.children.length > 0) {
-          that.formatData(element.children)
+          that.formatData(element.children);
         } else {
-          element.children = undefined
+          element.children = undefined;
         }
-      })
-      return data
+      });
+      return data;
     }
   }
 };

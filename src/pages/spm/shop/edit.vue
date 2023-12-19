@@ -1,28 +1,57 @@
 <template>
   <div class="manage-container">
-    <a-form-model ref="ruleForm" :model="formData" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
+    <a-form-model
+      ref="ruleForm"
+      :model="formData"
+      :rules="rules"
+      :label-col="labelCol"
+      :wrapper-col="wrapperCol"
+    >
       <a-form-model-item label="地址" prop="sysAreaId">
         <!-- <a-input
           v-model="formData.name"
           placeholder="请选择店铺地址"
           allowClear
         /> -->
-        <yAreaSelect v-model="formData.sysAreaId" :key="formData.sysAreaId"></yAreaSelect>
+        <yAreaSelect
+          :key="formData.sysAreaId"
+          v-model="formData.sysAreaId"
+        ></yAreaSelect>
       </a-form-model-item>
       <a-form-model-item label="店铺详细地址" prop="shopAddress">
-        <a-input v-model="formData.shopAddress" placeholder="请输入店铺地址" allowClear />
+        <a-input
+          v-model="formData.shopAddress"
+          placeholder="请输入店铺地址"
+          allowClear
+        />
       </a-form-model-item>
       <a-form-model-item label="商户名称" prop="merchantName">
-        <a-input v-model="formData.merchantName" placeholder="请输入商户名称" allowClear />
+        <a-input
+          v-model="formData.merchantName"
+          placeholder="请输入商户名称"
+          allowClear
+        />
       </a-form-model-item>
       <a-form-model-item label="商户邮箱" prop="merchantEmail">
-        <a-input v-model="formData.merchantEmail" placeholder="请输入商户邮箱" allowClear />
+        <a-input
+          v-model="formData.merchantEmail"
+          placeholder="请输入商户邮箱"
+          allowClear
+        />
       </a-form-model-item>
       <a-form-model-item label="商户手机号" prop="merchantPhone">
-        <a-input v-model="formData.merchantPhone" placeholder="请输入商户手机号" allowClear />
+        <a-input
+          v-model="formData.merchantPhone"
+          placeholder="请输入商户手机号"
+          allowClear
+        />
       </a-form-model-item>
       <a-form-model-item label="商户法人" prop="merchantLegalRepresentative">
-        <a-input v-model="formData.merchantLegalRepresentative" placeholder="请输入商户法人" allowClear />
+        <a-input
+          v-model="formData.merchantLegalRepresentative"
+          placeholder="请输入商户法人"
+          allowClear
+        />
       </a-form-model-item>
       <a-form-model-item label="商户主营类目" prop="mainCategoryIds">
         <yPlatCategorySelect v-model="formData.mainCategoryIds" />
@@ -31,10 +60,18 @@
         <yShopTypeSelect v-model="formData.spmShopTypeId" />
       </a-form-model-item>
       <a-form-model-item label="商户手续费" prop="merchantFee">
-        <a-input v-model="formData.merchantFee" placeholder="请输入商户手续费" allowClear />
+        <a-input
+          v-model="formData.merchantFee"
+          placeholder="请输入商户手续费"
+          allowClear
+        />
       </a-form-model-item>
       <a-form-model-item label="商户星级" prop="merchantRating">
-        <a-input v-model="formData.merchantRating" placeholder="请输入商户星级" allowClear />
+        <a-input
+          v-model="formData.merchantRating"
+          placeholder="请输入商户星级"
+          allowClear
+        />
       </a-form-model-item>
       <a-form-model-item label="资质图片" prop="qualificationImages">
         <!-- <a-input
@@ -42,11 +79,17 @@
           placeholder="请输入资质图片"
           allowClear
         /> -->
-        <y-upload-multiple v-model="formData.qualificationImages"
-          :key="formData.qualificationImages"></y-upload-multiple>
+        <y-upload-multiple
+          :key="formData.qualificationImages"
+          v-model="formData.qualificationImages"
+        ></y-upload-multiple>
       </a-form-model-item>
       <a-form-model-item label="店铺名称" prop="shopName">
-        <a-input v-model="formData.shopName" placeholder="请输入店铺名称" allowClear />
+        <a-input
+          v-model="formData.shopName"
+          placeholder="请输入店铺名称"
+          allowClear
+        />
       </a-form-model-item>
       <a-form-model-item label="店铺主头像" prop="shopOwnerAvatar">
         <y-upload-single v-model="formData.shopOwnerAvatar"></y-upload-single>
@@ -57,10 +100,17 @@
           placeholder="请输入店铺背景图"
           allowClear
         /> -->
-        <y-upload-single v-model="formData.shopBackgroundImage"></y-upload-single>
+        <y-upload-single
+          v-model="formData.shopBackgroundImage"
+        ></y-upload-single>
       </a-form-model-item>
-      <a-form-model-item label="推荐店铺背景图" prop="recommendedShopBackgroundImage">
-        <y-upload-single v-model="formData.recommendedShopBackgroundImage"></y-upload-single>
+      <a-form-model-item
+        label="推荐店铺背景图"
+        prop="recommendedShopBackgroundImage"
+      >
+        <y-upload-single
+          v-model="formData.recommendedShopBackgroundImage"
+        ></y-upload-single>
       </a-form-model-item>
       <a-form-model-item label="店铺封面图" prop="shopCover">
         <y-upload-single v-model="formData.shopCover"></y-upload-single>
@@ -69,11 +119,19 @@
         <y-upload-single v-model="formData.shopLogo"></y-upload-single>
       </a-form-model-item>
       <a-form-model-item label="店铺简介" prop="shopDescription">
-        <a-textarea v-model="formData.shopDescription" placeholder="请输入店铺简介" allow-clear />
+        <a-textarea
+          v-model="formData.shopDescription"
+          placeholder="请输入店铺简介"
+          allow-clear
+        />
       </a-form-model-item>
 
       <a-form-model-item label="库存告警阈值" prop="inventoryAlert">
-        <a-input v-model="formData.inventoryAlert" placeholder="请输入库存告警阈值" allowClear />
+        <a-input
+          v-model="formData.inventoryAlert"
+          placeholder="请输入库存告警阈值"
+          allowClear
+        />
       </a-form-model-item>
       <a-form-model-item label="是否支持自提" prop="isSupportsSelfPickup">
         <a-radio-group v-model="formData.isSupportsSelfPickup">
@@ -83,36 +141,50 @@
       </a-form-model-item>
       <a-form-model-item label="结算类型" prop="settlementType">
         <a-radio-group v-model="formData.settlementType">
-          <a-radio :value="1">
-            银行卡
-          </a-radio>
-          <a-radio :value="2">
-            微信
-          </a-radio>
-          <a-radio :value="3">
-            支付宝
-          </a-radio>
+          <a-radio :value="1"> 银行卡 </a-radio>
+          <a-radio :value="2"> 微信 </a-radio>
+          <a-radio :value="3"> 支付宝 </a-radio>
         </a-radio-group>
       </a-form-model-item>
       <!-- 银行卡 -->
       <div v-if="formData.settlementType == 1">
         <a-form-model-item label="收款人" prop="bankPayee">
-          <a-input v-model="formData.bankPayee" placeholder="请输入收款人" allowClear />
+          <a-input
+            v-model="formData.bankPayee"
+            placeholder="请输入收款人"
+            allowClear
+          />
         </a-form-model-item>
         <a-form-model-item label="开户银行" prop="bankNumber">
-          <a-input v-model="formData.bankNumber" placeholder="请输入开户银行" allowClear />
+          <a-input
+            v-model="formData.bankNumber"
+            placeholder="请输入开户银行"
+            allowClear
+          />
         </a-form-model-item>
         <a-form-model-item label="开户行地址" prop="bankAddress">
-          <a-input v-model="formData.bankAddress" placeholder="请输入开户行地址" allowClear />
+          <a-input
+            v-model="formData.bankAddress"
+            placeholder="请输入开户行地址"
+            allowClear
+          />
         </a-form-model-item>
       </div>
       <!-- 微信 -->
       <div v-if="formData.settlementType == 2">
         <a-form-model-item label="真实姓名" prop="wechatRealName">
-          <a-input v-model="formData.wechatRealName" placeholder="请输入真实姓名" allowClear />
+          <a-input
+            v-model="formData.wechatRealName"
+            placeholder="请输入真实姓名"
+            allowClear
+          />
         </a-form-model-item>
         <a-form-model-item label="微信号" prop="wechatAccount">
-          <a-input v-model="formData.wechatAccount" placeholder="请输入微信号" allowClear />
+          <a-input
+            v-model="formData.wechatAccount"
+            placeholder="请输入微信号"
+            allowClear
+          />
         </a-form-model-item>
         <a-form-model-item label="收款二维码" prop="wechatQrCode">
           <y-upload-single v-model="formData.wechatQrCode"></y-upload-single>
@@ -121,7 +193,11 @@
       <!-- 支付宝 -->
       <div v-if="formData.settlementType == 3">
         <a-form-model-item label="真实姓名" prop="alipayRealName">
-          <a-input v-model="formData.alipayRealName" placeholder="请输入真实姓名" allowClear />
+          <a-input
+            v-model="formData.alipayRealName"
+            placeholder="请输入真实姓名"
+            allowClear
+          />
         </a-form-model-item>
         <a-form-model-item label="支付宝二维码" prop="alipayQrCode">
           <y-upload-single v-model="formData.alipayQrCode"></y-upload-single>
@@ -135,7 +211,11 @@
         </a-radio-group>
       </a-form-model-item>
       <a-form-model-item label="排序" prop="sort">
-        <a-input v-model="formData.sort" placeholder="请输入排序值" allowClear />
+        <a-input
+          v-model="formData.sort"
+          placeholder="请输入排序值"
+          allowClear
+        />
       </a-form-model-item>
       <a-form-model-item label="状态" prop="isShow">
         <a-radio-group v-model="formData.isShow">
@@ -152,231 +232,265 @@
 </template>
 
 <script>
-  import {
-    getShopDetail,
-    shopTypeList,
-    editShop,
-    addShop
-  } from '@/api/spm/shop';
-  export default {
-    props: {
-      editId: {
-        // 待编辑数据
-        type: String,
-        require: false
-      }
-    },
-    data() {
-      return {
-        formData: {
-          spmShopTypeId: null, //店铺类型id
-          sysAreaId: null, //地址id
-          shopAddress: '', //店铺详细地址
-          merchantName: null, //商户名称
-          merchantEmail: null, //商户邮箱
-          merchantPhone: '', //商户手机号
-          merchantLegalRepresentative: null, //商户法人
-          mainCategoryIds: '', //商户分类
-          merchantType: '', //商户类别
-          merchantFee: '', //商户手续费
-          merchantRating: '', //商户星级
-          qualificationImages: '', //资质图片
-          shopName: '', //店铺名称
-          shopOwnerAvatar: '', //店铺主头像
-          shopBackgroundImage: '', //店铺背景图
-          recommendedShopBackgroundImage: '', //推荐店铺背景图
-          shopCover: '', //店铺封面图
-          shopLogo: '', //店铺logo
-          shopDescription: '', //店铺简介
-          inventoryAlert: 0, //库存告警阈值
-          isSupportsSelfPickup: false, //是否支持自提
-          settlementType: 1, //结算类型#1=银行卡|2=微信|3=支付宝
-          bankPayee: '', //银行卡结算-收款人
-          bankNumber: '', //银行卡结算-开户银行
-          bankAddress: '', //银行卡结算-开户行地址
-          wechatRealName: '', //微信结算-真实姓名
-          wechatAccount: '', //微信结算-微信号
-          wechatQrCode: '', //微信结算-收款二维码
-          alipayRealName: '', //支付宝结算-真实姓名
-          alipayAccount: '', //支付宝结算-微信号
-          alipayQrCode: '', //支付宝结算-收款二维码
-          isAudit: false, //是否加入审核
-          sort: 0, //排序
-          isShow: false //显示状态
-        },
+import { getShopDetail, shopTypeList, editShop, addShop } from '@/api/spm/shop';
+export default {
+  props: {
+    editId: {
+      // 待编辑数据
+      type: String,
+      require: false
+    }
+  },
+  data() {
+    return {
+      formData: {
+        spmShopTypeId: null, //店铺类型id
+        sysAreaId: null, //地址id
+        shopAddress: '', //店铺详细地址
+        merchantName: null, //商户名称
+        merchantEmail: null, //商户邮箱
+        merchantPhone: '', //商户手机号
+        merchantLegalRepresentative: null, //商户法人
+        mainCategoryIds: '', //商户分类
+        merchantType: '', //商户类别
+        merchantFee: '', //商户手续费
+        merchantRating: '', //商户星级
+        qualificationImages: '', //资质图片
+        shopName: '', //店铺名称
+        shopOwnerAvatar: '', //店铺主头像
+        shopBackgroundImage: '', //店铺背景图
+        recommendedShopBackgroundImage: '', //推荐店铺背景图
+        shopCover: '', //店铺封面图
+        shopLogo: '', //店铺logo
+        shopDescription: '', //店铺简介
+        inventoryAlert: 0, //库存告警阈值
+        isSupportsSelfPickup: false, //是否支持自提
+        settlementType: 1, //结算类型#1=银行卡|2=微信|3=支付宝
+        bankPayee: '', //银行卡结算-收款人
+        bankNumber: '', //银行卡结算-开户银行
+        bankAddress: '', //银行卡结算-开户行地址
+        wechatRealName: '', //微信结算-真实姓名
+        wechatAccount: '', //微信结算-微信号
+        wechatQrCode: '', //微信结算-收款二维码
+        alipayRealName: '', //支付宝结算-真实姓名
+        alipayAccount: '', //支付宝结算-微信号
+        alipayQrCode: '', //支付宝结算-收款二维码
+        isAudit: false, //是否加入审核
+        sort: 0, //排序
+        isShow: false //显示状态
+      },
 
-        shopType: [],
-        labelCol: {
-          span: 4
-        },
-        wrapperCol: {
-          span: 14
-        },
-        rules: {
-          sysAreaId: [{
+      shopType: [],
+      labelCol: {
+        span: 4
+      },
+      wrapperCol: {
+        span: 14
+      },
+      rules: {
+        sysAreaId: [
+          {
             required: true,
             message: '请选择店铺地址',
             trigger: 'blur'
-          }],
-          shopAddress: [{
+          }
+        ],
+        shopAddress: [
+          {
             required: true,
             message: '请输入店铺详细地址',
             trigger: 'blur'
-          }],
-          merchantName: [{
+          }
+        ],
+        merchantName: [
+          {
             required: true,
             message: '请输入商户名称',
             trigger: 'blur'
-          }],
-          merchantPhone: [{
+          }
+        ],
+        merchantPhone: [
+          {
             required: true,
             message: '请输入商户手机号',
             trigger: 'blur'
-          }],
-          merchantLegalRepresentative: [{
+          }
+        ],
+        merchantLegalRepresentative: [
+          {
             required: true,
             message: '请输入商户法人',
             trigger: 'blur'
-          }],
-          mainCategoryIds: [{
+          }
+        ],
+        mainCategoryIds: [
+          {
             required: true,
             message: '请输入商户分类',
             trigger: 'blur'
-          }],
-          merchantFee: [{
+          }
+        ],
+        merchantFee: [
+          {
             required: true,
             message: '请输入商户手续费',
             trigger: 'blur'
-          }],
-          merchantRating: [{
+          }
+        ],
+        merchantRating: [
+          {
             required: true,
             message: '请输入商户星级',
             trigger: 'blur'
-          }],
-          qualificationImages: [{
+          }
+        ],
+        qualificationImages: [
+          {
             required: true,
             message: '请输入商户资质图片',
             trigger: 'blur'
-          }],
-          shopName: [{
+          }
+        ],
+        shopName: [
+          {
             required: true,
             message: '请输入店铺名称',
             trigger: 'blur'
-          }],
-          shopOwnerAvatar: [{
+          }
+        ],
+        shopOwnerAvatar: [
+          {
             required: true,
             message: '请输入店铺主头像',
             trigger: 'blur'
-          }],
-          shopBackgroundImage: [{
+          }
+        ],
+        shopBackgroundImage: [
+          {
             required: true,
             message: '请输入店铺背景图',
             trigger: 'blur'
-          }],
-          recommendedShopBackgroundImage: [{
+          }
+        ],
+        recommendedShopBackgroundImage: [
+          {
             required: true,
             message: '请输入推荐店铺背景图',
             trigger: 'blur'
-          }],
-          shopCover: [{
+          }
+        ],
+        shopCover: [
+          {
             required: true,
             message: '请输入店铺封面图',
             trigger: 'blur'
-          }],
-          shopLogo: [{
+          }
+        ],
+        shopLogo: [
+          {
             required: true,
             message: '请输入店铺Logo',
             trigger: 'blur'
-          }],
-          shopDescription: [{
+          }
+        ],
+        shopDescription: [
+          {
             required: true,
             message: '请输入店铺简介',
             trigger: 'blur'
-          }],
-          shopType: [{
+          }
+        ],
+        shopType: [
+          {
             required: true,
             message: '请输入店铺类型',
             trigger: 'blur'
-          }],
-          inventoryAlert: [{
+          }
+        ],
+        inventoryAlert: [
+          {
             required: true,
             message: '请输入库存告警阈值',
             trigger: 'blur'
-          }],
-          isSupportsSelfPickup: [{
+          }
+        ],
+        isSupportsSelfPickup: [
+          {
             required: true,
             message: '请选择是否支持自提',
             trigger: 'blur'
-          }],
-          settlementType: [{
+          }
+        ],
+        settlementType: [
+          {
             required: true,
             message: '请选择店铺结算类型',
             trigger: 'blur'
-          }]
-        }
-      };
-    },
-    created() {
-      if (this.editId) {
-        this.getDetail();
-      }
-      this.getShopTypeList();
-    },
-    mounted() {
-      if (!this.editId) {
-        this.resetForm();
-      }
-    },
-    methods: {
-
-      async getDetail() {
-        let data = await getShopDetail(this.editId);
-
-        this.formData = data;
-        console.log(this.formData);
-      },
-      // 提交表单
-      onSubmit() {
-        this.$refs.ruleForm.validate(async (valid) => {
-          if (valid) {
-            if (this.editId) {
-              // 修改
-              await editShop(this.formData, this.editId);
-              this.$message.success('修改成功');
-              this.$emit('onSaveSubmit');
-            } else {
-              // 添加
-              await addShop(this.formData);
-              this.$message.success('添加成功');
-              this.$emit('onSaveSubmit');
-            }
-            this.onCancelHandle();
-          } else {
-            console.log('error submit!!');
-            return false;
           }
-        });
-      },
-      // emit 关闭
-      onCancelHandle() {
-        this.$emit('onCancelSubmit');
-      },
-      // 重置
-      resetForm() {
-        this.$refs.ruleForm.resetFields();
-      },
-      // 店铺类别
-      async getShopTypeList() {
-        let response = await shopTypeList();
-        this.shopType = response;
+        ]
       }
+    };
+  },
+  created() {
+    if (this.editId) {
+      this.getDetail();
     }
-  };
+    this.getShopTypeList();
+  },
+  mounted() {
+    if (!this.editId) {
+      this.resetForm();
+    }
+  },
+  methods: {
+    async getDetail() {
+      let data = await getShopDetail(this.editId);
+
+      this.formData = data;
+      console.log(this.formData);
+    },
+    // 提交表单
+    onSubmit() {
+      this.$refs.ruleForm.validate(async (valid) => {
+        if (valid) {
+          if (this.editId) {
+            // 修改
+            await editShop(this.formData, this.editId);
+            this.$message.success('修改成功');
+            this.$emit('onSaveSubmit');
+          } else {
+            // 添加
+            await addShop(this.formData);
+            this.$message.success('添加成功');
+            this.$emit('onSaveSubmit');
+          }
+          this.onCancelHandle();
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    // emit 关闭
+    onCancelHandle() {
+      this.$emit('onCancelSubmit');
+    },
+    // 重置
+    resetForm() {
+      this.$refs.ruleForm.resetFields();
+    },
+    // 店铺类别
+    async getShopTypeList() {
+      let response = await shopTypeList();
+      this.shopType = response;
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
-  .manage-container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+.manage-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 </style>

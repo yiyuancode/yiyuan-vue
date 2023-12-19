@@ -8,10 +8,15 @@
       :wrapper-col="wrapperCol"
     >
       <a-form-model-item label="商户id" prop="name">
-        <y-shop-select :key="formData.tenantId" v-model="formData.tenantId"></y-shop-select>
+        <y-shop-select
+          :key="formData.tenantId"
+          v-model="formData.tenantId"
+        ></y-shop-select>
       </a-form-model-item>
       <a-form-model-item label="关联分类" prop="categoryIds">
-        <y-product-category-plat-select v-model="formData.categoryIds"></y-product-category-plat-select>
+        <y-product-category-plat-select
+          v-model="formData.categoryIds"
+        ></y-product-category-plat-select>
       </a-form-model-item>
       <a-form-model-item label="品牌名称" prop="name">
         <a-input
@@ -28,8 +33,8 @@
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmitHandle">{{
-            editId ? '编辑' : '创建'
-          }}</a-button>
+          editId ? '编辑' : '创建'
+        }}</a-button>
         <a-button style="margin-left: 10px" @click="onCancelHandle">
           取消
         </a-button>
@@ -39,11 +44,9 @@
 </template>
 
 <script>
-import {
-   addProductBrand, editProductBrand
-} from '@/api/ptm/productBrand';
+import { addProductBrand, editProductBrand } from '@/api/ptm/productBrand';
 import UploadSngle from '@/components/uploadSngle';
-import {getProductBrandDetail} from "../../../api/ptm/productBrand";
+import { getProductBrandDetail } from '../../../api/ptm/productBrand';
 export default {
   name: 'ProductCateEdit',
   components: { UploadSngle },
@@ -64,7 +67,9 @@ export default {
         productCateList: []
       },
       rules: {
-        categoryIds: [{ required: true, message: '请选择关联分类', trigger: 'blur' }],
+        categoryIds: [
+          { required: true, message: '请选择关联分类', trigger: 'blur' }
+        ],
         name: [{ required: true, message: '请填写品牌名称', trigger: 'blur' }],
         icon: [{ required: true, message: '请选择品牌图标', trigger: 'blur' }]
       }
@@ -85,7 +90,7 @@ export default {
     },
     onSubmitHandle() {
       this.$refs.ruleForm.validate(async (valid) => {
-        console.log("this.formData:", this.formData);
+        console.log('this.formData:', this.formData);
         if (valid) {
           if (this.formData.id) {
             await editProductBrand(this.formData, this.formData.id);

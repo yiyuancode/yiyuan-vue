@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的区域信息(分页)
@@ -99,10 +99,9 @@ export async function deleteArea(ids) {
  */
 export function getCityTreeById(id) {
   return request({
-    url:  `/sys/area/getAreaTreeById/${id}`
+    url: `/sys/area/getAreaTreeById/${id}`
   });
 }
-
 
 /**
  * 根据父id查询下一级树结构

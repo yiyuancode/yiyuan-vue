@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的商品分类信息(分页)
@@ -31,7 +31,6 @@ export function getProductCategoryTreeList(data) {
   });
 }
 
-
 /**
  * 获取商品类型 属性结构数据
  * @param data
@@ -44,14 +43,12 @@ export function getProductCategoryTreeListForPlat(data) {
   });
 }
 
-
 export function getProductCategoryTreeListForShop(data) {
   return request({
     url: '/ptm/productCategory/treeListForShop',
     params: data
   });
 }
-
 
 /**
  * 获取所有的商品分类信息

@@ -14,7 +14,7 @@ import yRichEditor from '@/components/yRichEditor/index.vue';
 import yDateRingePicker from '@/components/yDateRingePicker/index.vue';
 import yUploadMultiple from '@/components/yUploadMultiple/index.vue';
 import yUploadSingle from '@/components/yUploadSingle/index.vue';
-import {Cascader, Select} from 'element-ui';
+import { Cascader, Select } from 'element-ui';
 import yEditForm from '@/components/yEditForm/index.vue';
 import yFreightTempPriceTable from '@/components/yFreightTempPriceTable/index.vue';
 import yAreaMultipleCascader from '@/components/yAreaMultipleCascader/index.vue';
@@ -23,10 +23,8 @@ import yFreightTempSelect from '@/components/yFreightTempSelect/index.vue';
 import yEnumSpan from '@/components/yEnumSpan/index.vue';
 import yProductGuaranteeSelect from '@/components/yProductGuaranteeSelect/index.vue';
 
-
 import yProductCategoryPlatSelect from '@/components/business/yProductCategoryPlatSelect/index.vue';
 import yProductCategoryShopSelect from '@/components/business/yProductCategoryShopSelect/index.vue';
-
 
 export default {
   install(Vue) {
@@ -59,6 +57,5 @@ export default {
     Vue.component('yProductCategoryShopSelect', yProductCategoryShopSelect);
     Vue.component(Cascader.name, Cascader);
     Vue.component(Select.name, Select);
-
   }
 };

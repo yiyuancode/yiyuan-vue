@@ -42,12 +42,11 @@ const assetsCDN = {
 };
 
 module.exports = {
-
   runtimeCompiler: true,
   devServer: {
     //解决外网映射Invalid Host header
     disableHostCheck: true,
-    port: 80,
+    port: 80
     // proxy: {
     //   '/': {
     //     target: 'http://api.dev.yicode.net',  // 目标服务器的地址

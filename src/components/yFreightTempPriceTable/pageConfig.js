@@ -4,7 +4,7 @@
  * @author  一源团队-花和尚
  * @date 2023-11-05
  */
-import * as freightTempPrice from "@/api/ftm/freightTempPrice";
+import * as freightTempPrice from '@/api/ftm/freightTempPrice';
 
 const columns = [
   {
@@ -12,7 +12,7 @@ const columns = [
     dataIndex: 'sysAreaIds',
     key: 'sysAreaIds',
     width: 200,
-    scopedSlots: {customRender: 'sysAreaIds'},
+    scopedSlots: { customRender: 'sysAreaIds' }
   },
 
   {
@@ -20,15 +20,14 @@ const columns = [
     dataIndex: 'firstNum',
     key: 'firstNum',
     width: 100,
-    scopedSlots: {customRender: 'firstNum'},
+    scopedSlots: { customRender: 'firstNum' }
   },
   {
     title: '运费',
     dataIndex: 'firstPrice',
     key: 'firstPrice',
     width: 100,
-    scopedSlots: {customRender: 'firstPrice'},
-
+    scopedSlots: { customRender: 'firstPrice' }
   },
 
   {
@@ -36,21 +35,21 @@ const columns = [
     dataIndex: 'nextNum',
     key: 'nextNum',
     width: 100,
-    scopedSlots: {customRender: 'nextNum'},
+    scopedSlots: { customRender: 'nextNum' }
   },
   {
     title: '续费',
     dataIndex: 'nextPrice',
     key: 'nextPrice',
     width: 100,
-    scopedSlots: {customRender: 'nextPrice'},
+    scopedSlots: { customRender: 'nextPrice' }
   },
   {
     title: '满件包邮',
     dataIndex: 'fullPackageNum',
     key: 'fullPackageNum',
     width: 120,
-    scopedSlots: {customRender: 'fullPackageNum'},
+    scopedSlots: { customRender: 'fullPackageNum' }
   },
 
   {
@@ -58,13 +57,13 @@ const columns = [
     dataIndex: 'fullPackagePrice',
     key: 'fullPackagePrice',
     width: 120,
-    scopedSlots: {customRender: 'fullPackagePrice'},
+    scopedSlots: { customRender: 'fullPackagePrice' }
   },
   {
     title: '操作',
     width: 100,
-    scopedSlots: {customRender: 'action'},
-  },
+    scopedSlots: { customRender: 'action' }
+  }
   // {
   //   title: '是否包邮',
   //   dataIndex: 'isPackage',
@@ -90,21 +89,18 @@ const columns = [
   //   scopedSlots: {customRender: 'isPackage'},
   //
   // },
-
-
-]
-
+];
 
 // 模块配置
 const moduleConfig = {
   module: freightTempPrice,
-  moduleAdd: "addFreightTempPrice",
-  moduleEdit: "editFreightTempPrice",
-  moduleDelete: "deleteFreightTempPrice",
-  moduleGetList: "getFreightTempPricePageList",
-  moduleGetDetail: "getFreightTempPriceDetail",
-  moduleName: "物流模板价格",
-}
+  moduleAdd: 'addFreightTempPrice',
+  moduleEdit: 'editFreightTempPrice',
+  moduleDelete: 'deleteFreightTempPrice',
+  moduleGetList: 'getFreightTempPricePageList',
+  moduleGetDetail: 'getFreightTempPriceDetail',
+  moduleName: '物流模板价格'
+};
 
 // 权限对象
 const permissionObj = {
@@ -114,8 +110,4 @@ const permissionObj = {
   deleteBtn: 'ftm:freightTempPrice:delete'
 };
 
-export {
-  columns,
-  moduleConfig,
-  permissionObj
-};
+export { columns, moduleConfig, permissionObj };

@@ -1,130 +1,129 @@
 <template>
-  <div style="width: 100%;">
-
-    <a-select v-if="!isSpan" v-model="selectedKeys"
-              :placeholder="placeholder"
-              :allowClear="allowClear"
-              @change="change">
-      <a-select-option v-for="(item) in options" :value="item.id" :key="item.id">
+  <div style="width: 100%">
+    <a-select
+      v-if="!isSpan"
+      v-model="selectedKeys"
+      :placeholder="placeholder"
+      :allowClear="allowClear"
+      @change="change"
+    >
+      <a-select-option v-for="item in options" :key="item.id" :value="item.id">
         {{ item.shopName }}
       </a-select-option>
     </a-select>
     <span v-else>
-      {{optionsMap[value]}}
+      {{ optionsMap[value] }}
     </span>
-
   </div>
 </template>
 <script>
-  import {getShopList as listPage} from "@/api/spm/shop.js";
+import { getShopList as listPage } from '@/api/spm/shop.js';
 
-  export default {
-    props: {
-      value: {
-        type: String,
-        default: function () {
-          return null;
-        }
-      },
-      allowClear: {
-        type: Boolean,
-        default: function () {
-          return true;
-        }
-      },
-      placeholder: {
-        type: String,
-        default: function () {
-          return "请选择店铺";
-        }
-      },
-      isSpan: {
-        type: Boolean,
-        default: function () {
-          return false;
-        }
-      },
-
-
-    },
-    data() {
-      return {
-        selectedKeys: undefined,
-        options: [],
-        optionsMap: {},
-      };
-    },
-    watch: {
-      value(newValue, oldValue) {
-        if (!newValue) {
-          this.selectedKeys = undefined;
-        }
+export default {
+  props: {
+    value: {
+      type: String,
+      default: function () {
+        return null;
       }
     },
-    computed: {},
-    async created() {
-      if (!this.isSpan) {
-        await this.getData();
-        if (this.value) {
-          this.selectedKeys = this.value
-        }
-      } else {
-        this.getCache()
+    allowClear: {
+      type: Boolean,
+      default: function () {
+        return true;
       }
     },
-    methods: {
-      async getData() {
-        this.options = await listPage();
-        this.setCache();
-      },
-      change(value, label, extra) {
-        this.$emit('input', value);
-        this.$emit('change', value);
-      },
-      setCache() {
-        this.optionsMap = this.options.reduce((acc, obj) => {
-          acc[obj.id] = obj.shopName;
-          return acc;
-        }, {});
-        localStorage.setItem("yShopSelect", JSON.stringify(this.optionsMap))
-      },
-      getCache() {
-        this.optionsMap = JSON.parse(localStorage.getItem("yShopSelect"))
+    placeholder: {
+      type: String,
+      default: function () {
+        return '请选择店铺';
+      }
+    },
+    isSpan: {
+      type: Boolean,
+      default: function () {
+        return false;
       }
     }
-  };
+  },
+  data() {
+    return {
+      selectedKeys: undefined,
+      options: [],
+      optionsMap: {}
+    };
+  },
+  computed: {},
+  watch: {
+    value(newValue, oldValue) {
+      if (!newValue) {
+        this.selectedKeys = undefined;
+      }
+    }
+  },
+  async created() {
+    if (!this.isSpan) {
+      await this.getData();
+      if (this.value) {
+        this.selectedKeys = this.value;
+      }
+    } else {
+      this.getCache();
+    }
+  },
+  methods: {
+    async getData() {
+      this.options = await listPage();
+      this.setCache();
+    },
+    change(value, label, extra) {
+      this.$emit('input', value);
+      this.$emit('change', value);
+    },
+    setCache() {
+      this.optionsMap = this.options.reduce((acc, obj) => {
+        acc[obj.id] = obj.shopName;
+        return acc;
+      }, {});
+      localStorage.setItem('yShopSelect', JSON.stringify(this.optionsMap));
+    },
+    getCache() {
+      this.optionsMap = JSON.parse(localStorage.getItem('yShopSelect'));
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
-  .ant-advanced-search-form {
-    padding: 10px;
+.ant-advanced-search-form {
+  padding: 10px;
 
-    /deep/ .ant-form-item {
-      display: flex;
+  /deep/ .ant-form-item {
+    display: flex;
 
-      .ant-form-item-label {
-        width: 100px;
-        white-space: nowrap; /* 防止文本换行 */
-        overflow: hidden; /* 超出部分隐藏 */
-        text-overflow: ellipsis; /* 显示省略符号 */
-      }
+    .ant-form-item-label {
+      width: 100px;
+      white-space: nowrap; /* 防止文本换行 */
+      overflow: hidden; /* 超出部分隐藏 */
+      text-overflow: ellipsis; /* 显示省略符号 */
+    }
 
-      .ant-form-item-control-wrapper {
-        flex: 1;
+    .ant-form-item-control-wrapper {
+      flex: 1;
 
-        .ant-calendar-picker {
-          width: 100% !important;
-        }
+      .ant-calendar-picker {
+        width: 100% !important;
       }
     }
   }
+}
 
-  .y-tools {
-    height: 100px;
-    width: 100%;
-    background: red;
-  }
+.y-tools {
+  height: 100px;
+  width: 100%;
+  background: red;
+}
 
-  .y-table {
-    margin: 20px;
-  }
+.y-table {
+  margin: 20px;
+}
 </style>

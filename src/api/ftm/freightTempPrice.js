@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的物流模板价格信息(全部)
@@ -10,10 +10,9 @@ import {request} from '@/utils/request';
  */
 export function getFreightTempPriceList(data) {
   return request({
-    url: "/ftm/freightTempPrice/list",
+    url: '/ftm/freightTempPrice/list',
     params: data
   });
-
 }
 
 /**
@@ -26,12 +25,10 @@ export function getFreightTempPriceList(data) {
  */
 export function getFreightTempPricePageList(data) {
   return request({
-    url: "/ftm/freightTempPrice/page",
+    url: '/ftm/freightTempPrice/page',
     params: data
   });
-
 }
-
 
 /**
  * 获取物流模板价格详情
@@ -43,9 +40,8 @@ export function getFreightTempPricePageList(data) {
  */
 export function getFreightTempPriceDetail(id) {
   return request({
-    url: `/ftm/freightTempPrice/details/${id}`,
+    url: `/ftm/freightTempPrice/details/${id}`
   });
-
 }
 
 /**
@@ -59,11 +55,10 @@ export function getFreightTempPriceDetail(id) {
 
 export function addFreightTempPrice(data) {
   return request({
-    url: "/ftm/freightTempPrice/add",
-    method: "post",
+    url: '/ftm/freightTempPrice/add',
+    method: 'post',
     data
   });
-
 }
 
 /**
@@ -77,15 +72,13 @@ export function addFreightTempPrice(data) {
  */
 export function editFreightTempPrice(data, id) {
   return request({
-    url: "/ftm/freightTempPrice/edit",
-    method: "post",
+    url: '/ftm/freightTempPrice/edit',
+    method: 'post',
     data: {
-      ...
-        data, id
+      ...data,
+      id
     }
-  })
-    ;
-
+  });
 }
 
 /**
@@ -98,12 +91,10 @@ export function editFreightTempPrice(data, id) {
  */
 export function deleteFreightTempPrice(ids) {
   return request({
-    url: "/ftm/freightTempPrice/delete",
-    method: "post",
+    url: '/ftm/freightTempPrice/delete',
+    method: 'post',
     params: {
       ids
     }
   });
-
 }
-

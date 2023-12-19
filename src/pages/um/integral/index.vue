@@ -3,19 +3,9 @@
     <y-search
       :columns="table.columns"
       :loading="table.loading"
-      :scopedSlots="['tenantId', 'pid']"
+      :scopedSlots="[]"
       @search="search"
     >
-      <a-form-model-item slot="tenantId" slot-scope="{ form }" label="商户">
-        <y-shop-select v-model="form.tenantId" />
-      </a-form-model-item>
-      <a-form-model-item slot="pid" slot-scope="{ form }" label="父级分类">
-        <y-product-category-shop-select
-          :key="form.tenantId"
-          v-model="form.pid"
-          :tenantId="form.tenantId"
-        />
-      </a-form-model-item>
     </y-search>
     <y-table
       :columns="table.columns"
@@ -26,64 +16,21 @@
       rowKey="id"
       @change="tableChange"
     >
-      <div slot="operations" class="y-flex">
-        <a-button icon="plus" type="primary" @click="onAdd"> 新建</a-button>
-        <a-divider type="vertical" />
-        <a-popconfirm
-          cancel-text="取消"
-          ok-text="确认"
-          title="是否要批量删除这些信息?"
-          @confirm="onBatchDelete"
-        >
-          <a-button :disabled="uBatchDisabled" icon="delete" type="danger">
-            批量删除
-          </a-button>
-        </a-popconfirm>
-        <a-divider type="vertical" />
-      </div>
-
-      <div slot="level" slot-scope="{ text, record }" class="y-flex">
-        {{ enumsMap['level' + text] }}
-      </div>
-
-      <div slot="isShow" slot-scope="{ text, record }" class="y-flex">
-        {{ enumsMap['isShow' + text] }}
-      </div>
-
-      <div slot="action" slot-scope="{ text, record }" class="y-flex">
-        <a-button icon="edit" @click="onEdit(record)"></a-button>
-        <a-divider type="vertical" />
-        <a-popconfirm
-          :title="'确定删除此条数据吗?'"
-          cancel-text="取消"
-          ok-text="确定"
-          @confirm="() => onDelete(record)"
-        >
-          <a-button icon="delete" type="danger"></a-button>
-        </a-popconfirm>
+      <!-- 积分类型 -->
+      <div slot="type" slot-scope="{ text, record }" class="y-flex">
+        <span v-if="text==1">签到积分</span>
       </div>
     </y-table>
-
-    <edit
-      :key="editId"
-      :columns="table.columns"
-      :editConfigProps="editConfigProps"
-      :editId="editId"
-      @ok="getData"
-    >
-    </edit>
   </div>
 </template>
 <script>
 import { columns, enumsMap } from './pageConfig.js';
-import edit from './edit.vue';
 import {
-  deleteProductCategoryShop as deletePost,
-  getProductCategoryShopPageList as pageGet
-} from '@/api/ptm/productCategoryShop.js';
+  deleteIntegral as deletePost,
+  getIntegralPageList as pageGet
+} from '@/api/um/integral.js';
 
 export default {
-  components: { edit },
   data() {
     return {
       enumsMap,
@@ -106,7 +53,7 @@ export default {
       },
       editConfigProps: {
         visible: false,
-        title: '店铺商品分类',
+        title: '积分管理',
         columns
       },
       editId: null

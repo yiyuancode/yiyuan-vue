@@ -6,8 +6,11 @@
       :wrapper-col="wrapperCol"
     >
       <a-form-model-item label="商户">
-<!--        这里的key必须指定，要么编辑是数据回显会有问题，添加key就可以让differnt 算法继续执行-->
-        <y-shop-select :key="formData.tenantId" v-model="formData.tenantId"></y-shop-select>
+        <!--        这里的key必须指定，要么编辑是数据回显会有问题，添加key就可以让differnt 算法继续执行-->
+        <y-shop-select
+          :key="formData.tenantId"
+          v-model="formData.tenantId"
+        ></y-shop-select>
       </a-form-model-item>
       <a-form-model-item label="商品分类">
         <a-cascader
@@ -24,7 +27,9 @@
         />
       </a-form-model-item>
       <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-        <a-button type="primary" @click="onSubmitHandle"> {{ editId ? '编辑':'创建'}} </a-button>
+        <a-button type="primary" @click="onSubmitHandle">
+          {{ editId ? '编辑' : '创建' }}
+        </a-button>
         <a-button style="margin-left: 10px" @click="onCancel"> 取消 </a-button>
       </a-form-model-item>
     </a-form-model>
@@ -93,8 +98,8 @@ export default {
     async genDataForEdit() {
       if (this.editId) {
         // setTimeout(async () => {
-          this.formData = await getProductAttrKeyDetail(this.editId);
-          this.formData.productCateId = [this.formData.ptmProductCategoryId];
+        this.formData = await getProductAttrKeyDetail(this.editId);
+        this.formData.productCateId = [this.formData.ptmProductCategoryId];
         // }, 800);
       }
     },
@@ -107,8 +112,8 @@ export default {
         this.$emit('onSaveSubmit');
       }
     },
-    onCancel(){
-      this.$emit("onCancel")
+    onCancel() {
+      this.$emit('onCancel');
     }
   }
 };

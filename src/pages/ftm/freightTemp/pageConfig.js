@@ -4,8 +4,8 @@
  * @author  一源团队-花和尚
  * @date 2023-11-09
  */
-import * as freightTemp from "@/api/ftm/freightTemp";
-import {getEnumsMap} from "@/utils/enumsUtils.js";
+import * as freightTemp from '@/api/ftm/freightTemp';
+import { getEnumsMap } from '@/utils/enumsUtils.js';
 
 const columns = [
   {
@@ -15,15 +15,13 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    rules: [{required: true, message: '请输入模板id', trigger: 'blur'},],
+    rules: [{ required: true, message: '请输入模板id', trigger: 'blur' }],
     noEdit: true,
     noAdd: true,
 
     noSearch: true,
     noShow: true,
-    noTable: true,
-
+    noTable: true
   },
 
   {
@@ -33,10 +31,8 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    rules: [{required: true, message: '请输入商户id', trigger: 'blur'},],
-    scopedSlots: {customRender: 'tenantId'},
-
+    rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }],
+    scopedSlots: { customRender: 'tenantId' }
   },
 
   {
@@ -46,9 +42,7 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    rules: [{required: true, message: '请输入模板名称', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入模板名称', trigger: 'blur' }]
   },
 
   {
@@ -58,33 +52,28 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    scopedSlots: {customRender: 'packageType'},
+    scopedSlots: { customRender: 'packageType' },
     //值类型
-    valType: "object",
-    formType: "radioGroup",
+    valType: 'object',
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '全部包邮',
-          value: 0,
+          value: 0
         },
         {
           label: '部分包邮',
-          value: 1,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: 1
         }
+      ],
+      style: {
+        width: '100%'
+      }
     },
-    rules: [
-      {required: true, message: '请选择包邮类型', trigger: 'change'},
-    ],
+    rules: [{ required: true, message: '请选择包邮类型', trigger: 'change' }],
     defaultValue: 0,
-    formSort: 1,
-
+    formSort: 1
   },
 
   {
@@ -94,37 +83,32 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    scopedSlots: {customRender: 'chargeType'},
+    scopedSlots: { customRender: 'chargeType' },
     //值类型
-    valType: "object",
-    formType: "radioGroup",
+    valType: 'object',
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '按个数',
-          value: 0,
+          value: 0
         },
         {
           label: '按重量',
-          value: 1,
+          value: 1
         },
         {
           label: '按体积',
-          value: 2,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: 2
         }
+      ],
+      style: {
+        width: '100%'
+      }
     },
-    rules: [
-      {required: true, message: '请选择计费类型', trigger: 'change'},
-    ],
+    rules: [{ required: true, message: '请选择计费类型', trigger: 'change' }],
     defaultValue: 0,
-    formSort: 1,
-
+    formSort: 1
   },
 
   {
@@ -132,9 +116,7 @@ const columns = [
     dataIndex: 'sort',
     key: 'sort',
     width: 160,
-    ellipsis: true,
-
-
+    ellipsis: true
   },
 
   {
@@ -144,26 +126,23 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    scopedSlots: {customRender: 'isShow'},
-    formType: "radioGroup",
+    scopedSlots: { customRender: 'isShow' },
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '否',
-          value: false,
+          value: false
         },
         {
           label: '是',
-          value: true,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: true
         }
-    },
-
+      ],
+      style: {
+        width: '100%'
+      }
+    }
   },
 
   {
@@ -173,21 +152,16 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择创建时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
-    noAdd: true,
-
-
+    noAdd: true
   },
 
   {
@@ -197,22 +171,18 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择修改时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
 
-    noSearch: true,
-
+    noSearch: true
   },
 
   {
@@ -222,14 +192,12 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     noEdit: true,
     noAdd: true,
 
     noSearch: true,
     noShow: true,
-    noTable: true,
-
+    noTable: true
   },
 
   {
@@ -239,14 +207,12 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     noEdit: true,
     noAdd: true,
 
     noSearch: true,
     noShow: true,
-    noTable: true,
-
+    noTable: true
   },
 
   {
@@ -258,23 +224,21 @@ const columns = [
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    fixed: "right",
-    scopedSlots: {customRender: "action"}
-
-  },
-]
-
+    fixed: 'right',
+    scopedSlots: { customRender: 'action' }
+  }
+];
 
 // 模块配置
 const moduleConfig = {
   module: freightTemp,
-  moduleAdd: "addFreightTemp",
-  moduleEdit: "editFreightTemp",
-  moduleDelete: "deleteFreightTemp",
-  moduleGetList: "getFreightTempPageList",
-  moduleGetDetail: "getFreightTempDetail",
-  moduleName: "物流模板",
-}
+  moduleAdd: 'addFreightTemp',
+  moduleEdit: 'editFreightTemp',
+  moduleDelete: 'deleteFreightTemp',
+  moduleGetList: 'getFreightTempPageList',
+  moduleGetDetail: 'getFreightTempDetail',
+  moduleName: '物流模板'
+};
 
 // 权限对象
 const permissionObj = {
@@ -285,9 +249,4 @@ const permissionObj = {
 };
 //转化map
 const enumsMap = getEnumsMap(columns);
-export {
-  columns,
-  moduleConfig,
-  permissionObj,
-  enumsMap
-};
+export { columns, moduleConfig, permissionObj, enumsMap };

@@ -1,4 +1,4 @@
-import {request} from '@/utils/request';
+import { request } from '@/utils/request';
 
 /**
  * 获取所有的保障服务信息(全部)
@@ -10,10 +10,9 @@ import {request} from '@/utils/request';
  */
 export function getProductGuaranteeList(data) {
   return request({
-    url: "/ptm/productGuarantee/list",
+    url: '/ptm/productGuarantee/list',
     params: data
   });
-
 }
 
 /**
@@ -26,12 +25,10 @@ export function getProductGuaranteeList(data) {
  */
 export function getProductGuaranteePageList(data) {
   return request({
-    url: "/ptm/productGuarantee/page",
+    url: '/ptm/productGuarantee/page',
     params: data
   });
-
 }
-
 
 /**
  * 获取保障服务详情
@@ -43,9 +40,8 @@ export function getProductGuaranteePageList(data) {
  */
 export function getProductGuaranteeDetail(id) {
   return request({
-    url: `/ptm/productGuarantee/details/${id}`,
+    url: `/ptm/productGuarantee/details/${id}`
   });
-
 }
 
 /**
@@ -59,11 +55,10 @@ export function getProductGuaranteeDetail(id) {
 
 export function addProductGuarantee(data) {
   return request({
-    url: "/ptm/productGuarantee/add",
-    method: "post",
+    url: '/ptm/productGuarantee/add',
+    method: 'post',
     data
   });
-
 }
 
 /**
@@ -77,15 +72,13 @@ export function addProductGuarantee(data) {
  */
 export function editProductGuarantee(data, id) {
   return request({
-    url: "/ptm/productGuarantee/edit",
-    method: "post",
+    url: '/ptm/productGuarantee/edit',
+    method: 'post',
     data: {
-      ...
-        data, id
+      ...data,
+      id
     }
-  })
-    ;
-
+  });
 }
 
 /**
@@ -98,12 +91,10 @@ export function editProductGuarantee(data, id) {
  */
 export function deleteProductGuarantee(ids) {
   return request({
-    url: "/ptm/productGuarantee/delete",
-    method: "post",
+    url: '/ptm/productGuarantee/delete',
+    method: 'post',
     params: {
       ids
     }
   });
-
 }
-

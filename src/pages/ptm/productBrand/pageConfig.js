@@ -40,7 +40,7 @@ const columns = [
     key: 'icon',
     width: 160,
     rules: [{ required: true, message: '请输入品牌图标', trigger: 'blur' }],
-    scopedSlots: {customRender: 'icon'}
+    scopedSlots: { customRender: 'icon' }
   },
 
   {
@@ -120,7 +120,7 @@ const columns = [
     // width: 150,
     //操作列可以不加宽度，但是必须要要加这个不换行属性
     ellipsis: true,
-    scopedSlots: {customRender: 'operation'}
+    scopedSlots: { customRender: 'operation' }
   }
 ];
 

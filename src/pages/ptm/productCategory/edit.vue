@@ -8,18 +8,24 @@
       :wrapper-col="wrapperCol"
     >
       <a-form-model-item label="商户" prop="tenantId">
-        <y-shop-select v-model="formData.tenantId" placeholder="商户|不选为平台分类"></y-shop-select>
+        <y-shop-select
+          v-model="formData.tenantId"
+          placeholder="商户|不选为平台分类"
+        ></y-shop-select>
       </a-form-model-item>
       <a-form-model-item label="平台父级分类" prop="pid">
-<!--        <a-cascader-->
-<!--          v-model="formData.pid"-->
-<!--          :options="forPramsData.productCateList"-->
-<!--          changeOnSelect-->
-<!--          placeholder="请选择商品分类"-->
-<!--          @change="onProductCateOptionSelected"-->
-<!--        />-->
-        <y-product-category-select v-model="formData.pid" placeholder="平台分类|不选为根目录"></y-product-category-select>
-<!--        <y-plat-category-select v-model="formData.pid" placeholder="平台分类|不选为根目录"></y-plat-category-select>-->
+        <!--        <a-cascader-->
+        <!--          v-model="formData.pid"-->
+        <!--          :options="forPramsData.productCateList"-->
+        <!--          changeOnSelect-->
+        <!--          placeholder="请选择商品分类"-->
+        <!--          @change="onProductCateOptionSelected"-->
+        <!--        />-->
+        <y-product-category-select
+          v-model="formData.pid"
+          placeholder="平台分类|不选为根目录"
+        ></y-product-category-select>
+        <!--        <y-plat-category-select v-model="formData.pid" placeholder="平台分类|不选为根目录"></y-plat-category-select>-->
       </a-form-model-item>
       <a-form-model-item label="平台分类名称" prop="name">
         <a-input
@@ -130,14 +136,14 @@ export default {
     onSubmitHandle() {
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
-          if(this.formData.pid.length > 0){
+          if (this.formData.pid.length > 0) {
             this.formData.pid = this.formData.pid[0];
           }
           if (this.formData.id) {
             await editProductCategory(this.formData, this.formData.id);
             this.$emit('onSaveSubmit');
           } else {
-            console.log("this.formData",this.formData)
+            console.log('this.formData', this.formData);
             await addProductCategory(this.formData);
             this.$emit('onSaveSubmit');
           }

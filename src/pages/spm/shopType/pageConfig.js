@@ -40,7 +40,7 @@ const columns = [
     width: 160,
     rules: [{ required: true, message: '请输入店铺类型合约', trigger: 'blur' }],
     formType: 'text',
-    noSearch:true
+    noSearch: true
   },
 
   {
@@ -56,7 +56,7 @@ const columns = [
     key: 'isShow',
     width: 160,
     scopedSlots: {
-      customRender: "isShow"
+      customRender: 'isShow'
     }
   },
   {
@@ -122,7 +122,7 @@ const columns = [
     // width: 150,
     //操作列可以不加宽度，但是必须要要加这个不换行属性
     ellipsis: true,
-    scopedSlots: {customRender: 'operation'}
+    scopedSlots: { customRender: 'operation' }
   }
 ];
 

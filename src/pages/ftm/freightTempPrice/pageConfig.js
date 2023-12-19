@@ -4,8 +4,8 @@
  * @author  一源团队-花和尚
  * @date 2023-11-09
  */
-import * as freightTempPrice from "@/api/ftm/freightTempPrice";
-import {getEnumsMap} from "@/utils/enumsUtils.js";
+import * as freightTempPrice from '@/api/ftm/freightTempPrice';
+import { getEnumsMap } from '@/utils/enumsUtils.js';
 
 const columns = [
   {
@@ -15,15 +15,15 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    rules: [{required: true, message: '请输入物流模板价格id', trigger: 'blur'},],
+    rules: [
+      { required: true, message: '请输入物流模板价格id', trigger: 'blur' }
+    ],
     noEdit: true,
     noAdd: true,
 
     noSearch: true,
     noShow: true,
-    noTable: true,
-
+    noTable: true
   },
 
   {
@@ -33,9 +33,7 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    rules: [{required: true, message: '请输入商户id', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入商户id', trigger: 'blur' }]
   },
 
   {
@@ -45,9 +43,7 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    rules: [{required: true, message: '请输入运费模板id', trigger: 'blur'},],
-
+    rules: [{ required: true, message: '请输入运费模板id', trigger: 'blur' }]
   },
 
   {
@@ -57,9 +53,13 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    rules: [{required: true, message: '请输入城市区域ids(区域最后一级,多个逗号分割)', trigger: 'blur'},],
-
+    rules: [
+      {
+        required: true,
+        message: '请输入城市区域ids(区域最后一级,多个逗号分割)',
+        trigger: 'blur'
+      }
+    ]
   },
 
   {
@@ -67,9 +67,7 @@ const columns = [
     dataIndex: 'firstNum',
     key: 'firstNum',
     width: 160,
-    ellipsis: true,
-
-
+    ellipsis: true
   },
 
   {
@@ -77,9 +75,7 @@ const columns = [
     dataIndex: 'firstPrice',
     key: 'firstPrice',
     width: 160,
-    ellipsis: true,
-
-
+    ellipsis: true
   },
 
   {
@@ -87,9 +83,7 @@ const columns = [
     dataIndex: 'nextNum',
     key: 'nextNum',
     width: 160,
-    ellipsis: true,
-
-
+    ellipsis: true
   },
 
   {
@@ -97,9 +91,7 @@ const columns = [
     dataIndex: 'nextPrice',
     key: 'nextPrice',
     width: 160,
-    ellipsis: true,
-
-
+    ellipsis: true
   },
 
   {
@@ -107,9 +99,7 @@ const columns = [
     dataIndex: 'fullPackageNum',
     key: 'fullPackageNum',
     width: 160,
-    ellipsis: true,
-
-
+    ellipsis: true
   },
 
   {
@@ -117,9 +107,7 @@ const columns = [
     dataIndex: 'fullPackagePrice',
     key: 'fullPackagePrice',
     width: 160,
-    ellipsis: true,
-
-
+    ellipsis: true
   },
 
   {
@@ -129,26 +117,23 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    scopedSlots: {customRender: 'isPackage'},
-    formType: "radioGroup",
+    scopedSlots: { customRender: 'isPackage' },
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '否',
-          value: false,
+          value: false
         },
         {
           label: '是',
-          value: true,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: true
         }
-    },
-
+      ],
+      style: {
+        width: '100%'
+      }
+    }
   },
 
   {
@@ -156,9 +141,7 @@ const columns = [
     dataIndex: 'sort',
     key: 'sort',
     width: 160,
-    ellipsis: true,
-
-
+    ellipsis: true
   },
 
   {
@@ -168,26 +151,23 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
-    scopedSlots: {customRender: 'isShow'},
-    formType: "radioGroup",
+    scopedSlots: { customRender: 'isShow' },
+    formType: 'radioGroup',
     props: {
       options: [
         {
           label: '否',
-          value: false,
+          value: false
         },
         {
           label: '是',
-          value: true,
-        },
-      ],
-      style:
-        {
-          width: '100%'
+          value: true
         }
-    },
-
+      ],
+      style: {
+        width: '100%'
+      }
+    }
   },
 
   {
@@ -197,21 +177,16 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择创建时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择创建时间', trigger: 'change' }];
     },
     noEdit: true,
-    noAdd: true,
-
-
+    noAdd: true
   },
 
   {
@@ -221,22 +196,18 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     props: {
       showTime: true,
-      style: {width: '100%'}
+      style: { width: '100%' }
     },
-    formType: "datePicker",
+    formType: 'datePicker',
     rules: function () {
-      return [
-        {required: true, message: '请选择修改时间', trigger: 'change'},
-      ]
+      return [{ required: true, message: '请选择修改时间', trigger: 'change' }];
     },
     noEdit: true,
     noAdd: true,
 
-    noSearch: true,
-
+    noSearch: true
   },
 
   {
@@ -246,14 +217,12 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     noEdit: true,
     noAdd: true,
 
     noSearch: true,
     noShow: true,
-    noTable: true,
-
+    noTable: true
   },
 
   {
@@ -263,14 +232,12 @@ const columns = [
     width: 160,
     ellipsis: true,
 
-
     noEdit: true,
     noAdd: true,
 
     noSearch: true,
     noShow: true,
-    noTable: true,
-
+    noTable: true
   },
 
   {
@@ -282,23 +249,21 @@ const columns = [
     noEdit: true,
     noAdd: true,
     noSearch: true,
-    fixed: "right",
-    scopedSlots: {customRender: "action"}
-
-  },
-]
-
+    fixed: 'right',
+    scopedSlots: { customRender: 'action' }
+  }
+];
 
 // 模块配置
 const moduleConfig = {
   module: freightTempPrice,
-  moduleAdd: "addFreightTempPrice",
-  moduleEdit: "editFreightTempPrice",
-  moduleDelete: "deleteFreightTempPrice",
-  moduleGetList: "getFreightTempPricePageList",
-  moduleGetDetail: "getFreightTempPriceDetail",
-  moduleName: "物流模板价格",
-}
+  moduleAdd: 'addFreightTempPrice',
+  moduleEdit: 'editFreightTempPrice',
+  moduleDelete: 'deleteFreightTempPrice',
+  moduleGetList: 'getFreightTempPricePageList',
+  moduleGetDetail: 'getFreightTempPriceDetail',
+  moduleName: '物流模板价格'
+};
 
 // 权限对象
 const permissionObj = {
@@ -309,9 +274,4 @@ const permissionObj = {
 };
 //转化map
 const enumsMap = getEnumsMap(columns);
-export {
-  columns,
-  moduleConfig,
-  permissionObj,
-  enumsMap
-};
+export { columns, moduleConfig, permissionObj, enumsMap };
