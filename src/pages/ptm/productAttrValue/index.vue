@@ -92,7 +92,7 @@ import { columns,enumsMap, permissionObj } from './pageConfig';
 import { getProductAttrValuePageList } from '@/api/ptm/productAttrValue.js';
 import {getProductAttrKeyList} from "@/api/ptm/productAttrKey";
 import edit from "./edit.vue";
-// TODO 属性名使用类似过滤器实现
+
 export default {
   name: 'ProductAttrValue',
   components: { edit },

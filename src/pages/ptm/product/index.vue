@@ -142,6 +142,9 @@
       <div slot="brandId" slot-scope="{ text, record }" class="y-flex">
         {{ text | getBrandNameById }}
       </div>
+      <div slot="guaranteeIds" slot-scope="{ text, record }" class="y-flex">
+        {{ text | getProductGuaranteeNameById }}
+      </div>
       <!--      主图image-->
       <div slot="image" slot-scope="{ text, record }" class="y-flex">
         <y-img :src="globalConfig.imgBaseUrl + text" :width="35"></y-img>

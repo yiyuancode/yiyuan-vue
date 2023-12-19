@@ -79,7 +79,8 @@ const columns = [
         message: '请输入保障服务ids(英文逗号拼接)',
         trigger: 'blur'
       }
-    ]
+    ],
+    scopedSlots: {customRender: 'guaranteeIds'},
   },
 
   {
