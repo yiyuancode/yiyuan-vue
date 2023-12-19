@@ -29,7 +29,6 @@ export function getProductAttrKeyPageList(data) {
  * @returns {*}
  */
 export function getProductAttrKeyList(data) {
-  console.log('data:', data);
   let finalData = JSON.parse(JSON.stringify(data));
   if (
     finalData.ptmProductCategoryId &&

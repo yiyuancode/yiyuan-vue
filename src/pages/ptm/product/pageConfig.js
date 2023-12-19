@@ -83,7 +83,8 @@ const columns = [
         message: '请输入保障服务ids(英文逗号拼接)',
         trigger: 'blur'
       }
-    ]
+    ],
+    scopedSlots: {customRender: 'guaranteeIds'},
   },
 
   {
@@ -91,7 +92,8 @@ const columns = [
     dataIndex: 'tempId',
     key: 'tempId',
     width: 160,
-    rules: [{ required: true, message: '请输入运费模板ID', trigger: 'blur' }]
+    rules: [{ required: true, message: '请输入运费模板ID', trigger: 'blur' }],
+    scopedSlots: {customRender: 'tempId'},
   },
 
   {
@@ -382,7 +384,7 @@ const columns = [
     title: '修改时间',
     dataIndex: 'updateTime',
     key: 'updateTime',
-    width: 160,
+    width: 180,
     props: {
       showTime: true,
       style: { width: '100%' }
@@ -424,6 +426,7 @@ const columns = [
     dataIndex: 'operation',
     scopedSlots: { customRender: 'operation' },
     fixed: 'right',
+    width: 130,
     ellipsis: true,
     noShow: true
   }

@@ -22,3 +22,22 @@ export function getPlatCateNameById(id) {
 export function getBrandNameById(id) {
   return store.getters['product/brandById'](id);
 }
+
+
+/**
+ * 根据保障服务id获取保障服务名称
+ * @param id
+ * @returns {*}
+ */
+export function getProductGuaranteeNameById(id) {
+  return store.getters['product/getProductGuaranteeById'](id);
+}
+
+/**
+ * 根据运费模版id获取模版名称
+ * @param id
+ * @returns {*}
+ */
+export function getFreightTempByIdNameById(id) {
+  return store.getters['product/freightTempById'](id);
+}

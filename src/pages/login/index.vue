@@ -144,6 +144,8 @@ export default {
               // 缓存平台分类
               this.$store.dispatch('product/platCategoryList');
               this.$store.dispatch('product/brandList');
+              this.$store.dispatch('product/productGuaranteeList');
+              this.$store.dispatch('product/freightTempList');
               this.$store.dispatch('tenantShop/shopList');
               this.$store.dispatch('tenantShop/shopCategoryIds');
             });
